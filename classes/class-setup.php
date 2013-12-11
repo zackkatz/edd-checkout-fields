@@ -17,7 +17,6 @@ class FES_Setup {
 			 $this,
 			'load_textdomain' 
 		) );
-		add_action( 'switch_theme', 'flush_rewrite_rules', 15 );
 		add_action( 'wp_enqueue_scripts', array(
 			 $this,
 			'enqueue_scripts' 
@@ -38,28 +37,10 @@ class FES_Setup {
 			 $this,
 			'fes_version' 
 		) );
-		add_filter( 'media_upload_tabs', array(
-			 $this,
-			'remove_media_library_tab' 
-		) );
-		add_action( 'admin_footer-post-new.php', array(
-			 $this,
-			'edd_lockup_uploaded' 
-		) );
-		add_action( 'admin_footer-post.php', array(
-			 $this,
-			'edd_lockup_uploaded' 
-		) );
-		add_action( 'wp_footer', array(
-			 $this,
-			'edd_lockup_uploaded' 
-		) );
-		add_post_type_support( 'download', 'author' );
 		add_action( 'edd_system_info_after', array(
 			 $this,
 			'fes_add_below_system_info' 
 		) );
-		$this->add_new_roles();
 	}
 	
 	public function is_wp_36_and_edd_activated() {
@@ -254,58 +235,7 @@ class FES_Setup {
 		// Newline on both sides to avoid being in a blob
 		echo '<meta name="generator" content="EDD FES v' . fes_plugin_version . '" />' . "\n";
 	}
-	
-	public function edd_lockup_uploaded() {
-		if ( is_admin() ) {
-			return;
-		}
-?>
-  <script type="text/javascript">
-    jQuery(document).on("DOMNodeInserted", function(){
-        // Lock uploads to "Uploaded to this post"
-        jQuery('select.attachment-filters [value="uploaded"]').attr( 'selected', true ).parent().trigger('change');
-    });
-	<?php
-		if ( EDD_FES()->vendors->is_s3_active() ) {
-?>
-	// handlediv rem
-	jQuery(document).on("DOMNodeInserted", function(){
-		//jQuery('.media-frame-menu').remove();
-    });
-	jQuery(document).on("DOMNodeInserted", function(){
-		jQuery('#media-upload-header').remove();
-		});
-	<?php
-		}
-?>
-</script>
-	<?php
-	}
-	
-	// removes URL tab in image upload for post
-	public function remove_media_library_tab( $tabs ) {
-		if ( is_admin() ) {
-			return $tabs;
-		}
-		if ( EDD_FES()->vendors->is_s3_active() && EDD_FES()->vendors->is_vendor( get_current_user_id() ) && !current_user_can( 'fes_is_admin' ) ) {
-			//home
-			unset( $tabs[ 'type' ] );
-			unset( $tabs[ 'type_url' ] );
-			unset( $tabs[ 'gallery' ] );
-			// s3 library
-			unset( $tabs[ 's3_library' ] );
-			return $tabs;
-		} else if ( !current_user_can( 'fes_is_admin' ) ) {
-			unset( $tabs[ 'library' ] );
-			unset( $tabs[ 'gallery' ] );
-			unset( $tabs[ 'type' ] );
-			unset( $tabs[ 'type_url' ] );
-			return $tabs;
-		} else {
-			return $tabs;
-		}
-	}
-	
+
 	public function register_post_type() {
 		$capability = 'manage_options';
 		register_post_type( 'fes-forms', array(
@@ -349,62 +279,5 @@ class FES_Setup {
 				'parent' => __( 'Parent FES Form', 'edd_fes' ) 
 			) 
 		) );
-	}
-	
-	private function add_new_roles() {
-		global $wp_roles;
-		remove_role( 'pending_vendor' );
-		add_role( 'pending_vendor', __( 'Pending Vendor', 'edd_fes' ), array(
-			 'read' => true,
-			'edit_posts' => false,
-			'delete_posts' => false 
-		) );
-		remove_role( 'frontend_vendor' );
-		add_role( 'frontend_vendor', 'Frontend Vendor', array(
-			 'read' => true,
-			'edit_posts' => true,
-			'upload_files' => true,
-			'delete_posts' => false,
-			'manage_categories' => false,
-			'unfiltered_html' => true 
-		) );
-		if ( class_exists( 'WP_Roles' ) && !isset( $wp_roles ) )
-			$wp_roles = new WP_Roles();
-		if ( is_object( $wp_roles ) ) {
-			$capabilities     = array();
-			$capability_types = array(
-				 'product' 
-			);
-			foreach ( $capability_types as $capability_type ) {
-				$capabilities[ $capability_type ] = array(
-					// Post type
-					 "edit_{$capability_type}",
-					"read_{$capability_type}",
-					"delete_{$capability_type}",
-					"edit_{$capability_type}s",
-					"read_private_{$capability_type}s",
-					"edit_private_{$capability_type}s",
-					// Terms
-					"manage_{$capability_type}_terms",
-					"edit_{$capability_type}_terms",
-					"assign_{$capability_type}_terms" 
-				);
-			}
-			foreach ( $capabilities as $cap_group ) {
-				foreach ( $cap_group as $cap ) {
-					$wp_roles->add_cap( 'frontend_vendor', $cap );
-				}
-			}
-			$wp_roles->add_cap( 'frontend_vendor', 'edit_product' );
-			$wp_roles->add_cap( 'frontend_vendor', 'edit_products' );
-			$wp_roles->add_cap( 'frontend_vendor', 'upload_files' );
-			$wp_roles->add_cap( 'frontend_vendor', 'assign_product_terms' );
-			$wp_roles->add_cap( 'frontend_vendor', 'delete_product' );
-			$wp_roles->add_cap( 'frontend_vendor', 'delete_products' );
-			$wp_roles->add_cap( 'administrator', 'fes_is_admin' );
-			$wp_roles->add_cap( 'editor', 'fes_is_admin' );
-			$wp_roles->add_cap( 'shop_vendor', 'fes_is_vendor' );
-			$wp_roles->add_cap( 'frontend_vendor', 'fes_is_vendor' );
-		}
 	}
 }
