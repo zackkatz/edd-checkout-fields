@@ -1,6 +1,6 @@
 <?php
 /**
- * Plugin Name:         Easy Digital Downloads - Frontend Submissions
+ * Plugin Name:         Easy Digital Downloads - Checkout Field Manager
  * Plugin URI:          https://easydigitaldownloads.com/extension/frontend-submissions/
  * Description:         Mimick eBay, Envato, or Amazon type sites with this plugin and Easy Digital Downloads combined!
  * Author:              Chris Christoff
@@ -170,9 +170,6 @@ class EDD_Front_End_Submissions {
 			require_once fes_plugin_dir . 'classes/forms/admin-template-post.php';
 			require_once fes_plugin_dir . 'classes/forms/admin-template-profile.php';
 		}
-		if ( !function_exists( 'recaptcha_get_html' ) ) {
-			require_once fes_plugin_dir . 'assets/lib/recaptchalib.php';
-		}
 	}
 	
 	public static function install() {
@@ -185,14 +182,6 @@ class EDD_Front_End_Submissions {
 		$this->load_settings();
 		$this->setup = new FES_Setup;
 		do_action( 'edd_fes_setup_actions' );
-	}
-	
-	public function load_settings() {
-		if ( empty( $this->fes_options ) ) {
-			require_once fes_plugin_dir . 'classes/settings/classes/sf-class-settings.php';
-			$this->fes_options = new SF_Settings_API( $this->id, 'Settings', 'fes-about', __FILE__ );
-			$this->fes_options->load_options( fes_plugin_dir . 'classes/settings/sf-options.php' );
-		}
 	}
 }
 
