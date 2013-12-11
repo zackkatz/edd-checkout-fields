@@ -11,7 +11,7 @@ if ( !defined( 'ABSPATH' ) ) {
  * @since 3.1.0
  * @access private
  */
-class FES_Posts_List_Table extends WP_List_Table {
+class CFM_Posts_List_Table extends WP_List_Table {
 
 	/**
 	 * Whether the items should be displayed hierarchically or linearly

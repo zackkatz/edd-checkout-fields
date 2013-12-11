@@ -6,7 +6,7 @@ if ( !defined( 'ABSPATH' ) ) {
 /**
  * Post related form templates
  */
-class FES_Admin_Template_Post extends FES_Admin_Template {
+class CFM_Admin_Template_Post extends CFM_Admin_Template {
     public static function post_title( $field_id, $label, $values = array() ) {
         if(!isset($values['label']) || $values['label'] == ''){
 			$values['label'] = edd_get_label_singular().' '.$label;

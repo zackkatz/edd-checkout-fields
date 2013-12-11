@@ -1,5 +1,5 @@
 ;(function($) {
-    var FES_Form = {
+    var CFM_Form = {
         init: function() {
             // clone and remove repeated field
             $('.fes-form').on('click', 'img.fes-clone-field', this.cloneField);
@@ -40,7 +40,7 @@
             e.preventDefault();
 
             var form = $(this),
-                form_data = FES_Form.validateForm(form);
+                form_data = CFM_Form.validateForm(form);
 
             if (form_data) {
                 return true;
@@ -52,7 +52,7 @@
 
             var form = $(this),
                 submitButton = form.find('input[type=submit]')
-                form_data = FES_Form.validateForm(form);
+                form_data = CFM_Form.validateForm(form);
 
             if (form_data) {
 
@@ -99,8 +99,8 @@
                 error_items = [];
 
             // remove all initial errors if any
-            FES_Form.removeErrors(self);
-            FES_Form.removeErrorNotice(self);
+            CFM_Form.removeErrors(self);
+            CFM_Form.removeErrorNotice(self);
 
             // ===== Validate: Text and Textarea ========
             var required = self.find('[data-required="yes"]');
@@ -121,7 +121,7 @@
                             error = true;
 
                             // make it warn collor
-                            FES_Form.markError(item);
+                            CFM_Form.markError(item);
                         }
                         break;
 
@@ -133,7 +133,7 @@
                             error = true;
 
                             // make it warn collor
-                            FES_Form.markError(item);
+                            CFM_Form.markError(item);
                         }
                         break;
 
@@ -145,7 +145,7 @@
                             error = true;
 
                             // make it warn collor
-                            FES_Form.markError(item);
+                            CFM_Form.markError(item);
                         }
                         break;
 
@@ -156,7 +156,7 @@
                             error = true;
 
                             // make it warn collor
-                            FES_Form.markError(item);
+                            CFM_Form.markError(item);
                         }
                         break;
 
@@ -167,7 +167,7 @@
                             error = true;
 
                             // make it warn collor
-                            FES_Form.markError(item);
+                            CFM_Form.markError(item);
                         }
                         break;
 
@@ -178,7 +178,7 @@
                             error = true;
 
                             // make it warn collor
-                            FES_Form.markError(item);
+                            CFM_Form.markError(item);
                         }
                         break;
 
@@ -189,7 +189,7 @@
                             error = true;
 
                             // make it warn collor
-                            FES_Form.markError(item);
+                            CFM_Form.markError(item);
                         }
                         break;
 
@@ -198,10 +198,10 @@
 
                         if ( val !== '' ) {
                             //run the validation
-                            if( !FES_Form.isValidEmail( val ) ) {
+                            if( !CFM_Form.isValidEmail( val ) ) {
                                 error = true;
 
-                                FES_Form.markError(item);
+                                CFM_Form.markError(item);
                             }
                         }
                         break;
@@ -212,10 +212,10 @@
 
                         if ( val !== '' ) {
                             //run the validation
-                            if( !FES_Form.isValidURL( val ) ) {
+                            if( !CFM_Form.isValidURL( val ) ) {
                                 error = true;
 
-                                FES_Form.markError(item);
+                                CFM_Form.markError(item);
                             }
                         }
                         break;
@@ -227,7 +227,7 @@
             // if already some error found, bail out
             if (error) {
                 // add error notice
-                FES_Form.addErrorNotice(self);
+                CFM_Form.addErrorNotice(self);
 
                 return false;
             }
@@ -370,8 +370,8 @@
     };
 
     $(function() {
-        FES_Form.init();
-        FES_Form.insertImage();
+        CFM_Form.init();
+        CFM_Form.insertImage();
     });
 
 })(jQuery);

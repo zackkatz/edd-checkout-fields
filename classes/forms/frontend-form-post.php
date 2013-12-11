@@ -3,7 +3,7 @@ if ( !defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-class FES_Frontend_Form_Post extends FES_Render_Form {
+class CFM_Frontend_Form_Post extends CFM_Render_Form {
 	private static $_instance;
 	
 	function __construct() {
@@ -31,7 +31,7 @@ class FES_Frontend_Form_Post extends FES_Render_Form {
 	
 	public function add_post_shortcode() {
 		ob_start();
-		$this->render_form( EDD_FES()->fes_options->get_option( 'fes-submission-form' ) );
+		$this->render_form( EDD_CFM()->fes_options->get_option( 'fes-submission-form' ) );
 		$content = ob_get_contents();
 		ob_end_clean();
 		return $content;
@@ -60,7 +60,7 @@ class FES_Frontend_Form_Post extends FES_Render_Form {
 			}
 		}
 		$post_author = get_current_user_id();
-		$pending     = EDD_FES()->fes_options->get_option( 'edd_fes_auto_approve_submissions' );
+		$pending     = EDD_CFM()->fes_options->get_option( 'edd_fes_auto_approve_submissions' );
 		$state       = 'pending';
 		if ( $pending == 1 ) {
 			$pending = false;
@@ -181,7 +181,7 @@ class FES_Frontend_Form_Post extends FES_Render_Form {
 			if ( !empty( $files ) ) {
 				add_post_meta( $post_id, 'edd_download_files', $edd_files );
 			}
-			if ( EDD_FES()->vendors->is_commissions_active() ) {
+			if ( EDD_CFM()->vendors->is_commissions_active() ) {
 				$commission = array(
 					 'amount' => eddc_get_recipient_rate( 0, $post_author ),
 					'user_id' => $post_author,
@@ -191,15 +191,15 @@ class FES_Frontend_Form_Post extends FES_Render_Form {
 				add_post_meta( $post_id, '_edd_commisions_enabled', true );
 			}
 			$email_post = get_post( $post_id );
-			EDD_FES()->emails->new_edd_fes_submission_admin( $email_post );
-			EDD_FES()->emails->new_edd_fes_submission_user( $email_post );
+			EDD_CFM()->emails->new_edd_fes_submission_admin( $email_post );
+			EDD_CFM()->emails->new_edd_fes_submission_user( $email_post );
 			// send the response (these are options in 2.1, so let's set this array up for that)
 			if ( function_exists( 'edd_set_upload_dir' ) ) {
 				remove_filter( 'upload_dir', 'edd_set_upload_dir' );
 			}
 			$response = array(
 				 'success' => true,
-				'redirect_to' => get_permalink( EDD_FES()->fes_options->get_option( 'vendor-dashboard-page' ) ),
+				'redirect_to' => get_permalink( EDD_CFM()->fes_options->get_option( 'vendor-dashboard-page' ) ),
 				'message' => __( 'Success!', 'edd_fes' ),
 				'is_post' => true 
 			);
@@ -245,4 +245,4 @@ class FES_Frontend_Form_Post extends FES_Render_Form {
 		}
 	}
 }
-new FES_Frontend_Form_Post;
+new CFM_Frontend_Form_Post;

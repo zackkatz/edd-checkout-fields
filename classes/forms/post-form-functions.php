@@ -16,7 +16,7 @@ $user_ID = $current_user->ID;
 $post_ID = isset($post_ID) ? (int) $post_ID : 0;
 $user_ID = isset($user_ID) ? (int) $user_ID : 0;
 $action = isset($action) ? $action : '';
-if (EDD_FES()->vendors->is_s3_active()){
+if (EDD_CFM()->vendors->is_s3_active()){
 	add_thickbox();
 }
 wp_enqueue_media( array( 'post' => $post_ID ) );
@@ -24,7 +24,7 @@ wp_enqueue_script( 'jquery-validation', EDD_PLUGIN_URL . 'assets/js/jquery.valid
 wp_enqueue_script( 'edd-fes-js', fes_assets_url . 'js/fes_adf.js', array( 'jquery', 'jquery-validation' ), fes_plugin_version );
 wp_enqueue_script( 'media-upload' );
 wp_enqueue_script( 'thickbox' );
-wp_localize_script( 'edd-fes-js', 'EDDFESL10n', array(
+wp_localize_script( 'edd-fes-js', 'EDDCFML10n', array(
 	'oneoption' => __( 'At least one price option is required.', 'edd_fes' ),
 	'post_id'            => 0,
 	'edd_version'        => EDD_VERSION,
@@ -39,7 +39,7 @@ wp_localize_script( 'edd-fes-js', 'EDDFESL10n', array(
 	'remove_text'        => __( 'Remove', 'edd' ),
 	'admin_ajax_url'     => admin_url(),
 ));
-if (EDD_FES()->vendors->is_s3_active()){
+if (EDD_CFM()->vendors->is_s3_active()){
 wp_enqueue_style( 'thickbox' ); 
 }
 ?>

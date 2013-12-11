@@ -3,7 +3,7 @@ if ( !defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-class FES_Emails {
+class CFM_Emails {
 	function __construct() {
 		add_filter( 'transition_post_status', array(
 			 $this,
@@ -23,22 +23,22 @@ class FES_Emails {
 			return;
 		}
 		if ( $previousstatus == 'pending' && $lateststatus == 'trash' ) {
-			EDD_FES()->emails->edd_fes_submission_declined_email( $post );
+			EDD_CFM()->emails->edd_fes_submission_declined_email( $post );
 		}
 	}
 	
 	public function new_edd_fes_submission_admin( $post ) {
 		// Retrieve stored message
-		$email   = EDD_FES()->fes_options->get_option( 'new_edd_fes_submission_admin_message' );
+		$email   = EDD_CFM()->fes_options->get_option( 'new_edd_fes_submission_admin_message' );
 		$user    = new WP_User( $post->post_author );
 		// Get the body ready
 		$message = edd_get_email_body_header();
-		$message .= EDD_FES()->emails->edd_fes_replace_placeholders_emails( $post, $email, $user );
+		$message .= EDD_CFM()->emails->edd_fes_replace_placeholders_emails( $post, $email, $user );
 		$message .= edd_get_email_body_footer();
 		$from_name  = isset( $edd_options[ 'from_name' ] ) ? $edd_options[ 'from_name' ] : get_bloginfo( 'name' );
 		$from_email = isset( $edd_options[ 'from_email' ] ) ? $edd_options[ 'from_email' ] : get_option( 'admin_email' );
 		$subject    = __( 'New Vendor Submission Received', 'edd_fes' );
-		if ( EDD_FES()->fes_options->get_option( 'edd_fes_auto_approve_submissions' ) ) {
+		if ( EDD_CFM()->fes_options->get_option( 'edd_fes_auto_approve_submissions' ) ) {
 			$subject = $subject = __( 'New Vendor Submission Posted', 'edd_fes' );
 		}
 		$subject = apply_filters( 'edd_fes_sub_admin_email_subj', $subject, 0 );
@@ -46,18 +46,18 @@ class FES_Emails {
 		$headers .= "Reply-To: " . $from_email . "\r\n";
 		$headers .= "MIME-Version: 1.0\r\n";
 		$headers .= "Content-Type: text/html; charset=utf-8\r\n";
-		if ( EDD_FES()->fes_options->get_option( 'edd_fes_notify_admin_new_app_toggle' ) ) {
+		if ( EDD_CFM()->fes_options->get_option( 'edd_fes_notify_admin_new_app_toggle' ) ) {
 			wp_mail( edd_get_admin_notice_emails(), $subject, $message, $headers );
 		}
 	}
 	
 	public function new_edd_fes_submission_user( $post ) {
 		// Retrieve stored message
-		$email   = EDD_FES()->fes_options->get_option( 'new_edd_fes_submission_user_message' );
+		$email   = EDD_CFM()->fes_options->get_option( 'new_edd_fes_submission_user_message' );
 		$user    = new WP_User( $post->post_author );
 		// Get the body ready
 		$message = edd_get_email_body_header();
-		$message .= EDD_FES()->emails->edd_fes_replace_placeholders_emails( $post, $email, $user );
+		$message .= EDD_CFM()->emails->edd_fes_replace_placeholders_emails( $post, $email, $user );
 		$message .= edd_get_email_body_footer();
 		$from_name  = isset( $edd_options[ 'from_name' ] ) ? $edd_options[ 'from_name' ] : get_bloginfo( 'name' );
 		$from_email = isset( $edd_options[ 'from_email' ] ) ? $edd_options[ 'from_email' ] : get_option( 'admin_email' );

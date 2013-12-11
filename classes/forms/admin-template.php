@@ -4,9 +4,9 @@ if ( !defined( 'ABSPATH' ) ) {
 }
 
 /**
- * FES Form builder template
+ * CFM Form builder template
  */
-class FES_Admin_Template {
+class CFM_Admin_Template {
 
     static $input_name = 'fes_input';
 

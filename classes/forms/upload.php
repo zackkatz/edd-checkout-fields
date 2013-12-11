@@ -6,7 +6,7 @@
  * @since 1.0
  * @package fes
  */
-class FES_Upload {
+class CFM_Upload {
 
     function __construct() {
 

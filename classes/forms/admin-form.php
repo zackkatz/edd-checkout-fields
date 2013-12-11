@@ -6,7 +6,7 @@ if ( !defined( 'ABSPATH' ) ) {
 /**
  * Admin Form UI Builder
  */
-class FES_Admin_Form {
+class CFM_Admin_Form {
 
     private $form_data_key = 'fes-form';
     private $form_settings_key = 'fes-form_settings';
@@ -150,11 +150,11 @@ class FES_Admin_Form {
     function add_meta_boxes() {
 		global $post;
 
-		if(get_the_ID() == EDD_FES()->fes_options->get_option( 'fes-submission-form')){
+		if(get_the_ID() == EDD_CFM()->fes_options->get_option( 'fes-submission-form')){
         add_meta_box( 'fes-metabox-editor', __( 'Submission Form Editor', 'edd_fes' ), array($this, 'metabox_post_form'), 'fes-forms', 'normal', 'high' );
-        add_meta_box( 'fes-metabox-fields', __( 'EDD FES Submission Form Guide', 'edd_fes' ), array($this, 'form_elements_post'), 'fes-forms', 'side', 'core' );
+        add_meta_box( 'fes-metabox-fields', __( 'EDD CFM Submission Form Guide', 'edd_fes' ), array($this, 'form_elements_post'), 'fes-forms', 'side', 'core' );
 		}
-		if(get_the_ID() == EDD_FES()->fes_options->get_option( 'fes-profile-form')){
+		if(get_the_ID() == EDD_CFM()->fes_options->get_option( 'fes-profile-form')){
         add_meta_box( 'fes-metabox-editor', __( 'Profile Form Editor', 'edd_fes' ), array($this, 'metabox_profile_form'), 'fes-forms', 'normal', 'high' );
         add_meta_box( 'fes-metabox-fields', __( 'Profile Submission Guide', 'edd_fes' ), array($this, 'form_elements_profile'), 'fes-forms', 'side', 'core' );
 		}
@@ -181,7 +181,7 @@ class FES_Admin_Form {
 
      function metabox_post_form( $post ) {
         ?>
-        <h1><?php _e('FES Submission Form Editor','edd_fes');?></h1>
+        <h1><?php _e('CFM Submission Form Editor','edd_fes');?></h1>
         <div class="tab-content">
             <div id="fes-metabox" class="group">
                 <?php $this->edit_form_area(); ?>
@@ -193,7 +193,7 @@ class FES_Admin_Form {
 
     function metabox_profile_form( $post ) {
         ?>
-        <h1><?php _e('FES Profile Form Editor','edd_fes');?></h1>
+        <h1><?php _e('CFM Profile Form Editor','edd_fes');?></h1>
         <div class="tab-content">
             <div id="fes-metabox" class="group">
                  <?php $this->edit_form_area_profile(); ?>
@@ -283,7 +283,7 @@ class FES_Admin_Form {
             <button class="button" data-name="user_bio" data-type="textarea"><?php _e( 'Biographical Info', 'edd_fes' ); ?></button>
             <button class="button" data-name="user_url" data-type="text"><?php _e( 'Website', 'edd_fes' ); ?></button>
             <button class="button" data-name="user_avatar" data-type="avatar"><?php _e( 'Avatar', 'edd_fes' ); ?></button>
-			<?php if (EDD_FES()->vendors->is_commissions_active()){ ?>
+			<?php if (EDD_CFM()->vendors->is_commissions_active()){ ?>
             <button class="button" data-name="eddc_user_paypal" data-type="eddc_user_paypal"><?php _e( 'PayPal Email', 'edd_fes' ); ?></button>
             <?php } ?>
 			<?php do_action( 'fes-form_buttons_user' ); ?>
@@ -349,9 +349,9 @@ class FES_Admin_Form {
                 $name = ucwords( str_replace( '_', ' ', $input_field['template'] ) );
 
                 if ( $input_field['template'] == 'taxonomy') {
-                    FES_Admin_Template_Post::$input_field['template']( $count, $name, $input_field['name'], $input_field );
+                    CFM_Admin_Template_Post::$input_field['template']( $count, $name, $input_field['name'], $input_field );
                 } else {
-                    FES_Admin_Template_Post::$input_field['template']( $count, $name, $input_field );
+                    CFM_Admin_Template_Post::$input_field['template']( $count, $name, $input_field );
                 }
 
                 $count++;
@@ -382,7 +382,7 @@ class FES_Admin_Form {
         </div>
 		<?php if ( empty( $form_inputs ) ){ ?>
         <div class="fes-updated">
-            <p><?php _e( 'Welcome to the EDD FES Profile Form Editor! The fields you can add are to the right.', 'edd_fes' ); ?></p>
+            <p><?php _e( 'Welcome to the EDD CFM Profile Form Editor! The fields you can add are to the right.', 'edd_fes' ); ?></p>
         </div>
 		<?php } ?>
         <ul id="fes-form-editor" class="fes-form-editor unstyled">
@@ -393,7 +393,7 @@ class FES_Admin_Form {
             foreach ($form_inputs as $order => $input_field) {
                 $name = ucwords( str_replace( '_', ' ', $input_field['template'] ) );
 
-                FES_Admin_Template_Profile::$input_field['template']( $count, $name, $input_field );
+                CFM_Admin_Template_Profile::$input_field['template']( $count, $name, $input_field );
 
                 $count++;
             }
@@ -417,148 +417,148 @@ class FES_Admin_Form {
 
         switch ($name) {
 			case 'post_title':
-				 FES_Admin_Template_Post::post_title( $field_id, __('Title','edd_fes'));
+				 CFM_Admin_Template_Post::post_title( $field_id, __('Title','edd_fes'));
 				break;
 			case 'post_content':
-				FES_Admin_Template_Post::post_content($field_id, __('Body','edd_fes'));
+				CFM_Admin_Template_Post::post_content($field_id, __('Body','edd_fes'));
 				break;
 			case 'post_excerpt':
-				FES_Admin_Template_Post::post_excerpt( $field_id, __('Excerpt','edd_fes'));			
+				CFM_Admin_Template_Post::post_excerpt( $field_id, __('Excerpt','edd_fes'));			
 				break;
 			case 'featured_image':
-				  FES_Admin_Template_Post::featured_image( $field_id, __('Featured Image','edd_fes'));
+				  CFM_Admin_Template_Post::featured_image( $field_id, __('Featured Image','edd_fes'));
 				break;
 			case 'download_category':
-				FES_Admin_Template_Post::taxonomy( $field_id, 'Category', __( 'download_category','edd_fes') );			
+				CFM_Admin_Template_Post::taxonomy( $field_id, 'Category', __( 'download_category','edd_fes') );			
 				break;
 			case 'download_tag':
-				FES_Admin_Template_Post::taxonomy( $field_id, 'Tags', __( 'download_tag','edd_fes') );
+				CFM_Admin_Template_Post::taxonomy( $field_id, 'Tags', __( 'download_tag','edd_fes') );
 				break;
 			case 'multiple_pricing':
-				FES_Admin_Template_Post::multiple_pricing( $field_id, __( 'Prices and Files','edd_fes'));	
+				CFM_Admin_Template_Post::multiple_pricing( $field_id, __( 'Prices and Files','edd_fes'));	
 				break;
             case 'custom_text':
-			    FES_Admin_Template_Post::text_field( $field_id, __( 'Custom field: Text','edd_fes'));
+			    CFM_Admin_Template_Post::text_field( $field_id, __( 'Custom field: Text','edd_fes'));
                 break;
 
             case 'custom_textarea':
-                FES_Admin_Template_Post::textarea_field( $field_id, __( 'Custom field: Textarea','edd_fes'));
+                CFM_Admin_Template_Post::textarea_field( $field_id, __( 'Custom field: Textarea','edd_fes'));
                 break;
 
             case 'custom_select':
-                FES_Admin_Template_Post::dropdown_field( $field_id, __( 'Custom field: Select','edd_fes'));
+                CFM_Admin_Template_Post::dropdown_field( $field_id, __( 'Custom field: Select','edd_fes'));
                 break;
 
             case 'custom_multiselect':
-                FES_Admin_Template_Post::multiple_select( $field_id, __( 'Custom field: Multiselect','edd_fes'));
+                CFM_Admin_Template_Post::multiple_select( $field_id, __( 'Custom field: Multiselect','edd_fes'));
                 break;
 
             case 'custom_radio':
-                FES_Admin_Template_Post::radio_field( $field_id, __( 'Custom field: Radio','edd_fes'));
+                CFM_Admin_Template_Post::radio_field( $field_id, __( 'Custom field: Radio','edd_fes'));
                 break;
 
             case 'custom_checkbox':
-                FES_Admin_Template_Post::checkbox_field( $field_id, __( 'Custom field: Checkbox','edd_fes'));
+                CFM_Admin_Template_Post::checkbox_field( $field_id, __( 'Custom field: Checkbox','edd_fes'));
                 break;
 
             case 'custom_image':
-                FES_Admin_Template_Post::image_upload( $field_id, __( 'Custom field: Image','edd_fes'));
+                CFM_Admin_Template_Post::image_upload( $field_id, __( 'Custom field: Image','edd_fes'));
                 break;
 
             case 'custom_file':
-                FES_Admin_Template_Post::file_upload( $field_id, __( 'Custom field: File Upload','edd_fes'));
+                CFM_Admin_Template_Post::file_upload( $field_id, __( 'Custom field: File Upload','edd_fes'));
                 break;
 
             case 'custom_url':
-                FES_Admin_Template_Post::website_url( $field_id, __( 'Custom field: URL','edd_fes'));
+                CFM_Admin_Template_Post::website_url( $field_id, __( 'Custom field: URL','edd_fes'));
                 break;
 
             case 'custom_email':
-                FES_Admin_Template_Post::email_address( $field_id, __( 'Custom field: E-Mail','edd_fes'));
+                CFM_Admin_Template_Post::email_address( $field_id, __( 'Custom field: E-Mail','edd_fes'));
                 break;
 
             case 'custom_repeater':
-                FES_Admin_Template_Post::repeat_field( $field_id, __( 'Custom field: Repeat Field','edd_fes'));
+                CFM_Admin_Template_Post::repeat_field( $field_id, __( 'Custom field: Repeat Field','edd_fes'));
                 break;
 
             case 'custom_html':
-                FES_Admin_Template_Post::custom_html( $field_id, __( 'HTML','edd_fes') );
+                CFM_Admin_Template_Post::custom_html( $field_id, __( 'HTML','edd_fes') );
                 break;
 
             case 'section_break':
-                FES_Admin_Template_Post::section_break( $field_id, __( 'Section Break','edd_fes') );
+                CFM_Admin_Template_Post::section_break( $field_id, __( 'Section Break','edd_fes') );
                 break;
 
             case 'recaptcha':
-                FES_Admin_Template_Post::recaptcha( $field_id, __( 'reCaptcha','edd_fes') );
+                CFM_Admin_Template_Post::recaptcha( $field_id, __( 'reCaptcha','edd_fes') );
                 break;
 
             case 'action_hook':
-                FES_Admin_Template_Post::action_hook( $field_id, __( 'Action Hook','edd_fes') );
+                CFM_Admin_Template_Post::action_hook( $field_id, __( 'Action Hook','edd_fes') );
                 break;
 
             case 'really_simple_captcha':
-                FES_Admin_Template_Post::really_simple_captcha( $field_id, __( 'Really Simple Captcha','edd_fes') );
+                CFM_Admin_Template_Post::really_simple_captcha( $field_id, __( 'Really Simple Captcha','edd_fes') );
                 break;
 
             case 'custom_date':
-                FES_Admin_Template_Post::date_field( $field_id, __( 'Custom Field: Date','edd_fes') );
+                CFM_Admin_Template_Post::date_field( $field_id, __( 'Custom Field: Date','edd_fes') );
                 break;
 
             case 'custom_map':
-                FES_Admin_Template_Post::google_map( $field_id, __( 'Custom Field: Google Map','edd_fes') );
+                CFM_Admin_Template_Post::google_map( $field_id, __( 'Custom Field: Google Map','edd_fes') );
                 break;
 
             case 'custom_hidden':
-                FES_Admin_Template_Post::custom_hidden_field( $field_id, __( 'Hidden Field','edd_fes') );
+                CFM_Admin_Template_Post::custom_hidden_field( $field_id, __( 'Hidden Field','edd_fes') );
                 break;
 
             case 'toc':
-                FES_Admin_Template_Post::toc( $field_id, 'TOC' );
+                CFM_Admin_Template_Post::toc( $field_id, 'TOC' );
                 break;
 
             case 'user_login':
-                FES_Admin_Template_Profile::user_login( $field_id, __( 'Username', 'edd_fes' ) );
+                CFM_Admin_Template_Profile::user_login( $field_id, __( 'Username', 'edd_fes' ) );
                 break;
 
             case 'first_name':
-                FES_Admin_Template_Profile::first_name( $field_id, __( 'First Name', 'edd_fes' ) );
+                CFM_Admin_Template_Profile::first_name( $field_id, __( 'First Name', 'edd_fes' ) );
                 break;
 
             case 'last_name':
-                FES_Admin_Template_Profile::last_name( $field_id, __( 'Last Name', 'edd_fes' ) );
+                CFM_Admin_Template_Profile::last_name( $field_id, __( 'Last Name', 'edd_fes' ) );
                 break;
 
             case 'nickname':
-                FES_Admin_Template_Profile::nickname( $field_id, __( 'Nickname', 'edd_fes' ) );
+                CFM_Admin_Template_Profile::nickname( $field_id, __( 'Nickname', 'edd_fes' ) );
                 break;
 
             case 'display_name':
-                FES_Admin_Template_Profile::display_name( $field_id, __( 'Display Name', 'edd_fes' ) );
+                CFM_Admin_Template_Profile::display_name( $field_id, __( 'Display Name', 'edd_fes' ) );
                 break;				
 				
             case 'user_email':
-                FES_Admin_Template_Profile::user_email( $field_id, __( 'E-mail', 'edd_fes' ) );
+                CFM_Admin_Template_Profile::user_email( $field_id, __( 'E-mail', 'edd_fes' ) );
                 break;
 
             case 'user_url':
-                FES_Admin_Template_Profile::user_url( $field_id, __( 'Website', 'edd_fes' ) );
+                CFM_Admin_Template_Profile::user_url( $field_id, __( 'Website', 'edd_fes' ) );
                 break;
 
             case 'user_bio':
-                FES_Admin_Template_Profile::description( $field_id, __( 'Biographical Info', 'edd_fes' ) );
+                CFM_Admin_Template_Profile::description( $field_id, __( 'Biographical Info', 'edd_fes' ) );
                 break;
 
             case 'password':
-                FES_Admin_Template_Profile::password( $field_id, __( 'Password', 'edd_fes' ) );
+                CFM_Admin_Template_Profile::password( $field_id, __( 'Password', 'edd_fes' ) );
                 break;
 
             case 'user_avatar':
-                FES_Admin_Template_Profile::avatar( $field_id, __( 'Avatar', 'edd_fes' ) );
+                CFM_Admin_Template_Profile::avatar( $field_id, __( 'Avatar', 'edd_fes' ) );
                 break;
 
             case 'eddc_user_paypal':
-                FES_Admin_Template_Profile::eddc_user_paypal( $field_id, __( 'PayPal Email', 'edd_fes' ) );
+                CFM_Admin_Template_Profile::eddc_user_paypal( $field_id, __( 'PayPal Email', 'edd_fes' ) );
                 break;
 
             default:

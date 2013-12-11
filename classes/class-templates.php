@@ -3,9 +3,9 @@ if ( !defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-class FES_Templates {
+class CFM_Templates {
 	/**
-	 * Returns the path to the FES templates directory
+	 * Returns the path to the CFM templates directory
 	 *
 	 * @since 1.2
 	 * @return string
@@ -15,7 +15,7 @@ class FES_Templates {
 	}
 	
 	/**
-	 * Returns the URL to the FES templates directory
+	 * Returns the URL to the CFM templates directory
 	 *
 	 * @since 1.3.2.1
 	 * @return string
@@ -49,7 +49,7 @@ class FES_Templates {
 		// Allow template parst to be filtered
 		$templates   = apply_filters( 'fes_get_template_part', $templates, $slug, $name );
 		// Return the part that is found
-		return EDD_FES()->templates->fes_locate_template( $templates, $load, false );
+		return EDD_CFM()->templates->fes_locate_template( $templates, $load, false );
 	}
 	
 	/**
@@ -88,8 +88,8 @@ class FES_Templates {
 				$located = trailingslashit( get_template_directory() ) . 'fes_templates/' . $template_name;
 				break;
 				// Check theme compatibility last
-			} elseif ( file_exists( trailingslashit( EDD_FES()->templates->fes_get_templates_dir() ) . $template_name ) ) {
-				$located = trailingslashit( EDD_FES()->templates->fes_get_templates_dir() ) . $template_name;
+			} elseif ( file_exists( trailingslashit( EDD_CFM()->templates->fes_get_templates_dir() ) . $template_name ) ) {
+				$located = trailingslashit( EDD_CFM()->templates->fes_get_templates_dir() ) . $template_name;
 				break;
 			}
 		}
@@ -101,7 +101,7 @@ class FES_Templates {
 	/**
 	 * Returns the template directory name.
 	 *
-	 * Themes can filter this by using the FES_templates_dir filter.
+	 * Themes can filter this by using the CFM_templates_dir filter.
 	 *
 	 * @since 1.6.2
 	 * @return string

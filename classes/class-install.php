@@ -6,7 +6,7 @@ if ( !defined( 'ABSPATH' ) ) {
 class CFM_Install {
 	public function init() {
 		$db_version = get_option( 'edd_cfm_version' )
-		EDD_FES()->setup->register_post_type();
+		EDD_CFM()->setup->register_post_type();
 		if ( !$db_version ) {
 			$this->install_fes();
 			update_option( 'edd_cfm_version', '1.0' );
@@ -40,7 +40,7 @@ class CFM_Install {
 	}
 	
 	public function update_to() {
-		$version = EDD_FES()->fes_options->get_option( 'db_version' );
+		$version = EDD_CFM()->fes_options->get_option( 'db_version' );
 		switch ( $version ) {
 			case '1.0':
 				break;

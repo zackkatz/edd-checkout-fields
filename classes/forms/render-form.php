@@ -3,7 +3,7 @@
 /**
  * Handles form generaton and posting for add/edit post in frontend
  */
-class FES_Render_Form {
+class CFM_Render_Form {
 
     static $meta_key = 'fes-form';
     static $separator = '| ';
@@ -75,7 +75,7 @@ class FES_Render_Form {
     function validate_re_captcha() {
         $recap_challenge = isset( $_POST['recaptcha_challenge_field'] ) ? $_POST['recaptcha_challenge_field'] : '';
         $recap_response = isset( $_POST['recaptcha_response_field'] ) ? $_POST['recaptcha_response_field'] : '';
-        $private_key = EDD_FES()->fes_options->get_option( 'recaptcha_private');
+        $private_key = EDD_CFM()->fes_options->get_option( 'recaptcha_private');
 
         $resp = recaptcha_check_answer( $private_key, $_SERVER["REMOTE_ADDR"], $recap_challenge, $recap_response );
 
@@ -255,7 +255,7 @@ class FES_Render_Form {
         $form_vars = get_post_meta( $form_id, self::$meta_key, true );
         $form_settings = get_post_meta( $form_id, 'fes-form_settings', true );
 
-        if ( EDD_FES()->vendors->is_pending( $user_ID ) ) {
+        if ( EDD_CFM()->vendors->is_pending( $user_ID ) ) {
             echo '<div class="fes-vendor-pending fes-info">';
             	echo __( 'Your vendor application is pending. Once approved you will be able to submit products.', 'edd_fes' );
             echo '</div>';
@@ -803,7 +803,7 @@ class FES_Render_Form {
                         <?php
                         if ( $uploaded_items ) {
                             foreach ($uploaded_items as $attach_id) {
-                                echo EDD_FES()->upload->attach_html( $attach_id, $attr['name'] );
+                                echo EDD_CFM()->upload->attach_html( $attach_id, $attr['name'] );
 
                                 if ( is_admin() ) {
                                     printf( '<a href="%s">%s</a>', wp_get_attachment_url( $attach_id ), __( 'Download File', 'edd_fes' ) );
@@ -821,7 +821,7 @@ class FES_Render_Form {
 
         <script type="text/javascript">
             jQuery(function($) {
-                new FES_Uploader('fes-<?php echo $attr['name']; ?>-pickfiles', 'fes-<?php echo $attr['name']; ?>-upload-container', <?php echo $attr['count']; ?>, '<?php echo $attr['name']; ?>', '<?php echo $allowed_ext; ?>', <?php echo $attr['max_size'] ?>);
+                new CFM_Uploader('fes-<?php echo $attr['name']; ?>-pickfiles', 'fes-<?php echo $attr['name']; ?>-upload-container', <?php echo $attr['count']; ?>, '<?php echo $attr['name']; ?>', '<?php echo $allowed_ext; ?>', <?php echo $attr['max_size'] ?>);
             });
         </script>
         <?php
@@ -851,7 +851,7 @@ class FES_Render_Form {
 
                     if ( $thumb_id ) {
                         $has_featured_image = true;
-                        $featured_image = EDD_FES()->upload->attach_html( $thumb_id );
+                        $featured_image = EDD_CFM()->upload->attach_html( $thumb_id );
                     }
                 } else {
                     // it must be a user avatar
@@ -887,7 +887,7 @@ class FES_Render_Form {
 
                         if ( $has_images ) {
                             foreach ($images as $attach_id) {
-                                echo EDD_FES()->upload->attach_html( $attach_id, $attr['name'] );
+                                echo EDD_CFM()->upload->attach_html( $attach_id, $attr['name'] );
                             }
                         }
                         ?>
@@ -901,7 +901,7 @@ class FES_Render_Form {
 
         <script type="text/javascript">
             jQuery(function($) {
-                new FES_Uploader('fes-<?php echo $attr['name']; ?>-pickfiles', 'fes-<?php echo $attr['name']; ?>-upload-container', <?php echo $attr['count']; ?>, '<?php echo $attr['name']; ?>', 'jpg,jpeg,gif,png,bmp', <?php echo $attr['max_size'] ?>);
+                new CFM_Uploader('fes-<?php echo $attr['name']; ?>-pickfiles', 'fes-<?php echo $attr['name']; ?>-upload-container', <?php echo $attr['count']; ?>, '<?php echo $attr['name']; ?>', 'jpg,jpeg,gif,png,bmp', <?php echo $attr['max_size'] ?>);
             });
         </script>
         <?php
@@ -1308,7 +1308,7 @@ class FES_Render_Form {
                 case 'multiselect':
                     $selected = $terms ? $terms : array();
                     $required = sprintf( 'data-required="%s" data-type="multiselect"', $attr['required'] );
-                    $walker = new FES_Walker_Category_Multi();
+                    $walker = new CFM_Walker_Category_Multi();
 
                     $select = wp_dropdown_categories( array(
                         'show_option_none' => __( '-- Select --', 'edd_fes' ),
@@ -1411,7 +1411,7 @@ class FES_Render_Form {
         }
         ?>
         <div class="fes-fields">
-            <?php echo recaptcha_get_html( EDD_FES()->fes_options->get_option( 'recaptcha_public') ); ?>
+            <?php echo recaptcha_get_html( EDD_CFM()->fes_options->get_option( 'recaptcha_public') ); ?>
         </div>
         <?php
     }
@@ -1651,4 +1651,4 @@ class FES_Render_Form {
     }
 
 }
-new FES_Render_Form();
+new CFM_Render_Form();

@@ -10,7 +10,7 @@ if ( !defined( 'ABSPATH' ) ) {
  * and handles value saving.
  *
  */
-class FES_Admin_Posting extends FES_Render_Form {
+class CFM_Admin_Posting extends CFM_Render_Form {
 
     function __construct() {
         add_action( 'add_meta_boxes', array($this, 'add_meta_boxes') );
@@ -18,13 +18,13 @@ class FES_Admin_Posting extends FES_Render_Form {
     }
 
     function add_meta_boxes() {
-		 add_meta_box( 'fes-custom-fields', __( 'FES Custom Fields', 'edd_fes' ), array($this, 'render_form'), 'download', 'normal', 'high' );
+		 add_meta_box( 'fes-custom-fields', __( 'CFM Custom Fields', 'edd_fes' ), array($this, 'render_form'), 'download', 'normal', 'high' );
     }
 
     function render_form($form_id, $post_id = NULL, $preview = false) {
         global $post;
 
-        $form_id = EDD_FES()->fes_options->get_option( 'fes-submission-form');
+        $form_id = EDD_CFM()->fes_options->get_option( 'fes-submission-form');
         $form_settings = get_post_meta( $form_id, 'fes-form_settings', true );
 
         list($post_fields, $taxonomy_fields, $custom_fields) = $this->get_input_fields( $form_id );
@@ -193,7 +193,7 @@ class FES_Admin_Posting extends FES_Render_Form {
 
         list( $post_vars, $tax_vars, $meta_vars ) = self::get_input_fields( $_POST['fes_cf_form_id'] );
 
-        EDD_FES()->frontend_form_post->update_post_meta( $meta_vars, $post->ID );
+        EDD_CFM()->frontend_form_post->update_post_meta( $meta_vars, $post->ID );
     }
 
 }

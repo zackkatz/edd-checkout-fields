@@ -8,7 +8,7 @@
      * @param int {max} maximum number of file uplaods
      * @param string {type}
      */
-    window.FES_Uploader = function (browse_button, container, max, type, allowed_type, max_file_size) {
+    window.CFM_Uploader = function (browse_button, container, max, type, allowed_type, max_file_size) {
         this.container = container;
         this.browse_button = browse_button;
         this.max = max || 1;
@@ -54,7 +54,7 @@
         $('#' + container).on('click', 'a.attachment-delete', $.proxy(this.removeAttachment, this));
     };
 
-    FES_Uploader.prototype = {
+    CFM_Uploader.prototype = {
 
         init: function (up, params) {
             this.showHide();

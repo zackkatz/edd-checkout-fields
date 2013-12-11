@@ -3,7 +3,7 @@ if ( !defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-class FES_Admin {
+class CFM_Admin {
 	public function __construct() {
 		add_filter( 'manage_edit-download_columns', array(
 			 $this,
@@ -61,7 +61,7 @@ class FES_Admin {
 	}
 	
 	public function do_bulk_actions() {
-		$wp_list_table = new FES_Posts_List_Table();
+		$wp_list_table = new CFM_Posts_List_Table();
 		$action        = $wp_list_table->current_action();
 		switch ( $action ) {
 			case 'approve_downloads':
@@ -77,7 +77,7 @@ class FES_Admin {
 						if ( get_post_status( $post_id ) == 'pending' && wp_update_post( $download_data ) )
 							$approved_downloads[] = $post_id;
 						$posted = get_post( $post_id );
-						EDD_FES()->emails->edd_fes_submission_accepted_email( $posted );
+						EDD_CFM()->emails->edd_fes_submission_accepted_email( $posted );
 					}
 				wp_redirect( remove_query_arg( 'approve_downloads', add_query_arg( 'approved_downloads', $approved_downloads, admin_url( 'edit.php?post_type=download' ) ) ) );
 				exit;
@@ -95,7 +95,7 @@ class FES_Admin {
 			);
 			wp_update_post( $download_data );
 			$posted = get_post( $post_id );
-			EDD_FES()->emails->edd_fes_submission_accepted_email( $posted );
+			EDD_CFM()->emails->edd_fes_submission_accepted_email( $posted );
 			wp_redirect( remove_query_arg( 'approve_download', add_query_arg( 'approved_downloads', $post_id, admin_url( 'edit.php?post_type=download' ) ) ) );
 			exit;
 		}
