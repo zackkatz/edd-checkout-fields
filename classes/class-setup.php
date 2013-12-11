@@ -3,7 +3,7 @@ if ( !defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-class cfm_Setup {
+class CFM_Setup {
 	public function __construct() {
 		add_action( 'admin_init', array(
 			 $this,

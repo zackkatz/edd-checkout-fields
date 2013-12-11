@@ -72,11 +72,6 @@ class FES_Frontend_Form_Profile extends FES_Render_Form {
 	public static function update_user_meta( $meta_vars, $user_id ) {
 		// prepare meta fields
 		list( $meta_key_value, $multi_repeated, $files ) = self::prepare_meta_fields( $meta_vars );
-		// set featured image if there's any
-		if ( isset( $_POST[ 'fes_files' ][ 'avatar' ] ) ) {
-			$attachment_id = $_POST[ 'fes_files' ][ 'avatar' ][ 0 ];
-			fes_update_avatar( $user_id, $attachment_id );
-		}
 		// save all custom fields
 		foreach ( $meta_key_value as $meta_key => $meta_value ) {
 			update_user_meta( $user_id, $meta_key, $meta_value );

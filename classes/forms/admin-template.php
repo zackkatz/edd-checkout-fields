@@ -460,48 +460,6 @@ class CFM_Admin_Template {
         </li>
         <?php
     }
-
-     public static function prices_and_files( $id, $values = array() ) {
-        $tpl = '%s[%d][%s]';
-		$single_name = sprintf( $tpl, self::$input_name, $id, 'single' );
-        $prices_name = sprintf( $tpl, self::$input_name, $id, 'prices' );
-        $files_name = sprintf( $tpl, self::$input_name, $id, 'files' );
-        $single = $values && isset($values['single']) ? esc_attr( $values['single'] ) : 'no';
-        $prices = $values && isset($values['prices']) ? esc_attr( $values['prices'] ) : 'yes';
-        $files = $values && isset($values['files']) ? esc_attr( $values['files'] ) : 'yes';
-        ?>
-
-        <div class="fes-form-rows required-field">
-            <label><?php _e( 'Single Price/Upload', 'edd_fes' ); ?></label>
-
-            <?php //self::hidden_field($order_name, ''); ?>
-            <div class="fes-form-sub-fields">
-                <label><input type="radio" name="<?php echo $single_name; ?>" value="yes"<?php checked( $single, 'yes' ); ?>> <?php _e( 'Yes', 'edd_fes' ); ?> </label>
-				<label><input type="radio" name="<?php echo $single_name; ?>" value="no"<?php checked( $single, 'no' ); ?>> <?php _e( 'No', 'edd_fes' ); ?> </label>
-			</div>
-        </div> <!-- .fes-form-rows -->
-
-        <div class="fes-form-rows required-field">
-            <label><?php _e( 'Allow Vendors to Set Prices', 'edd_fes' ); ?></label>
-
-            <?php //self::hidden_field($order_name, ''); ?>
-            <div class="fes-form-sub-fields">
-                <label><input type="radio" name="<?php echo $prices_name; ?>" value="yes"<?php checked( $prices, 'yes' ); ?>> <?php _e( 'Yes', 'edd_fes' ); ?> </label>
-				<label><input type="radio" name="<?php echo $prices_name; ?>" value="no"<?php checked( $prices, 'no' ); ?>> <?php _e( 'No', 'edd_fes' ); ?> </label>
-			</div>
-        </div> <!-- .fes-form-rows -->
-
-        <div class="fes-form-rows required-field">
-            <label><?php _e( 'Allow Vendors to Upload Downloads', 'edd_fes' ); ?></label>
-
-            <?php //self::hidden_field($order_name, ''); ?>
-            <div class="fes-form-sub-fields">
-                <label><input type="radio" name="<?php echo $files_name; ?>" value="yes"<?php checked( $files, 'yes' ); ?>> <?php _e( 'Yes', 'edd_fes' ); ?> </label>
-				<label><input type="radio" name="<?php echo $files_name; ?>" value="no"<?php checked( $files, 'no' ); ?>> <?php _e( 'No', 'edd_fes' ); ?> </label>
-			</div>
-        </div> <!-- .fes-form-rows -->
-        <?php
-    }
 	
 	public static function file_upload( $field_id, $label, $values = array(), $removeable = true, $reqtoggle = true  ) {
         $max_size_name = sprintf('%s[%d][max_size]', self::$input_name, $field_id);
@@ -743,64 +701,6 @@ class CFM_Admin_Template {
                     <label><?php _e( 'Description', 'edd_fes' ); ?></label>
                     <textarea class="smallipopInput" title="Some details text about the section" name="<?php echo $description_name; ?>" rows="3"><?php echo esc_html( $description_value ); ?></textarea>
                 </div> <!-- .fes-form-rows -->
-            </div> <!-- .fes-form-holder -->
-        </li>
-        <?php
-    }
-
-    public static function recaptcha( $field_id, $label, $values = array(), $removeable = true, $reqtoggle = true  ) {
-        $title_name = sprintf( '%s[%d][label]', self::$input_name, $field_id );
-        $html_name = sprintf( '%s[%d][html]', self::$input_name, $field_id );
-
-        $title_value = $values ? esc_attr( $values['label'] ) : '';
-        $html_value = $values ? esc_attr( $values['html'] ) : '';
-        ?>
-        <li class="custom-field custom_html">
-            <?php self::legend( $label, $values, $removeable ); ?>
-            <?php self::hidden_field( "[$field_id][input_type]", 'recaptcha' ); ?>
-            <?php self::hidden_field( "[$field_id][template]", 'recaptcha' ); ?>
-
-            <div class="fes-form-holder">
-                <div class="fes-form-rows">
-                    <label><?php _e( 'Title', 'edd_fes' ); ?></label>
-
-                    <div class="fes-form-sub-fields">
-                        <input type="text" class="smallipopInput" title="Title of the section" name="<?php echo $title_name; ?>" value="<?php echo esc_attr( $title_value ); ?>" />
-
-                        <div class="description" style="margin-top: 8px;">
-                            <?php printf( __( "Insert your public key and private key in <a href='%s'>plugin settings</a>. <a href='https://www.google.com/recaptcha/' target='_blank'>Register</a> first if you don't have any keys." ), admin_url( 'admin.php?page=edd_fes' ) ); ?>
-                        </div>
-                    </div> <!-- .fes-form-rows -->
-                </div>
-            </div> <!-- .fes-form-holder -->
-        </li>
-        <?php
-    }
-
-    public static function really_simple_captcha( $field_id, $label, $values = array(), $removeable = true, $reqtoggle = true  ) {
-        $title_name = sprintf( '%s[%d][label]', self::$input_name, $field_id );
-        $html_name = sprintf( '%s[%d][html]', self::$input_name, $field_id );
-
-        $title_value = $values ? esc_attr( $values['label'] ) : '';
-        $html_value = $values ? esc_attr( $values['html'] ) : '';
-        ?>
-        <li class="custom-field custom_html">
-            <?php self::legend( $label, $values, $removeable ); ?>
-            <?php self::hidden_field( "[$field_id][input_type]", 'really_simple_captcha' ); ?>
-            <?php self::hidden_field( "[$field_id][template]", 'really_simple_captcha' ); ?>
-
-            <div class="fes-form-holder">
-                <div class="fes-form-rows">
-                    <label><?php _e( 'Title', 'edd_fes' ); ?></label>
-
-                    <div class="fes-form-sub-fields">
-                        <input type="text" class="smallipopInput" title="Title of the section" name="<?php echo $title_name; ?>" value="<?php echo esc_attr( $title_value ); ?>" />
-
-                        <div class="description" style="margin-top: 8px;">
-                            <?php printf( __( "Depends on <a href='http://wordpress.org/extend/plugins/really-simple-captcha/' target='_blank'>Really Simple Captcha</a> Plugin. Install it first." )  ); ?>
-                        </div>
-                    </div> <!-- .fes-form-rows -->
-                </div>
             </div> <!-- .fes-form-holder -->
         </li>
         <?php

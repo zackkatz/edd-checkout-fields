@@ -393,10 +393,6 @@ class CFM_Render_Form {
                     $this->repeat( $form_field, $post_id, $type );
                     break;
 
-                case 'taxonomy':
-                    $this->taxonomy( $form_field, $post_id, $type );
-                    break;
-
                 case 'section_break':
                     $this->section_break( $form_field, $post_id );
                     break;
@@ -405,16 +401,8 @@ class CFM_Render_Form {
                     $this->html( $form_field );
                     break;
 
-                case 'recaptcha':
-                    $this->recaptcha( $form_field, $post_id );
-                    break;
-
                 case 'action_hook':
                     $this->action_hook( $form_field, $form_id, $post_id, $form_settings );
-                    break;
-
-                case 'really_simple_captcha':
-                    $this->really_simple_captcha( $form_field, $post_id );
                     break;
 
                 case 'date':
@@ -428,10 +416,6 @@ class CFM_Render_Form {
                 case 'toc':
                     $this->toc( $form_field, $post_id );
                     break;
-
-				case 'multiple_pricing':
-					$this->multiple_pricing( $form_field, $post_id );
-					break;
             }
 
             $this->render_item_after( $form_field );
@@ -691,81 +675,6 @@ class CFM_Render_Form {
             <span class="fes-help"><?php echo $attr['help']; ?></span>
         </div>
 
-        <?php
-    }
-
-	/**
-     * Prints a multiple pricing field
-     *
-     * @param array $attr
-     * @param int|null $post_id
-     */
-    function multiple_pricing( $attr, $post_id ) {
-
-        ?>
-	<div class="fes-fields">
-	<div class="<?php echo $attr['name']; ?> edd-fes-adf-submission-options">
-		<div class="edd-fes-adf-submission-option">
-			<div class="edd-fes-adf-submission-option-description">
-				<?php _e( 'Name of Price Option', 'edd_fes' ); ?>
-			</div>
-			<?php if ( $attr[ 'prices' ] !== 'no' ){ ?>
-			<div class="edd-fes-adf-submission-option-price">
-				<?php printf( __( 'Amount (%s)', 'edd_fes' ), edd_currency_filter( '' ) ); ?>
-			</div>
-			<?php } ?>
-			<?php if ( $attr[ 'files' ] !== 'no' ){ ?>
-			<div class="edd-fes-adf-submission-option-file">
-				<?php _e( 'File', 'edd_fes' ); ?>
-			</div>
-			<?php } ?>
-			<?php if ( $attr[ 'single' ] !== 'no' ){ ?>
-			<div class="edd-fes-adf-submission-option-remove">
-				<?php _e( 'Remove', 'edd_fes' ); ?>
-			</div>
-			<?php } ?>
-		</div>
-	 <?php
-	$combos = array(0 => array('description' => '', 'price' => '', 'files' => ''));
-	foreach($combos as $k => $combo) :
-	$price = isset($combo['price']) && $combo['price'] != '' ? $combo['price'] : null;
-	$description = isset($combo['description']) && $combo['description'] != '' ? $combo['description'] : null;
-	$files = isset($combo['files']) && $combo['files'] != '' ? $combo['files'] : null;
-	?>
-		<div class="edd-fes-adf-submission-option static">
-			<div class="edd-fes-adf-submission-option-description">
-				<input class="description" type="text" name="option[<?php echo esc_attr( $k ); ?>][description]" id="options[<?php echo esc_attr( $k ); ?>][description]" rows="3" placeholder="<?php esc_attr_e( 'Option Name', 'edd_fes' ); ?>" value="<?php echo esc_attr( $description ); ?>" />
-			</div>
-			<?php if ( $attr[ 'prices' ] !== 'no' ){ ?>
-			<div class="edd-fes-adf-submission-option-price">
-				<input class="name" type="text" name="option[<?php echo esc_attr( $k ); ?>][price]" id="options[<?php echo esc_attr( $k ); ?>][price]" placeholder="20" value="<?php echo esc_attr( $price ); ?>">
-			</div>
-			<?php } ?>
-			<?php if ( $attr[ 'files' ] !== 'no' ){ ?>
-			<div class="edd-fes-adf-submission-option-file">
-				<div class="edd_repeatable_upload_field_container">
-					<input type="text" class="edd_repeatable_upload_field edd_upload_field" name="files[<?php echo esc_attr( $k ); ?>]" id="files[<?php echo esc_attr( $k ); ?>]" value="<?php echo esc_attr( $files ); ?>"/>
-					<span class="edd_upload_file">
-						<a href="#" data-uploader_title="" data-uploader_button_text="<?php _e( 'Insert', 'edd' ); ?>" class="edd_upload_image_button" onclick="return false;"><?php _e( 'Upload', 'edd' ); ?></a>
-					</span>
-				</div>
-			</div>
-			<?php } ?>
-			<?php if( $attr[ 'single' ] !== 'yes' ){ ?>
-			<div class="edd-fes-adf-submission-option-remove">
-				<a href="#">&times;</a>
-			</div>
-			<?php } ?>
-		</div>
-	<?php endforeach; ?>
-		<?php if( $attr[ 'single' ] !== 'yes' ){ ?>
-		<p class="edd-fes-adf-submission-add-option">
-			<a href="#" class="edd-fes-adf-submission-add-option-button"><?php _e( '+ <em>Add Another Price Option</em>', 'edd_fes' ); ?></a>
-		</p>
-		<?php } ?>
-	</div>
-	 <span class="fes-help"><?php echo $attr['help']; ?></span>
-	</div>
         <?php
     }
 
@@ -1259,108 +1168,6 @@ class CFM_Render_Form {
     }
 
     /**
-     * Prints a taxonomy field
-     *
-     * @param array $attr
-     * @param int|null $post_id
-     */
-    function taxonomy( $attr, $post_id ) {
-        $exclude_type = isset( $attr['exclude_type'] ) ? $attr['exclude_type'] : 'exclude';
-        $exclude = $attr['exclude'];
-        $taxonomy = $attr['name'];
-
-        $terms = array();
-        if ( $post_id && $attr['type'] == 'text' ) {
-            $terms = wp_get_post_terms( $post_id, $taxonomy, array('fields' => 'names') );
-        } elseif( $post_id ) {
-            $terms = wp_get_post_terms( $post_id, $taxonomy, array('fields' => 'ids') );
-        }
-
-        ?>
-
-        <div class="fes-fields">
-            <?php
-            switch ($attr['type']) {
-                case 'select':
-
-                    $selected = $terms ? $terms[0] : '';
-                    $required = isset( $attr['required'] ) ? $attr['required'] : '';
-                    $required = sprintf( 'data-required="%s" data-type="select"', $required );
-
-                    $select = wp_dropdown_categories( array(
-                        'show_option_none' => __( '-- Select --', 'edd_fes' ),
-                        'hierarchical' => 1,
-                        'hide_empty' => 0,
-                        'orderby' => isset( $attr['orderby'] ) ? $attr['orderby'] : 'name',
-                        'order' => isset( $attr['order'] ) ? $attr['order'] : 'ASC',
-                        'name' => $taxonomy . '[]',
-                        'id' => $taxonomy,
-                        'taxonomy' => $taxonomy,
-                        'echo' => 0,
-                        'title_li' => '',
-                        'class' => $taxonomy,
-                        $exclude_type => $exclude,
-                        'selected' => $selected,
-                    ) );
-                    echo str_replace( '<select', '<select ' . $required, $select );
-                    break;
-
-                case 'multiselect':
-                    $selected = $terms ? $terms : array();
-                    $required = sprintf( 'data-required="%s" data-type="multiselect"', $attr['required'] );
-                    $walker = new CFM_Walker_Category_Multi();
-
-                    $select = wp_dropdown_categories( array(
-                        'show_option_none' => __( '-- Select --', 'edd_fes' ),
-                        'hierarchical' => 1,
-                        'hide_empty' => 0,
-                        'orderby' => isset( $attr['orderby'] ) ? $attr['orderby'] : 'name',
-                        'order' => isset( $attr['order'] ) ? $attr['order'] : 'ASC',
-                        'name' => $taxonomy . '[]',
-                        'id' => $taxonomy,
-                        'taxonomy' => $taxonomy,
-                        'echo' => 0,
-                        'title_li' => '',
-                        'class' => $taxonomy . ' multiselect',
-                        $exclude_type => $exclude,
-                        'selected' => $selected,
-                        'walker' => $walker
-                    ) );
-
-                    echo str_replace( '<select', '<select multiple="multiple" ' . $required, $select );
-                    break;
-
-                case 'checkbox':
-                    printf( '<span data-required="%s" data-type="tax-checkbox" />', $attr['required'] );
-                    fes_category_checklist( $post_id, false, $attr );
-                    break;
-
-                case 'text':
-                    ?>
-
-                    <input class="textfield<?php echo $this->required_class( $attr ); ?>" id="<?php echo $attr['name']; ?>" type="text" data-required="<?php echo $attr['required'] ?>" data-type="text"<?php $this->required_html5( $attr ); ?> name="<?php echo esc_attr( $attr['name'] ); ?>" value="<?php echo esc_attr( implode( ', ', $terms ) ); ?>" size="40" />
-
-                    <script type="text/javascript">
-                        jQuery(function($) {
-                            $('#<?php echo $attr['name']; ?>').suggest( ajaxurl + '?action=ajax-tag-search&tax=<?php echo $attr['name']; ?>', { delay: 500, minchars: 2, multiple: true, multipleSep: ', ' } );
-                        });
-                    </script>
-
-                    <?php
-                    break;
-
-                default:
-                    # code...
-                    break;
-            }
-            ?>
-            <span class="fes-help"><?php echo $attr['help']; ?></span>
-        </div>
-
-        <?php
-    }
-
-    /**
      * Prints a HTML field
      *
      * @param array $attr
@@ -1399,23 +1206,7 @@ class CFM_Render_Form {
         <?php
     }
 
-    /**
-     * Prints recaptcha field
-     *
-     * @param array $attr
-     */
-    function recaptcha( $attr, $post_id ) {
-
-        if ( $post_id ) {
-            return;
-        }
-        ?>
-        <div class="fes-fields">
-            <?php echo recaptcha_get_html( EDD_CFM()->fes_options->get_option( 'recaptcha_public') ); ?>
-        </div>
-        <?php
-    }
-
+ 
     /**
      * Prints a section break
      *
@@ -1444,38 +1235,6 @@ class CFM_Render_Form {
         if ( !empty( $attr['label'] ) ) {
             do_action( $attr['label'], $form_id, $post_id, $form_settings );
         }
-    }
-
-    /**
-     * Prints really simple captcha
-     *
-     * @param array $attr
-     * @param int|null $post_id
-     */
-    function really_simple_captcha( $attr, $post_id ) {
-
-        if ( $post_id ) {
-            return;
-        }
-
-        if ( !class_exists( 'ReallySimpleCaptcha' ) ) {
-            _e( 'Error: Really Simple Captcha plugin not found!', 'edd_fes' );
-            return;
-        }
-
-
-
-        $captcha_instance = new ReallySimpleCaptcha();
-        $word = $captcha_instance->generate_random_word();
-        $prefix = mt_rand();
-        $image_num = $captcha_instance->generate_image( $prefix, $word );
-        ?>
-        <div class="fes-fields">
-            <img src="<?php echo plugins_url( 'really-simple-captcha/tmp/' . $image_num ); ?>" alt="Captcha" />
-            <input type="text" name="rs_captcha" value="" />
-            <input type="hidden" name="rs_captcha_val" value="<?php echo $prefix; ?>" />
-        </div>
-        <?php
     }
 
     /**

@@ -21,26 +21,26 @@ class CFM_Admin_Form {
         add_action( 'admin_footer-edit.php', array($this, 'add_form_button_style') );
         add_action( 'admin_footer-post.php', array($this, 'add_form_button_style') );
         add_action( 'admin_head', array( $this, 'menu_icon' ) );
-		add_action( 'bulk_actions-edit-fes-forms', array( $this, 'remove_bulk_actions'),10,2);
+		add_action( 'bulk_actions-edit-edd-checkout-fields', array( $this, 'remove_bulk_actions'),10,2);
 		add_action( 'views_edit-fes-forms', array( $this, 'remove_bulk_actions'),10,2);
 		add_action( 'months_dropdown_results', array( $this, 'remove_months'),10,3);
 		add_action('admin_head',  array( $this, 'fes_remove_search_and_filter'));
         // meta boxes
-        add_action( 'add_meta_boxes_fes-forms', array($this, 'add_meta_boxes') );
+        add_action( 'add_meta_boxes_edd-checkout-fields', array($this, 'add_meta_boxes') );
 
         // custom columns
-        add_filter( 'manage_edit-fes-forms_columns', array( $this, 'admin_column' ) );
-        add_action( 'manage_fes-forms_posts_custom_column', array( $this, 'admin_column_value' ), 10, 2 );
+        add_filter( 'manage_edit-edd-checkout-fields_columns', array( $this, 'admin_column' ) );
+        add_action( 'manage_edd-checkout-fields_posts_custom_column', array( $this, 'admin_column_value' ), 10, 2 );
 
         // ajax actions for post forms
-        add_action( 'wp_ajax_fes-form_dump', array( $this, 'form_dump' ) );
-        add_action( 'wp_ajax_fes-form_add_el', array( $this, 'ajax_post_add_element' ) );
+        add_action( 'wp_ajax_edd-checkout-fields_dump', array( $this, 'form_dump' ) );
+        add_action( 'wp_ajax_edd-checkout-fields_add_el', array( $this, 'ajax_post_add_element' ) );
 
 		add_action( 'save_post', array( $this, 'save_form_meta' ), 1, 2 ); // save the custom fields
     }
 	function fes_remove_search_and_filter(){
 		$screen = get_current_screen();
-		if (!is_admin() || $screen->id !== 'edit-fes-forms'){
+		if (!is_admin() || $screen->id !== 'edit-edd-checkout-fields'){
 			return;
 		}
 		echo '<style type="text/css">
@@ -55,7 +55,7 @@ class CFM_Admin_Form {
 	}
 	
 	function remove_months($actions, $cpt){
-		if($cpt !== 'fes-forms'){
+		if($cpt !== 'edd-checkout-fields'){
 			return $actions;
 		}
 		return array();
@@ -112,7 +112,6 @@ class CFM_Admin_Form {
         );
 
         $messages['fes-forms'] = $message;
-        $messages['fes_profile'] = $message;
 
         return $messages;
     }
@@ -149,17 +148,10 @@ class CFM_Admin_Form {
      */
     function add_meta_boxes() {
 		global $post;
-
-		if(get_the_ID() == EDD_CFM()->fes_options->get_option( 'fes-submission-form')){
-        add_meta_box( 'fes-metabox-editor', __( 'Submission Form Editor', 'edd_fes' ), array($this, 'metabox_post_form'), 'fes-forms', 'normal', 'high' );
-        add_meta_box( 'fes-metabox-fields', __( 'EDD CFM Submission Form Guide', 'edd_fes' ), array($this, 'form_elements_post'), 'fes-forms', 'side', 'core' );
-		}
-		if(get_the_ID() == EDD_CFM()->fes_options->get_option( 'fes-profile-form')){
-        add_meta_box( 'fes-metabox-editor', __( 'Profile Form Editor', 'edd_fes' ), array($this, 'metabox_profile_form'), 'fes-forms', 'normal', 'high' );
-        add_meta_box( 'fes-metabox-fields', __( 'Profile Submission Guide', 'edd_fes' ), array($this, 'form_elements_profile'), 'fes-forms', 'side', 'core' );
-		}
-		remove_meta_box('submitdiv', 'fes-forms', 'side');
-        remove_meta_box('slugdiv', 'fes-forms', 'normal');
+        add_meta_box( 'fes-metabox-editor', __( 'Submission Form Editor', 'edd_fes' ), array($this, 'metabox_post_form'), 'edd-checkout-fields', 'normal', 'high' );
+        add_meta_box( 'fes-metabox-fields', __( 'EDD CFM Submission Form Guide', 'edd_fes' ), array($this, 'form_elements_post'), 'edd-checkout-fields', 'side', 'core' );
+		remove_meta_box('submitdiv', 'edd-checkout-fields', 'side');
+        remove_meta_box('slugdiv', 'edd-checkout-fields', 'normal');
 	}
 
     function publish_button() {
@@ -191,24 +183,31 @@ class CFM_Admin_Form {
         <?php
     }
 
-    function metabox_profile_form( $post ) {
-        ?>
-        <h1><?php _e('CFM Profile Form Editor','edd_fes');?></h1>
-        <div class="tab-content">
-            <div id="fes-metabox" class="group">
-                 <?php $this->edit_form_area_profile(); ?>
-            </div>
-             <?php do_action( 'fes_profile_form_tab_content' ); ?>
-        </div>
-        <?php
-    }
 
-    function form_elements_common($form = 'post') {
-        $title = esc_attr( __( 'Click to add to the editor', 'edd_fes' ) );
-        ?>
-        <h2><?php _e( 'Step 2: Insert Custom Fields', 'edd_fes' ); ?></h2>
+    /**
+     * Form elements for post form builder
+     *
+     * @return void
+     */
+    function form_elements_post() {
+		?>
+        <div class="fes-loading hide"></div>
         <div class="fes-form-buttons">
-            <button class="button" data-name="custom_text" data-type="text" title="<?php echo $title; ?>"><?php _e( 'Text', 'edd_fes' ); ?></button>
+			<button class="button" data-name="user_login" data-type="text"><?php _e( 'Username', 'edd_fes' ); ?></button>
+            <button class="button" data-name="password" data-type="password"><?php _e( 'Password', 'edd_fes' ); ?></button>
+            <button class="button" data-name="user_email" data-type="category"><?php _e( 'E-mail', 'edd_fes' ); ?></button>
+            <button class="button" data-name="first_name" data-type="textarea"><?php _e( 'First Name', 'edd_fes' ); ?></button>
+            <button class="button" data-name="last_name" data-type="textarea"><?php _e( 'Last Name', 'edd_fes' ); ?></button>
+            <button class="button" data-name="nickname" data-type="text"><?php _e( 'Nickname', 'edd_fes' ); ?></button>
+            <button class="button" data-name="display_name" data-type="text"><?php _e( 'Display Name', 'edd_fes' ); ?></button>
+            <button class="button" data-name="user_bio" data-type="textarea"><?php _e( 'Biographical Info', 'edd_fes' ); ?></button>
+            <button class="button" data-name="user_url" data-type="text"><?php _e( 'Website', 'edd_fes' ); ?></button>
+            <button class="button" data-name="user_avatar" data-type="avatar"><?php _e( 'Avatar', 'edd_fes' ); ?></button>
+			<?php if (EDD_CFM()->vendors->is_commissions_active()){ ?>
+            <button class="button" data-name="eddc_user_paypal" data-type="eddc_user_paypal"><?php _e( 'PayPal Email', 'edd_fes' ); ?></button>
+            <?php } ?>
+			
+			<button class="button" data-name="custom_text" data-type="text" title="<?php echo $title; ?>"><?php _e( 'Text', 'edd_fes' ); ?></button>
             <button class="button" data-name="custom_textarea" data-type="textarea" title="<?php echo $title; ?>"><?php _e( 'Textarea', 'edd_fes' ); ?></button>
             <button class="button" data-name="custom_select" data-type="select" title="<?php echo $title; ?>"><?php _e( 'Dropdown', 'edd_fes' ); ?></button>
             <button class="button" data-name="custom_date" data-type="date" title="<?php echo $title; ?>"><?php _e( 'Date', 'edd_fes' ); ?></button>
@@ -222,78 +221,19 @@ class CFM_Admin_Form {
             <button class="button" data-name="custom_repeater" data-type="repeat" title="<?php echo $title; ?>"><?php _e( 'Repeat Field', 'edd_fes' ); ?></button>
             <button class="button" data-name="custom_hidden" data-type="hidden" title="<?php echo $title; ?>"><?php _e( 'Hidden Field', 'edd_fes' ); ?></button>
             <button class="button" data-name="custom_map" data-type="map" title="<?php echo $title; ?>"><?php _e( 'Google Maps', 'edd_fes' ); ?></button>
-            <?php if($form == 'post'){ ?>
 			<button class="button" data-name="recaptcha" data-type="captcha" title="<?php echo $title; ?>"><?php _e( 'reCaptcha', 'edd_fes' ); ?></button>
             <button class="button" data-name="really_simple_captcha" data-type="rscaptcha" title="<?php echo $title; ?>"><?php _e( 'Really Simple Captcha', 'edd_fes' ); ?></button>
-			<?php } ?>
 			<button class="button" data-name="section_break" data-type="break" title="<?php echo $title; ?>"><?php _e( 'Section Break', 'edd_fes' ); ?></button>
             <button class="button" data-name="custom_html" data-type="html" title="<?php echo $title; ?>"><?php _e( 'HTML', 'edd_fes' ); ?></button>
             <button class="button" data-name="action_hook" data-type="action" title="<?php echo $title; ?>"><?php _e( 'Do Action', 'edd_fes' ); ?></button>
             <button class="button" data-name="toc" data-type="action" title="<?php echo $title; ?>"><?php _e( 'Term &amp; Condition', 'edd_fes' ); ?></button>
 
-            <?php do_action( 'fes-form_buttons_other' ); ?>
-        </div>
-
-        <?php
-    }
-
-    /**
-     * Form elements for post form builder
-     *
-     * @return void
-     */
-    function form_elements_post() {
-		?>
-        <div class="fes-loading hide"></div>
-        <h2><?php _e( 'Step 1: Add EDD Fields', 'edd_fes' ); ?></h2>
-        <div class="fes-form-buttons">
-            <button class="button" data-name="post_title" data-type="post_title" title="<?php _e( 'Click to add to the editor', 'edd_fes' ); ?>"><?php _e( 'Title (required)', 'edd_fes' ); ?></button>
-			<button class="button" data-name="post_content" data-type="post_content" title="<?php _e( 'Click to add to the editor', 'edd_fes' ); ?>"><?php _e( 'Description (required)', 'edd_fes' ); ?></button>
-			<button class="button" data-name="featured_image" data-type="featured_image" title="<?php _e( 'Click to add to the editor', 'edd_fes' ); ?>"><?php _e( 'Featured Image', 'edd_fes' ); ?></button>
-			<button class="button" data-name="download_category" data-type="download_category" title="<?php _e( 'Click to add to the editor', 'edd_fes' ); ?>"><?php _e( 'Categories', 'edd_fes' ); ?></button>
-			<button class="button" data-name="download_tag" data-type="download_tag" title="<?php _e( 'Click to add to the editor', 'edd_fes' ); ?>"><?php _e( 'Tags', 'edd_fes' ); ?></button>
-			<button class="button" data-name="multiple_pricing" data-type="multiple_pricing" title="<?php _e( 'Click to add to the editor', 'edd_fes' ); ?>"><?php _e( 'Prices and Files', 'edd_fes' ); ?></button>
-			<button class="button" data-name="post_excerpt" data-type="post_excerpt" title="<?php _e( 'Click to add to the editor', 'edd_fes' ); ?>"><?php _e( 'Excerpt', 'edd_fes' ); ?></button>
 			<?php do_action( 'fes-form_buttons_post' ); ?>
 	    </div>
 		<?php 
-        $this->form_elements_common('post');
+        $this->form_elements_common();
         $this->publish_button();
     }
-
-    /**
-     * Form elements for Profile Builder
-     *
-     * @return void
-     */
-    function form_elements_profile() {
-        ?>
-
-        <div class="fes-loading hide"></div>
-
-        <h2><?php _e( 'Step 1: Add Common Fields', 'edd_fes' ); ?></h2>
-        <div class="fes-form-buttons">
-            <button class="button" data-name="user_login" data-type="text"><?php _e( 'Username', 'edd_fes' ); ?></button>
-            <button class="button" data-name="password" data-type="password"><?php _e( 'Password', 'edd_fes' ); ?></button>
-            <button class="button" data-name="user_email" data-type="category"><?php _e( 'E-mail', 'edd_fes' ); ?></button>
-            <button class="button" data-name="first_name" data-type="textarea"><?php _e( 'First Name', 'edd_fes' ); ?></button>
-            <button class="button" data-name="last_name" data-type="textarea"><?php _e( 'Last Name', 'edd_fes' ); ?></button>
-            <button class="button" data-name="nickname" data-type="text"><?php _e( 'Nickname', 'edd_fes' ); ?></button>
-            <button class="button" data-name="display_name" data-type="text"><?php _e( 'Display Name', 'edd_fes' ); ?></button>
-            <button class="button" data-name="user_bio" data-type="textarea"><?php _e( 'Biographical Info', 'edd_fes' ); ?></button>
-            <button class="button" data-name="user_url" data-type="text"><?php _e( 'Website', 'edd_fes' ); ?></button>
-            <button class="button" data-name="user_avatar" data-type="avatar"><?php _e( 'Avatar', 'edd_fes' ); ?></button>
-			<?php if (EDD_CFM()->vendors->is_commissions_active()){ ?>
-            <button class="button" data-name="eddc_user_paypal" data-type="eddc_user_paypal"><?php _e( 'PayPal Email', 'edd_fes' ); ?></button>
-            <?php } ?>
-			<?php do_action( 'fes-form_buttons_user' ); ?>
-        </div>
-
-        <?php
-        $this->form_elements_common('user');
-        $this->publish_button();
-    }
-
     /**
      * Saves the form settings
      *
@@ -347,13 +287,7 @@ class CFM_Admin_Form {
             $count = 0;
             foreach ($form_inputs as $order => $input_field) {
                 $name = ucwords( str_replace( '_', ' ', $input_field['template'] ) );
-
-                if ( $input_field['template'] == 'taxonomy') {
-                    CFM_Admin_Template_Post::$input_field['template']( $count, $name, $input_field['name'], $input_field );
-                } else {
-                    CFM_Admin_Template_Post::$input_field['template']( $count, $name, $input_field );
-                }
-
+                 CFM_Admin_Template_Post::$input_field['template']( $count, $name, $input_field );
                 $count++;
             }
         }
@@ -363,46 +297,6 @@ class CFM_Admin_Form {
         <?php
     }
 
-    /**
-     * Edit form elements area for profile
-     *
-     * @global object $post
-     * @global string $pagenow
-     */
-    function edit_form_area_profile() {
-        global $post, $pagenow;
-
-        $form_inputs = get_post_meta( $post->ID, $this->form_data_key, true );
-        ?>
-
-        <input type="hidden" name="fes-form_editor" id="fes-form_editor" value="<?php echo wp_create_nonce( plugin_basename( __FILE__ ) ); ?>" />
-
-        <div style="margin-bottom: 10px">
-            <button class="button fes-collapse"><?php _e( 'Toggle All', 'edd_fes' ); ?></button>
-        </div>
-		<?php if ( empty( $form_inputs ) ){ ?>
-        <div class="fes-updated">
-            <p><?php _e( 'Welcome to the EDD CFM Profile Form Editor! The fields you can add are to the right.', 'edd_fes' ); ?></p>
-        </div>
-		<?php } ?>
-        <ul id="fes-form-editor" class="fes-form-editor unstyled">
-
-        <?php
-        if ($form_inputs) {
-            $count = 0;
-            foreach ($form_inputs as $order => $input_field) {
-                $name = ucwords( str_replace( '_', ' ', $input_field['template'] ) );
-
-                CFM_Admin_Template_Profile::$input_field['template']( $count, $name, $input_field );
-
-                $count++;
-            }
-        }
-        ?>
-        </ul>
-
-        <?php
-    }
 
     /**
      * Ajax Callback handler for inserting fields in forms
@@ -416,27 +310,6 @@ class CFM_Admin_Form {
         $field_id = $_POST['order'];
 
         switch ($name) {
-			case 'post_title':
-				 CFM_Admin_Template_Post::post_title( $field_id, __('Title','edd_fes'));
-				break;
-			case 'post_content':
-				CFM_Admin_Template_Post::post_content($field_id, __('Body','edd_fes'));
-				break;
-			case 'post_excerpt':
-				CFM_Admin_Template_Post::post_excerpt( $field_id, __('Excerpt','edd_fes'));			
-				break;
-			case 'featured_image':
-				  CFM_Admin_Template_Post::featured_image( $field_id, __('Featured Image','edd_fes'));
-				break;
-			case 'download_category':
-				CFM_Admin_Template_Post::taxonomy( $field_id, 'Category', __( 'download_category','edd_fes') );			
-				break;
-			case 'download_tag':
-				CFM_Admin_Template_Post::taxonomy( $field_id, 'Tags', __( 'download_tag','edd_fes') );
-				break;
-			case 'multiple_pricing':
-				CFM_Admin_Template_Post::multiple_pricing( $field_id, __( 'Prices and Files','edd_fes'));	
-				break;
             case 'custom_text':
 			    CFM_Admin_Template_Post::text_field( $field_id, __( 'Custom field: Text','edd_fes'));
                 break;
