@@ -148,7 +148,6 @@ class EDD_Checkout_Fields_Manager {
 	}
 	
 	public function setup() {
-		$this->load_settings();
 		$this->setup = new CFM_Setup;
 		do_action( 'edd_cfm_setup_actions' );
 	}
