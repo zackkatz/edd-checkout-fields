@@ -1,22 +1,22 @@
 <?php
 /**
- * Plugin Name:         Easy Digital Downloads - Checkout Field Manager
- * Plugin URI:          https://easydigitaldownloads.com/extension/frontend-submissions/
- * Description:         Mimick eBay, Envato, or Amazon type sites with this plugin and Easy Digital Downloads combined!
+ * Plugin Name:         Easy Digital Downloads - Checkout Fields Manager
+ * Plugin URI:          https://easydigitaldownloads.com/extension/checkout-fields-manager/
+ * Description:         Easily add and control EDD's checkout fields
  * Author:              Chris Christoff
  * Author URI:          http://www.chriscct7.com
  *
- * Version:             2.0.3
+ * Version:             1.0
  * Requires at least:   3.6
  * Tested up to:        3.6
  *
- * Text Domain:         edd_fes
- * Domain Path:         /edd_fes/languages/
+ * Text Domain:         edd_cfm
+ * Domain Path:         /edd_cfm/languages/
  *
  * @category            Plugin
  * @copyright           Copyright © 2013 Chris Christoff
  * @author              Chris Christoff
- * @package             FES
+ * @package             CFM
  */
  
 if ( !defined( 'ABSPATH' ) ) {
@@ -26,14 +26,13 @@ if ( !defined( 'ABSPATH' ) ) {
 /** Check if Easy Digital Downloads is active */
 include_once( ABSPATH . 'wp-admin/includes/plugin.php' );
 
-class EDD_Front_End_Submissions {
+class EDD_Checkout_Fields_Manager {
 	/**
-	 * @var EDD_Front_End_Submissions The one true EDD_Front_End_Submissions
+	 * @var EDD_Checkout_Fields_Manager The one true EDD_Checkout_Fields_Manager
 	 * @since 1.4
 	 */
 	private static $instance;
-	public $id = 'edd_fes';
-	public $fes_options;
+	public $id = 'edd_cfm';
 	public $basename;
 	
 	// Setup objects for each class
@@ -41,170 +40,145 @@ class EDD_Front_End_Submissions {
 	public $admin;
 	public $admin_form;
 	public $admin_posting;
-	public $admin_posting_profile;
-	public $application;
 	public $emails;
 	public $frontend;
-	public $frontend_form_profile;
 	public $install;
-	public $login_register;
 	public $menu;
-	public $queries;
 	public $templates;
-	public $vendor_applicants;
-	public $vendor_permissions;
-	public $vendor_shop;
 	public $vendors;
 	public $upload;
 	
 	/**
-	 * Main EDD_Front_End_Submissions Instance
+	 * Main EDD_Checkout_Fields_Manager Instance
 	 *
-	 * Insures that only one instance of EDD_Front_End_Submissions exists in memory at any one
+	 * Insures that only one instance of EDD_Checkout_Fields_Manager exists in memory at any one
 	 * time. Also prevents needing to define globals all over the place.
 	 *
 	 * @since 1.4
 	 * @static
 	 * @staticvar array $instance
-	 * @uses EDD_Front_End_Submissions::setup_globals() Setup the globals needed
-	 * @uses EDD_Front_End_Submissions::includes() Include the required files
-	 * @uses EDD_Front_End_Submissions::setup_actions() Setup the hooks and actions
+	 * @uses EDD_Checkout_Fields_Manager::setup_globals() Setup the globals needed
+	 * @uses EDD_Checkout_Fields_Manager::includes() Include the required files
+	 * @uses EDD_Checkout_Fields_Manager::setup_actions() Setup the hooks and actions
 	 * @see EDD()
-	 * @return The one true EDD_Front_End_Submissions
+	 * @return The one true EDD_Checkout_Fields_Manager
 	 */
 	public static function instance() {
-		if ( !isset( self::$instance ) && !( self::$instance instanceof EDD_Front_End_Submissions ) ) {
-			self::$instance = new EDD_Front_End_Submissions;
+		if ( !isset( self::$instance ) && !( self::$instance instanceof EDD_Checkout_Fields_Manager ) ) {
+			self::$instance = new EDD_Checkout_Fields_Manager;
 			self::$instance->define_globals();
 			self::$instance->includes();
 			self::$instance->setup();
 			// Setup class instances
-			self::$instance->render_form           = new FES_Render_Form;
-			self::$instance->login_register        = new FES_Login_Register;
-			self::$instance->application           = new FES_Application;
-			self::$instance->templates             = new FES_Templates;
-			self::$instance->setup                 = new FES_Setup;
-			self::$instance->emails                = new FES_Emails;
-			self::$instance->vendors               = new FES_Vendors;
-			self::$instance->vendor_permissions    = new FES_Vendor_Permissions;
-			self::$instance->vendor_applicants     = new FES_Vendor_Applicants;
-			self::$instance->vendor_shop           = new FES_Vendor_Shop;
-			self::$instance->upload                = new FES_Upload;
-			self::$instance->frontend              = new FES_Frontend;
-			self::$instance->frontend_form_profile = new FES_Frontend_Form_Profile;
-			self::$instance->frontend_form_post    = new FES_Frontend_Form_Post;
-			self::$instance->queries               = new FES_Queries;
-			self::$instance->menu                  = new FES_Menu;
+			self::$instance->render_form           = new CFM_Render_Form;
+			self::$instance->templates             = new CFM_Templates;
+			self::$instance->setup                 = new CFM_Setup;
+			self::$instance->emails                = new CFM_Emails;
+			self::$instance->upload                = new CFM_Upload;
+			self::$instance->frontend              = new CFM_Frontend;
+			self::$instance->frontend_form_post    = new CFM_Frontend_Form_Post;
+			self::$instance->menu                  = new CFM_Menu;
 			if ( is_admin() ) {
-				self::$instance->admin                 = new FES_Admin;
-				self::$instance->admin_form            = new FES_Admin_Form;
-				self::$instance->admin_posting         = new FES_Admin_Posting;
-				self::$instance->admin_posting_profile = new FES_Admin_Posting_Profile;
+				self::$instance->admin                 = new CFM_Admin;
+				self::$instance->admin_form            = new CFM_Admin_Form;
+				self::$instance->admin_posting         = new CFM_Admin_Posting;
 			}
 		}
 		return self::$instance;
 	}
 	
 	public function define_globals() {
-		$this->title    = __( 'Frontend Submissions', 'edd_fes' );
+		$this->title    = __( 'Checkout Fields Manager', 'edd_cfm' );
 		$this->file     = __FILE__;
-		$this->basename = apply_filters( 'edd_fes_plugin_basename', plugin_basename( $this->file ) );
+		$this->basename = apply_filters( 'edd_cfm_plugin_basename', plugin_basename( $this->file ) );
 		// Plugin Name
-		if ( !defined( 'fes_plugin_name' ) ) {
-			define( 'fes_plugin_name', 'Frontend Submissions' );
+		if ( !defined( 'cfm_plugin_name' ) ) {
+			define( 'cfm_plugin_name', 'Checkout Fields Manager' );
 		}
 		// Plugin Version
-		if ( !defined( 'fes_plugin_version' ) ) {
-			define( 'fes_plugin_version', '2.0.3' );
+		if ( !defined( 'cfm_plugin_version' ) ) {
+			define( 'cfm_plugin_version', '1.0' );
 		}
 		// Plugin Root File
-		if ( !defined( 'fes_plugin_file' ) ) {
-			define( 'fes_plugin_file', __FILE__ );
+		if ( !defined( 'cfm_plugin_file' ) ) {
+			define( 'cfm_plugin_file', __FILE__ );
 		}
 		// Plugin Folder Path
-		if ( !defined( 'fes_plugin_dir' ) ) {
-			define( 'fes_plugin_dir', WP_PLUGIN_DIR . '/' . basename( dirname( __FILE__ ) ) . '/' );
+		if ( !defined( 'cfm_plugin_dir' ) ) {
+			define( 'cfm_plugin_dir', WP_PLUGIN_DIR . '/' . basename( dirname( __FILE__ ) ) . '/' );
 		}
 		// Plugin Folder URL
-		if ( !defined( 'fes_plugin_url' ) ) {
-			define( 'fes_plugin_url', plugin_dir_url( fes_plugin_file ) );
+		if ( !defined( 'cfm_plugin_url' ) ) {
+			define( 'cfm_plugin_url', plugin_dir_url( cfm_plugin_file ) );
 		}
 		// Plugin Assets URL
-		if ( !defined( 'fes_assets_url' ) ) {
-			define( 'fes_assets_url', fes_plugin_url . 'assets/' );
+		if ( !defined( 'cfm_assets_url' ) ) {
+			define( 'cfm_assets_url', cfm_plugin_url . 'assets/' );
 		}
 		if ( !class_exists( 'EDD_License' ) ) {
-			require_once fes_plugin_dir . 'assets/lib/EDD_License_Handler.php';
+			require_once cfm_plugin_dir . 'assets/lib/EDD_License_Handler.php';
 		}
-		$license = new EDD_License( __FILE__, fes_plugin_name, fes_plugin_version, 'Chris Christoff' );
+		$license = new EDD_License( __FILE__, cfm_plugin_name, cfm_plugin_version, 'Chris Christoff' );
 	}
 	
 	public function includes() {
-		require_once fes_plugin_dir . 'classes/class-vendor-shop.php';
-		require_once fes_plugin_dir . 'classes/class-templates.php';
-		require_once fes_plugin_dir . 'classes/class-queries.php';
-		require_once fes_plugin_dir . 'classes/class-vendors.php';
-		require_once fes_plugin_dir . 'classes/class-vendor-permissions.php';
-		require_once fes_plugin_dir . 'classes/class-frontend.php';
-		require_once fes_plugin_dir . 'classes/class-login-register.php';
-		require_once fes_plugin_dir . 'classes/class-application.php';
-		require_once fes_plugin_dir . 'classes/class-emails.php';
-		require_once fes_plugin_dir . 'classes/class-setup.php';
-		require_once fes_plugin_dir . 'classes/class-vendor-applicants.php';
-		require_once fes_plugin_dir . 'classes/class-menu.php';
-		require_once fes_plugin_dir . 'classes/forms/render-form.php';
-		require_once fes_plugin_dir . 'classes/forms/frontend-form-post.php';
-		require_once fes_plugin_dir . 'classes/forms/frontend-form-profile.php';
-		require_once fes_plugin_dir . 'classes/forms/upload.php';
-		require_once fes_plugin_dir . 'classes/forms/functions.php';
+		require_once cfm_plugin_dir . 'classes/class-templates.php';
+		require_once cfm_plugin_dir . 'classes/class-frontend.php';
+		require_once cfm_plugin_dir . 'classes/class-emails.php';
+		require_once cfm_plugin_dir . 'classes/class-setup.php';
+		require_once cfm_plugin_dir . 'classes/class-menu.php';
+		require_once cfm_plugin_dir . 'classes/forms/render-form.php';
+		require_once cfm_plugin_dir . 'classes/forms/frontend-form-post.php';
+		require_once cfm_plugin_dir . 'classes/forms/upload.php';
+		require_once cfm_plugin_dir . 'classes/forms/functions.php';
 		if ( is_admin() ) {
 			if ( !class_exists( 'WP_List_Table' ) ) {
 				require_once( ABSPATH . 'wp-admin/includes/class-wp-list-table.php' );
 			}
-			require_once fes_plugin_dir . 'classes/class-fes-list-table.php';
-			require_once fes_plugin_dir . 'classes/class-admin.php';
-			require_once fes_plugin_dir . 'classes/forms/admin-form.php';
-			require_once fes_plugin_dir . 'classes/forms/admin-posting.php';
-			require_once fes_plugin_dir . 'classes/forms/admin-posting-profile.php';
-			require_once fes_plugin_dir . 'classes/forms/admin-template.php';
-			require_once fes_plugin_dir . 'classes/forms/admin-template-post.php';
-			require_once fes_plugin_dir . 'classes/forms/admin-template-profile.php';
+			require_once cfm_plugin_dir . 'classes/class-fes-list-table.php';
+			require_once cfm_plugin_dir . 'classes/class-admin.php';
+			require_once cfm_plugin_dir . 'classes/forms/admin-form.php';
+			require_once cfm_plugin_dir . 'classes/forms/admin-posting.php';
+			require_once cfm_plugin_dir . 'classes/forms/admin-posting-profile.php';
+			require_once cfm_plugin_dir . 'classes/forms/admin-template.php';
+			require_once cfm_plugin_dir . 'classes/forms/admin-template-post.php';
+			require_once cfm_plugin_dir . 'classes/forms/admin-template-profile.php';
 		}
 	}
 	
 	public static function install() {
-		require_once fes_plugin_dir . 'classes/class-install.php';
-		$install = new FES_Install;
+		require_once cfm_plugin_dir . 'classes/class-install.php';
+		$install = new CFM_Install;
 		$install->init();
 	}
 	
 	public function setup() {
 		$this->load_settings();
-		$this->setup = new FES_Setup;
-		do_action( 'edd_fes_setup_actions' );
+		$this->setup = new CFM_Setup;
+		do_action( 'edd_cfm_setup_actions' );
 	}
 }
 
 /**
- * The main function responsible for returning the one true EDD_Front_End_Submissions
+ * The main function responsible for returning the one true EDD_Checkout_Fields_Manager
  * Instance to functions everywhere.
  *
  * Use this function like you would a global variable, except without needing
  * to declare the global.
  *
- * Example: <?php $edd_fes = EDD_FES(); ?>
+ * Example: <?php $edd_cfm = EDD_CFM(); ?>
  *
  * @since 2.0
- * @return object The one true EDD_Front_End_Submissions Instance
+ * @return object The one true EDD_Checkout_Fields_Manager Instance
  */
-function EDD_FES() {
-	return EDD_Front_End_Submissions::instance();
+function EDD_CFM() {
+	return EDD_Checkout_Fields_Manager::instance();
 }
 
-EDD_FES();
+EDD_CFM();
 
-function EDD_FES_Install() {
-	EDD_FES()->install();
+function EDD_CFM_Install() {
+	EDD_CFM()->install();
 }
 
-register_activation_hook( __FILE__, 'EDD_FES_Install' );
+register_activation_hook( __FILE__, 'EDD_CFM_Install' );
