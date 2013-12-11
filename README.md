@@ -1,12 +1,10 @@
-# Easy Digital Downloads - Frontend Submissions (version 2.0.3) #
+# Easy Digital Downloads - Checkout Fields Manager (version 1.0) #
 
 ## Who this README file is for ##
 This readme file is to share information to plugin & theme developers.
-Users looking for assistance with FES (like setting it up) should check
-out the KB for FES at kb.eddfes.com
 
-## Formatting of FES ##
-Where the majority of the file was not an HTML template, FES was formatted
+## Formatting of CFMd ##
+Where the majority of the file was not an HTML template, CFM was formatted
 using beta.phpformatter.com, with the following settings:
 + Indentation Style: K & R Style
 + Indent with: Tabs
