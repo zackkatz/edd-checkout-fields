@@ -1,0 +1,42 @@
+2.0.4: 11/25/2013
+* Feature: Adds options to prices and files field
+* Bug: Field values of login/register forms not lost on error now
+
+2.0.3: 11/24/2013
+* Bug: change "changes" to uppercase on settings panel
+* Bug: Flash of intro message on FES_forms on saved forms fixed
+* Bug: Shortcode redirects no longer cause fatal errors
+* Bug: Vendors were accidentily always getting approved
+
+2.0.2: 11/23/2013
+* New: Replaced CList with direct links to FES-forms
+* New: MP6 compatibility
+* New: Author page now redirects to vendor page
+* Bug: Vendors if allowed to go to backend, can no longer edit products
+* Bug: Fatal error caused by typo of email function name
+* Bug: Comments form hidden on submission form view
+* Bug: CSS caused publish button to look odd on edit download
+
+2.0.1: 11/15/2013
+* Bug: Fixed issue in setup class causing fatal error
+* Bug: Corrected spelling mistake in plugin
+
+2.0: 11/13/2013
+* New: FES Forms added
+* New: Vendor dashboard reorganized
+* New: Admin download list reorganized
+* Bug: Hundreds of bugs fixed. 
+
+1.1.6/1.1.9:
+* regression fix
+
+1.1.5: 7/12/2012
+* fix email bug
+* add start of S3 support
+
+1.1: 6/17/2013
+* fix email bug
+* fix styling bug
+
+1.0: 5/17/2013
+ * Initial release
