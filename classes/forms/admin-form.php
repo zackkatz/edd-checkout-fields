@@ -193,8 +193,6 @@ class CFM_Admin_Form {
 		?>
         <div class="fes-loading hide"></div>
         <div class="fes-form-buttons">
-			<button class="button" data-name="user_login" data-type="text"><?php _e( 'Username', 'edd_fes' ); ?></button>
-            <button class="button" data-name="password" data-type="password"><?php _e( 'Password', 'edd_fes' ); ?></button>
             <button class="button" data-name="user_email" data-type="category"><?php _e( 'E-mail', 'edd_fes' ); ?></button>
             <button class="button" data-name="first_name" data-type="textarea"><?php _e( 'First Name', 'edd_fes' ); ?></button>
             <button class="button" data-name="last_name" data-type="textarea"><?php _e( 'Last Name', 'edd_fes' ); ?></button>
@@ -221,8 +219,6 @@ class CFM_Admin_Form {
             <button class="button" data-name="custom_repeater" data-type="repeat" title="<?php echo $title; ?>"><?php _e( 'Repeat Field', 'edd_fes' ); ?></button>
             <button class="button" data-name="custom_hidden" data-type="hidden" title="<?php echo $title; ?>"><?php _e( 'Hidden Field', 'edd_fes' ); ?></button>
             <button class="button" data-name="custom_map" data-type="map" title="<?php echo $title; ?>"><?php _e( 'Google Maps', 'edd_fes' ); ?></button>
-			<button class="button" data-name="recaptcha" data-type="captcha" title="<?php echo $title; ?>"><?php _e( 'reCaptcha', 'edd_fes' ); ?></button>
-            <button class="button" data-name="really_simple_captcha" data-type="rscaptcha" title="<?php echo $title; ?>"><?php _e( 'Really Simple Captcha', 'edd_fes' ); ?></button>
 			<button class="button" data-name="section_break" data-type="break" title="<?php echo $title; ?>"><?php _e( 'Section Break', 'edd_fes' ); ?></button>
             <button class="button" data-name="custom_html" data-type="html" title="<?php echo $title; ?>"><?php _e( 'HTML', 'edd_fes' ); ?></button>
             <button class="button" data-name="action_hook" data-type="action" title="<?php echo $title; ?>"><?php _e( 'Do Action', 'edd_fes' ); ?></button>
@@ -362,16 +358,8 @@ class CFM_Admin_Form {
                 CFM_Admin_Template_Post::section_break( $field_id, __( 'Section Break','edd_fes') );
                 break;
 
-            case 'recaptcha':
-                CFM_Admin_Template_Post::recaptcha( $field_id, __( 'reCaptcha','edd_fes') );
-                break;
-
             case 'action_hook':
                 CFM_Admin_Template_Post::action_hook( $field_id, __( 'Action Hook','edd_fes') );
-                break;
-
-            case 'really_simple_captcha':
-                CFM_Admin_Template_Post::really_simple_captcha( $field_id, __( 'Really Simple Captcha','edd_fes') );
                 break;
 
             case 'custom_date':
@@ -388,10 +376,6 @@ class CFM_Admin_Form {
 
             case 'toc':
                 CFM_Admin_Template_Post::toc( $field_id, 'TOC' );
-                break;
-
-            case 'user_login':
-                CFM_Admin_Template_Profile::user_login( $field_id, __( 'Username', 'edd_fes' ) );
                 break;
 
             case 'first_name':
@@ -420,14 +404,6 @@ class CFM_Admin_Form {
 
             case 'user_bio':
                 CFM_Admin_Template_Profile::description( $field_id, __( 'Biographical Info', 'edd_fes' ) );
-                break;
-
-            case 'password':
-                CFM_Admin_Template_Profile::password( $field_id, __( 'Password', 'edd_fes' ) );
-                break;
-
-            case 'user_avatar':
-                CFM_Admin_Template_Profile::avatar( $field_id, __( 'Avatar', 'edd_fes' ) );
                 break;
 
             case 'eddc_user_paypal':

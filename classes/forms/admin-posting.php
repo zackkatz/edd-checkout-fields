@@ -81,7 +81,6 @@ class CFM_Admin_Posting extends CFM_Render_Form {
                     init: function() {
                         $('.fes-cf-table').on('click', 'img.fes-clone-field', this.cloneField);
                         $('.fes-cf-table').on('click', 'img.fes-remove-field', this.removeField);
-                        $('.fes-cf-table').on('click', 'a.fes-delete-avatar', this.deleteAvatar);
                     },
                     cloneField: function(e) {
                         e.preventDefault();
@@ -105,21 +104,6 @@ class CFM_Admin_Posting extends CFM_Render_Form {
                             $parent.remove();
                         }
                     },
-
-                    deleteAvatar: function(e) {
-                        e.preventDefault();
-
-                        var data = {
-                            action: 'fes_delete_avatar',
-                            _wpnonce: '<?php echo wp_create_nonce( 'fes_nonce' ); ?>'
-                        };
-
-                        if ( confirm( $(this).data('confirm') ) ) {
-                            $.post(ajaxurl, data, function() {
-                                window.location.reload();
-                            });
-                        }
-                    }
                 };
 
                 fes.init();

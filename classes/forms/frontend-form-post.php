@@ -48,44 +48,16 @@ class CFM_Frontend_Form_Post extends CFM_Render_Form {
 		$form_vars     = $this->get_input_fields( $form_id );
 		$form_settings = get_post_meta( $form_id, 'fes-form_settings', true );
 		list( $post_vars, $taxonomy_vars, $meta_vars ) = $form_vars;
-		// don't check captcha on post edit
-		if ( !isset( $_POST[ 'post_id' ] ) ) {
-			// search if rs captcha is there
-			if ( $this->search( $post_vars, 'input_type', 'really_simple_captcha' ) ) {
-				$this->validate_rs_captcha();
-			}
-			// check recaptcha
-			if ( $this->search( $post_vars, 'input_type', 'recaptcha' ) ) {
-				$this->validate_re_captcha();
-			}
-		}
 		$post_author = get_current_user_id();
-		$pending     = EDD_CFM()->fes_options->get_option( 'edd_fes_auto_approve_submissions' );
-		$state       = 'pending';
-		if ( $pending == 1 ) {
-			$pending = false;
-			$status  = 'publish';
-		} else {
-			$pending = true;
-			$status  = 'pending';
-		}
+		$status  = 'publish';
 		$postarr = array(
-			 'post_type' => 'download',
+			'post_type' => 'download',
 			'post_status' => $status,
 			'post_author' => $post_author,
 			'post_title' => isset( $_POST[ 'post_title' ] ) ? trim( $_POST[ 'post_title' ] ) : '',
 			'post_content' => isset( $_POST[ 'post_content' ] ) ? trim( $_POST[ 'post_content' ] ) : '',
 			'post_excerpt' => isset( $_POST[ 'post_excerpt' ] ) ? trim( $_POST[ 'post_excerpt' ] ) : '' 
 		);
-		if ( isset( $_POST[ 'category' ] ) ) {
-			$category                   = $_POST[ 'category' ];
-			$postarr[ 'post_category' ] = is_array( $category ) ? $category : array(
-				 $category 
-			);
-		}
-		if ( isset( $_POST[ 'tags' ] ) ) {
-			$postarr[ 'tags_input' ] = explode( ',', $_POST[ 'tags' ] );
-		}
 		$error = apply_filters( 'fes_add_post_validate', '' );
 		if ( !empty( $error ) ) {
 			$this->send_error( $error );
@@ -117,82 +89,7 @@ class CFM_Frontend_Form_Post extends CFM_Render_Form {
 					}
 				}
 			}
-			foreach ( $taxonomy_vars as $taxonomy ) {
-				if ( isset( $_POST[ $taxonomy[ 'name' ] ] ) ) {
-					if ( is_object_in_taxonomy( 'download', $taxonomy[ 'name' ] ) ) {
-						$tax = $_POST[ $taxonomy[ 'name' ] ];
-						// if it's not an array, make it one
-						if ( !is_array( $tax ) ) {
-							$tax = array(
-								 $tax 
-							);
-						}
-						if ( $taxonomy[ 'type' ] == 'text' ) {
-							$hierarchical = array_map( 'trim', array_map( 'strip_tags', explode( ',', $_POST[ $taxonomy[ 'name' ] ] ) ) );
-							wp_set_object_terms( $post_id, $hierarchical, $taxonomy[ 'name' ] );
-						} else {
-							if ( is_taxonomy_hierarchical( $taxonomy[ 'name' ] ) ) {
-								wp_set_post_terms( $post_id, $_POST[ $taxonomy[ 'name' ] ], $taxonomy[ 'name' ] );
-							} else {
-								if ( $tax ) {
-									$non_hierarchical = array();
-									foreach ( $tax as $value ) {
-										$term = get_term_by( 'id', $value, $taxonomy[ 'name' ] );
-										if ( $term && !is_wp_error( $term ) ) {
-											$non_hierarchical[] = $term->name;
-										}
-									}
-									wp_set_post_terms( $post_id, $non_hierarchical, $taxonomy[ 'name' ] );
-								}
-							} // hierarchical
-						} // is text
-					} // is object tax
-				} // isset tax
-			}
-			$options   = isset( $_POST[ 'option' ] ) ? $_POST[ 'option' ] : '';
-			$files     = isset( $_POST[ 'files' ] ) ? $_POST[ 'files' ] : '';
-			$prices    = array();
-			$edd_files = array();
-			if ( isset( $options ) && $options != '' ) {
-				foreach ( $options as $key => $option ) {
-					$prices[] = array(
-						 'name' => sanitize_text_field( $option[ 'description' ] ),
-						'amount' => $option[ 'price' ] 
-					);
-				}
-				if ( !empty( $files ) ) {
-					foreach ( $files as $key => $url ) {
-						$edd_files[ $key ] = array(
-							 'name' => basename( $url ),
-							'file' => $url,
-							'condition' => $key 
-						);
-					}
-				}
-			}
 
-			if ( count( $prices ) === 1 ) {
-				add_post_meta( $post_id, '_variable_pricing', 0 );
-				add_post_meta( $post_id, 'edd_price', $prices[ 0 ][ 'amount' ] );
-			} else {
-				add_post_meta( $post_id, '_variable_pricing', 1 );
-				add_post_meta( $post_id, 'edd_variable_prices', $prices );
-			}
-			if ( !empty( $files ) ) {
-				add_post_meta( $post_id, 'edd_download_files', $edd_files );
-			}
-			if ( EDD_CFM()->vendors->is_commissions_active() ) {
-				$commission = array(
-					 'amount' => eddc_get_recipient_rate( 0, $post_author ),
-					'user_id' => $post_author,
-					'type' => 'percentage' 
-				);
-				add_post_meta( $post_id, '_edd_commission_settings', $commission );
-				add_post_meta( $post_id, '_edd_commisions_enabled', true );
-			}
-			$email_post = get_post( $post_id );
-			EDD_CFM()->emails->new_edd_fes_submission_admin( $email_post );
-			EDD_CFM()->emails->new_edd_fes_submission_user( $email_post );
 			// send the response (these are options in 2.1, so let's set this array up for that)
 			if ( function_exists( 'edd_set_upload_dir' ) ) {
 				remove_filter( 'upload_dir', 'edd_set_upload_dir' );

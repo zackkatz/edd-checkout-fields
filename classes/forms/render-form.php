@@ -385,10 +385,6 @@ class CFM_Render_Form {
                     $this->email( $form_field, $post_id, $type );
                     break;
 
-                case 'password':
-                    $this->password( $form_field, $post_id, $type );
-                    break;
-
                 case 'repeat':
                     $this->repeat( $form_field, $post_id, $type );
                     break;
@@ -509,9 +505,6 @@ class CFM_Render_Form {
      * @param string $attr
      */
     function label( $attr, $post_id = 0 ) {
-        if ( $post_id && $attr['input_type'] == 'password') {
-            $attr['required'] = 'no';
-        }
         ?>
         <div class="fes-label">
             <label for="fes-<?php echo isset( $attr['name'] ) ? $attr['name'] : 'cls'; ?>"><?php echo $attr['label'] . $this->required_mark( $attr ); ?></label>
@@ -992,64 +985,6 @@ class CFM_Render_Form {
 
         <?php
     }
-
-    /**
-     * Prints a email field
-     *
-     * @param array $attr
-     */
-    function password( $attr, $post_id, $type ) {
-        if ( $post_id ) {
-            $attr['required'] = 'no';
-        }
-        ?>
-
-        <div class="fes-fields">
-            <input id="pass1" type="password" class="password" data-required="<?php echo $attr['required'] ?>" data-type="text"<?php $this->required_html5( $attr ); ?> name="pass1" placeholder="<?php echo esc_attr( $attr['placeholder'] ); ?>" value="" size="<?php echo esc_attr( $attr['size'] ) ?>" />
-            <span class="fes-help"><?php echo $attr['help']; ?></span>
-        </div>
-
-        <?php
-        if ( $attr['repeat_pass'] == 'yes' ) {
-            $this->label( array('name' => 'pass2', 'label' => $attr['re_pass_label'], 'required' => $post_id ? 'no' : 'yes') );
-            ?>
-
-            <div class="fes-fields">
-                <input id="pass2" type="password" class="password" data-required="<?php echo $attr['required'] ?>" data-type="text"<?php $this->required_html5( $attr ); ?> name="pass2" value="" size="<?php echo esc_attr( $attr['size'] ) ?>" />
-            </div>
-
-            <?php
-        }
-
-        if ( $attr['repeat_pass'] == 'yes' && $attr['pass_strength'] == 'yes' ) {
-            ?>
-            <div class="fes-label">
-                &nbsp;
-            </div>
-
-            <div class="fes-fields">
-                <div id="pass-strength-result"><?php _e( 'Strength indicator' ); ?></div>
-                <script src="<?php echo admin_url( 'js/password-strength-meter.js' ); ?>"></script>
-                <script src="<?php echo admin_url( 'js/user-profile.js' ); ?>"></script>
-                <script type="text/javascript">
-                    var pwsL10n = {
-                        empty: "Strength indicator",
-                        short: "Very weak",
-                        bad: "Weak",
-                        good: "Medium",
-                        strong: "Strong",
-                        mismatch: "Mismatch"
-                    };
-                    try{convertEntities(pwsL10n);}catch(e){};
-                </script>
-            </div>
-            <?php
-        }
-        ?>
-
-        <?php
-    }
-
     /**
      * Prints a repeatable field
      *
