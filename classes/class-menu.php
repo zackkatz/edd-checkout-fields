@@ -24,8 +24,7 @@ class FES_Menu {
 			array( $this, 'about_screen' ),'','25.01'
 		);
 		add_submenu_page( 'fes-about','About FES', 'About FES', $this->minimum_capability,'fes-about', array( $this, 'about_screen' ));
-		add_submenu_page( 'fes-about', 'Submission Form Editor', 'Submission Form Editor', 'manage_options', 'post.php?post=' . EDD_FES()->fes_options->get_option( 'fes-submission-form') . '&action=edit');
-		add_submenu_page( 'fes-about', 'Profile Form Editor', 'Profile Form Editor', 'manage_options', 'post.php?post=' . EDD_FES()->fes_options->get_option( 'fes-profile-form') . '&action=edit');
+		add_submenu_page( 'fes-about', 'Checkout Fields Editor', 'Submission Form Editor', 'manage_options', 'post.php?post=' . EDD_FES()->fes_options->get_option( 'fes-submission-form') . '&action=edit');
 		add_dashboard_page(
 			__( 'EDD FES Documentation', 'edd_fes' ),
 			__( 'EDD FES Documentation', 'edd_fes' ),
