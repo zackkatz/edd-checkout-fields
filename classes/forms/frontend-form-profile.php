@@ -11,23 +11,6 @@ class FES_Frontend_Form_Profile extends FES_Render_Form {
 		foreach ( $meta_key_value as $meta_key => $meta_value ) {
 			update_user_meta( $user_id, $meta_key, $meta_value );
 		}
-		// save any multicolumn repeatable fields
-		foreach ( $multi_repeated as $repeat_key => $repeat_value ) {
-			// first, delete any previous repeatable fields
-			delete_user_meta( $user_id, $repeat_key );
-			// now add them
-			foreach ( $repeat_value as $repeat_field ) {
-				add_user_meta( $user_id, $repeat_key, $repeat_field );
-			}
-		} //foreach
-		// save any files attached
-		foreach ( $files as $file_input ) {
-			// delete any previous value
-			delete_user_meta( $user_id, $file_input[ 'name' ] );
-			foreach ( $file_input[ 'value' ] as $attachment_id ) {
-				add_user_meta( $user_id, $file_input[ 'name' ], $attachment_id );
-			}
-		}
 	}
 	
 	public function update_profile() {
