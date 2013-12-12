@@ -78,13 +78,7 @@ function fes_show_custom_fields( $content ) {
 
                 if ( $field_value ) {
                     foreach ($field_value as $attachment_id) {
-
-                        if ( $attr['input_type'] == 'image_upload' ) {
-                            $thumb = wp_get_attachment_image( $attachment_id, 'thumbnail' );
-                        } else {
-                            $thumb = get_post_field( 'post_title', $attachment_id );
-                        }
-
+                         $thumb = get_post_field( 'post_title', $attachment_id );
                         $full_size = wp_get_attachment_url( $attachment_id );
                         $image_html .= sprintf( '<a href="%s">%s</a> ', $full_size, $thumb );
                     }
@@ -92,12 +86,7 @@ function fes_show_custom_fields( $content ) {
 
                 $html .= $image_html . '</li>';
 
-            } elseif ( $attr['input_type'] == 'map' ) {
-                ob_start();
-                fes_shortcode_map_post($attr['name'], $post->ID);
-                $html .= ob_get_clean();
-            } else {
-
+            }else {
                 $value = get_post_meta( $post->ID, $attr['name'] );
                 $html .= sprintf( '<li><label>%s</label>: %s</li>', $attr['label'], make_clickable( implode( ', ', $value ) ) );
             }
@@ -110,135 +99,6 @@ function fes_show_custom_fields( $content ) {
 }
 
 add_filter( 'the_content', 'fes_show_custom_fields' );
-
-/**
- * Map display shortcode
- *
- * @param string $meta_key
- * @param int $post_id
- * @param array $args
- */
-function fes_shortcode_map( $location, $post_id = null, $args = array(), $meta_key = '' ) {
-    global $post;
-
-    // compatibility
-    if ( $post_id ) {
-        fes_shortcode_map_post( $location, $post_id, $args );
-        return;
-    }
-
-    $default = array('width' => 450, 'height' => 250, 'zoom' => 12);
-    $args = wp_parse_args( $args, $default );
-
-    list( $def_lat, $def_long ) = explode( ',', $location );
-    $def_lat = $def_lat ? $def_lat : 0;
-    $def_long = $def_long ? $def_long : 0;
-    ?>
-
-    <div class="google-map" style="margin: 10px 0; height: <?php echo $args['height']; ?>px; width: <?php echo $args['width']; ?>px;" id="fes-map-<?php echo $meta_key . $post->ID; ?>"></div>
-
-    <script type="text/javascript">
-        jQuery(function($){
-            var curpoint = new google.maps.LatLng(<?php echo $def_lat; ?>, <?php echo $def_long; ?>);
-
-            var gmap = new google.maps.Map( $('#fes-map-<?php echo $meta_key . $post->ID; ?>')[0], {
-                center: curpoint,
-                zoom: <?php echo $args['zoom']; ?>,
-                mapTypeId: window.google.maps.MapTypeId.ROADMAP
-            });
-
-            var marker = new window.google.maps.Marker({
-                position: curpoint,
-                map: gmap,
-                draggable: true
-            });
-
-        });
-    </script>
-    <?php
-}
-
-/**
- * Map shortcode for users
- *
- * @param string $meta_key
- * @param int $user_id
- * @param array $args
- */
-function fes_shortcode_map_user( $meta_key, $user_id = null, $args = array() ) {
-    $location = get_user_meta( $user_id, $meta_key, true );
-    fes_shortcode_map( $location, null, $args, $meta_key );
-}
-
-/**
- * Map shortcode post posts
- *
- * @global object $post
- * @param string $meta_key
- * @param int $post_id
- * @param array $args
- */
-function fes_shortcode_map_post( $meta_key, $post_id = null, $args = array() ) {
-    global $post;
-
-    if ( !$post_id ) {
-        $post_id = $post->ID;
-    }
-
-    $location = get_post_meta( $post_id, $meta_key, true );
-    fes_shortcode_map( $location, null, $args, $meta_key );
-}
-
-function fes_meta_shortcode( $atts ) {
-    global $post;
-
-    extract( shortcode_atts( array(
-        'name' => '',
-        'type' => 'normal',
-        'size' => 'thumbnail',
-        'height' => 250,
-        'width' => 450,
-        'zoom' => 12
-    ), $atts ) );
-
-    if ( empty( $name ) ) {
-        return;
-    }
-
-    if ( $type == 'image' || $type == 'file' ) {
-        $images = get_post_meta( $post->ID, $name );
-
-        if ( $images ) {
-            $html = '';
-            foreach ($images as $attachment_id) {
-
-                if ( $type == 'image' ) {
-                    $thumb = wp_get_attachment_image( $attachment_id, $size );
-                } else {
-                    $thumb = get_post_field( 'post_title', $attachment_id );
-                }
-
-                $full_size = wp_get_attachment_url( $attachment_id );
-                $html .= sprintf( '<a href="%s">%s</a> ', $full_size, $thumb );
-            }
-
-            return $html;
-        }
-
-    } elseif ( $type == 'map' ) {
-        ob_start();
-        fes_shortcode_map( $name, $post->ID, array('width' => $width, 'height' => $height, 'zoom' => $zoom ) );
-        return ob_get_clean();
-
-    } elseif ( $type == 'repeat' ) {
-        return implode( '; ', get_post_meta( $post->ID, $name ) );
-    } else {
-        return implode( ', ', get_post_meta( $post->ID, $name ) );
-    }
-}
-
-add_shortcode( 'fes-meta', 'fes_meta_shortcode' );
-
 
 /**
  * Get attachment ID from a URL
