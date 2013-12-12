@@ -116,7 +116,7 @@
                         if ( val === '') {
                             error = true;
 
-                            // make it warn collor
+                            // make it warn color
                             CFM_Form.markError(item);
                         }
                         break;
@@ -128,7 +128,7 @@
                         if ( val === '') {
                             error = true;
 
-                            // make it warn collor
+                            // make it warn color
                             CFM_Form.markError(item);
                         }
                         break;
@@ -140,7 +140,7 @@
                         if ( !val || val === '-1' ) {
                             error = true;
 
-                            // make it warn collor
+                            // make it warn color
                             CFM_Form.markError(item);
                         }
                         break;
@@ -151,7 +151,7 @@
                         if ( val === null || val.length === 0 ) {
                             error = true;
 
-                            // make it warn collor
+                            // make it warn color
                             CFM_Form.markError(item);
                         }
                         break;
@@ -162,7 +162,7 @@
                         if ( !length ) {
                             error = true;
 
-                            // make it warn collor
+                            // make it warn color
                             CFM_Form.markError(item);
                         }
                         break;
@@ -173,7 +173,7 @@
                         if ( !length ) {
                             error = true;
 
-                            // make it warn collor
+                            // make it warn color
                             CFM_Form.markError(item);
                         }
                         break;
