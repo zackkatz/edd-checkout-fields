@@ -33,8 +33,8 @@
             urlstream_upload: true,
             file_data_name: 'fes_file',
             max_file_size: max_file_size + 'kb',
-            url: fes_frontend_upload.plupload.url + '&type=' + type,
-            flash_swf_url: fes_frontend_upload.flash_swf_url,
+            url: cfm_frontend_upload.plupload.url + '&type=' + type,
+            flash_swf_url: cfm_frontend_upload.flash_swf_url,
             filters: [{
                 title: 'Allowed Files',
                 extensions: allowed_type
@@ -134,14 +134,14 @@
             var self = this,
             el = $(e.currentTarget);
 
-            if ( confirm(fes_frontend_upload.confirmMsg) ) {
+            if ( confirm(cfm_frontend_upload.confirmMsg) ) {
                 var data = {
                     'attach_id' : el.data('attach_id'),
-                    'nonce' : fes_frontend_upload.nonce,
+                    'nonce' : cfm_frontend_upload.nonce,
                     'action' : 'fes_file_del'
                 };
 
-                jQuery.post(fes_frontend_upload.ajaxurl, data, function() {
+                jQuery.post(cfm_frontend_upload.ajaxurl, data, function() {
                     el.parent().parent().remove();
 
                     self.count -= 1;

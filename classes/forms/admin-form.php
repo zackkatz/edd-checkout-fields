@@ -30,8 +30,6 @@ class CFM_Admin_Form {
         // ajax actions for post forms
         add_action( 'wp_ajax_edd-checkout-fields_dump', array( $this, 'form_dump' ) );
         add_action( 'wp_ajax_edd-checkout-fields_add_el', array( $this, 'ajax_post_add_element' ) );
-
-		add_action( 'save_post', array( $this, 'save_form_meta' ), 1, 2 ); // save the custom fields
     }
 	function remove_bulk_actions($actions){
 		return array();

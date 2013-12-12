@@ -14,12 +14,11 @@ class CFM_Admin_Posting extends CFM_Render_Form {
 
     function __construct() {
         add_action('edd_view_order_details_main_after', array($this, 'render_form'));
-		add_action( 'admin_init', array($this, 'save_meta'), 1, 2 );
+		add_action( 'admin_init', array( $this, 'save_meta' ) ); 
     }
 
-    function render_form($form_id, $post_id = NULL, $preview = false) {
-        global $post;
 
+    function render_form($form_id, $post_id = NULL, $preview = false) {
         $form_id = get_option( 'edd_cfm_id');
         $form_settings = get_post_meta( $form_id, 'edd-checkout-fields_settings', true );
 
@@ -30,17 +29,23 @@ class CFM_Admin_Posting extends CFM_Render_Form {
             return;
         }
         ?>
-
+		<div id="edd-checkout-fields" class="postbox">
+		<h3 class="hndle"><?php _e( 'Custom Checkout Fields', 'edd' ); ?></h3>
+			<div class="inside">
+		<form class="edd-checkout-fields-add" action="" method="post">
         <input type="hidden" name="fes_cf_update" value="<?php echo wp_create_nonce( plugin_basename( __FILE__ ) ); ?>" />
         <input type="hidden" name="fes_cf_form_id" value="<?php echo $form_id; ?>" />
-
         <table class="form-table fes-cf-table">
             <tbody>
                 <?php
-                $this->render_items( $custom_fields, $post->ID, 'post', $form_id, $form_settings );
+                $this->render_items( $custom_fields, absint( $_GET['id']) , 'post', $form_id, $form_settings );
                 ?>
             </tbody>
         </table>
+		<?php $this->submit_button(); ?>
+		</form>
+		</div>
+		</div>
         <?php
         $this->scripts_styles();
     }
@@ -158,22 +163,30 @@ class CFM_Admin_Posting extends CFM_Render_Form {
     }
 
     // Save the Metabox Data
-    function save_meta( $post_id, $post ) {
+    function save_meta( $post_id) {
+		
         if ( !isset( $_POST['fes_cf_update'] ) ) {
             return;
         }
 
-        if ( !wp_verify_nonce( $_POST['fes_cf_update'], plugin_basename( __FILE__ ) ) ) {
-            return;
-        }
-
-        // Is the user allowed to edit the post or page?
-        if ( !current_user_can( 'edit_post', $post->ID ) )
-            return $post->ID;
-
         list( $post_vars, $tax_vars, $meta_vars ) = self::get_input_fields( $_POST['fes_cf_form_id'] );
 
-        EDD_CFM()->frontend_form_post->update_post_meta( $meta_vars, $post->ID );
+        EDD_CFM()->frontend_form_post->update_post_meta( $meta_vars,  absint( $_GET['id']) );
+    }
+	
+	    function submit_button( ) {
+        $form_settings['update_text']= __( 'Update', 'edd_fes' );
+		?>
+        <fieldset class="fes-submit">
+            <div class="fes-label">
+                &nbsp;
+            </div>
+
+            <?php wp_nonce_field( 'fes_cf_update' ); ?>
+                <input type="hidden" name="fes_cf_update" value="fes_cf_update">
+                <input type="submit" class="button" name="submit" value="<?php echo $form_settings['update_text']; ?>" />
+        </fieldset>
+        <?php
     }
 
 }
