@@ -23,7 +23,7 @@ class CFM_Admin_Form {
 		add_action( 'bulk_actions-edit-edd-checkout-fields', array( $this, 'remove_bulk_actions'),10,2);
 		add_action( 'views_edit-edd-checkout-fields', array( $this, 'remove_bulk_actions'),10,2);
 		add_action( 'months_dropdown_results', array( $this, 'remove_months'),10,3);
-
+		add_action( 'save_post', array( $this, 'save_form_meta' ), 1, 2 );
         // meta boxes
         add_action( 'add_meta_boxes_edd-checkout-fields', array($this, 'add_meta_boxes') );
 
@@ -319,15 +319,15 @@ class CFM_Admin_Form {
                 break;
 
             case 'first_name':
-                CFM_Admin_Template_Profile::first_name( $field_id, __( 'First Name', 'edd_fes' ) );
+                CFM_Admin_Template::first_name( $field_id, __( 'First Name', 'edd_fes' ) );
                 break;
 
             case 'last_name':
-                CFM_Admin_Template_Profile::last_name( $field_id, __( 'Last Name', 'edd_fes' ) );
+                CFM_Admin_Template::last_name( $field_id, __( 'Last Name', 'edd_fes' ) );
                 break;
 
             case 'user_email':
-                CFM_Admin_Template_Profile::user_email( $field_id, __( 'E-mail', 'edd_fes' ) );
+                CFM_Admin_Template::user_email( $field_id, __( 'E-mail', 'edd_fes' ) );
                 break;
 
             default:

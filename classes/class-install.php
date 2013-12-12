@@ -35,6 +35,8 @@ class CFM_Install {
 			'post_title' => 'Checkout Fields' 
 		);
 		$page_id   = wp_insert_post( $page_data );
+		$data = 'a:3:{i:0;a:11:{s:10:"input_type";s:4:"text";s:8:"template";s:10:"first_name";s:8:"required";s:3:"yes";s:5:"label";s:10:"First Name";s:4:"name";s:10:"first_name";s:7:"is_meta";s:2:"no";s:4:"help";s:0:"";s:3:"css";s:0:"";s:11:"placeholder";s:0:"";s:7:"default";s:0:"";s:4:"size";s:2:"40";}i:1;a:11:{s:10:"input_type";s:4:"text";s:8:"template";s:9:"last_name";s:8:"required";s:3:"yes";s:5:"label";s:9:"Last Name";s:4:"name";s:9:"last_name";s:7:"is_meta";s:2:"no";s:4:"help";s:0:"";s:3:"css";s:0:"";s:11:"placeholder";s:0:"";s:7:"default";s:0:"";s:4:"size";s:2:"40";}i:3;a:11:{s:10:"input_type";s:5:"email";s:8:"template";s:10:"user_email";s:8:"required";s:3:"yes";s:5:"label";s:6:"E-mail";s:4:"name";s:10:"user_email";s:7:"is_meta";s:2:"no";s:4:"help";s:0:"";s:3:"css";s:0:"";s:11:"placeholder";s:0:"";s:7:"default";s:0:"";s:4:"size";s:2:"40";}}';
+		update_post_meta($page_id,'edd-checkout-fields', $data);
 		update_option( 'edd_cfm_id', $page_id );
 		return;
 	}
