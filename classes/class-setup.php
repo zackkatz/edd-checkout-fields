@@ -204,7 +204,6 @@ class CFM_Setup {
 			return;
 		}
 		if ( edd_is_checkout() ) {
-			wp_enqueue_style( 'cfm-css', cfm_plugin_url . 'assets/css/frontend.css' );
 			wp_enqueue_style( 'jquery-ui', cfm_plugin_url . 'assets/css/jquery-ui-1.9.1.custom.css' );
 		}
 	}
