@@ -24,7 +24,7 @@ class CFM_Admin_Posting extends CFM_Render_Form {
     function render_form($form_id, $post_id = NULL, $preview = false) {
         global $post;
 
-        $form_id = EDD_CFM()->fes_options->get_option( 'fes-submission-form');
+        $form_id = get_option( 'edd_cfm_id');
         $form_settings = get_post_meta( $form_id, 'edd-checkout-fields_settings', true );
 
         list($post_fields, $taxonomy_fields, $custom_fields) = $this->get_input_fields( $form_id );
