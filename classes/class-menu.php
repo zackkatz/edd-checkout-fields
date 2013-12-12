@@ -15,7 +15,7 @@ class CFM_Menu {
 	}
 
 	public function admin_menus() {
-		add_menu_page( 'About CFM', 'About CFM', $this->minimum_capability,'cfm-about', array( $this, 'about_screen' ));
+		add_dashboard_page( 'About CFM', 'About CFM', $this->minimum_capability,'cfm-about', array( $this, 'about_screen' ));
 		add_submenu_page( 'edit.php?post_type=download', 'Checkout Fields', 'Checkout Fields Editor', 'manage_options', 'post.php?post=' . get_option( 'edd_cfm_id') . '&action=edit');
 	}
 

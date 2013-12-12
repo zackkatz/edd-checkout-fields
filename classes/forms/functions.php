@@ -40,7 +40,7 @@ function fes_associate_attachment( $attachment_id, $post_id ) {
 function fes_show_custom_fields( $content ) {
     global $post;
 
-    $show_custom = EDD_FES()->fes_options->get_option( 'edd_fes_show_custom_meta');
+    $show_custom = false;//EDD_FES()->fes_options->get_option( 'edd_fes_show_custom_meta');
 	if($post->post_type != 'download'){
 		return $content;
 	}
@@ -52,7 +52,7 @@ function fes_show_custom_fields( $content ) {
 
     $html = '<ul class="fes_customs">';
 
-    $form_vars = get_post_meta( $form_id, 'fes-form', true );
+    $form_vars = get_post_meta( $form_id, 'edd-checkout-fields', true );
     $meta = array();
 
     if ( $form_vars ) {

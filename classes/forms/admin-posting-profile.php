@@ -58,7 +58,7 @@ class FES_Admin_Posting_Profile extends FES_Admin_Posting {
                     $this->render_item_after( $avatar );
                 }
 
-                $this->render_items( $custom_fields, $userdata->ID, 'user', $form_id, get_post_meta( $form_id, 'fes-form', true ) );
+                $this->render_items( $custom_fields, $userdata->ID, 'user', $form_id, get_post_meta( $form_id, 'edd-checkout-fields', true ) );
                 ?>
             </tbody>
         </table>

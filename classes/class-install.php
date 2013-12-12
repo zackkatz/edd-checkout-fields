@@ -5,7 +5,7 @@ if ( !defined( 'ABSPATH' ) ) {
 
 class CFM_Install {
 	public function init() {
-		$db_version = get_option( 'edd_cfm_version' )
+		$db_version = get_option( 'edd_cfm_version' );
 		EDD_CFM()->setup->register_post_type();
 		if ( !$db_version ) {
 			$this->install_fes();

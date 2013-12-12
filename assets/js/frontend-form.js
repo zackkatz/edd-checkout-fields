@@ -2,11 +2,11 @@
     var CFM_Form = {
         init: function() {
             // clone and remove repeated field
-            $('.fes-form').on('click', 'img.fes-clone-field', this.cloneField);
-            $('.fes-form').on('click', 'img.fes-remove-field', this.removeField);
-            $('.fes-form').on('click', 'a.fes-delete-avatar', this.deleteAvatar);
+            $('.edd-checkout-fields').on('click', 'img.fes-clone-field', this.cloneField);
+            $('.edd-checkout-fields').on('click', 'img.fes-remove-field', this.removeField);
+            $('.edd-checkout-fields').on('click', 'a.fes-delete-avatar', this.deleteAvatar);
 
-            $('.fes-form-add').on('submit', this.formSubmit);
+            $('.edd-checkout-fields-add').on('submit', this.formSubmit);
             $('form#post').on('submit', this.adminPostSubmit);
 
             // image insert

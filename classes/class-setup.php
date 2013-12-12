@@ -5,6 +5,8 @@ if ( !defined( 'ABSPATH' ) ) {
 
 class CFM_Setup {
 	public function __construct() {
+		remove_action( 'edd_purchase_form_after_user_info', 'edd_user_info_fields' );
+		add_action('edd_purchase_form_after_user_info', array ($this, 'add_fields'));
 		add_action( 'admin_init', array(
 			 $this,
 			'is_wp_36_and_edd_activated' 
@@ -38,7 +40,9 @@ class CFM_Setup {
 			'cfm_version' 
 		) );
 	}
-	
+	function add_fields(){
+		echo do_shortcode('[edd-checkout-fields]');
+	}
 	public function is_wp_36_and_edd_activated() {
 		global $wp_version;
 		if ( version_compare( $wp_version, '3.6', '< ' ) ) {
@@ -95,7 +99,6 @@ class CFM_Setup {
 		if ( edd_is_checkout() ) {
 			$scheme = is_ssl() ? 'https' : 'http';
 			wp_enqueue_script( 'jquery' );
-			wp_enqueue_script( 'google-maps', $scheme . '://maps.google.com/maps/api/js?sensor=true' );
 			wp_enqueue_style( 'cfm-css', cfm_plugin_url . 'assets/css/frontend.css' );
 			wp_enqueue_script( 'cfm-form', cfm_plugin_url . 'assets/js/frontend-form.js', array(
 				 'jquery' 
@@ -146,7 +149,6 @@ class CFM_Setup {
 		$current_screen = get_current_screen();
 		if ( $current_screen->post_type === 'edd-checkout-fields' || $current_screen->post_type === 'shop_orders' ) {
 			$scheme = is_ssl() ? 'https' : 'http';
-			wp_enqueue_script( 'google-maps', $scheme . '://maps.google.com/maps/api/js?sensor=true' );
 			wp_register_script( 'jquery-tiptip', cfm_plugin_url . 'assets/js/jquery-tiptip/jquery.tipTip.min.js', array(
 				 'jquery' 
 			), '2.0', true );

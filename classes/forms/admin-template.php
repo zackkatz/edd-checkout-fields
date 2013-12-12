@@ -61,29 +61,29 @@ class CFM_Admin_Template {
 		do_action('edd_fes_add_field_to_common_form_element', $tpl, self::$input_name, $id, $values);
         ?>
 
-        <div class="fes-form-rows required-field">
+        <div class="edd-checkout-fields-rows required-field">
             <label><?php _e( 'Required', 'edd_fes' ); ?></label>
 
             <?php //self::hidden_field($order_name, ''); ?>
-            <div class="fes-form-sub-fields">
+            <div class="edd-checkout-fields-sub-fields">
                 <label><input type="radio" name="<?php echo $required_name; ?>" value="yes"<?php checked( $required, 'yes' ); ?>> <?php _e( 'Yes', 'edd_fes' ); ?> </label>
 				<?php if($reqtoggle){ ?>
 				<label><input type="radio" name="<?php echo $required_name; ?>" value="no"<?php checked( $required, 'no' ); ?>> <?php _e( 'No', 'edd_fes' ); ?> </label>
 				<?php } ?>
 			</div>
-        </div> <!-- .fes-form-rows -->
+        </div> <!-- .edd-checkout-fields-rows -->
 
-        <div class="fes-form-rows">
+        <div class="edd-checkout-fields-rows">
             <label><?php _e( 'Field Label', 'edd_fes' ); ?></label>
             <input type="text" data-type="label" name="<?php echo $label_name; ?>" value="<?php echo $label_value; ?>" class="smallipopInput" title="<?php _e( 'Enter a title of this field', 'edd_fes' ); ?>">
-        </div> <!-- .fes-form-rows -->
+        </div> <!-- .edd-checkout-fields-rows -->
 
         <?php if ( $custom_field ) { ?>
-            <div class="fes-form-rows">
+            <div class="edd-checkout-fields-rows">
                 <label><?php _e( 'Meta Key', 'edd_fes' ); ?></label>
                 <input type="text" name="<?php echo $field_name; ?>" value="<?php echo $field_name_value; ?>" class="smallipopInput" title="<?php _e( 'Name of the meta key this field will save to', 'edd_fes' ); ?>">
                 <input type="hidden" name="<?php echo $is_meta_name; ?>" value="yes">
-            </div> <!-- .fes-form-rows -->
+            </div> <!-- .edd-checkout-fields-rows -->
         <?php } else { ?>
 
             <input type="hidden" name="<?php echo $field_name; ?>" value="<?php echo $field_name_value; ?>">
@@ -91,15 +91,15 @@ class CFM_Admin_Template {
 
         <?php } ?>
 
-        <div class="fes-form-rows">
+        <div class="edd-checkout-fields-rows">
             <label><?php _e( 'Help text', 'edd_fes' ); ?></label>
             <textarea name="<?php echo $help_name; ?>" class="smallipopInput" title="<?php _e( 'Give the user some information about this field', 'edd_fes' ); ?>"><?php echo $help_value; ?></textarea>
-        </div> <!-- .fes-form-rows -->
+        </div> <!-- .edd-checkout-fields-rows -->
 
-        <div class="fes-form-rows">
+        <div class="edd-checkout-fields-rows">
             <label><?php _e( 'CSS Class Name', 'edd_fes' ); ?></label>
             <input type="text" name="<?php echo $css_name; ?>" value="<?php echo $css_value; ?>" class="smallipopInput" title="<?php _e( 'Add a CSS class name for this field', 'edd_fes' ); ?>">
-        </div> <!-- .fes-form-rows -->
+        </div> <!-- .edd-checkout-fields-rows -->
 
         <?php
     }
@@ -121,20 +121,20 @@ class CFM_Admin_Template {
         $size_value = $values && isset($values['size']) ? esc_attr( $values['size'] ) : '40';
 
         ?>
-        <div class="fes-form-rows">
+        <div class="edd-checkout-fields-rows">
             <label><?php _e( 'Placeholder text', 'edd_fes' ); ?></label>
             <input type="text" class="smallipopInput" name="<?php echo $placeholder_name; ?>" title="<?php esc_attr_e( 'Text for HTML5 placeholder attribute', 'edd_fes' ); ?>" value="<?php echo $placeholder_value; ?>" />
-        </div> <!-- .fes-form-rows -->
+        </div> <!-- .edd-checkout-fields-rows -->
 
-        <div class="fes-form-rows">
+        <div class="edd-checkout-fields-rows">
             <label><?php _e( 'Default value', 'edd_fes' ); ?></label>
             <input type="text" class="smallipopInput" name="<?php echo $default_name; ?>" title="<?php esc_attr_e( 'The default value this field will have', 'edd_fes' ); ?>" value="<?php echo $default_value; ?>" />
-        </div> <!-- .fes-form-rows -->
+        </div> <!-- .edd-checkout-fields-rows -->
 
-        <div class="fes-form-rows">
+        <div class="edd-checkout-fields-rows">
             <label><?php _e( 'Size', 'edd_fes' ); ?></label>
             <input type="text" class="smallipopInput" name="<?php echo $size_name; ?>" title="<?php esc_attr_e( 'Size of this input field', 'edd_fes' ); ?>" value="<?php echo $size_value; ?>" />
-        </div> <!-- .fes-form-rows -->
+        </div> <!-- .edd-checkout-fields-rows -->
         <?php
     }
 
@@ -159,35 +159,35 @@ class CFM_Admin_Template {
         $default_value = $values && isset( $values['default'] )? esc_attr( $values['default'] ) : '';
 
         ?>
-        <div class="fes-form-rows">
+        <div class="edd-checkout-fields-rows">
             <label><?php _e( 'Rows', 'edd_fes' ); ?></label>
             <input type="text" class="smallipopInput" name="<?php echo $rows_name; ?>" title="Number of rows in textarea" value="<?php echo $rows_value; ?>" />
-        </div> <!-- .fes-form-rows -->
+        </div> <!-- .edd-checkout-fields-rows -->
 
-        <div class="fes-form-rows">
+        <div class="edd-checkout-fields-rows">
             <label><?php _e( 'Columns', 'edd_fes' ); ?></label>
             <input type="text" class="smallipopInput" name="<?php echo $cols_name; ?>" title="Number of columns in textarea" value="<?php echo $cols_value; ?>" />
-        </div> <!-- .fes-form-rows -->
+        </div> <!-- .edd-checkout-fields-rows -->
 
-        <div class="fes-form-rows">
+        <div class="edd-checkout-fields-rows">
             <label><?php _e( 'Placeholder text', 'edd_fes' ); ?></label>
             <input type="text" class="smallipopInput" name="<?php echo $placeholder_name; ?>" title="text for HTML5 placeholder attribute" value="<?php echo $placeholder_value; ?>" />
-        </div> <!-- .fes-form-rows -->
+        </div> <!-- .edd-checkout-fields-rows -->
 
-        <div class="fes-form-rows">
+        <div class="edd-checkout-fields-rows">
             <label><?php _e( 'Default value', 'edd_fes' ); ?></label>
             <input type="text" class="smallipopInput" name="<?php echo $default_name; ?>" title="the default value this field will have" value="<?php echo $default_value; ?>" />
-        </div> <!-- .fes-form-rows -->
+        </div> <!-- .edd-checkout-fields-rows -->
 
-        <div class="fes-form-rows">
+        <div class="edd-checkout-fields-rows">
             <label><?php _e( 'Textarea', 'edd_fes' ); ?></label>
 
-            <div class="fes-form-sub-fields">
+            <div class="edd-checkout-fields-sub-fields">
                 <label><input type="radio" name="<?php echo $rich_name; ?>" value="no"<?php checked( $rich_value, 'no' ); ?>> <?php _e( 'Normal', 'edd_fes' ); ?></label>
                 <label><input type="radio" name="<?php echo $rich_name; ?>" value="yes"<?php checked( $rich_value, 'yes' ); ?>> <?php _e( 'Rich textarea', 'edd_fes' ); ?></label>
                 <label><input type="radio" name="<?php echo $rich_name; ?>" value="teeny"<?php checked( $rich_value, 'teeny' ); ?>> <?php _e( 'Teeny Rich textarea', 'edd_fes' ); ?></label>
             </div>
-        </div> <!-- .fes-form-rows -->
+        </div> <!-- .edd-checkout-fields-rows -->
         <?php
     }
 
@@ -279,8 +279,8 @@ class CFM_Admin_Template {
      * @return void
      */
     public static function remove_button() {
-        $add = fes_assets_url .'img/add.png';
-        $remove = fes_assets_url. 'img/remove.png';
+        $add = cfm_assets_url .'img/add.png';
+        $remove = cfm_assets_url. 'img/remove.png';
         ?>
         <img style="cursor:pointer; margin:0 3px;" alt="add another choice" title="add another choice" class="fes-clone-field" src="<?php echo $add; ?>">
         <img style="cursor:pointer;" class="fes-remove-field" alt="remove this choice" title="remove this choice" src="<?php echo $remove; ?>">
@@ -302,10 +302,10 @@ class CFM_Admin_Template {
             <?php self::hidden_field( "[$field_id][input_type]", 'text' ); ?>
             <?php self::hidden_field( "[$field_id][template]", 'text_field' ); ?>
 
-            <div class="fes-form-holder">
+            <div class="edd-checkout-fields-holder">
                 <?php self::common( $field_id, '', true, $values, $reqtoggle ); ?>
                 <?php self::common_text( $field_id, $values ); ?>
-            </div> <!-- .fes-form-holder -->
+            </div> <!-- .edd-checkout-fields-holder -->
         </li>
         <?php
     }
@@ -317,10 +317,10 @@ class CFM_Admin_Template {
             <?php self::hidden_field( "[$field_id][input_type]", 'textarea' ); ?>
             <?php self::hidden_field( "[$field_id][template]", 'textarea_field' ); ?>
 
-            <div class="fes-form-holder">
+            <div class="edd-checkout-fields-holder">
                 <?php self::common( $field_id, '', true, $values, $reqtoggle ); ?>
                 <?php self::common_textarea( $field_id, $values ); ?>
-            </div> <!-- .fes-form-holder -->
+            </div> <!-- .edd-checkout-fields-holder -->
         </li>
         <?php
     }
@@ -332,17 +332,17 @@ class CFM_Admin_Template {
             <?php self::hidden_field( "[$field_id][input_type]", 'radio' ); ?>
             <?php self::hidden_field( "[$field_id][template]", 'radio_field' ); ?>
 
-            <div class="fes-form-holder">
+            <div class="edd-checkout-fields-holder">
                 <?php self::common( $field_id, '', true, $values, $reqtoggle ); ?>
 
-                <div class="fes-form-rows">
+                <div class="edd-checkout-fields-rows">
                     <label><?php _e( 'Options', 'edd_fes' ); ?></label>
 
-                    <div class="fes-form-sub-fields">
+                    <div class="edd-checkout-fields-sub-fields">
                         <?php self::radio_fields( $field_id, 'options', $values ); ?>
-                    </div> <!-- .fes-form-sub-fields -->
-                </div> <!-- .fes-form-rows -->
-            </div> <!-- .fes-form-holder -->
+                    </div> <!-- .edd-checkout-fields-sub-fields -->
+                </div> <!-- .edd-checkout-fields-rows -->
+            </div> <!-- .edd-checkout-fields-holder -->
         </li>
         <?php
     }
@@ -354,17 +354,17 @@ class CFM_Admin_Template {
             <?php self::hidden_field( "[$field_id][input_type]", 'checkbox' ); ?>
             <?php self::hidden_field( "[$field_id][template]", 'checkbox_field' ); ?>
 
-            <div class="fes-form-holder">
+            <div class="edd-checkout-fields-holder">
                 <?php self::common( $field_id, '', true, $values, $reqtoggle ); ?>
 
-                <div class="fes-form-rows">
+                <div class="edd-checkout-fields-rows">
                     <label><?php _e( 'Options', 'edd_fes' ); ?></label>
 
-                    <div class="fes-form-sub-fields">
+                    <div class="edd-checkout-fields-sub-fields">
                         <?php self::common_checkbox( $field_id, 'options', $values ); ?>
-                    </div> <!-- .fes-form-sub-fields -->
-                </div> <!-- .fes-form-rows -->
-            </div> <!-- .fes-form-holder -->
+                    </div> <!-- .edd-checkout-fields-sub-fields -->
+                </div> <!-- .edd-checkout-fields-rows -->
+            </div> <!-- .edd-checkout-fields-holder -->
         </li>
         <?php
     }
@@ -379,22 +379,22 @@ class CFM_Admin_Template {
             <?php self::hidden_field( "[$field_id][input_type]", 'select' ); ?>
             <?php self::hidden_field( "[$field_id][template]", 'dropdown_field' ); ?>
 
-            <div class="fes-form-holder">
+            <div class="edd-checkout-fields-holder">
                 <?php self::common( $field_id, '', true, $values, $reqtoggle ); ?>
 
-                <div class="fes-form-rows">
+                <div class="edd-checkout-fields-rows">
                     <label><?php _e( 'Select Text', 'edd_fes' ); ?></label>
                     <input type="text" class="smallipopInput" name="<?php echo $first_name; ?>" value="<?php echo $first_value; ?>" title="<?php echo $help; ?>">
-                </div> <!-- .fes-form-rows -->
+                </div> <!-- .edd-checkout-fields-rows -->
 
-                <div class="fes-form-rows">
+                <div class="edd-checkout-fields-rows">
                     <label><?php _e( 'Options', 'edd_fes' ); ?></label>
 
-                    <div class="fes-form-sub-fields">
+                    <div class="edd-checkout-fields-sub-fields">
                         <?php self::radio_fields( $field_id, 'options', $values ); ?>
-                    </div> <!-- .fes-form-sub-fields -->
-                </div> <!-- .fes-form-rows -->
-            </div> <!-- .fes-form-holder -->
+                    </div> <!-- .edd-checkout-fields-sub-fields -->
+                </div> <!-- .edd-checkout-fields-rows -->
+            </div> <!-- .edd-checkout-fields-holder -->
         </li>
         <?php
     }
@@ -409,54 +409,22 @@ class CFM_Admin_Template {
             <?php self::hidden_field( "[$field_id][input_type]", 'multiselect' ); ?>
             <?php self::hidden_field( "[$field_id][template]", 'multiple_select' ); ?>
 
-            <div class="fes-form-holder">
+            <div class="edd-checkout-fields-holder">
                 <?php self::common( $field_id, '', true, $values, $reqtoggle ); ?>
 
-                <div class="fes-form-rows">
+                <div class="edd-checkout-fields-rows">
                     <label><?php _e( 'Select Text', 'edd_fes' ); ?></label>
                     <input type="text" class="smallipopInput" name="<?php echo $first_name; ?>" value="<?php echo $first_value; ?>" title="<?php echo $help; ?>">
-                </div> <!-- .fes-form-rows -->
+                </div> <!-- .edd-checkout-fields-rows -->
 
-                <div class="fes-form-rows">
+                <div class="edd-checkout-fields-rows">
                     <label><?php _e( 'Options', 'edd_fes' ); ?></label>
 
-                    <div class="fes-form-sub-fields">
+                    <div class="edd-checkout-fields-sub-fields">
                         <?php self::radio_fields( $field_id, 'options', $values ); ?>
-                    </div> <!-- .fes-form-sub-fields -->
-                </div> <!-- .fes-form-rows -->
-            </div> <!-- .fes-form-holder -->
-        </li>
-        <?php
-    }
-
-    public static function image_upload( $field_id, $label, $values = array(), $removeable = true, $reqtoggle = true  ) {
-        $max_size_name = sprintf('%s[%d][max_size]', self::$input_name, $field_id);
-        $max_files_name = sprintf('%s[%d][count]', self::$input_name, $field_id);
-
-        $max_size_value = $values ? $values['max_size'] : '1024';
-        $max_files_value = $values ? $values['count'] : '1';
-
-        $help = esc_attr( __( 'Enter maximum upload size limit in KB', 'edd_fes' ) );
-        $count = esc_attr( __( 'Number of images can be uploaded', 'edd_fes' ) );
-        ?>
-        <li class="custom-field image_upload">
-            <?php self::legend( $label, $values, $removeable ); ?>
-            <?php self::hidden_field( "[$field_id][input_type]", 'image_upload' ); ?>
-            <?php self::hidden_field( "[$field_id][template]", 'image_upload' ); ?>
-
-            <div class="fes-form-holder">
-                <?php self::common( $field_id, '', true, $values, $reqtoggle ); ?>
-
-                <div class="fes-form-rows">
-                    <label><?php _e( 'Max. file size', 'edd_fes' ); ?></label>
-                    <input type="text" class="smallipopInput" name="<?php echo $max_size_name; ?>" value="<?php echo $max_size_value; ?>" title="<?php echo $help; ?>">
-                </div> <!-- .fes-form-rows -->
-
-                <div class="fes-form-rows">
-                    <label><?php _e( 'Max. files', 'edd_fes' ); ?></label>
-                    <input type="text" class="smallipopInput" name="<?php echo $max_files_name; ?>" value="<?php echo $max_files_value; ?>" title="<?php echo $count; ?>">
-                </div> <!-- .fes-form-rows -->
-            </div> <!-- .fes-form-holder -->
+                    </div> <!-- .edd-checkout-fields-sub-fields -->
+                </div> <!-- .edd-checkout-fields-rows -->
+            </div> <!-- .edd-checkout-fields-holder -->
         </li>
         <?php
     }
@@ -480,23 +448,23 @@ class CFM_Admin_Template {
             <?php self::hidden_field( "[$field_id][input_type]", 'file_upload' ); ?>
             <?php self::hidden_field( "[$field_id][template]", 'file_upload' ); ?>
 
-            <div class="fes-form-holder">
+            <div class="edd-checkout-fields-holder">
                 <?php self::common( $field_id, '', true, $values, $reqtoggle ); ?>
 
-                <div class="fes-form-rows">
+                <div class="edd-checkout-fields-rows">
                     <label><?php _e( 'Max. file size', 'edd_fes' ); ?></label>
                     <input type="text" class="smallipopInput" name="<?php echo $max_size_name; ?>" value="<?php echo $max_size_value; ?>" title="<?php echo $help; ?>">
-                </div> <!-- .fes-form-rows -->
+                </div> <!-- .edd-checkout-fields-rows -->
 
-                <div class="fes-form-rows">
+                <div class="edd-checkout-fields-rows">
                     <label><?php _e( 'Max. files', 'edd_fes' ); ?></label>
                     <input type="text" class="smallipopInput" name="<?php echo $max_files_name; ?>" value="<?php echo $max_files_value; ?>" title="<?php echo $count; ?>">
-                </div> <!-- .fes-form-rows -->
+                </div> <!-- .edd-checkout-fields-rows -->
 
-                <div class="fes-form-rows">
+                <div class="edd-checkout-fields-rows">
                     <label><?php _e( 'Allowed Files', 'edd_fes' ); ?></label>
 
-                    <div class="fes-form-sub-fields">
+                    <div class="edd-checkout-fields-sub-fields">
                         <?php foreach ($extensions as $key => $value) {
                             ?>
                             <label>
@@ -505,8 +473,8 @@ class CFM_Admin_Template {
                             </label> <br />
                         <?php } ?>
                     </div>
-                </div> <!-- .fes-form-rows -->
-            </div> <!-- .fes-form-holder -->
+                </div> <!-- .edd-checkout-fields-rows -->
+            </div> <!-- .edd-checkout-fields-holder -->
         </li>
         <?php
     }
@@ -518,10 +486,10 @@ class CFM_Admin_Template {
             <?php self::hidden_field( "[$field_id][input_type]", 'url' ); ?>
             <?php self::hidden_field( "[$field_id][template]", 'website_url' ); ?>
 
-            <div class="fes-form-holder">
+            <div class="edd-checkout-fields-holder">
                 <?php self::common( $field_id, '', true, $values, $reqtoggle ); ?>
                 <?php self::common_text( $field_id, $values ); ?>
-            </div> <!-- .fes-form-holder -->
+            </div> <!-- .edd-checkout-fields-holder -->
         </li>
         <?php
     }
@@ -533,10 +501,10 @@ class CFM_Admin_Template {
             <?php self::hidden_field( "[$field_id][input_type]", 'email' ); ?>
             <?php self::hidden_field( "[$field_id][template]", 'email_address' ); ?>
 
-            <div class="fes-form-holder">
+            <div class="edd-checkout-fields-holder">
                 <?php self::common( $field_id, '', true, $values, $reqtoggle ); ?>
                 <?php self::common_text( $field_id, $values ); ?>
-            </div> <!-- .fes-form-holder -->
+            </div> <!-- .edd-checkout-fields-holder -->
         </li>
         <?php
     }
@@ -562,36 +530,36 @@ class CFM_Admin_Template {
             <?php self::hidden_field( "[$field_id][input_type]", 'repeat' ); ?>
             <?php self::hidden_field( "[$field_id][template]", 'repeat_field' ); ?>
 
-            <div class="fes-form-holder">
+            <div class="edd-checkout-fields-holder">
                 <?php self::common( $field_id, '', true, $values, $reqtoggle ); ?>
 
-                <div class="fes-form-rows">
+                <div class="edd-checkout-fields-rows">
                     <label><?php _e( 'Multiple Column', 'edd_fes' ); ?></label>
 
-                    <div class="fes-form-sub-fields">
+                    <div class="edd-checkout-fields-sub-fields">
                         <label><input type="checkbox" class="multicolumn" name="<?php echo $enable_column_name ?>"<?php echo $has_column ? ' checked="checked"' : ''; ?> value="true"> Enable Multi Column</label>
                     </div>
                 </div>
 
-                <div class="fes-form-rows<?php echo $has_column ? ' fes-hide' : ''; ?>">
+                <div class="edd-checkout-fields-rows<?php echo $has_column ? ' fes-hide' : ''; ?>">
                     <label><?php _e( 'Placeholder text', 'edd_fes' ); ?></label>
                     <input type="text" class="smallipopInput" name="<?php echo $placeholder_name; ?>" title="text for HTML5 placeholder attribute" value="<?php echo $placeholder_value; ?>" />
-                </div> <!-- .fes-form-rows -->
+                </div> <!-- .edd-checkout-fields-rows -->
 
-                <div class="fes-form-rows<?php echo $has_column ? ' fes-hide' : ''; ?>">
+                <div class="edd-checkout-fields-rows<?php echo $has_column ? ' fes-hide' : ''; ?>">
                     <label><?php _e( 'Default value', 'edd_fes' ); ?></label>
                     <input type="text" class="smallipopInput" name="<?php echo $default_name; ?>" title="the default value this field will have" value="<?php echo $default_value; ?>" />
-                </div> <!-- .fes-form-rows -->
+                </div> <!-- .edd-checkout-fields-rows -->
 
-                <div class="fes-form-rows">
+                <div class="edd-checkout-fields-rows">
                     <label><?php _e( 'Size', 'edd_fes' ); ?></label>
                     <input type="text" class="smallipopInput" name="<?php echo $size_name; ?>" title="Size of this input field" value="<?php echo $size_value; ?>" />
-                </div> <!-- .fes-form-rows -->
+                </div> <!-- .edd-checkout-fields-rows -->
 
-                <div class="fes-form-rows column-names<?php echo $has_column ? '' : ' fes-hide'; ?>">
+                <div class="edd-checkout-fields-rows column-names<?php echo $has_column ? '' : ' fes-hide'; ?>">
                     <label><?php _e( 'Columns', 'edd_fes' ); ?></label>
 
-                    <div class="fes-form-sub-fields">
+                    <div class="edd-checkout-fields-sub-fields">
                     <?php
 
                         if ( $values && $values['columns'] > 0 ) {
@@ -615,8 +583,8 @@ class CFM_Admin_Template {
                         }
                     ?>
                     </div>
-                </div> <!-- .fes-form-rows -->
-            </div> <!-- .fes-form-holder -->
+                </div> <!-- .edd-checkout-fields-rows -->
+            </div> <!-- .edd-checkout-fields-holder -->
         </li>
         <?php
     }
@@ -633,75 +601,17 @@ class CFM_Admin_Template {
             <?php self::hidden_field( "[$field_id][input_type]", 'html' ); ?>
             <?php self::hidden_field( "[$field_id][template]", 'custom_html' ); ?>
 
-            <div class="fes-form-holder">
-                <div class="fes-form-rows">
+            <div class="edd-checkout-fields-holder">
+                <div class="edd-checkout-fields-rows">
                     <label><?php _e( 'Title', 'edd_fes' ); ?></label>
                     <input type="text" class="smallipopInput" title="Title of the section" name="<?php echo $title_name; ?>" value="<?php echo esc_attr( $title_value ); ?>" />
-                </div> <!-- .fes-form-rows -->
+                </div> <!-- .edd-checkout-fields-rows -->
 
-                <div class="fes-form-rows">
+                <div class="edd-checkout-fields-rows">
                     <label><?php _e( 'HTML Codes', 'edd_fes' ); ?></label>
                     <textarea class="smallipopInput" title="Paste your HTML codes, WordPress shortcodes will also work here" name="<?php echo $html_name; ?>" rows="10"><?php echo esc_html( $html_value ); ?></textarea>
                 </div>
-            </div> <!-- .fes-form-holder -->
-        </li>
-        <?php
-    }
-
-    public static function custom_hidden_field( $field_id, $label, $values = array(), $removeable = true, $reqtoggle = true  ) {
-        $meta_name = sprintf( '%s[%d][name]', self::$input_name, $field_id );
-        $value_name = sprintf( '%s[%d][meta_value]', self::$input_name, $field_id );
-        $is_meta_name = sprintf( '%s[%d][is_meta]', self::$input_name, $field_id );
-        $label_name = sprintf( '%s[%d][label]', self::$input_name, $field_id );
-
-        $meta_value = $values ? esc_attr( $values['name'] ) : '';
-        $value_value = $values ? esc_attr( $values['meta_value'] ) : '';
-        ?>
-        <li class="custom-field custom_hidden_field">
-            <?php self::legend( $label, $values, $removeable ); ?>
-            <?php self::hidden_field( "[$field_id][input_type]", 'hidden' ); ?>
-            <?php self::hidden_field( "[$field_id][template]", 'custom_hidden_field' ); ?>
-
-            <div class="fes-form-holder">
-                <div class="fes-form-rows">
-                    <label><?php _e( 'Meta Key', 'edd_fes' ); ?></label>
-                    <input type="text" name="<?php echo $meta_name; ?>" value="<?php echo $meta_value; ?>" class="smallipopInput" title="<?php _e( 'Name of the meta key this field will save to', 'edd_fes' ); ?>">
-                    <input type="hidden" name="<?php echo $is_meta_name; ?>" value="yes">
-                    <input type="hidden" name="<?php echo $label_name; ?>" value="">
-                </div> <!-- .fes-form-rows -->
-
-                <div class="fes-form-rows">
-                    <label><?php _e( 'Meta Value', 'edd_fes' ); ?></label>
-                    <input type="text" class="smallipopInput" title="<?php esc_attr_e( 'Enter the meta value', 'edd_fes' ); ?>" name="<?php echo $value_name; ?>" value="<?php echo $value_value; ?>">
-                </div>
-            </div> <!-- .fes-form-holder -->
-        </li>
-        <?php
-    }
-
-    public static function section_break( $field_id, $label, $values = array(), $removeable = true, $reqtoggle = true  ) {
-        $title_name = sprintf( '%s[%d][label]', self::$input_name, $field_id );
-        $description_name = sprintf( '%s[%d][description]', self::$input_name, $field_id );
-
-        $title_value = $values ? esc_attr( $values['label'] ) : '';
-        $description_value = $values ? esc_attr( $values['description'] ) : '';
-        ?>
-        <li class="custom-field custom_html">
-            <?php self::legend( $label, $values, $removeable ); ?>
-            <?php self::hidden_field( "[$field_id][input_type]", 'section_break' ); ?>
-            <?php self::hidden_field( "[$field_id][template]", 'section_break' ); ?>
-
-            <div class="fes-form-holder">
-                <div class="fes-form-rows">
-                    <label><?php _e( 'Title', 'edd_fes' ); ?></label>
-                    <input type="text" class="smallipopInput" title="Title of the section" name="<?php echo $title_name; ?>" value="<?php echo esc_attr( $title_value ); ?>" />
-                </div> <!-- .fes-form-rows -->
-
-                <div class="fes-form-rows">
-                    <label><?php _e( 'Description', 'edd_fes' ); ?></label>
-                    <textarea class="smallipopInput" title="Some details text about the section" name="<?php echo $description_name; ?>" rows="3"><?php echo esc_html( $description_value ); ?></textarea>
-                </div> <!-- .fes-form-rows -->
-            </div> <!-- .fes-form-holder -->
+            </div> <!-- .edd-checkout-fields-holder -->
         </li>
         <?php
     }
@@ -715,11 +625,11 @@ class CFM_Admin_Template {
             <?php self::hidden_field( "[$field_id][input_type]", 'action_hook' ); ?>
             <?php self::hidden_field( "[$field_id][template]", 'action_hook' ); ?>
 
-            <div class="fes-form-holder">
-                <div class="fes-form-rows">
+            <div class="edd-checkout-fields-holder">
+                <div class="edd-checkout-fields-rows">
                     <label><?php _e( 'Hook Name', 'edd_fes' ); ?></label>
 
-                    <div class="fes-form-sub-fields">
+                    <div class="edd-checkout-fields-sub-fields">
                         <input type="text" class="smallipopInput" title="<?php _e( 'Name of the hook', 'edd_fes' ); ?>" name="<?php echo $title_name; ?>" value="<?php echo esc_attr( $title_value ); ?>" />
 
                         <div class="description" style="margin-top: 8px;">
@@ -732,9 +642,9 @@ function your_function_name( $form_id, $post_id, $form_settings ) {
 }
 </pre>
                         </div>
-                    </div> <!-- .fes-form-rows -->
+                    </div> <!-- .edd-checkout-fields-rows -->
                 </div>
-            </div> <!-- .fes-form-holder -->
+            </div> <!-- .edd-checkout-fields-holder -->
         </li>
         <?php
     }
@@ -753,115 +663,100 @@ function your_function_name( $form_id, $post_id, $form_settings ) {
             <?php self::hidden_field( "[$field_id][input_type]", 'date' ); ?>
             <?php self::hidden_field( "[$field_id][template]", 'date_field' ); ?>
 
-            <div class="fes-form-holder">
+            <div class="edd-checkout-fields-holder">
                 <?php self::common( $field_id, '', true, $values, $reqtoggle ); ?>
 
-                <div class="fes-form-rows">
+                <div class="edd-checkout-fields-rows">
                     <label><?php _e( 'Date Format', 'edd_fes' ); ?></label>
                     <input type="text" class="smallipopInput" name="<?php echo $format_name; ?>" value="<?php echo $format_value; ?>" title="<?php echo $help; ?>">
-                </div> <!-- .fes-form-rows -->
+                </div> <!-- .edd-checkout-fields-rows -->
 
-                <div class="fes-form-rows">
+                <div class="edd-checkout-fields-rows">
                     <label><?php _e( 'Time', 'edd_fes' ); ?></label>
 
-                    <div class="fes-form-sub-fields">
+                    <div class="edd-checkout-fields-sub-fields">
                         <label>
                             <?php self::hidden_field( "[$field_id][time]", 'no' ); ?>
                             <input type="checkbox" name="<?php echo $time_name ?>" value="yes"<?php checked( $time_value, 'yes' ); ?> />
                             <?php _e( 'Enable time input', 'edd_fes' ); ?>
                         </label>
                     </div>
-                </div> <!-- .fes-form-rows -->
-            </div> <!-- .fes-form-holder -->
+                </div> <!-- .edd-checkout-fields-rows -->
+            </div> <!-- .edd-checkout-fields-holder -->
         </li>
         <?php
     }
 
-    public static function google_map( $field_id, $label, $values = array(), $removeable = true, $reqtoggle = true  ) {
-        $zoom_name = sprintf('%s[%d][zoom]', self::$input_name, $field_id);
-        $address_name = sprintf('%s[%d][address]', self::$input_name, $field_id);
-        $default_pos_name = sprintf('%s[%d][default_pos]', self::$input_name, $field_id);
-        $show_lat_name = sprintf('%s[%d][show_lat]', self::$input_name, $field_id);
-
-        $zoom_value = $values ? $values['zoom'] : '12';
-        $address_value = $values ? $values['address'] : 'yes';
-        $show_lat_value = $values ? $values['show_lat'] : 'no';
-        $default_pos_value = $values ? $values['default_pos'] : '40.7143528,-74.0059731';
-
-        $zoom_help = esc_attr( __( 'Set the map zoom level', 'edd_fes' ) );
-        $pos_help = esc_attr( __( 'Enter default latitude and longitude to center the map', 'edd_fes' ) );
+    public static function first_name( $field_id, $label, $values = array() ) {
+	    if(!isset($values['label']) || $values['label'] == ''){
+			$values['label'] = $label;
+		}
         ?>
-        <li class="custom-field custom_image">
-            <?php self::legend( $label, $values, $removeable ); ?>
-            <?php self::hidden_field( "[$field_id][input_type]", 'map' ); ?>
-            <?php self::hidden_field( "[$field_id][template]", 'google_map' ); ?>
+        <li class="first_name">
+            <?php self::legend( $label, $values ); ?>
+            <?php self::hidden_field( "[$field_id][input_type]", 'text' ); ?>
+            <?php self::hidden_field( "[$field_id][template]", 'first_name' ); ?>
 
-            <div class="fes-form-holder">
-                <?php self::common( $field_id, '', true, $values, $reqtoggle ); ?>
-
-                <div class="fes-form-rows">
-                    <label><?php _e( 'Zoom Level', 'edd_fes' ); ?></label>
-                    <input type="text" class="smallipopInput" name="<?php echo $zoom_name; ?>" value="<?php echo $zoom_value; ?>" title="<?php echo $zoom_help; ?>">
-                </div> <!-- .fes-form-rows -->
-
-                <div class="fes-form-rows">
-                    <label><?php _e( 'Default Co-ordinate', 'edd_fes' ); ?></label>
-                    <input type="text" class="smallipopInput" name="<?php echo $default_pos_name; ?>" value="<?php echo $default_pos_value; ?>" title="<?php echo $pos_help; ?>">
-                </div> <!-- .fes-form-rows -->
-
-                <div class="fes-form-rows">
-                    <label><?php _e( 'Address Button', 'edd_fes' ); ?></label>
-
-                    <div class="fes-form-sub-fields">
-                        <label>
-                            <?php self::hidden_field( "[$field_id][address]", 'no' ); ?>
-                            <input type="checkbox" name="<?php echo $address_name ?>" value="yes"<?php checked( $address_value, 'yes' ); ?> />
-                            <?php _e( 'Show address find button', 'edd_fes' ); ?>
-                        </label>
-                    </div>
-                </div> <!-- .fes-form-rows -->
-
-                <div class="fes-form-rows">
-                    <label><?php _e( 'Show Latitude/Longitude', 'edd_fes' ); ?></label>
-
-                    <div class="fes-form-sub-fields">
-                        <label>
-                            <?php self::hidden_field( "[$field_id][show_lat]", 'no' ); ?>
-                            <input type="checkbox" name="<?php echo $show_lat_name ?>" value="yes"<?php checked( $show_lat_value, 'yes' ); ?> />
-                            <?php _e( 'Show latitude and longitude input box value', 'edd_fes' ); ?>
-                        </label>
-                    </div>
-                </div> <!-- .fes-form-rows -->
-            </div> <!-- .fes-form-holder -->
+            <div class="edd-checkout-fields-holder">
+                <?php self::common( $field_id, 'first_name', false, $values ); ?>
+                <?php self::common_text( $field_id, $values ); ?>
+            </div> <!-- .edd-checkout-fields-holder -->
         </li>
         <?php
     }
 
-    public static function toc( $field_id, $label, $values = array(), $removeable = true, $reqtoggle = true  ) {
-        $title_name = sprintf( '%s[%d][label]', self::$input_name, $field_id );
-        $description_name = sprintf( '%s[%d][description]', self::$input_name, $field_id );
-
-        $title_value = $values ? esc_attr( $values['label'] ) : '';
-        $description_value = $values ? esc_attr( $values['description'] ) : '';
+    public static function last_name( $field_id, $label, $values = array() ) {
+		if(!isset($values['label']) || $values['label'] == ''){
+			$values['label'] = $label;
+		}
         ?>
-        <li class="custom-field custom_html">
-            <?php self::legend( $label, $values, $removeable ); ?>
-            <?php self::hidden_field( "[$field_id][input_type]", 'toc' ); ?>
-            <?php self::hidden_field( "[$field_id][template]", 'toc' ); ?>
+        <li class="last_name">
+            <?php self::legend( $label, $values ); ?>
+            <?php self::hidden_field( "[$field_id][input_type]", 'text' ); ?>
+            <?php self::hidden_field( "[$field_id][template]", 'last_name' ); ?>
 
-            <div class="fes-form-holder">
-                <div class="fes-form-rows">
-                    <label><?php _e( 'Label', 'edd_fes' ); ?></label>
-                    <input type="text" name="<?php echo $title_name; ?>" value="<?php echo esc_attr( $title_value ); ?>" />
-                </div> <!-- .fes-form-rows -->
-
-                <div class="fes-form-rows">
-                    <label><?php _e( 'Terms & Conditions', 'edd_fes' ); ?></label>
-                    <textarea class="smallipopInput" title="<?php _e( 'Insert terms and condtions here.', 'edd_fes'); ?>" name="<?php echo $description_name; ?>" rows="3"><?php echo esc_html( $description_value ); ?></textarea>
-                </div> <!-- .fes-form-rows -->
-            </div> <!-- .fes-form-holder -->
+            <div class="edd-checkout-fields-holder">
+                <?php self::common( $field_id, 'last_name', false, $values ); ?>
+                <?php self::common_text( $field_id, $values ); ?>
+            </div> <!-- .edd-checkout-fields-holder -->
         </li>
         <?php
     }
 
+    public static function user_email( $field_id, $label, $values = array() ) {
+		if(!isset($values['label']) || $values['label'] == ''){
+			$values['label'] = $label;
+		}
+        ?>
+        <li class="user_email">
+            <?php self::legend( $label, $values ); ?>
+            <?php self::hidden_field( "[$field_id][input_type]", 'email' ); ?>
+            <?php self::hidden_field( "[$field_id][template]", 'user_email' ); ?>
+
+            <div class="edd-checkout-fields-holder">
+                <?php self::common( $field_id, 'user_email', false, $values ); ?>
+                <?php self::common_text( $field_id, $values ); ?>
+            </div> <!-- .edd-checkout-fields-holder -->
+        </li>
+        <?php
+    }
+
+
+    public static function description( $field_id, $label, $values = array() ) {	    
+		if(!isset($values['label']) || $values['label'] == ''){
+			$values['label'] = $label;
+		}
+        ?>
+        <li class="user_bio">
+            <?php self::legend( $label, $values ); ?>
+            <?php self::hidden_field( "[$field_id][input_type]", 'textarea' ); ?>
+            <?php self::hidden_field( "[$field_id][template]", 'description' ); ?>
+
+            <div class="edd-checkout-fields-holder">
+                <?php self::common( $field_id, 'description', false, $values ); ?>
+                <?php self::common_textarea( $field_id, $values ); ?>
+            </div> <!-- .edd-checkout-fields-holder -->
+        </li>
+        <?php
+    }
 }

@@ -19,7 +19,7 @@ class FES_Frontend_Form_Profile extends FES_Render_Form {
 		ob_start();
 		$id            = EDD_FES()->fes_options->get_option( 'fes-profile-form' );
 		$form_vars     = get_post_meta( $id, self::$meta_key, true );
-		$form_settings = get_post_meta( $id, 'fes-form_settings', true );
+		$form_settings = get_post_meta( $id, 'edd-checkout-fields_settings', true );
 		if ( !$form_vars ) {
 			return;
 		}
@@ -35,8 +35,8 @@ class FES_Frontend_Form_Profile extends FES_Render_Form {
 	}
 	
 	public function profile_edit( $form_id, $form_vars, $form_settings ) {
-		echo '<form class="fes-form-add" action="" method="post">';
-		echo '<div class="fes-form">';
+		echo '<form class="edd-checkout-fields-add" action="" method="post">';
+		echo '<div class="edd-checkout-fields">';
 		$this->render_items( $form_vars, get_current_user_id(), 'user', $form_id, $form_settings );
 		$this->submit_button( $form_id, $form_settings, 0 );
 		echo '</div>';
@@ -52,7 +52,7 @@ class FES_Frontend_Form_Profile extends FES_Render_Form {
             </div>
 
             <?php
-		wp_nonce_field( 'fes-form_add' );
+		wp_nonce_field( 'edd-checkout-fields_add' );
 ?>
             <input type="hidden" name="form_id" value="<?php
 		echo $form_id;
@@ -96,11 +96,11 @@ class FES_Frontend_Form_Profile extends FES_Render_Form {
 	}
 	
 	public function update_profile() {
-		check_ajax_referer( 'fes-form_add' );
+		check_ajax_referer( 'edd-checkout-fields_add' );
 		@header( 'Content-Type: application/json; charset=' . get_option( 'blog_charset' ) );
 		$form_id       = isset( $_POST[ 'form_id' ] ) ? intval( $_POST[ 'form_id' ] ) : 0;
 		$form_vars     = $this->get_input_fields( $form_id );
-		$form_settings = get_post_meta( $form_id, 'fes-form_settings', true );
+		$form_settings = get_post_meta( $form_id, 'edd-checkout-fields_settings', true );
 		list( $user_vars, $taxonomy_vars, $meta_vars ) = $form_vars;
 		$user_id  = get_current_user_id();
 		$userdata = array(

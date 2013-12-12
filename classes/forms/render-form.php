@@ -5,9 +5,9 @@
  */
 class CFM_Render_Form {
 
-    static $meta_key = 'fes-form';
+    static $meta_key = 'edd-checkout-fields';
     static $separator = '| ';
-    static $config_id = '_fes-form_id';
+    static $config_id = '_edd-checkout-fields_id';
 
     /**
      * Send json error message
@@ -253,23 +253,16 @@ class CFM_Render_Form {
     	global $user_ID;
 
         $form_vars = get_post_meta( $form_id, self::$meta_key, true );
-        $form_settings = get_post_meta( $form_id, 'fes-form_settings', true );
-
-        if ( EDD_CFM()->vendors->is_pending( $user_ID ) ) {
-            echo '<div class="fes-vendor-pending fes-info">';
-            	echo __( 'Your vendor application is pending. Once approved you will be able to submit products.', 'edd_fes' );
-            echo '</div>';
-            return;
-        }
+        $form_settings = get_post_meta( $form_id, 'edd-checkout-fields_settings', true );
 
         if ( $form_vars ) {
             ?>
 
             <?php if ( !$preview ) { ?>
-                <form class="fes-form-add" action="" method="post">
+                <form class="edd-checkout-fields-add" action="" method="post">
                 <?php } ?>
 
-                <div class="fes-form">
+                <div class="edd-checkout-fields">
 
                     <?php
                     if ( !is_user_logged_in() && $form_settings['guest_post'] == 'true' && $form_settings['guest_details'] == 'true' ) {
@@ -353,10 +346,6 @@ class CFM_Render_Form {
                     $this->textarea( $form_field, $post_id, $type );
                     break;
 
-                case 'image_upload':
-                    $this->image_upload( $form_field, $post_id, $type );
-                    break;
-
                 case 'select':
                     $this->select( $form_field, false, $post_id, $type );
                     break;
@@ -389,10 +378,6 @@ class CFM_Render_Form {
                     $this->repeat( $form_field, $post_id, $type );
                     break;
 
-                case 'section_break':
-                    $this->section_break( $form_field, $post_id );
-                    break;
-
                 case 'html':
                     $this->html( $form_field );
                     break;
@@ -403,14 +388,6 @@ class CFM_Render_Form {
 
                 case 'date':
                     $this->date( $form_field, $post_id, $type );
-                    break;
-
-                case 'map':
-                    $this->map( $form_field, $post_id, $type );
-                    break;
-
-                case 'toc':
-                    $this->toc( $form_field, $post_id );
                     break;
             }
 
@@ -434,7 +411,7 @@ class CFM_Render_Form {
                 &nbsp;
             </div>
 
-            <?php wp_nonce_field( 'fes-form_add' ); ?>
+            <?php wp_nonce_field( 'edd-checkout-fields_add' ); ?>
             <input type="hidden" name="form_id" value="<?php echo $form_id; ?>">
             <input type="hidden" name="page_id" value="<?php echo get_post() ? get_the_ID() : '0'; ?>">
             <input type="hidden" name="action" value="fes_submit_post">
@@ -450,7 +427,7 @@ class CFM_Render_Form {
                 <input type="submit" class="button" name="submit" value="<?php echo $form_settings['update_text']; ?>" />
             <?php } else { ?>
                 <input type="submit" class="button" name="submit" value="<?php echo $form_settings['submit_text']; ?>" />
-                <input type="hidden" name="fes-form_status" value="new">
+                <input type="hidden" name="edd-checkout-fields_status" value="new">
             <?php } ?>
 
             <?php 
@@ -730,86 +707,6 @@ class CFM_Render_Form {
     }
 
     /**
-     * Prints a image upload field
-     *
-     * @param array $attr
-     * @param int|null $post_id
-     */
-    function image_upload( $attr, $post_id, $type ) {
-
-        $has_featured_image = false;
-        $has_images = false;
-        $has_avatar = false;
-
-        if ( $post_id ) {
-            if ( $this->is_meta( $attr ) ) {
-                $images = $this->get_meta( $post_id, $attr['name'], $type, false );
-                $has_images = true;
-            } else {
-
-                if ( $type == 'post' ) {
-                    // it's a featured image then
-                    $thumb_id = get_post_thumbnail_id( $post_id );
-
-                    if ( $thumb_id ) {
-                        $has_featured_image = true;
-                        $featured_image = EDD_CFM()->upload->attach_html( $thumb_id );
-                    }
-                } else {
-                    // it must be a user avatar
-                    $has_avatar = true;
-                    $featured_image = get_avatar( $post_id );
-                }
-            }
-        }
-        ?>
-
-        <div class="fes-fields">
-            <div id="fes-<?php echo $attr['name']; ?>-upload-container">
-                <div class="fes-attachment-upload-filelist">
-                    <a id="fes-<?php echo $attr['name']; ?>-pickfiles" class="button file-selector" href="#"><?php _e( 'Select Image', 'edd_fes' ); ?></a>
-
-                    <?php
-                    $required = isset( $attr['required'] ) ? $attr['required'] : '';
-                    printf( '<span class="fes-file-validation" data-required="%s" data-type="file"></span>', $required ); ?>
-
-                    <ul class="fes-attachment-list thumbnails">
-                        <?php
-                        if ( $has_featured_image ) {
-                            echo $featured_image;
-                        }
-
-                        if ( $has_avatar ) {
-                            $avatar = get_user_meta( $post_id, 'user_avatar', true );
-                            if ( $avatar ) {
-                                echo $featured_image;
-                                printf( '<br><a href="#" data-confirm="%s" class="fes-button button fes-delete-avatar">%s</a>', __( 'Are you sure?', 'edd_fes' ), __( 'Delete', 'edd_fes' ) );
-                            }
-                        }
-
-                        if ( $has_images ) {
-                            foreach ($images as $attach_id) {
-                                echo EDD_CFM()->upload->attach_html( $attach_id, $attr['name'] );
-                            }
-                        }
-                        ?>
-                    </ul>
-                </div>
-            </div><!-- .container -->
-
-            <span class="fes-help"><?php echo $attr['help']; ?></span>
-
-        </div> <!-- .fes-fields -->
-
-        <script type="text/javascript">
-            jQuery(function($) {
-                new CFM_Uploader('fes-<?php echo $attr['name']; ?>-pickfiles', 'fes-<?php echo $attr['name']; ?>-upload-container', <?php echo $attr['count']; ?>, '<?php echo $attr['name']; ?>', 'jpg,jpeg,gif,png,bmp', <?php echo $attr['max_size'] ?>);
-            });
-        </script>
-        <?php
-    }
-
-    /**
      * Prints a select or multiselect field
      *
      * @param array $attr
@@ -992,8 +889,8 @@ class CFM_Render_Form {
      * @param int|null $post_id
      */
     function repeat( $attr, $post_id, $type ) {
-        $add = fes_assets_url .'img/add.png';
-        $remove = fes_assets_url. 'img/remove.png';
+        $add = cfm_assets_url .'img/add.png';
+        $remove = cfm_assets_url. 'img/remove.png';
         ?>
 
         <div class="fes-fields">
@@ -1116,48 +1013,6 @@ class CFM_Render_Form {
     }
 
     /**
-     * Prints a HTML field
-     *
-     * @param array $attr
-     */
-    function toc( $attr, $post_id ) {
-
-        if ( $post_id ) {
-            return;
-        }
-        ?>
-        <div class="fes-label">
-            &nbsp;
-        </div>
-
-        <div class="fes-fields">
-            <span data-required="yes" data-type="radio"></span>
-
-            <textarea rows="10" cols="40" disabled="disabled" name="toc"><?php echo $attr['description']; ?></textarea>
-            <label>
-                <input type="checkbox" name="fes_accept_toc" required="required" /> <?php echo $attr['label']; ?>
-            </label>
-        </div>
-        <?php
-    }
-
- 
-    /**
-     * Prints a section break
-     *
-     * @param array $attr
-     * @param int|null $post_id
-     */
-    function section_break( $attr ) {
-        ?>
-        <div class="fes-section-wrap">
-            <h2 class="fes-section-title"><?php echo $attr['label']; ?></h2>
-            <div class="fes-section-details"><?php echo $attr['description']; ?></div>
-        </div>
-        <?php
-    }
-
-    /**
      * Prints a action hook
      *
      * @param array $attr
@@ -1199,150 +1054,5 @@ class CFM_Render_Form {
 
         <?php
     }
-
-    /**
-     * Prints a map field
-     *
-     * @param array $attr
-     * @param int|null $post_id
-     */
-    function map( $attr, $post_id, $type ) {
-
-        $value = $post_id ? $this->get_meta( $post_id, $attr['name'], $type, true ) : '';
-        $type = $attr['show_lat'] == 'yes' ? 'text' : 'hidden';
-
-        if ( $post_id ) {
-            list( $def_lat, $def_long ) = explode( ',', $value );
-        } else {
-            list( $def_lat, $def_long ) = explode( ',', $attr['default_pos'] );
-        }
-        ?>
-
-        <div class="fes-fields">
-            <input id="fes-map-lat-<?php echo $attr['name']; ?>" type="<?php echo $type; ?>" data-required="<?php echo $attr['required'] ?>" data-type="text"<?php $this->required_html5( $attr ); ?> name="<?php echo esc_attr( $attr['name'] ); ?>" value="<?php echo esc_attr( $value ) ?>" size="30" />
-
-            <?php if ( $attr['address'] == 'yes' ) { ?>
-                <input id="fes-map-add-<?php echo $attr['name']; ?>" type="text" value="" name="find-address" placeholder="<?php _e( 'Type an address to find', 'edd_fes' ); ?>" size="30" />
-                <button class="fes-button button" id="fes-map-btn-<?php echo $attr['name']; ?>"><?php _e( 'Find Address', 'edd_fes' ); ?></button>
-            <?php } ?>
-
-            <div class="google-map" style="margin: 10px 0; height: 250px; width: 450px;" id="fes-map-<?php echo $attr['name']; ?>"></div>
-            <span class="fes-help"><?php echo $attr['help']; ?></span>
-        </div>
-        <script type="text/javascript">
-
-            (function($) {
-                $(function() {
-                    var def_zoomval = <?php echo $attr['zoom']; ?>;
-                    var def_longval = <?php echo $def_long ? $def_long : 0; ?>;
-                    var def_latval = <?php echo $def_lat ? $def_lat : 0; ?>;
-                    var curpoint = new google.maps.LatLng(def_latval, def_longval),
-                        geocoder   = new window.google.maps.Geocoder(),
-                        $map_area = $('#fes-map-<?php echo $attr['name']; ?>'),
-                        $input_area = $( '#fes-map-lat-<?php echo $attr['name']; ?>' ),
-                        $input_add = $( '#fes-map-add-<?php echo $attr['name']; ?>' ),
-                        $find_btn = $( '#fes-map-btn-<?php echo $attr['name']; ?>' );
-
-                    autoCompleteAddress();
-
-                    $find_btn.on('click', function(e) {
-                        e.preventDefault();
-
-                        geocodeAddress( $input_add.val() );
-                    });
-
-                    var gmap = new google.maps.Map( $map_area[0], {
-                        center: curpoint,
-                        zoom: def_zoomval,
-                        mapTypeId: window.google.maps.MapTypeId.ROADMAP
-                    });
-
-                    var marker = new window.google.maps.Marker({
-                        position: curpoint,
-                        map: gmap,
-                        draggable: true
-                    });
-
-                    window.google.maps.event.addListener( gmap, 'click', function ( event ) {
-                        marker.setPosition( event.latLng );
-                        updatePositionInput( event.latLng );
-                    } );
-
-                    window.google.maps.event.addListener( marker, 'drag', function ( event ) {
-                        updatePositionInput(event.latLng );
-                    } );
-
-                    function updatePositionInput( latLng ) {
-                        $input_area.val( latLng.lat() + ',' + latLng.lng() );
-                    }
-
-                    function updatePositionMarker() {
-                        var coord = $input_area.val(),
-                            pos, zoom;
-
-                        if ( coord ) {
-                            pos = coord.split( ',' );
-                            marker.setPosition( new window.google.maps.LatLng( pos[0], pos[1] ) );
-
-                            zoom = pos.length > 2 ? parseInt( pos[2], 10 ) : 12;
-
-                            gmap.setCenter( marker.position );
-                            gmap.setZoom( zoom );
-                        }
-                    }
-
-                    function geocodeAddress( address ) {
-                        geocoder.geocode( {'address': address}, function ( results, status ) {
-                            if ( status == window.google.maps.GeocoderStatus.OK ) {
-                                updatePositionInput( results[0].geometry.location );
-                                marker.setPosition( results[0].geometry.location );
-                                gmap.setCenter( marker.position );
-                                gmap.setZoom( 15 );
-                            }
-                        } );
-                    }
-
-                    function autoCompleteAddress(){
-                        if (!$input_add) return null;
-
-                        $input_add.autocomplete({
-                            source: function(request, response) {
-                                // TODO: add 'region' option, to help bias geocoder.
-                                geocoder.geocode( {'address': request.term }, function(results, status) {
-                                    response(jQuery.map(results, function(item) {
-                                        return {
-                                            label     : item.formatted_address,
-                                            value     : item.formatted_address,
-                                            latitude  : item.geometry.location.lat(),
-                                            longitude : item.geometry.location.lng()
-                                        };
-                                    }));
-                                });
-                            },
-                            select: function(event, ui) {
-
-                                $input_area.val(ui.item.latitude + ',' + ui.item.longitude );
-
-                                var location = new window.google.maps.LatLng(ui.item.latitude, ui.item.longitude);
-
-                                gmap.setCenter(location);
-                                // Drop the Marker
-                                setTimeout( function(){
-                                    marker.setValues({
-                                        position    : location,
-                                        animation   : window.google.maps.Animation.DROP
-                                    });
-                                }, 1500);
-                            }
-                        });
-                    }
-
-                });
-            })(jQuery);
-        </script>
-
-        <?php
-    }
-
 }
 new CFM_Render_Form();

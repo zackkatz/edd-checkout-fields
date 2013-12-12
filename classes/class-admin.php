@@ -37,7 +37,7 @@ class CFM_Admin {
 	
 	public function remove_quick_edit( $actions ) {
 		global $post;
-		if ( $post->post_type == 'fes-forms' ) {
+		if ( $post->post_type == 'edd-checkout-fields' ) {
 			unset( $actions[ 'inline hide-if-no-js' ] );
 		}
 		return $actions;

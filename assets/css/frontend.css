@@ -45,40 +45,40 @@
     padding: 5px 10px;
     webkit-border-radius: 5px;
 }
-div.fes-form {
+div.edd-checkout-fields {
     list-style: none !important;
     margin: 0 !important;
 }
-div.fes-form fieldset {
+div.edd-checkout-fields fieldset {
     margin-bottom: 10px;
     margin-left: 0;
     padding: 10px;
 }
-div.fes-form fieldset:after {
+div.edd-checkout-fields fieldset:after {
     clear: both;
     content: "";
     display: table;
 }
-div.fes-form fieldset.has-error {
+div.edd-checkout-fields fieldset.has-error {
     background: #FFE4E4
 }
-div.fes-form fieldset .fes-label {
+div.edd-checkout-fields fieldset .fes-label {
     float: left;
     width: 25%;
 }
-div.fes-form fieldset .fes-label .required {
+div.edd-checkout-fields fieldset .fes-label .required {
     color: red
 }
-div.fes-form fieldset .fes-fields {
+div.edd-checkout-fields fieldset .fes-fields {
     float: left;
     width: 75%;
 }
-div.fes-form fieldset .fes-fields input[type=text],
-div.fes-form fieldset .fes-fields input[type=password],
-div.fes-form fieldset .fes-fields input[type=email],
-div.fes-form fieldset .fes-fields input[type=url],
-div.fes-form fieldset .fes-fields input[type=number],
-div.fes-form fieldset .fes-fields textarea {
+div.edd-checkout-fields fieldset .fes-fields input[type=text],
+div.edd-checkout-fields fieldset .fes-fields input[type=password],
+div.edd-checkout-fields fieldset .fes-fields input[type=email],
+div.edd-checkout-fields fieldset .fes-fields input[type=url],
+div.edd-checkout-fields fieldset .fes-fields input[type=number],
+div.edd-checkout-fields fieldset .fes-fields textarea {
     background: #fafafa;
     border: 1px solid #ddd;
     box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.1);
@@ -86,26 +86,26 @@ div.fes-form fieldset .fes-fields textarea {
     moz-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.1);
     webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.1);
 }
-div.fes-form fieldset .fes-fields input[type=text]:focus,
-div.fes-form fieldset .fes-fields input[type=password]:focus,
-div.fes-form fieldset .fes-fields input[type=email]:focus,
-div.fes-form fieldset .fes-fields input[type=url]:focus,
-div.fes-form fieldset .fes-fields input[type=number]:focus,
-div.fes-form fieldset .fes-fields textarea:focus {
+div.edd-checkout-fields fieldset .fes-fields input[type=text]:focus,
+div.edd-checkout-fields fieldset .fes-fields input[type=password]:focus,
+div.edd-checkout-fields fieldset .fes-fields input[type=email]:focus,
+div.edd-checkout-fields fieldset .fes-fields input[type=url]:focus,
+div.edd-checkout-fields fieldset .fes-fields input[type=number]:focus,
+div.edd-checkout-fields fieldset .fes-fields textarea:focus {
     color: #373737
 }
-div.fes-form fieldset .fes-fields textarea {
+div.edd-checkout-fields fieldset .fes-fields textarea {
     padding-left: 3px;
     width: 98%;
 }
-div.fes-form fieldset .fes-fields input[type=text],
-div.fes-form fieldset .fes-fields input[type=password],
-div.fes-form fieldset .fes-fields input[type=email],
-div.fes-form fieldset .fes-fields input[type=url],
-div.fes-form fieldset .fes-fields input[type=number] {
+div.edd-checkout-fields fieldset .fes-fields input[type=text],
+div.edd-checkout-fields fieldset .fes-fields input[type=password],
+div.edd-checkout-fields fieldset .fes-fields input[type=email],
+div.edd-checkout-fields fieldset .fes-fields input[type=url],
+div.edd-checkout-fields fieldset .fes-fields input[type=number] {
     padding: 5px
 }
-div.fes-form fieldset .fes-fields select {
+div.edd-checkout-fields fieldset .fes-fields select {
     border: 1px solid #dfdfdf;
     border-radius: 3px;
     height: 2em;
@@ -114,10 +114,10 @@ div.fes-form fieldset .fes-fields select {
     padding: 2px;
     webkit-border-radius: 3px;
 }
-div.fes-form fieldset .fes-fields select[multiple] {
+div.edd-checkout-fields fieldset .fes-fields select[multiple] {
     height: auto
 }
-div.fes-form fieldset .fes-fields a.file-selector {
+div.edd-checkout-fields fieldset .fes-fields a.file-selector {
     background-color: #21759b;
     background-image: linear-gradient(to bottom, #2a95c5, #21759b);
     background-image: -moz-linear-gradient(top, #2a95c5, #21759b);
@@ -140,8 +140,8 @@ div.fes-form fieldset .fes-fields a.file-selector {
     webkit-border-radius: 3px;
     webkit-box-shadow: inset 0 1px 0 rgba(120, 200, 230, 0.5);
 }
-div.fes-form fieldset .fes-fields a.file-selector:hover,
-div.fes-form fieldset .fes-fields a.file-selector:focus {
+div.edd-checkout-fields fieldset .fes-fields a.file-selector:hover,
+div.edd-checkout-fields fieldset .fes-fields a.file-selector:focus {
     background-color: #278ab7;
     background-image: linear-gradient(to bottom, #2e9fd2, #21759b);
     background-image: -moz-linear-gradient(top, #2e9fd2, #21759b);
@@ -155,37 +155,37 @@ div.fes-form fieldset .fes-fields a.file-selector:focus {
     text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.3);
     webkit-box-shadow: inset 0 1px 0 rgba(120, 200, 230, 0.6);
 }
-div.fes-form fieldset .fes-fields .google-map img {
+div.edd-checkout-fields fieldset .fes-fields .google-map img {
     max-width: none !important
 }
-div.fes-form fieldset .fes-fields .fes-help {
+div.edd-checkout-fields fieldset .fes-fields .fes-help {
     color: #666;
     font-family: sans-serif;
     font-size: 12px;
     font-style: italic;
     margin: 2px 0 5px 0;
 }
-div.fes-form fieldset .fes-fields table,
-div.fes-form fieldset .fes-fields td {
+div.edd-checkout-fields fieldset .fes-fields table,
+div.edd-checkout-fields fieldset .fes-fields td {
     border: none;
     margin: 0;
 }
-div.fes-form fieldset .fes-fields table {
+div.edd-checkout-fields fieldset .fes-fields table {
     width: 100%
 }
-div.fes-form fieldset .fes-fields img.fes-clone-field,
-div.fes-form fieldset .fes-fields img.fes-remove-field {
+div.edd-checkout-fields fieldset .fes-fields img.fes-clone-field,
+div.edd-checkout-fields fieldset .fes-fields img.fes-remove-field {
     border: none;
     box-shadow: none;
     cursor: pointer;
     margin: 0 3px;
 }
-div.fes-form fieldset .fes-fields div.fes-attachment-list {
+div.edd-checkout-fields fieldset .fes-fields div.fes-attachment-list {
     list-style: none;
     margin: 5px 0 0 0;
     padding: 0;
 }
-div.fes-form fieldset .fes-fields div.fes-attachment-list li {
+div.edd-checkout-fields fieldset .fes-fields div.fes-attachment-list li {
     border: 1px solid #dfdfdf;
     border-radius: 5px;
     display: inline-block;
@@ -194,7 +194,7 @@ div.fes-form fieldset .fes-fields div.fes-attachment-list li {
     padding: 5px;
     webkit-border-radius: 5px;
 }
-div.fes-form fieldset .fes-fields div.fes-attachment-list li a.attachment-delete {
+div.edd-checkout-fields fieldset .fes-fields div.fes-attachment-list li a.attachment-delete {
     background-color: #bd362f;
     background-color: #da4f49;
     background-image: linear-gradient(to bottom, #ee5f5b, #bd362f);
@@ -216,13 +216,13 @@ div.fes-form fieldset .fes-fields div.fes-attachment-list li a.attachment-delete
     text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
     webkit-border-radius: 3px;
 }
-div.fes-form fieldset .fes-fields div.fes-attachment-list li a.attachment-delete:hover,
-div.fes-form fieldset .fes-fields div.fes-attachment-list li a.attachment-delete:active {
+div.edd-checkout-fields fieldset .fes-fields div.fes-attachment-list li a.attachment-delete:hover,
+div.edd-checkout-fields fieldset .fes-fields div.fes-attachment-list li a.attachment-delete:active {
     background-color: #a9302a;
     background-color: #bd362f;
     color: #ffffff;
 }
-div.fes-form fieldset .fes-fields .progress {
+div.edd-checkout-fields fieldset .fes-fields .progress {
     background: -moz-linear-gradient(center bottom, #ffffff 0%, #f7f7f7 100%) repeat scroll 0 0 #ffffff;
     border: 1px solid #D1D1D1;
     border-radius: 3px 3px 3px 3px;
@@ -235,7 +235,7 @@ div.fes-form fieldset .fes-fields .progress {
     padding: 0;
     width: 200px;
 }
-div.fes-form fieldset .fes-fields .bar {
+div.edd-checkout-fields fieldset .fes-fields .bar {
     background-color: #83B4D8;
     background-image: -moz-linear-gradient(center bottom, #72a7cf 0%, #90c5ee 100%);
     border-radius: 3px 3px 3px 3px;
@@ -244,7 +244,7 @@ div.fes-form fieldset .fes-fields .bar {
     width: 0;
     z-index: 9;
 }
-div.fes-form fieldset .fes-fields .progress .percent {
+div.edd-checkout-fields fieldset .fes-fields .progress .percent {
     color: rgba(0, 0, 0, 0.6);
     padding: 0 8px;
     position: relative;
@@ -252,28 +252,28 @@ div.fes-form fieldset .fes-fields .progress .percent {
     width: 200px;
     z-index: 10;
 }
-div.fes-form fieldset .fes-fields div.fes-category-checklist {
+div.edd-checkout-fields fieldset .fes-fields div.fes-category-checklist {
     list-style: none;
     margin: 0;
     padding: 0;
 }
-div.fes-form fieldset .fes-fields div.fes-category-checklist li {
+div.edd-checkout-fields fieldset .fes-fields div.fes-category-checklist li {
     margin-bottom: 5px;
     padding: 0;
 }
-div.fes-form fieldset .fes-fields div.fes-category-checklist div.children {
+div.edd-checkout-fields fieldset .fes-fields div.fes-category-checklist div.children {
     list-style: none;
     margin-left: 25px;
 }
-div.fes-form fieldset .fes-fields #fes-insert-image-container {
+div.edd-checkout-fields fieldset .fes-fields #fes-insert-image-container {
     margin-bottom: 3px
 }
-div.fes-form fieldset .fes-fields #fes-insert-image-container:after {
+div.edd-checkout-fields fieldset .fes-fields #fes-insert-image-container:after {
     clear: both;
     content: "";
     display: table;
 }
-div.fes-form fieldset .fes-fields #fes-insert-image-container a#fes-insert-image {
+div.edd-checkout-fields fieldset .fes-fields #fes-insert-image-container a#fes-insert-image {
     border: 1px solid #DFDFDF;
     border-radius: 3px;
     font-size: 11px;
@@ -283,22 +283,22 @@ div.fes-form fieldset .fes-fields #fes-insert-image-container a#fes-insert-image
     text-decoration: none;
     webkit-border-radius: 3px;
 }
-div.fes-form fieldset .fes-fields #fes-insert-image-container a#fes-insert-image .fes-media-icon {
+div.edd-checkout-fields fieldset .fes-fields #fes-insert-image-container a#fes-insert-image .fes-media-icon {
     height: 12px;
     width: 12px;
 }
-div.fes-form fieldset .fes-section-wrap {
+div.edd-checkout-fields fieldset .fes-section-wrap {
     border-bottom: 1px solid #ccc;
     margin: 15px 0;
 }
-div.fes-form fieldset .fes-section-wrap h2.fes-section-title {
+div.edd-checkout-fields fieldset .fes-section-wrap h2.fes-section-title {
     margin: 0
 }
-div.fes-form fieldset .fes-section-wrap .fes-section-details {
+div.edd-checkout-fields fieldset .fes-section-wrap .fes-section-details {
     font-size: 12px;
     padding: 4px 0 8px;
 }
-div.fes-form .fes-submit input[type=submit] {
+div.edd-checkout-fields .fes-submit input[type=submit] {
     background-color: #21759b;
     background-image: linear-gradient(to bottom, #2a95c5, #21759b);
     background-image: -moz-linear-gradient(top, #2a95c5, #21759b);
@@ -321,7 +321,7 @@ div.fes-form .fes-submit input[type=submit] {
     webkit-box-shadow: inset 0 1px 0 rgba(120, 200, 230, 0.5);
     height: 30px;
 }
-div.fes-form .fes-submit .button-primary-disabled {
+div.edd-checkout-fields .fes-submit .button-primary-disabled {
     background: #298cba !important;
     border-color: #1b607f !important;
     box-shadow: none !important;
@@ -330,7 +330,7 @@ div.fes-form .fes-submit .button-primary-disabled {
     text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.1) !important;
     webkit-box-shadow: none !important;
 }
-div.fes-form .fes-submit .fes-error edd_errors {
+div.edd-checkout-fields .fes-submit .fes-error edd_errors {
     background: #FFE4E4;
     border: 1px solid #ffb1b1;
     border-radius: 3px;

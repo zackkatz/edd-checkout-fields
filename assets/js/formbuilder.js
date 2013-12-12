@@ -1,6 +1,6 @@
 ;(function($) {
 
-    var $formEditor = $('ul#fes-form-editor');
+    var $formEditor = $('ul#edd-checkout-fields-editor');
 
     var Editor = {
         init: function() {
@@ -16,24 +16,24 @@
             $('button.fes-collapse').on('click', this.collpaseEditFields);
 
             // add field click
-            $('.fes-form-buttons').on('click', 'button', this.addNewField);
+            $('.edd-checkout-fields-buttons').on('click', 'button', this.addNewField);
 
             // remove form field
-            $('#fes-form-editor').on('click', '.fes-remove', this.removeFormField);
+            $('#edd-checkout-fields-editor').on('click', '.fes-remove', this.removeFormField);
 
             // on change event: meta key
-            $('#fes-form-editor').on('change', 'li.custom-field input[data-type="label"]', this.setMetaKey);
+            $('#edd-checkout-fields-editor').on('change', 'li.custom-field input[data-type="label"]', this.setMetaKey);
 
             // on change event: checkbox|radio fields
-            $('#fes-form-editor').on('change', '.fes-form-sub-fields input[type=text]', function() {
+            $('#edd-checkout-fields-editor').on('change', '.edd-checkout-fields-sub-fields input[type=text]', function() {
                 $(this).prev('input[type=checkbox], input[type=radio]').val($(this).val());
             });
 
             // on change event: checkbox|radio fields
-            $('#fes-form-editor').on('click', 'input[type=checkbox].multicolumn', function() {
+            $('#edd-checkout-fields-editor').on('click', 'input[type=checkbox].multicolumn', function() {
                 // $(this).prev('input[type=checkbox], input[type=radio]').val($(this).val());
                 var $self = $(this),
-                    $parent = $self.closest('.fes-form-rows');
+                    $parent = $self.closest('.edd-checkout-fields-rows');
 
                 if ($self.is(':checked')) {
                     $parent.next().hide().next().hide();
@@ -45,10 +45,10 @@
             });
 
             // on change event: checkbox|radio fields
-            $('#fes-form-editor').on('click', 'input[type=checkbox].retype-pass', function() {
+            $('#edd-checkout-fields-editor').on('click', 'input[type=checkbox].retype-pass', function() {
                 // $(this).prev('input[type=checkbox], input[type=radio]').val($(this).val());
                 var $self = $(this),
-                    $parent = $self.closest('.fes-form-rows');
+                    $parent = $self.closest('.edd-checkout-fields-rows');
 
                 if ($self.is(':checked')) {
                     $parent.next().show().next().show();
@@ -58,15 +58,15 @@
             });
 
             // toggle form field
-            $('#fes-form-editor').on('click', '.fes-toggle', this.toggleFormField);
+            $('#edd-checkout-fields-editor').on('click', '.fes-toggle', this.toggleFormField);
 
             // clone and remove repeated field
-            $('#fes-form-editor').on('click', 'img.fes-clone-field', this.cloneField);
-            $('#fes-form-editor').on('click', 'img.fes-remove-field', this.removeField);
+            $('#edd-checkout-fields-editor').on('click', 'img.fes-clone-field', this.cloneField);
+            $('#edd-checkout-fields-editor').on('click', 'img.fes-remove-field', this.removeField);
         },
 
         showHideHelp: function() {
-            var childs = $('ul#fes-form-editor').children('li');
+            var childs = $('ul#edd-checkout-fields-editor').children('li');
 
             if ( !childs.length) {
                 $('.fes-updated').show();
@@ -76,7 +76,7 @@
         },
 
         makeSortable: function() {
-            $formEditor = $('ul#fes-form-editor');
+            $formEditor = $('ul#edd-checkout-fields-editor');
 
             if ($formEditor) {
                 $formEditor.sortable({
@@ -91,14 +91,14 @@
             e.preventDefault();
 
             var $self = $(this),
-                $formEditor = $('ul#fes-form-editor'),
+                $formEditor = $('ul#edd-checkout-fields-editor'),
                 name = $self.data('name'),
                 type = $self.data('type'),
                 data = {
                     name: name,
                     type: type,
                     order: $formEditor.find('li').length + 1,
-                    action: 'fes-form_add_el'
+                    action: 'edd-checkout-fields_add_el'
                 };
 
             // console.log($self, data);
@@ -146,7 +146,7 @@
         toggleFormField: function(e) {
             e.preventDefault();
 
-            $(this).closest('li').find('.fes-form-holder').slideToggle('fast');
+            $(this).closest('li').find('.edd-checkout-fields-holder').slideToggle('fast');
         },
 
         cloneField: function(e) {
@@ -175,7 +175,7 @@
         setMetaKey: function() {
             var $self = $(this),
                 val = $self.val().toLowerCase().split(' ').join('_').split('\'').join(''),
-                $metaKey = $(this).closest('.fes-form-rows').next().find('input[type=text]');
+                $metaKey = $(this).closest('.edd-checkout-fields-rows').next().find('input[type=text]');
 
             if ($metaKey.length) {
                 $metaKey.val(val);
@@ -194,7 +194,7 @@
         collpaseEditFields: function(e) {
             e.preventDefault();
 
-            $('ul#fes-form-editor').children('li').find('.fes-form-holder').slideToggle();
+            $('ul#edd-checkout-fields-editor').children('li').find('.edd-checkout-fields-holder').slideToggle();
         },
 
         tabber: function() {

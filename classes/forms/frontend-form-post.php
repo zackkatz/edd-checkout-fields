@@ -7,7 +7,7 @@ class CFM_Frontend_Form_Post extends CFM_Render_Form {
 	private static $_instance;
 	
 	function __construct() {
-		add_shortcode( 'fes-form', array(
+		add_shortcode( 'edd-checkout-fields', array(
 			 $this,
 			'add_post_shortcode' 
 		) );
@@ -31,7 +31,7 @@ class CFM_Frontend_Form_Post extends CFM_Render_Form {
 	
 	public function add_post_shortcode() {
 		ob_start();
-		$this->render_form( EDD_CFM()->fes_options->get_option( 'fes-submission-form' ) );
+		$this->render_form( get_option( 'edd_cfm_id' ) );
 		$content = ob_get_contents();
 		ob_end_clean();
 		return $content;
@@ -42,11 +42,11 @@ class CFM_Frontend_Form_Post extends CFM_Render_Form {
 		if ( function_exists( 'edd_set_upload_dir' ) ) {
 			add_filter( 'upload_dir', 'edd_set_upload_dir' );
 		}
-		check_ajax_referer( 'fes-form_add' );
+		check_ajax_referer( 'edd-checkout-fields_add' );
 		@header( 'Content-Type: application/json; charset=' . get_option( 'blog_charset' ) );
 		$form_id       = isset( $_POST[ 'form_id' ] ) ? intval( $_POST[ 'form_id' ] ) : 0;
 		$form_vars     = $this->get_input_fields( $form_id );
-		$form_settings = get_post_meta( $form_id, 'fes-form_settings', true );
+		$form_settings = get_post_meta( $form_id, 'edd-checkout-fields_settings', true );
 		list( $post_vars, $taxonomy_vars, $meta_vars ) = $form_vars;
 		$post_author = get_current_user_id();
 		$status  = 'publish';

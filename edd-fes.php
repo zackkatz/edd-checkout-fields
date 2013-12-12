@@ -137,7 +137,6 @@ class EDD_Checkout_Fields_Manager {
 			require_once cfm_plugin_dir . 'classes/forms/admin-form.php';
 			require_once cfm_plugin_dir . 'classes/forms/admin-posting.php';
 			require_once cfm_plugin_dir . 'classes/forms/admin-template.php';
-			require_once cfm_plugin_dir . 'classes/forms/admin-template-post.php';
 		}
 	}
 	
