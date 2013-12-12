@@ -12,14 +12,14 @@ class CFM_Frontend_Form_Post extends CFM_Render_Form {
 			'add_post_shortcode' 
 		) );
 		// ajax requests
-		add_action( 'wp_ajax_fes_submit_post', array(
-			 $this,
-			'submit_post' 
-		) );
-		add_action( 'wp_ajax_nopriv_fes_submit_post', array(
-			 $this,
-			'submit_post' 
-		) );
+		//add_action( 'wp_ajax_fes_submit_post', array(
+		//	 $this,
+		//	'submit_post' 
+		//) );
+		//add_action( 'wp_ajax_nopriv_fes_submit_post', array(
+		//	 $this,
+		//	'submit_post' 
+		//) );
 	}
 	
 	public static function init() {
