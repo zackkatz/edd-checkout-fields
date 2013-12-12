@@ -4,7 +4,7 @@
  * Attachment Uploader class
  *
  * @since 1.0
- * @package fes
+ * @package cfm
  */
 class CFM_Upload {
 
@@ -15,9 +15,6 @@ class CFM_Upload {
 
         add_action( 'wp_ajax_fes_file_del', array($this, 'delete_file') );
         add_action( 'wp_ajax_nopriv_fes_file_del', array($this, 'delete_file') );
-
-        add_action( 'wp_ajax_fes_insert_image', array( $this, 'insert_image' ) );
-        add_action( 'wp_ajax_nopriv_fes_insert_image', array( $this, 'insert_image' ) );
     }
 
     function upload_file( $image_only = false ) {
@@ -36,22 +33,7 @@ class CFM_Upload {
         if ( $attach['success'] ) {
 
             $response = array( 'success' => true );
-
-            if ($image_only) {
-				// To be an option in 2.1 but we need to test this first before ill pro this
-                $image_size = 'thumbnail';
-                $image_type = 'slink';
-
-                if ( $image_type == 'link' ) {
-                    $response['html'] = wp_get_attachment_link( $attach['attach_id'], $image_size );
-                } else {
-                    $response['html'] = wp_get_attachment_image( $attach['attach_id'], $image_size );
-                }
-
-            } else {
-                $response['html'] = $this->attach_html( $attach['attach_id'] );
-            }
-
+            $response['html'] = $this->attach_html( $attach['attach_id'] );
             echo $response['html'];
         } else {
             echo 'error';
@@ -139,10 +121,6 @@ class CFM_Upload {
             'ID' => $attach_id,
             'post_parent' => $post_id
         ) );
-    }
-
-    function insert_image() {
-        $this->upload_file( true );
     }
 
 }
