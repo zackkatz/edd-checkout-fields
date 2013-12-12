@@ -13,12 +13,8 @@ if ( !defined( 'ABSPATH' ) ) {
 class CFM_Admin_Posting extends CFM_Render_Form {
 
     function __construct() {
-        add_action( 'add_meta_boxes', array($this, 'add_meta_boxes') );
-        add_action( 'save_post', array($this, 'save_meta'), 1, 2 ); // save the custom fields
-    }
-
-    function add_meta_boxes() {
-		 add_meta_box( 'fes-custom-fields', __( 'Custom Checkout Fields', 'edd_fes' ), array($this, 'render_form'), 'edd_payment', 'normal', 'high' );
+        add_action('edd_view_order_details_main_after', array($this, 'render_form'));
+		add_action( 'admin_init', array($this, 'save_meta'), 1, 2 );
     }
 
     function render_form($form_id, $post_id = NULL, $preview = false) {
