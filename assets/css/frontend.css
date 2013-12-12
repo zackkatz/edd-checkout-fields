@@ -66,9 +66,6 @@ div.edd-checkout-fields fieldset .fes-label {
     float: left;
     width: 25%;
 }
-div.edd-checkout-fields fieldset .fes-label .required {
-    color: red
-}
 div.edd-checkout-fields fieldset .fes-fields {
     float: left;
     width: 75%;

@@ -315,10 +315,9 @@ class CFM_Render_Form {
      * @param array $attr
      * @return string
      */
-	 // TODO: use EDD's class for this
     function required_mark( $attr ) {
         if ( isset( $attr['required'] ) && $attr['required'] == 'yes' ) {
-            return ' <span class="required">*</span>';
+            return ' <span class="edd-required">*</span>';
         }
     }
 
@@ -874,7 +873,6 @@ class CFM_Render_Form {
         ?>
 			<span class="edd-description"><?php echo $attr['help']; ?></span>
             <input id="fes-date-<?php echo $attr['name']; ?>" type="text" class="datepicker" data-required="<?php echo $attr['required'] ?>" data-type="text"<?php $this->required_html5( $attr ); ?> name="<?php echo esc_attr( $attr['name'] ); ?>" value="<?php echo esc_attr( $value ) ?>" size="30" />
-        </div>
         <script type="text/javascript">
             jQuery(function($) {
         <?php if ( $attr['time'] == 'yes' ) { ?>
