@@ -169,8 +169,8 @@ class CFM_Admin_Form {
 		?>
         <div class="fes-loading hide"></div>
         <div class="edd-checkout-fields-buttons">
-            <button class="button" data-name="first_name" data-type="textarea"><?php _e( 'First Name', 'edd_fes' ); ?></button><br />
-            <button class="button" data-name="last_name" data-type="textarea"><?php _e( 'Last Name', 'edd_fes' ); ?></button><br />
+            <button class="button" data-name="first_name" data-type="textarea"><?php _e( 'First', 'edd_fes' ); ?></button>
+            <button class="button" data-name="last_name" data-type="textarea"><?php _e( 'Last', 'edd_fes' ); ?></button><br />
             <button class="button" data-name="user_email" data-type="category"><?php _e( 'E-mail', 'edd_fes' ); ?></button><br />
 			<button class="button" data-name="custom_text" data-type="text" title="<?php echo $title; ?>"><?php _e( 'Text', 'edd_fes' ); ?></button><br />
             <button class="button" data-name="custom_textarea" data-type="textarea" title="<?php echo $title; ?>"><?php _e( 'Textarea', 'edd_fes' ); ?></button><br />
