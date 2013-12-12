@@ -356,40 +356,6 @@ div.edd-checkout-fields .fes-submit .fes-error edd_errors {
 .fes_sub_info .text {
     padding: 5px 10px
 }
-div.fes_packs {
-    margin: 35px 0 15px;
-    overflow: hidden;
-}
-div.fes_packs li {
-    background: #EEEEEE;
-    border: 1px solid #DDDDDD;
-    border-radius: 5px 5px 5px 5px;
-    float: left;
-    list-style: none outside none;
-    margin: 25px 25px 10px 0;
-    padding: 5px;
-    position: relative;
-    width: 200px;
-}
-div.fes_packs h3 {
-    font-size: 14px;
-    font-weight: bold;
-    padding: 10px !important;
-}
-div.fes_packs p {
-    margin-bottom: 8px;
-    padding: 0 10px;
-}
-div.fes_packs .cost {
-    background: red;
-    border-radius: 30px 30px 30px 30px;
-    color: #FFFFFF;
-    margin: -16px -12px 0 0;
-    padding: 10px 8px 8px;
-    position: absolute;
-    right: 0;
-    top: 0;
-}
 .ui-timepicker-div .ui-widget-header {
     margin-bottom: 8px
 }

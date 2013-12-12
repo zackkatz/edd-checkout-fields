@@ -309,49 +309,13 @@ class CFM_Render_Form {
         }
     }
 
-    function submit_button( $form_id, $form_settings, $post_id ) {
-        $form_settings['update_text']= __( 'Update', 'edd_fes' );
-		$form_settings['submit_text']= __( 'Submit', 'edd_fes' );
-		?>
-        <fieldset class="fes-submit">
-            <div class="fes-label">
-                &nbsp;
-            </div>
-
-            <?php wp_nonce_field( 'edd-checkout-fields_add' ); ?>
-            <input type="hidden" name="form_id" value="<?php echo $form_id; ?>">
-            <input type="hidden" name="page_id" value="<?php echo get_post() ? get_the_ID() : '0'; ?>">
-            <input type="hidden" name="action" value="fes_submit_post">
-
-            <?php
-            if ( $post_id ) {
-                $cur_post = get_post( $post_id );
-                ?>
-                <input type="hidden" name="post_id" value="<?php echo $post_id; ?>">
-                <input type="hidden" name="post_date" value="<?php echo esc_attr( $cur_post->post_date ); ?>">
-                <input type="hidden" name="comment_status" value="<?php echo esc_attr( $cur_post->comment_status ); ?>">
-                <input type="hidden" name="post_author" value="<?php echo esc_attr( $cur_post->post_author ); ?>">
-                <input type="submit" class="button" name="submit" value="<?php echo $form_settings['update_text']; ?>" />
-            <?php } else { ?>
-                <input type="submit" class="button" name="submit" value="<?php echo $form_settings['submit_text']; ?>" />
-                <input type="hidden" name="edd-checkout-fields_status" value="new">
-            <?php } ?>
-
-            <?php 
-			// for 2.1/2 ;)
-			if ( isset( $form_settings['draft_post'] ) && $form_settings['draft_post'] == 'true' ) { ?>
-                <a href="#" class="btn" id="fes-post-draft"><?php _e( 'Save Draft', 'edd_fes' ); ?></a>
-            <?php } ?>
-        </fieldset>
-        <?php
-    }
-
     /**
      * Prints required field asterisk
      *
      * @param array $attr
      * @return string
      */
+	 // TODO: use EDD's class for this
     function required_mark( $attr ) {
         if ( isset( $attr['required'] ) && $attr['required'] == 'yes' ) {
             return ' <span class="required">*</span>';
