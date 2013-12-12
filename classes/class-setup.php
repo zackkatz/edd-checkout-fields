@@ -236,9 +236,6 @@ class CFM_Setup {
 			),
 			'hierarchical' => false,
 			'query_var' => false,
-			'supports' => array(
-				 'title' 
-			),
 			'labels' => array(
 				 'name' => __( 'EDD cfm Forms', 'edd_cfm' ),
 				'singular_name' => __( 'cfm Form', 'edd_cfm' ),

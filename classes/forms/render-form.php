@@ -73,17 +73,7 @@ class CFM_Render_Form {
                 continue;
             }
 
-            if ( $value['input_type'] == 'taxonomy' ) {
-
-                // don't add "category"
-                if ( $value['name'] == 'category' ) {
-                    continue;
-                }
-
-                $taxonomy_vars[] = $value;
-            } else {
-                $post_vars[] = $value;
-            }
+            $post_vars[] = $value;
         }
 
         return array($post_vars, $taxonomy_vars, $meta_vars);

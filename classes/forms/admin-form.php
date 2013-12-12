@@ -20,27 +20,16 @@ class CFM_Admin_Form {
         add_filter( 'post_updated_messages', array($this, 'form_updated_message') );
         add_action( 'admin_footer-edit.php', array($this, 'add_form_button_style') );
         add_action( 'admin_footer-post.php', array($this, 'add_form_button_style') );
-		add_action( 'bulk_actions-edit-edd-checkout-fields', array( $this, 'remove_bulk_actions'),10,2);
-		add_action( 'views_edit-edd-checkout-fields', array( $this, 'remove_bulk_actions'),10,2);
-		add_action( 'months_dropdown_results', array( $this, 'remove_months'),10,3);
 		add_action( 'save_post', array( $this, 'save_form_meta' ), 1, 2 );
-        // meta boxes
+        
+		// meta boxes
         add_action( 'add_meta_boxes_edd-checkout-fields', array($this, 'add_meta_boxes') );
 
         // ajax actions for post forms
         add_action( 'wp_ajax_edd-checkout-fields_dump', array( $this, 'form_dump' ) );
         add_action( 'wp_ajax_edd-checkout-fields_add_el', array( $this, 'ajax_post_add_element' ) );
     }
-	function remove_bulk_actions($actions){
-		return array();
-	}
-	
-	function remove_months($actions, $cpt){
-		if($cpt !== 'edd-checkout-fields'){
-			return $actions;
-		}
-		return array();
-	}
+
     /**
      * Enqueue scripts and styles for form builder
      *
@@ -100,22 +89,6 @@ class CFM_Admin_Form {
         $messages['fes_profile'] = $message;
 
         return $messages;
-    }
-
-
-    /**
-     * Columns form builder list table
-     *
-     * @param type $columns
-     * @return string
-     */
-    function admin_column( $columns ) {
-        $columns = array(
-            'cb' => '<input type="checkbox" />',
-            'title' => __( 'Form Name', 'edd_fes' ),
-        );
-
-        return $columns;
     }
 
     /**
