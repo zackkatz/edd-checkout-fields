@@ -67,7 +67,7 @@ class EDD_Checkout_Fields_Manager {
 			// Setup class instances
 			self::$instance->render_form           = new CFM_Render_Form;
 			self::$instance->setup                 = new CFM_Setup;
-			self::$instnace->frontend			   = new CFM_Frontend;
+			self::$instance->frontend			   = new CFM_Frontend;
 			self::$instance->upload                = new CFM_Upload;
 			self::$instance->frontend_form_post    = new CFM_Frontend_Form_Post;
 			self::$instance->menu                  = new CFM_Menu;
