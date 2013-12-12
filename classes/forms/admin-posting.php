@@ -18,7 +18,7 @@ class CFM_Admin_Posting extends CFM_Render_Form {
     }
 
     function add_meta_boxes() {
-		// add_meta_box( 'fes-custom-fields', __( 'CFM Custom Fields', 'edd_fes' ), array($this, 'render_form'), 'download', 'normal', 'high' );
+		 add_meta_box( 'fes-custom-fields', __( 'Custom Checkout Fields', 'edd_fes' ), array($this, 'render_form'), 'edd_payment', 'normal', 'high' );
     }
 
     function render_form($form_id, $post_id = NULL, $preview = false) {
