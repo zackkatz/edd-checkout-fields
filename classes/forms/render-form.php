@@ -188,7 +188,7 @@ class CFM_Render_Form {
                     }
 
                     $this->render_items( $form_vars, $post_id, 'post', $form_id, $form_settings );
-                    $this->submit_button( $form_id, $form_settings, $post_id );
+                    //$this->submit_button( $form_id, $form_settings, $post_id );
 
                     if ( !$post_id ) {
                         do_action( 'fes_add_post_form_bottom', $form_id, $form_settings );
