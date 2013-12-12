@@ -104,9 +104,7 @@
             // console.log($self, data);
 
             // check if these are already inserted
-            var oneInstance = ['user_login', 'first_name', 'last_name', 'nickname', 'display_name', 'user_email', 'user_url',
-                'user_bio', 'password', 'user_avatar', 'post_title', 'post_content', 'featured_image', 'download_category',
-				'download_tag','multiple_pricing','post_excerpt','eddc_user_paypal'];
+            var oneInstance = ['first_name', 'last_name', 'user_email'];
 
             if ($.inArray(name, oneInstance) >= 0) {
                 if( $formEditor.find('li.' + name).length ) {

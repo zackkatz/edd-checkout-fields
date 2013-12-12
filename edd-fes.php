@@ -37,13 +37,11 @@ class EDD_Checkout_Fields_Manager {
 	
 	// Setup objects for each class
 	public $render_form;
-//	public $admin;
 	public $admin_form;
 	public $admin_posting;
 //	public $emails;
 	public $install;
 	public $menu;
-//	public $templates;
 	public $upload;
 	
 	/**
@@ -69,14 +67,12 @@ class EDD_Checkout_Fields_Manager {
 			self::$instance->setup();
 			// Setup class instances
 			self::$instance->render_form           = new CFM_Render_Form;
-//			self::$instance->templates             = new CFM_Templates;
 			self::$instance->setup                 = new CFM_Setup;
 //			self::$instance->emails                = new CFM_Emails;
 			self::$instance->upload                = new CFM_Upload;
 			self::$instance->frontend_form_post    = new CFM_Frontend_Form_Post;
 			self::$instance->menu                  = new CFM_Menu;
 			if ( is_admin() ) {
-//				self::$instance->admin                 = new CFM_Admin;
 				self::$instance->admin_form            = new CFM_Admin_Form;
 				self::$instance->admin_posting         = new CFM_Admin_Posting;
 			}
@@ -119,8 +115,6 @@ class EDD_Checkout_Fields_Manager {
 	}
 	
 	public function includes() {
-//		require_once cfm_plugin_dir . 'classes/class-templates.php';
-//		require_once cfm_plugin_dir . 'classes/class-frontend.php';
 //		require_once cfm_plugin_dir . 'classes/class-emails.php';
 		require_once cfm_plugin_dir . 'classes/class-setup.php';
 		require_once cfm_plugin_dir . 'classes/class-menu.php';
@@ -133,7 +127,6 @@ class EDD_Checkout_Fields_Manager {
 				require_once( ABSPATH . 'wp-admin/includes/class-wp-list-table.php' );
 			}
 			require_once cfm_plugin_dir . 'classes/class-fes-list-table.php';
-//			require_once cfm_plugin_dir . 'classes/class-admin.php';
 			require_once cfm_plugin_dir . 'classes/forms/admin-form.php';
 			require_once cfm_plugin_dir . 'classes/forms/admin-posting.php';
 			require_once cfm_plugin_dir . 'classes/forms/admin-template.php';

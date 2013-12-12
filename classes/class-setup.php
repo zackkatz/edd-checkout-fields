@@ -70,7 +70,7 @@ class CFM_Setup {
 ?>
 	<div class="updated">
 		<p><?php
-		printf( __( '<strong>Notice:</strong> Easy Digital Downloads Frontend Submissions requires Easy Digital Downloads 1.8 or higher in order to function properly.', 'edd_cfm' ) );
+		printf( __( '<strong>Notice:</strong> Easy Digital Downloads Checkout Fields Manager requires Easy Digital Downloads 1.8 or higher in order to function properly.', 'edd_cfm' ) );
 ?>
 		</p>
 	</div>
@@ -80,7 +80,7 @@ class CFM_Setup {
 ?>
 	<div class="updated">
 		<p><?php
-		printf( __( '<strong>Notice:</strong> Easy Digital Downloads Frontend Submissions requires WordPress 3.6 or higher in order to function properly.', 'edd_cfm' ) );
+		printf( __( '<strong>Notice:</strong> Easy Digital Downloads Checkout Fields Manager requires WordPress 3.6 or higher in order to function properly.', 'edd_cfm' ) );
 ?>
 		</p>
 	</div>
@@ -108,7 +108,6 @@ class CFM_Setup {
 			wp_enqueue_script( 'suggest' );
 			wp_enqueue_script( 'jquery-ui-slider' );
 			wp_enqueue_script( 'plupload-handlers' );
-			wp_enqueue_script( 'zxcvbn', includes_url( '/js/zxcvbn.min.js' ) );
 			wp_enqueue_script( 'jquery-ui-timepicker', cfm_plugin_url . 'assets/js/jquery-ui-timepicker-addon.js', array(
 				 'jquery-ui-datepicker' 
 			) );
@@ -151,10 +150,6 @@ class CFM_Setup {
 			$scheme = is_ssl() ? 'https' : 'http';
 			wp_register_script( 'jquery-tiptip', cfm_plugin_url . 'assets/js/jquery-tiptip/jquery.tipTip.min.js', array(
 				 'jquery' 
-			), '2.0', true );
-			wp_enqueue_script( 'edd-cfm-admin-js', cfm_plugin_url . 'assets/js/admin.js', array(
-				 'jquery',
-				'jquery-tiptip' 
 			), '2.0', true );
 			wp_enqueue_script( 'jquery-ui-autocomplete' );
 			wp_enqueue_script( 'jquery-smallipop', cfm_plugin_url . 'assets/js/jquery.smallipop-0.4.0.min.js', array(
@@ -203,7 +198,6 @@ class CFM_Setup {
 		}
 		$current_screen = get_current_screen();
 		if ( $current_screen->post_type === 'edd-checkout-fields' || $current_screen->post_type === 'shop_orders' ) {
-			wp_enqueue_style( 'edd-cfm-admin-css', cfm_plugin_url . 'assets/css/admin.css' );
 			wp_enqueue_style( 'jquery-smallipop', cfm_plugin_url . 'assets/css/jquery.smallipop.css' );
 			wp_enqueue_style( 'cfm-formbuilder', cfm_plugin_url . 'assets/css/formbuilder.css' );
 			wp_enqueue_style( 'jquery-ui-core', cfm_plugin_url . 'assets/css/jquery-ui-1.9.1.custom.css' );

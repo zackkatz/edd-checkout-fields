@@ -4,13 +4,9 @@
             // clone and remove repeated field
             $('.edd-checkout-fields').on('click', 'img.fes-clone-field', this.cloneField);
             $('.edd-checkout-fields').on('click', 'img.fes-remove-field', this.removeField);
-            $('.edd-checkout-fields').on('click', 'a.fes-delete-avatar', this.deleteAvatar);
 
             $('.edd-checkout-fields-add').on('submit', this.formSubmit);
             $('form#post').on('submit', this.adminPostSubmit);
-
-            // image insert
-            // this.insertImage();
         },
 
         cloneField: function(e) {
@@ -160,17 +156,6 @@
                         }
                         break;
 
-                    case 'tax-checkbox':
-                        var length = $(item).children().find('input:checked').length;
-
-                        if ( !length ) {
-                            error = true;
-
-                            // make it warn collor
-                            CFM_Form.markError(item);
-                        }
-                        break;
-
                     case 'radio':
                         var length = $(item).parent().find('input:checked').length;
 
@@ -274,104 +259,10 @@
             var urlregex = new RegExp("^(http:\/\/www.|https:\/\/www.|ftp:\/\/www.|www.|http:\/\/|https:\/\/){1}([0-9A-Za-z]+\.)");
             return urlregex.test(url);
         },
-
-        insertImage: function() {
-
-            var button = 'fes-insert-image',
-                container = 'fes-insert-image-container';
-            if ( !$('#' + button).length) {
-                return;
-            };
-
-            var imageUploader = new plupload.Uploader({
-                runtimes: 'html5,html4',
-                browse_button: button,
-                container: container,
-                multipart: true,
-                multipart_params: {
-                    action: 'fes_insert_image'
-                },
-                multiple_queues: false,
-                multi_selection: false,
-                urlstream_upload: true,
-                file_data_name: 'fes_file',
-                max_file_size: '2mb',
-                url: fes_frontend_upload.plupload.url,
-                flash_swf_url: fes_frontend_upload.flash_swf_url,
-                filters: [{
-                    title: 'Allowed Files',
-                    extensions: 'jpg,jpeg,gif,png,bmp'
-                }]
-            });
-
-            imageUploader.bind('Init', function(up, params) {
-                // console.log("Current runtime environment: " + params.runtime);
-            });
-
-            imageUploader.bind('FilesAdded', function(up, files) {
-                var $container = $('#' + container);
-
-                $.each(files, function(i, file) {
-                    $container.append(
-                        '<div class="upload-item" id="' + file.id + '"><div class="progress progress-striped active"><div class="bar"></div></div></div>');
-                });
-
-                up.refresh();
-                up.start();
-            });
-
-            imageUploader.bind('QueueChanged', function (uploader) {
-                imageUploader.start();
-            });
-
-            imageUploader.bind('UploadProgress', function(up, file) {
-                var item = $('#' + file.id);
-
-                $('.bar', item).css({ width: file.percent + '%' });
-                $('.percent', item).html( file.percent + '%' );
-            });
-
-            imageUploader.bind('Error', function(up, err) {
-                alert('Error #' + error.code + ': ' + error.message);
-            });
-
-            imageUploader.bind('FileUploaded', function(up, file, response) {
-
-                $('#' + file.id).remove();
-
-                if(response.response !== 'error' ) {
-                    var success = false;
-
-                    if ( typeof tinyMCE !== 'undefined') {
-                        success = tinyMCE.execInstanceCommand('post_content',"mceInsertContent",false, response.response);
-                    }
-
-                    // insert failed to the edit, perhaps insert into textarea
-                    var post_content = $('#post_content');
-                    post_content.val( post_content.val() + response.response );
-
-                } else {
-                    alert('Something went wrong');
-                }
-            });
-
-            imageUploader.init();
-        },
-
-        deleteAvatar: function(e) {
-            e.preventDefault();
-
-            if ( confirm( $(this).data('confirm') ) ) {
-                $.post(fes_frontend.ajaxurl, {action: 'fes_delete_avatar', _wpnonce: fes_frontend.nonce}, function() {
-                    window.location.reload();
-                });
-            }
-        }
     };
 
     $(function() {
         CFM_Form.init();
-        CFM_Form.insertImage();
     });
 
 })(jQuery);
