@@ -5,8 +5,6 @@ if ( !defined( 'ABSPATH' ) ) {
 
 class CFM_Setup {
 	public function __construct() {
-		remove_action( 'edd_purchase_form_after_user_info', 'edd_user_info_fields' );
-		add_action('edd_purchase_form_after_user_info', array ($this, 'add_fields'));
 		add_action( 'admin_init', array(
 			 $this,
 			'is_wp_36_and_edd_activated' 
@@ -39,9 +37,6 @@ class CFM_Setup {
 			 $this,
 			'cfm_version' 
 		) );
-	}
-	function add_fields(){
-		echo do_shortcode('[edd-checkout-fields]');
 	}
 	public function is_wp_36_and_edd_activated() {
 		global $wp_version;
