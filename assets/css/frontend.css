@@ -421,13 +421,3 @@ div.fes_packs .cost {
 .ui-timepicker-rtl dl dd {
     margin: 0 65px 10px 10px
 }
-
-#edd_checkout_form_wrap fieldset {
-border: none;
-padding: 0px;
-}
-.edd-checkout-fields {
-border: 1px solid #eee;
-padding: 1.387em;
-margin: 0 0 21px;
-}

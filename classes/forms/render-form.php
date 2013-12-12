@@ -45,65 +45,6 @@ class CFM_Render_Form {
         return $results;
     }
 
-    /**
-     * Really simple captcha validation
-     *
-     * @return void
-     */
-    function validate_rs_captcha() {
-        $rs_captcha_input = isset( $_POST['rs_captcha'] ) ? $_POST['rs_captcha'] : '';
-        $rs_captcha_file = isset( $_POST['rs_captcha_val'] ) ? $_POST['rs_captcha_val'] : '';
-
-        if ( class_exists( 'ReallySimpleCaptcha' ) ) {
-            $captcha_instance = new ReallySimpleCaptcha();
-
-            if ( !$captcha_instance->check( $rs_captcha_file, $rs_captcha_input ) ) {
-
-                $this->send_error( __( 'Really Simple Captcha validation failed', 'edd_fes' ) );
-            } else {
-                // validation success, remove the files
-                $captcha_instance->remove( $rs_captcha_file );
-            }
-        }
-    }
-
-    /**
-     * reCaptcha Validation
-     *
-     * @return void
-     */
-    function validate_re_captcha() {
-        $recap_challenge = isset( $_POST['recaptcha_challenge_field'] ) ? $_POST['recaptcha_challenge_field'] : '';
-        $recap_response = isset( $_POST['recaptcha_response_field'] ) ? $_POST['recaptcha_response_field'] : '';
-        $private_key = EDD_CFM()->fes_options->get_option( 'recaptcha_private');
-
-        $resp = recaptcha_check_answer( $private_key, $_SERVER["REMOTE_ADDR"], $recap_challenge, $recap_response );
-
-        if ( !$resp->is_valid ) {
-            $this->send_error( __( 'reCAPTCHA validation failed', 'edd_fes' ) );
-        }
-    }
-
-    /**
-     * Guess a suitable username for registration based on email address
-     * @param string $email email address
-     * @return string username
-     */
-    function guess_username( $email ) {
-        // username from email address
-        $username = sanitize_user( substr( $email, 0, strpos( $email, '@' ) ) );
-
-        if ( !username_exists( $username ) ) {
-            return $username;
-        }
-
-        // try to add some random number in username
-        // and may be we got our username
-        $username .= rand( 1, 199 );
-        if ( !username_exists( $username ) ) {
-            return $username;
-        }
-    }
 
     /**
      * Get input meta fields separated as post vars, taxonomy and meta vars
@@ -219,30 +160,6 @@ class CFM_Render_Form {
         return array($meta_key_value, $multi_repeated, $files);
     }
 
-    function guest_fields( $form_settings ) {
-        ?>
-        <li class="el-name">
-            <div class="fes-label">
-                <label><?php echo $form_settings['name_label']; ?> <span class="required">*</span></label>
-            </div>
-
-            <div class="fes-fields">
-                <input type="text" required="required" data-required="yes" data-type="text" name="guest_name" value="" size="40">
-            </div>
-        </li>
-
-        <li class="el-email">
-            <div class="fes-label">
-                <label><?php echo $form_settings['email_label']; ?> <span class="required">*</span></label>
-            </div>
-
-            <div class="fes-fields">
-                <input type="email" required="required" data-required="yes" data-type="email" name="guest_email" value="" size="40">
-            </div>
-        </li>
-        <?php
-    }
-
     /**
      * Handles the add post shortcode
      *
@@ -257,12 +174,7 @@ class CFM_Render_Form {
 
         if ( $form_vars ) {
             ?>
-
-            <?php if ( !$preview ) { ?>
-                <form class="edd-checkout-fields-add" action="" method="post">
-                <?php } ?>
-
-                <div class="edd-checkout-fields">
+                <fieldset id="edd_checkout_user_info">
 
                     <?php
                     if ( !is_user_logged_in() && $form_settings['guest_post'] == 'true' && $form_settings['guest_details'] == 'true' ) {
@@ -285,12 +197,7 @@ class CFM_Render_Form {
                     }
                     ?>
 
-                </div>
-
-                <?php if ( !$preview ) { ?>
-                </form>
-            <?php } ?>
-
+                </fieldset>
             <?php
         } //endif
     }
@@ -300,7 +207,7 @@ class CFM_Render_Form {
         $el_name = !empty( $form_field['name'] ) ? $form_field['name'] : '';
         $class_name = !empty( $form_field['css'] ) ? ' ' . $form_field['css'] : '';
 
-        printf( '<fieldset class="fes-el %s%s">', $el_name, $class_name );
+        printf( '<p id="fes-el %s%s">', $el_name, $class_name );
 
         if ( isset( $form_field['input_type'] ) && !in_array( $form_field['input_type'], $label_exclude ) ) {
             $this->label( $form_field, $post_id );
@@ -308,7 +215,7 @@ class CFM_Render_Form {
     }
 
     function render_item_after( $form_field ) {
-        echo '</fieldset>';
+        echo '</p>';
     }
 
     /**
@@ -483,9 +390,7 @@ class CFM_Render_Form {
      */
     function label( $attr, $post_id = 0 ) {
         ?>
-        <div class="fes-label">
-            <label for="fes-<?php echo isset( $attr['name'] ) ? $attr['name'] : 'cls'; ?>"><?php echo $attr['label'] . $this->required_mark( $attr ); ?></label>
-        </div>
+            <label class="edd-label" for="fes-<?php echo isset( $attr['name'] ) ? $attr['name'] : 'cls'; ?>"><?php echo $attr['label'] . $this->required_mark( $attr ); ?></label>
         <?php
     }
 
@@ -572,10 +477,8 @@ class CFM_Render_Form {
             }
         }
         ?>
-
-        <div class="fes-fields">
+			<span class="edd-description"><?php echo $attr['help']; ?></span>
             <input class="textfield<?php echo $this->required_class( $attr ); ?>" id="<?php echo $attr['name']; ?>" type="text" data-required="<?php echo $attr['required'] ?>" data-type="text"<?php $this->required_html5( $attr ); ?> name="<?php echo esc_attr( $attr['name'] ); ?>" placeholder="<?php echo esc_attr( $attr['placeholder'] ); ?>" value="<?php echo esc_attr( $value ) ?>" size="<?php echo esc_attr( $attr['size'] ) ?>" <?php echo $username ? 'disabled' : ''; ?> />
-            <span class="fes-help"><?php echo $attr['help']; ?></span>
 
             <?php if ( $taxonomy ) { ?>
             <script type="text/javascript">
@@ -584,7 +487,6 @@ class CFM_Render_Form {
                 });
             </script>
             <?php } ?>
-        </div>
 
         <?php
     }
@@ -613,9 +515,7 @@ class CFM_Render_Form {
             $value = $attr['default'];
         }
         ?>
-
-        <div class="fes-fields">
-
+            <span class="edd-description"><?php echo $attr['help']; ?></span>
             <?php if ( isset( $attr['insert_image'] ) && $attr['insert_image'] == 'yes' ) { ?>
                 <div id="fes-insert-image-container">
                     <a class="fes-button" id="fes-insert-image" href="#">
@@ -642,8 +542,7 @@ class CFM_Render_Form {
                 ?>
                 <textarea class="textareafield<?php echo $this->required_class( $attr ); ?>" id="<?php echo $attr['name']; ?>" name="<?php echo $attr['name']; ?>" data-required="<?php echo $attr['required'] ?>" data-type="textarea"<?php $this->required_html5( $attr ); ?> placeholder="<?php echo esc_attr( $attr['placeholder'] ); ?>" rows="<?php echo $attr['rows']; ?>" cols="<?php echo $attr['cols']; ?>"><?php echo esc_textarea( $value ) ?></textarea>
             <?php } ?>
-            <span class="fes-help"><?php echo $attr['help']; ?></span>
-        </div>
+
 
         <?php
     }
@@ -671,7 +570,7 @@ class CFM_Render_Form {
         $uploaded_items = $post_id ? $this->get_meta( $post_id, $attr['name'], $type, false ) : array();
         ?>
 
-        <div class="fes-fields">
+            <span class="edd-description"><?php echo $attr['help']; ?></span>
             <div id="fes-<?php echo $attr['name']; ?>-upload-container">
                 <div class="fes-attachment-upload-filelist">
                     <a id="fes-<?php echo $attr['name']; ?>-pickfiles" class="button file-selector" href="#"><?php _e( 'Select File(s)', 'edd_fes' ); ?></a>
@@ -694,9 +593,6 @@ class CFM_Render_Form {
                 </div>
             </div><!-- .container -->
 
-            <span class="fes-help"><?php echo $attr['help']; ?></span>
-
-        </div> <!-- .fes-fields -->
 
         <script type="text/javascript">
             jQuery(function($) {
@@ -725,10 +621,8 @@ class CFM_Render_Form {
         $multi = $multiselect ? ' multiple="multiple"' : '';
         $data_type = $multiselect ? 'multiselect' : 'select';
         $css = $multiselect ? ' class="multiselect"' : '';
-        ?>
-
-        <div class="fes-fields">
-
+		?>
+            <span class="edd-description"><?php echo $attr['help']; ?></span>
             <select<?php echo $css; ?> name="<?php echo $attr['name'] ?>[]"<?php echo $multi; ?> data-required="<?php echo $attr['required'] ?>" data-type="<?php echo $data_type; ?>"<?php $this->required_html5( $attr ); ?>>
 
                 <?php if ( !empty( $attr['first'] ) ) { ?>
@@ -746,8 +640,6 @@ class CFM_Render_Form {
                 }
                 ?>
             </select>
-            <span class="fes-help"><?php echo $attr['help']; ?></span>
-        </div>
         <?php
     }
 
@@ -765,10 +657,9 @@ class CFM_Render_Form {
         }
         ?>
 
-        <div class="fes-fields">
-
             <span data-required="<?php echo $attr['required'] ?>" data-type="radio"></span>
 
+            <span class="edd-description"><?php echo $attr['help']; ?></span>
             <?php
             if ( $attr['options'] && count( $attr['options'] ) > 0 ) {
                 foreach ($attr['options'] as $option) {
@@ -782,9 +673,6 @@ class CFM_Render_Form {
                 }
             }
             ?>
-
-            <span class="fes-help"><?php echo $attr['help']; ?></span>
-        </div>
 
         <?php
     }
@@ -802,10 +690,11 @@ class CFM_Render_Form {
             $selected = explode( self::$separator, $this->get_meta( $post_id, $attr['name'], $type, true ) );
         }
         ?>
-
-        <div class="fes-fields">
             <span data-required="<?php echo $attr['required'] ?>" data-type="radio"></span>
 
+            <div class="fes-fields">
+                <span class="edd-description"><?php echo $attr['help']; ?></span>
+            </div>
             <?php
             if ( $attr['options'] && count( $attr['options'] ) > 0 ) {
                 foreach ($attr['options'] as $option) {
@@ -820,11 +709,6 @@ class CFM_Render_Form {
             }
             ?>
 
-            <div class="fes-fields">
-                <span class="fes-help"><?php echo $attr['help']; ?></span>
-            </div>
-
-        </div>
 
         <?php
     }
@@ -848,11 +732,8 @@ class CFM_Render_Form {
             $value = $attr['default'];
         }
         ?>
-
-        <div class="fes-fields">
+            <span class="edd-description"><?php echo $attr['help']; ?></span>
             <input id="fes-<?php echo $attr['name']; ?>" type="url" class="url" data-required="<?php echo $attr['required'] ?>" data-type="text"<?php $this->required_html5( $attr ); ?> name="<?php echo esc_attr( $attr['name'] ); ?>" placeholder="<?php echo esc_attr( $attr['placeholder'] ); ?>" value="<?php echo esc_attr( $value ) ?>" size="<?php echo esc_attr( $attr['size'] ) ?>" />
-            <span class="fes-help"><?php echo $attr['help']; ?></span>
-        </div>
 
         <?php
     }
@@ -873,12 +754,8 @@ class CFM_Render_Form {
         } else {
             $value = $attr['default'];
         }
-        ?>
-
-        <div class="fes-fields">
+        ?> <span class="edd-description"><?php echo $attr['help']; ?></span>
             <input id="fes-<?php echo $attr['name']; ?>" type="email" class="email" data-required="<?php echo $attr['required'] ?>" data-type="text"<?php $this->required_html5( $attr ); ?> name="<?php echo esc_attr( $attr['name'] ); ?>" placeholder="<?php echo esc_attr( $attr['placeholder'] ); ?>" value="<?php echo esc_attr( $value ) ?>" size="<?php echo esc_attr( $attr['size'] ) ?>" />
-            <span class="fes-help"><?php echo $attr['help']; ?></span>
-        </div>
 
         <?php
     }
@@ -892,9 +769,7 @@ class CFM_Render_Form {
         $add = cfm_assets_url .'img/add.png';
         $remove = cfm_assets_url. 'img/remove.png';
         ?>
-
-        <div class="fes-fields">
-
+            <span class="edd-description"><?php echo $attr['help']; ?></span>
             <?php if ( isset( $attr['multiple'] ) ) { ?>
                 <table>
                     <thead>
@@ -993,8 +868,6 @@ class CFM_Render_Form {
 
                 </table>
             <?php } ?>
-            <span class="fes-help"><?php echo $attr['help']; ?></span>
-        </div>
 
         <?php
     }
@@ -1006,9 +879,7 @@ class CFM_Render_Form {
      */
     function html( $attr ) {
         ?>
-        <div class="fes-fields">
             <?php echo do_shortcode( $attr['html'] ); ?>
-        </div>
         <?php
     }
 
@@ -1037,10 +908,8 @@ class CFM_Render_Form {
 
         $value = $post_id ? $this->get_meta( $post_id, $attr['name'], $type, true ) : '';
         ?>
-
-        <div class="fes-fields">
+			<span class="edd-description"><?php echo $attr['help']; ?></span>
             <input id="fes-date-<?php echo $attr['name']; ?>" type="text" class="datepicker" data-required="<?php echo $attr['required'] ?>" data-type="text"<?php $this->required_html5( $attr ); ?> name="<?php echo esc_attr( $attr['name'] ); ?>" value="<?php echo esc_attr( $value ) ?>" size="30" />
-            <span class="fes-help"><?php echo $attr['help']; ?></span>
         </div>
         <script type="text/javascript">
             jQuery(function($) {
