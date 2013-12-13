@@ -87,14 +87,10 @@ class CFM_Setup {
 	}
 	
 	public function enqueue_scripts() {
-		if ( is_admin() ) {
-			return;
-		}
 		global $post;
 		if ( edd_is_checkout() ) {
 			$scheme = is_ssl() ? 'https' : 'http';
 			wp_enqueue_script( 'jquery' );
-			wp_enqueue_style( 'cfm-css', cfm_plugin_url . 'assets/css/frontend.css' );
 			wp_enqueue_script( 'cfm-form', cfm_plugin_url . 'assets/js/frontend-form.js', array(
 				 'jquery' 
 			) );
@@ -111,7 +107,7 @@ class CFM_Setup {
 				'plupload-handlers' 
 			) );
 			wp_localize_script( 'cfm-form', 'cfm_frontend', array(
-				 'ajaxurl' => admin_url( 'admin-ajax.php' ),
+				'ajaxurl' => admin_url( 'admin-ajax.php' ),
 				'error_message' => __( 'Please fix the errors to proceed', 'edd_cfm' ),
 				'nonce' => wp_create_nonce( 'cfm_nonce' ) 
 			) );
@@ -136,9 +132,6 @@ class CFM_Setup {
 	}
 	
 	public function admin_enqueue_scripts() {
-		if ( !is_admin() ) {
-			return;
-		}
 		global $pagenow, $post;
 		$current_screen = get_current_screen();
 		if ( $current_screen->post_type === 'edd-checkout-fields' || $current_screen->post_type === 'download' ) {
@@ -188,9 +181,6 @@ class CFM_Setup {
 	}
 	
 	public function admin_enqueue_styles() {
-		if ( !is_admin() ) {
-			return;
-		}
 		$current_screen = get_current_screen();
 		if ( $current_screen->post_type === 'edd-checkout-fields' || $current_screen->post_type === 'download' ) {
 			wp_enqueue_style( 'jquery-smallipop', cfm_plugin_url . 'assets/css/jquery.smallipop.css' );
@@ -200,9 +190,6 @@ class CFM_Setup {
 	}
 	
 	public function enqueue_styles() {
-		if ( is_admin() ) {
-			return;
-		}
 		if ( edd_is_checkout() ) {
 			wp_enqueue_style( 'jquery-ui', cfm_plugin_url . 'assets/css/jquery-ui-1.9.1.custom.css' );
 		}
@@ -216,41 +203,20 @@ class CFM_Setup {
 	public function register_post_type() {
 		$capability = 'manage_options';
 		register_post_type( 'edd-checkout-fields', array(
-			'label' => __( 'EDD CFM Forms', 'edd_cfm' ),
+			'label' => __( 'EDD CFM', 'edd_cfm' ),
 			'public' => false,
-			'show_ui' => true,
+			'show_ui' => false,
 			'rewrites' => false,
 			'show_in_menu' => 'cfm-admin-opt',
 			'capability_type' => 'post',
 			'capabilities' => array(
-				 'publish_posts' => 'cap_that_doesnt_exist',
-				'edit_posts' => $capability,
-				'edit_others_posts' => $capability,
-				'delete_posts' => 'cap_that_doesnt_exist',
-				'delete_others_posts' => 'cap_that_doesnt_exist',
-				'read_private_posts' => 'cap_that_doesnt_exist',
 				'edit_post' => $capability,
-				'delete_post' => 'cap_that_doesnt_exist',
 				'read_post' => $capability,
 				'create_posts' => 'cap_that_doesnt_exist' 
 			),
-			'hierarchical' => false,
 			'query_var' => false,
 			'labels' => array(
-				 'name' => __( 'EDD cfm Forms', 'edd_cfm' ),
-				'singular_name' => __( 'cfm Form', 'edd_cfm' ),
-				'menu_name' => __( 'cfm Forms', 'edd_cfm' ),
-				'add_new' => __( 'Add cfm Form', 'edd_cfm' ),
-				'add_new_item' => __( 'Add New Form', 'edd_cfm' ),
-				'edit' => __( 'Edit', 'edd_cfm' ),
 				'edit_item' => __( '', 'edd_cfm' ),
-				'new_item' => __( 'New cfm Form', 'edd_cfm' ),
-				'view' => __( 'View cfm Form', 'edd_cfm' ),
-				'view_item' => __( 'View cfm Form', 'edd_cfm' ),
-				'search_items' => __( 'Search cfm Forms', 'edd_cfm' ),
-				'not_found' => __( 'No cfm Forms Found', 'edd_cfm' ),
-				'not_found_in_trash' => __( 'No cfm Forms Found in Trash', 'edd_cfm' ),
-				'parent' => __( 'Parent cfm Form', 'edd_cfm' ) 
 			) 
 		) );
 	}

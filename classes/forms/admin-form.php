@@ -66,6 +66,9 @@ class CFM_Admin_Form {
 				margin-right: -240px;
 				width: 30px;
 			}
+			#icon-edit{
+				display: none;
+			}
         </style>
         <?php
     }

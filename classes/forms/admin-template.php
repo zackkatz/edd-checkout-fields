@@ -695,10 +695,10 @@ function your_function_name( $form_id, $post_id, $form_settings ) {
         <li class="first_name">
             <?php self::legend( $label, $values ); ?>
             <?php self::hidden_field( "[$field_id][input_type]", 'text' ); ?>
-            <?php self::hidden_field( "[$field_id][template]", 'first_name' ); ?>
+            <?php self::hidden_field( "[$field_id][template]", 'edd_first' ); ?>
 
             <div class="edd-checkout-fields-holder">
-                <?php self::common( $field_id, 'first_name', false, $values ); ?>
+                <?php self::common( $field_id, 'edd_first', false, $values ); ?>
                 <?php self::common_text( $field_id, $values ); ?>
             </div> <!-- .edd-checkout-fields-holder -->
         </li>

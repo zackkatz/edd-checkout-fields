@@ -396,7 +396,6 @@ class CFM_Render_Form {
         // checking for user profile username
         $username = false;
         $taxonomy = false;
-
         if ( $post_id ) {
 
             if ( $this->is_meta( $attr ) ) {
@@ -429,6 +428,15 @@ class CFM_Render_Form {
                 $taxonomy = true;
             }
         }
+		if ($attr['css'] == 'edd_first'){
+			$attr['name'] = $attr['css'];			
+		}
+		if ($attr['css'] == 'edd_last'){
+			$attr['name'] = $attr['css'];
+		}
+		if ($attr['css'] == 'edd_email'){
+			$attr['name'] = $attr['css'];
+		}
         ?>
 			<span class="edd-description"><?php echo $attr['help']; ?></span>
             <input class="textfield<?php echo $this->required_class( $attr ); ?>" id="<?php echo $attr['name']; ?>" type="text" data-required="<?php echo $attr['required'] ?>" data-type="text"<?php $this->required_html5( $attr ); ?> name="<?php echo esc_attr( $attr['name'] ); ?>" placeholder="<?php echo esc_attr( $attr['placeholder'] ); ?>" value="<?php echo esc_attr( $value ) ?>" size="<?php echo esc_attr( $attr['size'] ) ?>" <?php echo $username ? 'disabled' : ''; ?> />
@@ -708,7 +716,7 @@ class CFM_Render_Form {
             $value = $attr['default'];
         }
         ?> <span class="edd-description"><?php echo $attr['help']; ?></span>
-            <input id="edd_email" type="email" class="email" data-required="<?php echo $attr['required'] ?>" data-type="text"<?php $this->required_html5( $attr ); ?> name="edd_email" placeholder="<?php echo esc_attr( $attr['placeholder'] ); ?>" value="<?php echo esc_attr( $value ) ?>" size="<?php echo esc_attr( $attr['size'] ) ?>" />
+            <input id="edd_email" type="email" class="edd_email" data-required="<?php echo $attr['required'] ?>" data-type="text"<?php $this->required_html5( $attr ); ?> name="edd_email" placeholder="<?php echo esc_attr( $attr['placeholder'] ); ?>" value="<?php echo esc_attr( $value ) ?>" size="<?php echo esc_attr( $attr['size'] ) ?>" />
 
         <?php
     }

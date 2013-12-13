@@ -20,6 +20,8 @@ class CFM_Frontend_Form_Post extends CFM_Render_Form {
 		//	 $this,
 		//	'submit_post' 
 		//) );
+		add_action( 'edd_insert_payment', array($this,'submit_post'),10,2);
+		//do_action( 'edd_checkout_error_checks', $valid_data, $_POST );
 	}
 	
 	public static function init() {
@@ -37,34 +39,16 @@ class CFM_Frontend_Form_Post extends CFM_Render_Form {
 		return $content;
 	}
 	
-	public function submit_post() {
+	public function submit_post( $payment, $payment_data ) {
 		require_once EDD_PLUGIN_DIR . 'includes/admin/upload-functions.php';
 		if ( function_exists( 'edd_set_upload_dir' ) ) {
 			add_filter( 'upload_dir', 'edd_set_upload_dir' );
 		}
-		check_ajax_referer( 'edd-checkout-fields_add' );
-		@header( 'Content-Type: application/json; charset=' . get_option( 'blog_charset' ) );
 		$form_id       = isset( $_POST[ 'form_id' ] ) ? intval( $_POST[ 'form_id' ] ) : 0;
 		$form_vars     = $this->get_input_fields( $form_id );
 		$form_settings = get_post_meta( $form_id, 'edd-checkout-fields_settings', true );
 		list( $post_vars, $taxonomy_vars, $meta_vars ) = $form_vars;
-		$post_author = get_current_user_id();
-		$status  = 'publish';
-		$postarr = array(
-			'post_type' => 'download',
-			'post_status' => $status,
-			'post_author' => $post_author,
-			'post_title' => isset( $_POST[ 'post_title' ] ) ? trim( $_POST[ 'post_title' ] ) : '',
-			'post_content' => isset( $_POST[ 'post_content' ] ) ? trim( $_POST[ 'post_content' ] ) : '',
-			'post_excerpt' => isset( $_POST[ 'post_excerpt' ] ) ? trim( $_POST[ 'post_excerpt' ] ) : '' 
-		);
-		$error = apply_filters( 'fes_add_post_validate', '' );
-		if ( !empty( $error ) ) {
-			$this->send_error( $error );
-		}
-
-		$postarr = apply_filters( 'fes_add_post_args', $postarr, $form_id, $form_settings, $form_vars );
-		$post_id = wp_insert_post( $postarr );
+		$post_id = $payment;
 		if ( $post_id ) {
 			self::update_post_meta( $meta_vars, $post_id );
 			// set the post form_id for later usage
@@ -94,18 +78,6 @@ class CFM_Frontend_Form_Post extends CFM_Render_Form {
 			if ( function_exists( 'edd_set_upload_dir' ) ) {
 				remove_filter( 'upload_dir', 'edd_set_upload_dir' );
 			}
-			$response = array(
-				 'success' => true,
-				'redirect_to' => get_permalink( EDD_CFM()->fes_options->get_option( 'vendor-dashboard-page' ) ),
-				'message' => __( 'Success!', 'edd_fes' ),
-				'is_post' => true 
-			);
-			$response = apply_filters( 'fes_add_post_redirect', $response, $post_id, $form_id, $form_settings );
-			echo json_encode( $response );
-			exit;
-		}
-		else {
-			$this->send_error( __( 'Something went wrong. Error 1049.', 'edd_fes' ) );	
 		}
 	}
 	
