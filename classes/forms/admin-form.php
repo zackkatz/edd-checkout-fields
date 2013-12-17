@@ -18,8 +18,6 @@ class CFM_Admin_Form {
      */
     function __construct() {
         add_filter( 'post_updated_messages', array($this, 'form_updated_message') );
-        add_action( 'admin_footer-edit.php', array($this, 'add_form_button_style') );
-        add_action( 'admin_footer-post.php', array($this, 'add_form_button_style') );
 		add_action( 'save_post', array( $this, 'save_form_meta' ), 1, 2 );
         
 		// meta boxes
@@ -76,13 +74,13 @@ class CFM_Admin_Form {
     function form_updated_message( $messages ) {
         $message = array(
              0 => '',
-             1 => __( 'Form updated.', 'edd_fes' ),
+             1 => __( 'Checkout fields updated!', 'edd_fes' ),
              2 => __( 'Custom field updated.', 'edd_fes' ),
              3 => __( 'Custom field deleted.', 'edd_fes' ),
              4 => __( 'Form updated.', 'edd_fes' ),
              5 => isset($_GET['revision']) ? sprintf( __( 'Form restored to revision from %s', 'edd_fes' ), wp_post_revision_title( (int) $_GET['revision'], false ) ) : false,
              6 => __( 'Form published.', 'edd_fes' ),
-             7 => __( 'Form saved.', 'edd_fes' ),
+             7 => __( 'Checkout fields saved!', 'edd_fes' ),
              8 => __( 'Form submitted.', 'edd_fes' ),
              9 => '',
             10 => __( 'Form draft updated.', 'edd_fes' ),
@@ -120,6 +118,54 @@ class CFM_Admin_Form {
                 <div class="fes-clear"></div>
             </div>
        </div>
+	    <style type="text/css">
+            .wrap .add-new-h2, .wrap .add-new-h2:active {
+                background: #21759b;
+                color: #fff;
+                text-shadow: 0 1px 1px #446E81;
+            }
+			#post-body-content{
+				display: none;
+			}
+           #fes-metabox-fields{
+                position: fixed;
+            }
+		   #major-publishing-actions {
+				padding: 0 !important;
+				background: #FFF !important;
+				border-top: none !important;
+			}
+		   #post-body.columns-2 #postbox-container-1 {
+				margin-right: 0px;
+				width: 30px;
+				margin-top: 25px;
+			}
+			#icon-edit{
+				display: none;
+			}
+			#poststuff #post-body.columns-2 {
+				margin-right: 100px;
+			}
+			.postbox {
+				min-width: 30px;
+			}
+			#poststuff .postbox-container {
+				width: 92%;
+			}
+			#poststuff {
+				padding-top: 0px;
+			}
+			.wrap div.updated{
+				width: 50%;
+				margin: 0px;
+			}
+			.wrap {
+				margin-top: 0px;
+			}
+			#fes-metabox-fields .edd-checkout-fields-buttons {
+				margin-bottom: 0px;
+			}
+        </style>
         <?php
     }
 
@@ -145,9 +191,9 @@ class CFM_Admin_Form {
 		?>
         <div class="fes-loading hide"></div>
         <div class="edd-checkout-fields-buttons">
-            <button class="button" data-name="first_name" data-type="textarea"><?php _e( 'First', 'edd_fes' ); ?></button>
-            <button class="button" data-name="last_name" data-type="textarea"><?php _e( 'Last', 'edd_fes' ); ?></button><br />
-            <button class="button" data-name="user_email" data-type="category"><?php _e( 'E-mail', 'edd_fes' ); ?></button><br />
+            <button class="button" data-name="edd_first" data-type="textarea"><?php _e( 'First', 'edd_fes' ); ?></button>
+            <button class="button" data-name="edd_last" data-type="textarea"><?php _e( 'Last', 'edd_fes' ); ?></button><br />
+            <button class="button" data-name="edd_email" data-type="category"><?php _e( 'E-mail', 'edd_fes' ); ?></button><br />
 			<button class="button" data-name="custom_text" data-type="text" title="<?php echo $title; ?>"><?php _e( 'Text', 'edd_fes' ); ?></button><br />
             <button class="button" data-name="custom_textarea" data-type="textarea" title="<?php echo $title; ?>"><?php _e( 'Textarea', 'edd_fes' ); ?></button><br />
             <button class="button" data-name="custom_select" data-type="select" title="<?php echo $title; ?>"><?php _e( 'Dropdown', 'edd_fes' ); ?></button><br />
@@ -294,16 +340,16 @@ class CFM_Admin_Form {
                 CFM_Admin_Template::date_field( $field_id, __( 'Custom Field: Date','edd_fes') );
                 break;
 
-            case 'first_name':
-                CFM_Admin_Template::first_name( $field_id, __( 'First Name', 'edd_fes' ) );
+            case 'edd_first':
+                CFM_Admin_Template::edd_first( $field_id, __( 'First Name', 'edd_fes' ) );
                 break;
 
-            case 'last_name':
-                CFM_Admin_Template::last_name( $field_id, __( 'Last Name', 'edd_fes' ) );
+            case 'edd_last':
+                CFM_Admin_Template::edd_last( $field_id, __( 'Last Name', 'edd_fes' ) );
                 break;
 
-            case 'user_email':
-                CFM_Admin_Template::user_email( $field_id, __( 'E-mail', 'edd_fes' ) );
+            case 'edd_email':
+                CFM_Admin_Template::edd_email( $field_id, __( 'Email', 'edd_fes' ) );
                 break;
 
             default:

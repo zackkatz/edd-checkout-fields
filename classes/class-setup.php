@@ -217,7 +217,11 @@ class CFM_Setup {
 			'query_var' => false,
 			'labels' => array(
 				'edit_item' => __( '', 'edd_cfm' ),
-			) 
+			),
+			'supports' => array(
+				'title' 
+			),
+
 		) );
 	}
 }

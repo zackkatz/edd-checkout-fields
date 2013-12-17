@@ -50,8 +50,7 @@
     min-height: 50px;
     background: #eee;
 }
-.edd-checkout-fields-editor li.password .required-field,
-.edd-checkout-fields-editor li.user_email .required-field {
+.edd-checkout-fields-editor li.edd_email .required-field {
     display: none
 }
 .edd-checkout-fields-editor li .fes-legend {

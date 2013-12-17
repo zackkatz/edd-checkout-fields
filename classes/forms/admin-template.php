@@ -687,12 +687,12 @@ function your_function_name( $form_id, $post_id, $form_settings ) {
         <?php
     }
 
-    public static function first_name( $field_id, $label, $values = array() ) {
+    public static function edd_first( $field_id, $label, $values = array() ) {
 	    if(!isset($values['label']) || $values['label'] == ''){
 			$values['label'] = $label;
 		}
         ?>
-        <li class="first_name">
+        <li class="edd_first">
             <?php self::legend( $label, $values ); ?>
             <?php self::hidden_field( "[$field_id][input_type]", 'text' ); ?>
             <?php self::hidden_field( "[$field_id][template]", 'edd_first' ); ?>
@@ -705,36 +705,39 @@ function your_function_name( $form_id, $post_id, $form_settings ) {
         <?php
     }
 
-    public static function last_name( $field_id, $label, $values = array() ) {
+    public static function edd_last( $field_id, $label, $values = array() ) {
 		if(!isset($values['label']) || $values['label'] == ''){
 			$values['label'] = $label;
 		}
         ?>
-        <li class="last_name">
+        <li class="edd_last">
             <?php self::legend( $label, $values ); ?>
             <?php self::hidden_field( "[$field_id][input_type]", 'text' ); ?>
-            <?php self::hidden_field( "[$field_id][template]", 'last_name' ); ?>
+            <?php self::hidden_field( "[$field_id][template]", 'edd_last' ); ?>
 
             <div class="edd-checkout-fields-holder">
-                <?php self::common( $field_id, 'last_name', false, $values ); ?>
+                <?php self::common( $field_id, 'edd_last', false, $values ); ?>
                 <?php self::common_text( $field_id, $values ); ?>
             </div> <!-- .edd-checkout-fields-holder -->
         </li>
         <?php
     }
+	 public static function user_email( $field_id, $label, $values = array() ) {
+		 CFM_Admin_Template::edd_email( $field_id, $label, $values = array() );
+	 }
 
-    public static function user_email( $field_id, $label, $values = array() ) {
+    public static function edd_email( $field_id, $label, $values = array() ) {
 		if(!isset($values['label']) || $values['label'] == ''){
 			$values['label'] = $label;
 		}
         ?>
-        <li class="user_email">
+        <li class="edd_email">
             <?php self::legend( $label, $values ); ?>
             <?php self::hidden_field( "[$field_id][input_type]", 'email' ); ?>
-            <?php self::hidden_field( "[$field_id][template]", 'user_email' ); ?>
+            <?php self::hidden_field( "[$field_id][template]", 'edd_email' ); ?>
 
             <div class="edd-checkout-fields-holder">
-                <?php self::common( $field_id, 'user_email', false, $values ); ?>
+                <?php self::common( $field_id, 'edd_email', false, $values ); ?>
                 <?php self::common_text( $field_id, $values ); ?>
             </div> <!-- .edd-checkout-fields-holder -->
         </li>

@@ -19,14 +19,14 @@ class FES_Frontend_Form_Profile extends FES_Render_Form {
 		$userdata = array(
 			 'ID' => $user_id 
 		);
-		if ( $this->search( $user_vars, 'name', 'first_name' ) ) {
-			$userdata[ 'first_name' ] = $_POST[ 'first_name' ];
+		if ( $this->search( $user_vars, 'name', 'edd_first' ) ) {
+			$userdata[ 'edd_first' ] = $_POST[ 'edd_first' ];
 		}
-		if ( $this->search( $user_vars, 'name', 'last_name' ) ) {
-			$userdata[ 'last_name' ] = $_POST[ 'last_name' ];
+		if ( $this->search( $user_vars, 'name', 'edd_last' ) ) {
+			$userdata[ 'edd_last' ] = $_POST[ 'edd_last' ];
 		}
-		if ( $this->search( $user_vars, 'name', 'user_email' ) ) {
-			$userdata[ 'user_email' ] = $_POST[ 'user_email' ];
+		if ( $this->search( $user_vars, 'name', 'edd_email' ) ) {
+			$userdata[ 'edd_email' ] = $_POST[ 'edd_email' ];
 		}
 		$userdata = apply_filters( 'fes_update_profile_vars', $userdata, $form_id, $form_settings );
 		$user_id  = wp_update_user( $userdata );
