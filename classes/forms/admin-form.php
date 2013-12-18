@@ -27,49 +27,6 @@ class CFM_Admin_Form {
         add_action( 'wp_ajax_edd-checkout-fields_dump', array( $this, 'form_dump' ) );
         add_action( 'wp_ajax_edd-checkout-fields_add_el', array( $this, 'ajax_post_add_element' ) );
     }
-
-    /**
-     * Enqueue scripts and styles for form builder
-     *
-     * @global string $pagenow
-     * @return void
-     */
-
-
-    function add_form_button_style() {
-        global $pagenow, $post_type;
-
-        if ( $post_type != 'edd-checkout-fields' ) {
-            return;
-        }
-        ?>
-        <style type="text/css">
-            .wrap .add-new-h2, .wrap .add-new-h2:active {
-                background: #21759b;
-                color: #fff;
-                text-shadow: 0 1px 1px #446E81;
-            }
-			#post-body-content{
-				display: none;
-			}
-           #fes-metabox-fields{
-                position: fixed;
-            }
-		   #major-publishing-actions {
-				padding: 0 !important;
-				background: #FFF !important;
-				border-top: none !important;
-			}
-		   #post-body.columns-2 #postbox-container-1 {
-				margin-right: -240px;
-				width: 30px;
-			}
-			#icon-edit{
-				display: none;
-			}
-        </style>
-        <?php
-    }
 	
     function form_updated_message( $messages ) {
         $message = array(
