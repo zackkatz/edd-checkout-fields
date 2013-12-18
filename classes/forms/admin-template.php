@@ -60,7 +60,7 @@ class CFM_Admin_Template {
         }
 		do_action('edd_fes_add_field_to_common_form_element', $tpl, self::$input_name, $id, $values);
         ?>
-
+		
         <div class="edd-checkout-fields-rows required-field">
             <label><?php _e( 'Required', 'edd_fes' ); ?></label>
 
@@ -95,12 +95,12 @@ class CFM_Admin_Template {
             <label><?php _e( 'Help text', 'edd_fes' ); ?></label>
             <textarea name="<?php echo $help_name; ?>" class="smallipopInput" title="<?php _e( 'Give the user some information about this field', 'edd_fes' ); ?>"><?php echo $help_value; ?></textarea>
         </div> <!-- .edd-checkout-fields-rows -->
-
+		<?php if( $reqtoggle ) { ?>
         <div class="edd-checkout-fields-rows">
             <label><?php _e( 'CSS Class Name', 'edd_fes' ); ?></label>
             <input type="text" name="<?php echo $css_name; ?>" value="<?php echo $css_value; ?>" class="smallipopInput" title="<?php _e( 'Add a CSS class name for this field', 'edd_fes' ); ?>">
         </div> <!-- .edd-checkout-fields-rows -->
-
+		<?php } ?>
         <?php
     }
 
@@ -693,12 +693,12 @@ function your_function_name( $form_id, $post_id, $form_settings ) {
 		}
         ?>
         <li class="edd_first">
-            <?php self::legend( $label, $values ); ?>
+            <?php self::legend( $label, $values, false ); ?>
             <?php self::hidden_field( "[$field_id][input_type]", 'text' ); ?>
             <?php self::hidden_field( "[$field_id][template]", 'edd_first' ); ?>
 
             <div class="edd-checkout-fields-holder">
-                <?php self::common( $field_id, 'edd_first', false, $values ); ?>
+                <?php self::common( $field_id, 'edd_first', false, $values, false ); ?>
                 <?php self::common_text( $field_id, $values ); ?>
             </div> <!-- .edd-checkout-fields-holder -->
         </li>
@@ -723,7 +723,7 @@ function your_function_name( $form_id, $post_id, $form_settings ) {
         <?php
     }
 	 public static function user_email( $field_id, $label, $values = array() ) {
-		 CFM_Admin_Template::edd_email( $field_id, $label, $values = array() );
+		 CFM_Admin_Template::edd_email( $field_id, $label, $values = array());
 	 }
 
     public static function edd_email( $field_id, $label, $values = array() ) {
@@ -732,12 +732,12 @@ function your_function_name( $form_id, $post_id, $form_settings ) {
 		}
         ?>
         <li class="edd_email">
-            <?php self::legend( $label, $values ); ?>
+            <?php self::legend( $label, $values,false ); ?>
             <?php self::hidden_field( "[$field_id][input_type]", 'email' ); ?>
             <?php self::hidden_field( "[$field_id][template]", 'edd_email' ); ?>
 
             <div class="edd-checkout-fields-holder">
-                <?php self::common( $field_id, 'edd_email', false, $values ); ?>
+                <?php self::common( $field_id, 'edd_email', false, $values, false); ?>
                 <?php self::common_text( $field_id, $values ); ?>
             </div> <!-- .edd-checkout-fields-holder -->
         </li>
