@@ -3,8 +3,8 @@
 ## Who this README file is for ##
 This readme file is to share information to plugin & theme developers.
 
-## Formatting of CFM ##
-Where the majority of the file was not an HTML template, CFM was formatted
+## Formatting of Chriscct7 Plugins ##
+Where the majority of the file was not an HTML template, this plugin was formatted
 using beta.phpformatter.com, with the following settings:
 + Indentation Style: K & R Style
 + Indent with: Tabs
