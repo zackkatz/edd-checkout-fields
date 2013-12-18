@@ -16,9 +16,15 @@ class CFM_Admin_Template {
      * @param string $title
      * @param array $values
      */
-    public static function legend( $title = 'Field Name', $values = array(), $removeable = true ) {
-        $field_label = $values ? ': <strong>' . $values['label'] . '</strong>' : '';
-        ?>
+    public static function legend( $title = 'Field Name', $values = array(), $removeable = true, $custom = false ) {
+		if ( $custom ){
+			$title = '';
+			$field_label = $values ? '<strong>' . $values['label'] . '</strong>' : '';			
+        }
+		else{
+			$field_label = $values ? ': <strong>' . $values['label'] . '</strong>' : '';
+		}
+		?>
         <div class="fes-legend" title="<?php _e( 'Click and Drag to rearrange', 'edd_fes'); ?>">
             <div class="fes-label"><?php echo $title . $field_label; ?></div>
             <div class="fes-actions">
@@ -693,7 +699,7 @@ function your_function_name( $form_id, $post_id, $form_settings ) {
 		}
         ?>
         <li class="edd_first">
-            <?php self::legend( $label, $values, false ); ?>
+            <?php self::legend( $label, $values, false, true); ?>
             <?php self::hidden_field( "[$field_id][input_type]", 'text' ); ?>
             <?php self::hidden_field( "[$field_id][template]", 'edd_first' ); ?>
 
@@ -711,7 +717,7 @@ function your_function_name( $form_id, $post_id, $form_settings ) {
 		}
         ?>
         <li class="edd_last">
-            <?php self::legend( $label, $values ); ?>
+            <?php self::legend( $label, $values, true ); ?>
             <?php self::hidden_field( "[$field_id][input_type]", 'text' ); ?>
             <?php self::hidden_field( "[$field_id][template]", 'edd_last' ); ?>
 
@@ -732,7 +738,7 @@ function your_function_name( $form_id, $post_id, $form_settings ) {
 		}
         ?>
         <li class="edd_email">
-            <?php self::legend( $label, $values,false ); ?>
+            <?php self::legend( $label, $values, false, true ); ?>
             <?php self::hidden_field( "[$field_id][input_type]", 'email' ); ?>
             <?php self::hidden_field( "[$field_id][template]", 'edd_email' ); ?>
 
