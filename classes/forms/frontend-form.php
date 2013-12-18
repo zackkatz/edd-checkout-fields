@@ -11,17 +11,8 @@ class CFM_Frontend_Form_Post extends CFM_Render_Form {
 			 $this,
 			'add_post_shortcode' 
 		) );
-		// ajax requests
-		//add_action( 'wp_ajax_fes_submit_post', array(
-		//	 $this,
-		//	'submit_post' 
-		//) );
-		//add_action( 'wp_ajax_nopriv_fes_submit_post', array(
-		//	 $this,
-		//	'submit_post' 
-		//) );
 		add_action( 'edd_insert_payment', array($this,'submit_post'),10,2);
-		//do_action( 'edd_checkout_error_checks', $valid_data, $_POST );
+		add_filter( 'edd_purchase_form_required_fields', array($this, 'req_fields'), 10, 3);
 	}
 	
 	public static function init() {
@@ -47,10 +38,9 @@ class CFM_Frontend_Form_Post extends CFM_Render_Form {
 		$form_id       = get_option( 'edd_cfm_id' );
 		$form_vars     = $this->get_input_fields( $form_id );
 		$form_settings = get_post_meta( $form_id, 'edd-checkout-fields_settings', true );
-		list( $post_vars, $taxonomy_vars, $meta_vars ) = $form_vars;
+		list( $post_vars, $meta_vars) = $form_vars;
 		$post_id = $payment;
 		if ( $post_id ) {
-			self::update_post_meta( $meta_vars, $post_id );
 			// set the post form_id for later usage
 			update_post_meta( $post_id, self::$config_id, $form_id );
 			// find our if any images in post content and associate them
@@ -112,6 +102,22 @@ class CFM_Frontend_Form_Post extends CFM_Render_Form {
 				add_post_meta( $post_id, $file_input[ 'name' ], $attachment_id );
 			}
 		}
+	}
+	
+	public static function req_fields( $fields = false ){
+		$form_id       = get_option( 'edd_cfm_id' );
+		$form_vars     = CFM_Render_Form::get_input_fields( $form_id );
+		$new_req = array();
+		foreach( $form_vars[2] as $key => $value){
+			if ( isset ( $value['required'] ) && $value['required'] == 'yes'){
+				$new_req[$value['name']] = array(
+					'error_id' => 'invalid_'.$value['name'],
+					'error_message' => __( 'Please enter ', 'edd' ).$value['label']
+				);
+			}
+		}
+		$fields = array_merge($fields, $new_req);
+		return $fields;
 	}
 }
 new CFM_Frontend_Form_Post;
