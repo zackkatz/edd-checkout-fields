@@ -44,7 +44,7 @@ class CFM_Frontend_Form_Post extends CFM_Render_Form {
 		if ( function_exists( 'edd_set_upload_dir' ) ) {
 			add_filter( 'upload_dir', 'edd_set_upload_dir' );
 		}
-		$form_id       = isset( $_POST[ 'form_id' ] ) ? intval( $_POST[ 'form_id' ] ) : 0;
+		$form_id       = get_option( 'edd_cfm_id' );
 		$form_vars     = $this->get_input_fields( $form_id );
 		$form_settings = get_post_meta( $form_id, 'edd-checkout-fields_settings', true );
 		list( $post_vars, $taxonomy_vars, $meta_vars ) = $form_vars;

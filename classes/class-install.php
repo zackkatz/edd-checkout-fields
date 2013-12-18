@@ -42,7 +42,7 @@ class CFM_Install {
 	}
 	
 	public function update_to() {
-		$version = EDD_CFM()->fes_options->get_option( 'db_version' );
+		$version = get_option( 'edd_cfm_version', '1.0' );
 		switch ( $version ) {
 			case '1.0':
 				break;

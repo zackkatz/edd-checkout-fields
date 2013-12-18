@@ -117,7 +117,7 @@ class EDD_Checkout_Fields_Manager {
 		require_once cfm_plugin_dir . 'classes/class-setup.php';
 		require_once cfm_plugin_dir . 'classes/class-menu.php';
 		require_once cfm_plugin_dir . 'classes/forms/render-form.php';
-		require_once cfm_plugin_dir . 'classes/forms/frontend-form-post.php';
+		require_once cfm_plugin_dir . 'classes/forms/frontend-form.php';
 		require_once cfm_plugin_dir . 'classes/forms/upload.php';
 		require_once cfm_plugin_dir . 'classes/forms/functions.php';
 		require_once cfm_plugin_dir . 'classes/class-frontend.php';

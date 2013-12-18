@@ -25,7 +25,8 @@ class CFM_Admin_Posting extends CFM_Render_Form {
         list($post_fields, $taxonomy_fields, $custom_fields) = $this->get_input_fields( $form_id );
 
         if ( empty( $custom_fields ) ) {
-            _e( 'No custom fields found.', 'edd_fes' );
+            // TODO: Its probably better not to output anything. To revisit later.
+			//_e( 'No custom fields found.', 'edd_fes' );
             return;
         }
         ?>

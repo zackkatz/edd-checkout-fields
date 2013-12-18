@@ -106,8 +106,10 @@ class CFM_Admin_Template {
             <label><?php _e( 'CSS Class Name', 'edd_fes' ); ?></label>
             <input type="text" name="<?php echo $css_name; ?>" value="<?php echo $css_value; ?>" class="smallipopInput" title="<?php _e( 'Add a CSS class name for this field', 'edd_fes' ); ?>">
         </div> <!-- .edd-checkout-fields-rows -->
-		<?php } ?>
-        <?php
+		<?php }
+			  else { ?>
+            <input type="hidden" name="<?php echo $css_name; ?>" value="">				  
+        <?php }
     }
 
     /**
