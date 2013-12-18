@@ -27,7 +27,7 @@ class CFM_Menu {
 	 * @return void
 	 */
 	public function admin_head() {
-		// hide from dash menu
+		// TODO: hide from dash menu
 		//remove_menu_page( 'index.php', 'cfm-about' );
 		// Badge for welcome page
 		$badge_url = cfm_assets_url . 'img/extensions2.jpg';
@@ -59,17 +59,14 @@ class CFM_Menu {
 				<h3><?php _e( 'What\'s New:', 'edd_cfm' );?></h3>
 
 				<div class="feature-section">
-					<h4><?php _e( '15 Field Types!', 'edd_cfm' );?></h4>
+					<h4><?php _e( '15 Field Types', 'edd_cfm' );?></h4>
 					<p><?php _e( 'The most requested new feature of cfm was to make it easier to add custom fields. After months of hard work, you can now add all sorts of different fields with the push of a button. I\'ll be adding more fields to choose from in future versions based on feedback from you guys.', 'edd_cfm' );?></p>
 
-					<h4><?php _e( 'File Upload!', 'edd_cfm' );?></h4>
+					<h4><?php _e( 'File Upload', 'edd_cfm' );?></h4>
 					<p><?php _e( 'Now you can collect all sorts of information about your users. And without having to write a single line of code.', 'edd_cfm' );?></p>
 					
 					<h4><?php _e( 'Drag and Drop Re-Ordering of fields', 'edd_cfm' );?></h4>
 					<p><?php _e( 'To change the order of the fields, simply drag and drop! ', 'edd_cfm' );?></p>
-					
-					<h4><?php _e( 'Total Control', 'edd_cfm' );?></h4>
-					<p><?php _e( 'Using the new form editor you can make fields that map to any post_meta. ', 'edd_cfm' );?></p>
 				</div>
 			</div>
 		</div>
