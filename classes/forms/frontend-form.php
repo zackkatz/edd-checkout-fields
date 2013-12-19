@@ -36,7 +36,7 @@ class CFM_Frontend_Form extends CFM_Render_Form {
 		$form_id       = get_option( 'edd_cfm_id' );
 		$form_vars     = $this->get_input_fields( $form_id );
 		$form_settings = get_post_meta( $form_id, 'edd-checkout-fields_settings', true );
-		list( $post_vars, $meta_vars) = $form_vars;
+		list( $post_vars, $tax_vars, $meta_vars) = $form_vars;
 		$post_id = $payment;
 		self::update_post_meta( $meta_vars, $post_id, $form_vars );
 		// set the post form_id for later usage

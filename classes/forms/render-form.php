@@ -224,12 +224,7 @@ class CFM_Render_Form {
 
         foreach ($form_vars as $key => $form_field) {
 
-            // don't show captcha in edit page
-            if ( $post_id && in_array( $form_field['input_type'], $edit_ignore ) ) {
-                continue;
-            }
-
-            // igonre the hidden fields
+            // ignore the hidden fields
             if ( $form_field['input_type'] == 'hidden' ) {
                 $hidden_fields[] = $form_field;
                 continue;
