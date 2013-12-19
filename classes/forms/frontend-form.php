@@ -3,16 +3,14 @@ if ( !defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-class CFM_Frontend_Form_Post extends CFM_Render_Form {
+class CFM_Frontend_Form extends CFM_Render_Form {
 	private static $_instance;
 	
 	function __construct() {
-		add_shortcode( 'edd-checkout-fields', array(
-			 $this,
-			'add_post_shortcode' 
-		) );
 		add_action( 'edd_insert_payment', array($this,'submit_post'),8,2);
 		add_filter( 'edd_purchase_form_required_fields', array($this, 'req_fields'), 10, 3);
+		remove_action( 'edd_purchase_form_after_user_info', 'edd_user_info_fields' );
+		add_action('edd_purchase_form_after_user_info', array ($this, 'add_fields'));
 	}
 	
 	public static function init() {
@@ -22,12 +20,12 @@ class CFM_Frontend_Form_Post extends CFM_Render_Form {
 		return self::$_instance;
 	}
 	
-	public function add_post_shortcode() {
+	public function add_fields() {
 		ob_start();
 		$this->render_form( get_option( 'edd_cfm_id' ) );
 		$content = ob_get_contents();
 		ob_end_clean();
-		return $content;
+		echo $content;
 	}
 	
 	public function submit_post( $payment, $payment_data ) {
