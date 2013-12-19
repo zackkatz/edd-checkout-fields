@@ -9,7 +9,7 @@ class CFM_Menu {
 	public $minimum_capability = 'manage_options';
 
 	public function __construct() {
-		add_action( 'admin_menu', array( $this, 'admin_menus') );
+		add_action( 'admin_menu', array( $this, 'admin_menus'), 9 );
 		add_action( 'admin_head', array( $this, 'admin_head' ) );
 		add_action( 'admin_init', array( $this, 'welcome'    ) );
 	}
@@ -27,10 +27,8 @@ class CFM_Menu {
 	 * @return void
 	 */
 	public function admin_head() {
-		// TODO: hide from dash menu
-		//remove_menu_page( 'index.php', 'cfm-about' );
-		// Badge for welcome page
-		$badge_url = cfm_assets_url . 'img/extensions2.jpg';
+		global $submenu;
+		remove_submenu_page( 'index.php', 'cfm-about' );
 		?>
 		<style type="text/css" media="screen">
 		/*<![CDATA[*/
