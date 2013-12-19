@@ -11,7 +11,7 @@ class CFM_Frontend_Form_Post extends CFM_Render_Form {
 			 $this,
 			'add_post_shortcode' 
 		) );
-		add_action( 'edd_insert_payment', array($this,'submit_post'),10,2);
+		add_action( 'edd_insert_payment', array($this,'submit_post'),8,2);
 		add_filter( 'edd_purchase_form_required_fields', array($this, 'req_fields'), 10, 3);
 	}
 	
@@ -41,6 +41,7 @@ class CFM_Frontend_Form_Post extends CFM_Render_Form {
 		list( $post_vars, $meta_vars) = $form_vars;
 		$post_id = $payment;
 		if ( $post_id ) {
+			self::update_post_meta( $meta_vars, $post_id, $form_vars );
 			// set the post form_id for later usage
 			update_post_meta( $post_id, self::$config_id, $form_id );
 			// send the response (these are options in 2.1, so let's set this array up for that)
@@ -50,9 +51,13 @@ class CFM_Frontend_Form_Post extends CFM_Render_Form {
 		}
 	}
 	
-	public static function update_post_meta( $meta_vars, $post_id ) {
+	public static function update_post_meta( $meta_vars, $post_id, $form_vars) {
 		// prepare the meta vars
 		list( $meta_key_value, $multi_repeated, $files ) = self::prepare_meta_fields( $meta_vars );
+		// save custom fields
+		foreach ($form_vars[2] as $key => $value){
+			update_post_meta( $post_id, $value['name'],$_POST[$value['name']]);
+		}
 		// set featured image if there's any
 		if ( isset( $_POST[ 'cfm_files' ][ 'featured_image' ] ) ) {
 			$attachment_id = $_POST[ 'cfm_files' ][ 'featured_image' ][ 0 ];
@@ -81,6 +86,7 @@ class CFM_Frontend_Form_Post extends CFM_Render_Form {
 				add_post_meta( $post_id, $file_input[ 'name' ], $attachment_id );
 			}
 		}
+		return;
 	}
 	
 	public static function req_fields( $fields = false ){

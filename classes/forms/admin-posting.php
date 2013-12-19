@@ -171,8 +171,9 @@ class CFM_Admin_Posting extends CFM_Render_Form {
         }
 
         list( $post_vars, $tax_vars, $meta_vars ) = self::get_input_fields( $_POST['cfm_cf_form_id'] );
-
-        EDD_CFM()->frontend_form_post->update_post_meta( $meta_vars,  absint( $_GET['id']) );
+		$form_id       = get_option( 'edd_cfm_id' );
+		$form_vars     = self::get_input_fields( $form_id );
+        EDD_CFM()->frontend_form_post->update_post_meta( $meta_vars,  absint( $_GET['id']), $form_vars );
     }
 	
 	    function submit_button( ) {
