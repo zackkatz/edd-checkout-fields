@@ -108,7 +108,7 @@ class CFM_Setup {
 			) );
 			wp_localize_script( 'cfm-form', 'cfm_frontend', array(
 				'ajaxurl' => admin_url( 'admin-ajax.php' ),
-				'error_message' => __( 'Please fix the errors to proceed', 'edd_cfm' ),
+				'error_message' => __( 'Please fill out this required field', 'edd_cfm' ),
 				'nonce' => wp_create_nonce( 'cfm_nonce' ) 
 			) );
 			wp_localize_script( 'cfm-upload', 'cfm_frontend_upload', array(
@@ -157,7 +157,7 @@ class CFM_Setup {
 			wp_enqueue_script( 'jquery-ui-slider' );
 			wp_localize_script( 'cfm-form', 'cfm_frontend', array(
 				 'ajaxurl' => admin_url( 'admin-ajax.php' ),
-				'error_message' => __( 'Please fix the errors to proceed', 'edd_cfm' ),
+				'error_message' => __( 'Please fill out this required field', 'edd_cfm' ),
 				'nonce' => wp_create_nonce( 'cfm_nonce' ) 
 			) );
 			wp_localize_script( 'cfm-upload', 'cfm_frontend_upload', array(
