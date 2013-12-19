@@ -123,6 +123,9 @@ class CFM_Admin_Form {
 			#cfm-metabox-fields {
 				z-index: 9999;
 			}
+			#publishing-action {
+				margin-bottom: 5px;
+			}
         </style>
         <?php
     }
@@ -149,9 +152,9 @@ class CFM_Admin_Form {
 		?>
         <div class="cfm-loading hide"></div>
         <div class="edd-checkout-fields-buttons">
-            <button class="button" data-name="edd_first" data-type="textarea"><?php _e( 'First', 'edd_cfm' ); ?></button>
-            <button class="button" data-name="edd_last" data-type="textarea"><?php _e( 'Last', 'edd_cfm' ); ?></button><br />
-            <button class="button" data-name="edd_email" data-type="category"><?php _e( 'E-mail', 'edd_cfm' ); ?></button><br />
+            <!--<button class="button" data-name="edd_first" data-type="textarea"><?php _e( 'First', 'edd_cfm' ); ?></button> -->
+            <button class="button" data-name="edd_last" data-type="textarea"><?php _e( 'Last Name', 'edd_cfm' ); ?></button><br />
+            <!--<button class="button" data-name="edd_email" data-type="category"><?php _e( 'E-mail', 'edd_cfm' ); ?></button><br /> -->
 			<button class="button" data-name="custom_text" data-type="text" title="<?php echo $title; ?>"><?php _e( 'Text', 'edd_cfm' ); ?></button><br />
             <button class="button" data-name="custom_textarea" data-type="textarea" title="<?php echo $title; ?>"><?php _e( 'Textarea', 'edd_cfm' ); ?></button><br />
             <button class="button" data-name="custom_select" data-type="select" title="<?php echo $title; ?>"><?php _e( 'Dropdown', 'edd_cfm' ); ?></button><br />
