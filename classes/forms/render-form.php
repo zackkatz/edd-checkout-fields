@@ -427,25 +427,18 @@ class CFM_Render_Form {
         } else {
             $value = $attr['default'];
         }
-		if ($attr['css'] == 'edd_first'){
+		if ($attr['name'] == 'edd_first'){
 			$attr['name'] = $attr['css'];
-			if ( is_user_logged_in() ){
+			if ( is_user_logged_in() && !is_admin() ){
 				$user_data = get_userdata( get_current_user_id() );
 				$value = $user_data->first_name;
 			}
 		}
-		if ($attr['css'] == 'edd_last'){
+		if ($attr['name'] == 'edd_last'){
 			$attr['name'] = $attr['css'];
-			if ( is_user_logged_in() ){
+			if ( is_user_logged_in() && !is_admin() ){
 				$user_data = get_userdata( get_current_user_id() );
 				$value = $user_data->last_name;
-			}
-		}
-		if ($attr['css'] == 'edd_email'){
-			$attr['name'] = $attr['css'];
-			if ( is_user_logged_in() ){
-				$user_data = get_userdata( get_current_user_id() );
-				$value = $user_data->user_email;
 			}
 		}
         ?>
@@ -717,15 +710,13 @@ class CFM_Render_Form {
      * @param int|null $post_id
      */
     function email( $attr, $post_id, $type = 'post' ) {
-        if ( $post_id ) {
-            if ( $this->is_meta( $attr ) ) {
-                $value = $this->get_meta( $post_id, $attr['name'], $type, true );
-            } else {
-				$value = $this->get_user_data( $post_id, $attr['name'] );
-            }
-        } else {
-            $value = $attr['default'];
-        }
+		if ( is_user_logged_in() && !is_admin() ){
+				$user_data = get_userdata( get_current_user_id() );
+				$value = $user_data->user_email;
+		}
+		else{
+			$value = $attr['default'];
+		}
         ?> <span class="edd-description"><?php echo $attr['help']; ?></span>
             <input id="edd_email" type="email" class="edd_email" data-required="<?php echo $attr['required'] ?>" data-type="text"<?php $this->required_html5( $attr ); ?> name="edd_email" placeholder="<?php echo esc_attr( $attr['placeholder'] ); ?>" value="<?php echo esc_attr( $value ) ?>" size="<?php echo esc_attr( $attr['size'] ) ?>" />
 
