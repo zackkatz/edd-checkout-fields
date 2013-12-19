@@ -91,9 +91,8 @@ class CFM_Frontend_Form_Post extends CFM_Render_Form {
 			if ( isset ( $value['required'] ) && $value['required'] == 'yes'){
 				$new_req[$value['name']] = array(
 					'error_id' => 'invalid_'.$value['name'],
-					'error_message' => __( 'Please enter ', 'edd' ).$value['label']
+					'error_message' => __( 'Please enter ', 'edd' ).strtolower($value['label'])
 				);
-			// TODO: str_to_lower($value['label'])
 			}
 		}
 		$fields = array_merge($fields, $new_req);
