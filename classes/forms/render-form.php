@@ -428,14 +428,12 @@ class CFM_Render_Form {
             $value = $attr['default'];
         }
 		if ($attr['name'] == 'edd_first'){
-			$attr['name'] = $attr['css'];
 			if ( is_user_logged_in() && !is_admin() ){
 				$user_data = get_userdata( get_current_user_id() );
 				$value = $user_data->first_name;
 			}
 		}
 		if ($attr['name'] == 'edd_last'){
-			$attr['name'] = $attr['css'];
 			if ( is_user_logged_in() && !is_admin() ){
 				$user_data = get_userdata( get_current_user_id() );
 				$value = $user_data->last_name;

@@ -530,7 +530,7 @@ class CFM_Admin_Template {
 
         $placeholder_value = $values ? esc_attr( $values['placeholder'] ) : '';
         $default_value = $values ? esc_attr( $values['default'] ) : '';
-        $size_value = $values ? esc_attr( $values['size'] ) : '40';
+        $size_value = $values ? esc_attr( $values['size'] ) : '30';
 
         ?>
         <li class="custom-field custom_repeater">

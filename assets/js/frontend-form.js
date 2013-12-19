@@ -2,10 +2,10 @@
     var CFM_Form = {
         init: function() {
             // clone and remove repeated field
-            $('.edd-checkout-fields').on('click', 'img.cfm-clone-field', this.cloneField);
-            $('.edd-checkout-fields').on('click', 'img.cfm-remove-field', this.removeField);
+            $('#edd_checkout_user_info').on('click', 'img.cfm-clone-field', this.cloneField);
+            $('#edd_checkout_user_info').on('click', 'img.cfm-remove-field', this.removeField);
 
-            $('.edd-checkout-fields-add').on('submit', this.formSubmit);
+            $('#edd_purchase_form').on('submit', this.formSubmit);
             $('form#post').on('submit', this.adminPostSubmit);
         },
 
@@ -49,42 +49,14 @@
             var form = $(this),
                 submitButton = form.find('input[type=submit]')
                 form_data = CFM_Form.validateForm(form);
-
-            if (form_data) {
-
-                // send the request
-                form.find('fieldset.cfm-submit').append('<span class="cfm-loading"></span>');
-                submitButton.attr('disabled', 'disabled').addClass('button-primary-disabled');
-
-                $.post(cfm_frontend.ajaxurl, form_data, function(res) {
-                    // var res = $.parseJSON(res);
-
-                    if ( res.success) {
-						 form.before( '<div class="cfm-success">' + res.message + '</div>');
-						if(res.is_post){
-							form.slideUp( 'fast', function() {
-								form.remove();
-							});
-						}
-						 
-                        //focus
-                        $('html, body').animate({
-                            scrollTop: $('.cfm-success').offset().top - 100
-                         }, 'fast');
-
-                        setTimeout(
-						function() {
-							 window.location = res.redirect_to;
-						}, 1000);
-                    } else {
-                        alert( res.error );
-                        submitButton.removeAttr('disabled');
-                    }
-
-                    submitButton.removeClass('button-primary-disabled');
-                    form.find('span.cfm-loading').remove();
-                });
-            }
+			
+				if(form_data){
+					var form = $("#edd_purchase_form");
+					form.get(0).submit();
+				}
+				else{
+					
+				}
         },
 
         validateForm: function( self ) {
@@ -213,7 +185,6 @@
             if (error) {
                 // add error notice
                 CFM_Form.addErrorNotice(self);
-
                 return false;
             }
 
@@ -234,8 +205,15 @@
         },
 
         addErrorNotice: function(form) {
-            $(form).find('fieldset.cfm-submit').append('<div class="cfm-error edd_errors">' + cfm_frontend.error_message + '</div>');
-        },
+			$('#edd_purchase_form #edd-purchase-button').attr("disabled", false);
+			$('.edd-cart-ajax').hide();
+			if( edd_global_vars.complete_purchase )
+				$('#edd-purchase-button').val(edd_global_vars.complete_purchase);
+			else
+				$('#edd-purchase-button').val('Purchase');
+			
+            $(form).find('#edd_purchase_submit').prepend('<div class="edd_errors"><p class="edd_error">' + cfm_frontend.error_message + '</p></div>');
+	   },
 
         removeErrorNotice: function(form) {
             $(form).find('.cfm-error edd_errors').remove();
