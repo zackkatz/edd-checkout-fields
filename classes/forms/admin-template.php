@@ -719,7 +719,7 @@ function your_function_name( $form_id, $post_id, $form_settings ) {
 		}
         ?>
         <li class="edd_last">
-            <?php self::legend( $label, $values, true ); ?>
+            <?php self::legend( $label, $values, true, true ); ?>
             <?php self::hidden_field( "[$field_id][input_type]", 'text' ); ?>
             <?php self::hidden_field( "[$field_id][template]", 'edd_last' ); ?>
 

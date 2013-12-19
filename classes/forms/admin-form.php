@@ -93,7 +93,7 @@ class CFM_Admin_Form {
 		   #post-body.columns-2 #postbox-container-1 {
 				margin-right: 0px;
 				width: 30px;
-				margin-top: 25px;
+				margin-top: 18px;
 			}
 			#icon-edit{
 				display: none;
@@ -119,6 +119,9 @@ class CFM_Admin_Form {
 			}
 			#cfm-metabox-fields .edd-checkout-fields-buttons {
 				margin-bottom: 0px;
+			}
+			#cfm-metabox-fields {
+				z-index: 9999;
 			}
         </style>
         <?php
