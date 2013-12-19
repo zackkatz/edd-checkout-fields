@@ -12,7 +12,7 @@
         this.container = container;
         this.browse_button = browse_button;
         this.max = max || 1;
-        this.count = $('#' + container).find('.fes-attachment-list > li').length; //count how many items are there
+        this.count = $('#' + container).find('.cfm-attachment-list > li').length; //count how many items are there
 
         //if no element found on the page, bail out
         if( !$('#'+browse_button).length ) {
@@ -72,7 +72,7 @@
         },
 
         added: function (up, files) {
-            var $container = $('#' + this.container).find('.fes-attachment-upload-filelist');
+            var $container = $('#' + this.container).find('.cfm-attachment-upload-filelist');
 
             this.count += 1;
             this.showHide();
@@ -118,7 +118,7 @@
             $('#' + file.id).remove();
 
             if(response.response !== 'error') {
-                var $container = $('#' + this.container).find('.fes-attachment-list');
+                var $container = $('#' + this.container).find('.cfm-attachment-list');
                 $container.append(response.response);
             } else {
                 alert(res.error);

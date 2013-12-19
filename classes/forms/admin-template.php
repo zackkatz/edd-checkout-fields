@@ -8,7 +8,7 @@ if ( !defined( 'ABSPATH' ) ) {
  */
 class CFM_Admin_Template {
 
-    static $input_name = 'fes_input';
+    static $input_name = 'cfm_input';
 
     /**
      * Legend of a form item
@@ -25,15 +25,15 @@ class CFM_Admin_Template {
 			$field_label = $values ? ': <strong>' . $values['label'] . '</strong>' : '';
 		}
 		?>
-        <div class="fes-legend" title="<?php _e( 'Click and Drag to rearrange', 'edd_cfm'); ?>">
-            <div class="fes-label"><?php echo $title . $field_label; ?></div>
-            <div class="fes-actions">
+        <div class="cfm-legend" title="<?php _e( 'Click and Drag to rearrange', 'edd_cfm'); ?>">
+            <div class="cfm-label"><?php echo $title . $field_label; ?></div>
+            <div class="cfm-actions">
 				<?php if ($removeable){ ?>
-                <a href="#" class="fes-remove"><?php _e( 'Remove', 'edd_cfm' ); ?></a>
+                <a href="#" class="cfm-remove"><?php _e( 'Remove', 'edd_cfm' ); ?></a>
 				<?php } ?>
-                <a href="#" class="fes-toggle"><?php _e( 'Toggle', 'edd_cfm' ); ?></a>
+                <a href="#" class="cfm-toggle"><?php _e( 'Toggle', 'edd_cfm' ); ?></a>
             </div>
-        </div> <!-- .fes-legend -->
+        </div> <!-- .cfm-legend -->
         <?php
     }
 
@@ -64,7 +64,7 @@ class CFM_Admin_Template {
         if ($custom_field && $values) {
             $field_name_value = $values['name'];
         }
-		do_action('edd_fes_add_field_to_common_form_element', $tpl, self::$input_name, $id, $values);
+		do_action('edd_cfm_add_field_to_common_form_element', $tpl, self::$input_name, $id, $values);
         ?>
 		
         <div class="edd-checkout-fields-rows required-field">
@@ -290,8 +290,8 @@ class CFM_Admin_Template {
         $add = cfm_assets_url .'img/add.png';
         $remove = cfm_assets_url. 'img/remove.png';
         ?>
-        <img style="cursor:pointer; margin:0 3px;" alt="add another choice" title="add another choice" class="fes-clone-field" src="<?php echo $add; ?>">
-        <img style="cursor:pointer;" class="fes-remove-field" alt="remove this choice" title="remove this choice" src="<?php echo $remove; ?>">
+        <img style="cursor:pointer; margin:0 3px;" alt="add another choice" title="add another choice" class="cfm-clone-field" src="<?php echo $add; ?>">
+        <img style="cursor:pointer;" class="cfm-remove-field" alt="remove this choice" title="remove this choice" src="<?php echo $remove; ?>">
         <?php
     }
 
@@ -446,7 +446,7 @@ class CFM_Admin_Template {
         $max_files_value = $values ? $values['count'] : '1';
         $extensions_value = $values ? $values['extension'] : array('images', 'audio', 'video', 'pdf', 'office', 'zip', 'exe', 'csv');
 
-        $extensions = fes_allowed_extensions();
+        $extensions = cfm_allowed_extensions();
 
         $help = esc_attr( __( 'Enter maximum upload size limit in KB', 'edd_cfm' ) );
         $count = esc_attr( __( 'Number of images can be uploaded', 'edd_cfm' ) );
@@ -549,12 +549,12 @@ class CFM_Admin_Template {
                     </div>
                 </div>
 
-                <div class="edd-checkout-fields-rows<?php echo $has_column ? ' fes-hide' : ''; ?>">
+                <div class="edd-checkout-fields-rows<?php echo $has_column ? ' cfm-hide' : ''; ?>">
                     <label><?php _e( 'Placeholder text', 'edd_cfm' ); ?></label>
                     <input type="text" class="smallipopInput" name="<?php echo $placeholder_name; ?>" title="text for HTML5 placeholder attribute" value="<?php echo $placeholder_value; ?>" />
                 </div> <!-- .edd-checkout-fields-rows -->
 
-                <div class="edd-checkout-fields-rows<?php echo $has_column ? ' fes-hide' : ''; ?>">
+                <div class="edd-checkout-fields-rows<?php echo $has_column ? ' cfm-hide' : ''; ?>">
                     <label><?php _e( 'Default value', 'edd_cfm' ); ?></label>
                     <input type="text" class="smallipopInput" name="<?php echo $default_name; ?>" title="the default value this field will have" value="<?php echo $default_value; ?>" />
                 </div> <!-- .edd-checkout-fields-rows -->
@@ -564,7 +564,7 @@ class CFM_Admin_Template {
                     <input type="text" class="smallipopInput" name="<?php echo $size_name; ?>" title="Size of this input field" value="<?php echo $size_value; ?>" />
                 </div> <!-- .edd-checkout-fields-rows -->
 
-                <div class="edd-checkout-fields-rows column-names<?php echo $has_column ? '' : ' fes-hide'; ?>">
+                <div class="edd-checkout-fields-rows column-names<?php echo $has_column ? '' : ' cfm-hide'; ?>">
                     <label><?php _e( 'Columns', 'edd_cfm' ); ?></label>
 
                     <div class="edd-checkout-fields-sub-fields">

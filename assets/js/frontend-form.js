@@ -2,8 +2,8 @@
     var CFM_Form = {
         init: function() {
             // clone and remove repeated field
-            $('.edd-checkout-fields').on('click', 'img.fes-clone-field', this.cloneField);
-            $('.edd-checkout-fields').on('click', 'img.fes-remove-field', this.removeField);
+            $('.edd-checkout-fields').on('click', 'img.cfm-clone-field', this.cloneField);
+            $('.edd-checkout-fields').on('click', 'img.cfm-remove-field', this.removeField);
 
             $('.edd-checkout-fields-add').on('submit', this.formSubmit);
             $('form#post').on('submit', this.adminPostSubmit);
@@ -53,14 +53,14 @@
             if (form_data) {
 
                 // send the request
-                form.find('fieldset.fes-submit').append('<span class="fes-loading"></span>');
+                form.find('fieldset.cfm-submit').append('<span class="cfm-loading"></span>');
                 submitButton.attr('disabled', 'disabled').addClass('button-primary-disabled');
 
-                $.post(fes_frontend.ajaxurl, form_data, function(res) {
+                $.post(cfm_frontend.ajaxurl, form_data, function(res) {
                     // var res = $.parseJSON(res);
 
                     if ( res.success) {
-						 form.before( '<div class="fes-success">' + res.message + '</div>');
+						 form.before( '<div class="cfm-success">' + res.message + '</div>');
 						if(res.is_post){
 							form.slideUp( 'fast', function() {
 								form.remove();
@@ -69,7 +69,7 @@
 						 
                         //focus
                         $('html, body').animate({
-                            scrollTop: $('.fes-success').offset().top - 100
+                            scrollTop: $('.cfm-success').offset().top - 100
                          }, 'fast');
 
                         setTimeout(
@@ -82,7 +82,7 @@
                     }
 
                     submitButton.removeClass('button-primary-disabled');
-                    form.find('span.fes-loading').remove();
+                    form.find('span.cfm-loading').remove();
                 });
             }
         },
@@ -221,7 +221,7 @@
                 rich_texts = [];
 
             // grab rich texts from tinyMCE
-            $('.fes-rich-validation').each(function (index, item) {
+            $('.cfm-rich-validation').each(function (index, item) {
                 temp = $(item).data('id');
                 val = $.trim( tinyMCE.get(temp).getContent() );
 
@@ -234,11 +234,11 @@
         },
 
         addErrorNotice: function(form) {
-            $(form).find('fieldset.fes-submit').append('<div class="fes-error edd_errors">' + fes_frontend.error_message + '</div>');
+            $(form).find('fieldset.cfm-submit').append('<div class="cfm-error edd_errors">' + cfm_frontend.error_message + '</div>');
         },
 
         removeErrorNotice: function(form) {
-            $(form).find('.fes-error edd_errors').remove();
+            $(form).find('.cfm-error edd_errors').remove();
         },
 
         markError: function(item) {

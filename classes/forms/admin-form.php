@@ -70,7 +70,7 @@ class CFM_Admin_Form {
                         <input name="original_publish" type="hidden" id="original_publish" value="<?php esc_attr_e( 'Save' ) ?>" />
                         <input name="save" type="submit" class="button button-primary button-large" id="publish" accesskey="p" value="<?php esc_attr_e( 'Save' ) ?>" />
                 </div>
-                <div class="fes-clear"></div>
+                <div class="cfm-clear"></div>
             </div>
        </div>
 	    <style type="text/css">
@@ -131,7 +131,7 @@ class CFM_Admin_Form {
             <div id="cfm-metabox" class="group">
                 <?php $this->edit_form_area(); ?>
             </div>
-            <?php do_action( 'fes_post_form_tab_content' ); ?>
+            <?php do_action( 'cfm_post_form_tab_content' ); ?>
         </div>
         <?php
     }
@@ -144,7 +144,7 @@ class CFM_Admin_Form {
     function form_elements_post() {
 		$title = __( 'Click to add to the editor', 'edd_cfm' );
 		?>
-        <div class="fes-loading hide"></div>
+        <div class="cfm-loading hide"></div>
         <div class="edd-checkout-fields-buttons">
             <button class="button" data-name="edd_first" data-type="textarea"><?php _e( 'First', 'edd_cfm' ); ?></button>
             <button class="button" data-name="edd_last" data-type="textarea"><?php _e( 'Last', 'edd_cfm' ); ?></button><br />
@@ -189,7 +189,7 @@ class CFM_Admin_Form {
             return $post->ID;
         }
 
-        update_post_meta( $post->ID, $this->form_data_key, $_POST['fes_input'] );
+        update_post_meta( $post->ID, $this->form_data_key, $_POST['cfm_input'] );
     }
 
     /**
@@ -207,10 +207,10 @@ class CFM_Admin_Form {
         <input type="hidden" name="edd-checkout-fields_editor" id="edd-checkout-fields_editor" value="<?php echo wp_create_nonce( plugin_basename( __FILE__ ) ); ?>" />
 
         <div style="margin-bottom: 10px">
-          <button class="button fes-collapse"><?php _e( 'Toggle All Fields Open/Close', 'edd_cfm' ); ?></button>
+          <button class="button cfm-collapse"><?php _e( 'Toggle All Fields Open/Close', 'edd_cfm' ); ?></button>
         </div>
 		<?php if ( empty( $form_inputs ) ){ ?>		
-        <div class="fes-updated">
+        <div class="cfm-updated">
             <p><?php _e( 'Your checkout form has no fields!', 'edd_cfm' ); ?></p>
         </div>
 		<?php } ?>

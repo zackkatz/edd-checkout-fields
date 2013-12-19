@@ -8,7 +8,7 @@ class CFM_Install {
 		$db_version = get_option( 'edd_cfm_version' );
 		EDD_CFM()->setup->register_post_type();
 		if ( !$db_version ) {
-			$this->install_fes();
+			$this->install_cfm();
 			update_option( 'edd_cfm_version', '1.0' );
 		} 
 		else {
@@ -16,7 +16,7 @@ class CFM_Install {
 		}
 	}
 	
-	private function install_fes() {
+	private function install_cfm() {
 		$this->create_post();
 		set_transient( '_edd_cfm_activation_redirect', true, 30 );
 	}

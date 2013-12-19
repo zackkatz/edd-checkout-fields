@@ -13,13 +13,13 @@
             this.showHideHelp();
 
             // collapse all
-            $('button.fes-collapse').on('click', this.collpaseEditFields);
+            $('button.cfm-collapse').on('click', this.collpaseEditFields);
 
             // add field click
             $('.edd-checkout-fields-buttons').on('click', 'button', this.addNewField);
 
             // remove form field
-            $('#edd-checkout-fields-editor').on('click', '.fes-remove', this.removeFormField);
+            $('#edd-checkout-fields-editor').on('click', '.cfm-remove', this.removeFormField);
 
             // on change event: meta key
             $('#edd-checkout-fields-editor').on('change', 'li.custom-field input[data-type="label"]', this.setMetaKey);
@@ -58,20 +58,20 @@
             });
 
             // toggle form field
-            $('#edd-checkout-fields-editor').on('click', '.fes-toggle', this.toggleFormField);
+            $('#edd-checkout-fields-editor').on('click', '.cfm-toggle', this.toggleFormField);
 
             // clone and remove repeated field
-            $('#edd-checkout-fields-editor').on('click', 'img.fes-clone-field', this.cloneField);
-            $('#edd-checkout-fields-editor').on('click', 'img.fes-remove-field', this.removeField);
+            $('#edd-checkout-fields-editor').on('click', 'img.cfm-clone-field', this.cloneField);
+            $('#edd-checkout-fields-editor').on('click', 'img.cfm-remove-field', this.removeField);
         },
 
         showHideHelp: function() {
             var childs = $('ul#edd-checkout-fields-editor').children('li');
 
             if ( !childs.length) {
-                $('.fes-updated').show();
+                $('.cfm-updated').show();
             } else {
-                $('.fes-updated').hide();
+                $('.cfm-updated').hide();
             }
         },
 
@@ -81,7 +81,7 @@
             if ($formEditor) {
                 $formEditor.sortable({
                     placeholder: "ui-state-highlight",
-                    handle: '> .fes-legend',
+                    handle: '> .cfm-legend',
                     distance: 5
                 });
             }
@@ -113,7 +113,7 @@
                 }
             }
 
-            $('.fes-loading').removeClass('hide');
+            $('.cfm-loading').removeClass('hide');
             $.post(ajaxurl, data, function(res) {
                 $formEditor.append(res);
 
@@ -123,7 +123,7 @@
                 // enable tooltip
                 Editor.tooltip();
 
-                $('.fes-loading').addClass('hide');
+                $('.cfm-loading').addClass('hide');
                 Editor.showHideHelp();
             });
         },

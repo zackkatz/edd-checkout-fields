@@ -102,7 +102,7 @@ class CFM_Upload {
     }
 
     function delete_file() {
-        check_ajax_referer( 'fes_nonce', 'nonce' );
+        check_ajax_referer( 'cfm_nonce', 'nonce' );
 
         $attach_id = isset( $_POST['attach_id'] ) ? intval( $_POST['attach_id'] ) : 0;
         $attachment = get_post( $attach_id );

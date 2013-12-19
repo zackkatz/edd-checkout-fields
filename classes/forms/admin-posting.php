@@ -34,9 +34,9 @@ class CFM_Admin_Posting extends CFM_Render_Form {
 		<h3 class="hndle"><?php _e( 'Custom Checkout Fields', 'edd' ); ?></h3>
 			<div class="inside">
 		<form class="edd-checkout-fields-add" action="" method="post">
-        <input type="hidden" name="fes_cf_update" value="<?php echo wp_create_nonce( plugin_basename( __FILE__ ) ); ?>" />
-        <input type="hidden" name="fes_cf_form_id" value="<?php echo $form_id; ?>" />
-        <table class="form-table fes-cf-table">
+        <input type="hidden" name="cfm_cf_update" value="<?php echo wp_create_nonce( plugin_basename( __FILE__ ) ); ?>" />
+        <input type="hidden" name="cfm_cf_form_id" value="<?php echo $form_id; ?>" />
+        <table class="form-table cfm-cf-table">
             <tbody>
                 <?php
                 $this->render_items( $custom_fields, absint( $_GET['id']) , 'post', $form_id, $form_settings );
@@ -79,10 +79,10 @@ class CFM_Admin_Posting extends CFM_Render_Form {
         ?>
         <script type="text/javascript">
             jQuery(function($){
-                var fes = {
+                var cfm = {
                     init: function() {
-                        $('.fes-cf-table').on('click', 'img.fes-clone-field', this.cloneField);
-                        $('.fes-cf-table').on('click', 'img.fes-remove-field', this.removeField);
+                        $('.cfm-cf-table').on('click', 'img.cfm-clone-field', this.cloneField);
+                        $('.cfm-cf-table').on('click', 'img.cfm-remove-field', this.removeField);
                     },
                     cloneField: function(e) {
                         e.preventDefault();
@@ -108,12 +108,12 @@ class CFM_Admin_Posting extends CFM_Render_Form {
                     },
                 };
 
-                fes.init();
+                cfm.init();
             });
 
         </script>
         <style type="text/css">
-            ul.fes-attachment-list li {
+            ul.cfm-attachment-list li {
                 display: inline-block;
                 border: 1px solid #dfdfdf;
                 padding: 5px;
@@ -122,7 +122,7 @@ class CFM_Admin_Posting extends CFM_Render_Form {
                 border-radius: 5px;
                 margin-right: 5px;
             }
-            ul.fes-attachment-list li a.attachment-delete {
+            ul.cfm-attachment-list li a.attachment-delete {
                 text-decoration: none;
                 padding: 3px 12px;
                 border: 1px solid #C47272;
@@ -144,20 +144,20 @@ class CFM_Admin_Posting extends CFM_Render_Form {
                 *background-color: #bd362f;
                 filter: progid:DXImageTransform.Microsoft.gradient(enabled=false);
             }
-            ul.fes-attachment-list li a.attachment-delete:hover,
-            ul.fes-attachment-list li a.attachment-delete:active {
+            ul.cfm-attachment-list li a.attachment-delete:hover,
+            ul.cfm-attachment-list li a.attachment-delete:active {
                 color: #ffffff;
                 background-color: #bd362f;
                 *background-color: #a9302a;
             }
 
-            .fes-cf-table table th,
-            .fes-cf-table table td{
+            .cfm-cf-table table th,
+            .cfm-cf-table table td{
                 padding-left: 0 !important;
             }
 
-            .fes-cf-table .required { color: red;}
-            .fes-cf-table textarea { width: 400px; }
+            .cfm-cf-table .required { color: red;}
+            .cfm-cf-table textarea { width: 400px; }
 
         </style>
         <?php
@@ -166,11 +166,11 @@ class CFM_Admin_Posting extends CFM_Render_Form {
     // Save the Metabox Data
     function save_meta( $post_id) {
 		
-        if ( !isset( $_POST['fes_cf_update'] ) ) {
+        if ( !isset( $_POST['cfm_cf_update'] ) ) {
             return;
         }
 
-        list( $post_vars, $tax_vars, $meta_vars ) = self::get_input_fields( $_POST['fes_cf_form_id'] );
+        list( $post_vars, $tax_vars, $meta_vars ) = self::get_input_fields( $_POST['cfm_cf_form_id'] );
 
         EDD_CFM()->frontend_form_post->update_post_meta( $meta_vars,  absint( $_GET['id']) );
     }
@@ -178,13 +178,13 @@ class CFM_Admin_Posting extends CFM_Render_Form {
 	    function submit_button( ) {
         $form_settings['update_text']= __( 'Update', 'edd_cfm' );
 		?>
-        <fieldset class="fes-submit">
-            <div class="fes-label">
+        <fieldset class="cfm-submit">
+            <div class="cfm-label">
                 &nbsp;
             </div>
 
-            <?php wp_nonce_field( 'fes_cf_update' ); ?>
-                <input type="hidden" name="fes_cf_update" value="fes_cf_update">
+            <?php wp_nonce_field( 'cfm_cf_update' ); ?>
+                <input type="hidden" name="cfm_cf_update" value="cfm_cf_update">
                 <input type="submit" class="button" name="submit" value="<?php echo $form_settings['update_text']; ?>" />
         </fieldset>
         <?php

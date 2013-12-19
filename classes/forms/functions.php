@@ -1,5 +1,5 @@
 <?php
-function fes_allowed_extensions() {
+function cfm_allowed_extensions() {
     $extensions = array(
         'images' => array('ext' => 'jpg,jpeg,gif,png,bmp', 'label' => __( 'Images', 'edd_cfm' )),
         'audio' => array('ext' => 'mp3,wav,ogg,wma,mka,m4a,ra,mid,midi', 'label' => __( 'Audio', 'edd_cfm' )),
@@ -11,7 +11,7 @@ function fes_allowed_extensions() {
         'csv' => array('ext' => 'csv', 'label' => __( 'CSV', 'edd_cfm' ))
     );
 
-    return apply_filters( 'fes_allowed_extensions', $extensions );
+    return apply_filters( 'cfm_allowed_extensions', $extensions );
 }
 
 /**
@@ -22,7 +22,7 @@ function fes_allowed_extensions() {
  * @param type $attachment_id
  * @param type $post_id
  */
-function fes_associate_attachment( $attachment_id, $post_id ) {
+function cfm_associate_attachment( $attachment_id, $post_id ) {
     wp_update_post( array(
         'ID' => $attachment_id,
         'post_parent' => $post_id
@@ -42,7 +42,7 @@ function cfm_show_custom_fields() {
 
     $form_id = get_option( 'edd_cfm_id');
 
-    $html = '<ul class="fes_customs">';
+    $html = '<ul class="cfm_customs">';
 
     $form_vars = get_post_meta( $form_id, 'edd-checkout-fields', true );
     $meta = array();
@@ -102,7 +102,7 @@ function cfm_show_custom_fields() {
  * @param type $attachment_url
  * @return type
  */
-function fes_get_attachment_id_from_url( $attachment_url = '' ) {
+function cfm_get_attachment_id_from_url( $attachment_url = '' ) {
 
     global $wpdb;
     $attachment_id = false;

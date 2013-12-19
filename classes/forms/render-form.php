@@ -172,18 +172,18 @@ class CFM_Render_Form {
                     }
 
                     if ( !$post_id ) {
-                        do_action( 'fes_add_post_form_top', $form_id, $form_settings );
+                        do_action( 'cfm_add_post_form_top', $form_id, $form_settings );
                     } else {
-                        do_action( 'fes_edit_post_form_top', $form_id, $post_id, $form_settings );
+                        do_action( 'cfm_edit_post_form_top', $form_id, $post_id, $form_settings );
                     }
 
                     $this->render_items( $form_vars, $post_id, 'post', $form_id, $form_settings );
                     //$this->submit_button( $form_id, $form_settings, $post_id );
 
                     if ( !$post_id ) {
-                        do_action( 'fes_add_post_form_bottom', $form_id, $form_settings );
+                        do_action( 'cfm_add_post_form_bottom', $form_id, $form_settings );
                     } else {
-                        do_action( 'fes_edit_post_form_bottom', $form_id, $post_id, $form_settings );
+                        do_action( 'cfm_edit_post_form_bottom', $form_id, $post_id, $form_settings );
                     }
                     ?>
 
@@ -197,7 +197,7 @@ class CFM_Render_Form {
         $el_name = !empty( $form_field['name'] ) ? $form_field['name'] : '';
         $class_name = !empty( $form_field['css'] ) ? ' ' . $form_field['css'] : '';
 
-        printf( '<p id="fes-el %s%s">', $el_name, $class_name );
+        printf( '<p id="cfm-el %s%s">', $el_name, $class_name );
 
         if ( isset( $form_field['input_type'] ) && !in_array( $form_field['input_type'], $label_exclude ) ) {
             $this->label( $form_field, $post_id );
@@ -343,7 +343,7 @@ class CFM_Render_Form {
      */
     function label( $attr, $post_id = 0 ) {
         ?>
-            <label class="edd-label" for="fes-<?php echo isset( $attr['name'] ) ? $attr['name'] : 'cls'; ?>"><?php echo $attr['label'] . $this->required_mark( $attr ); ?></label>
+            <label class="edd-label" for="cfm-<?php echo isset( $attr['name'] ) ? $attr['name'] : 'cls'; ?>"><?php echo $attr['label'] . $this->required_mark( $attr ); ?></label>
         <?php
     }
 
@@ -478,9 +478,9 @@ class CFM_Render_Form {
         ?>
             <span class="edd-description"><?php echo $attr['help']; ?></span>
             <?php if ( isset( $attr['insert_image'] ) && $attr['insert_image'] == 'yes' ) { ?>
-                <div id="fes-insert-image-container">
-                    <a class="fes-button" id="fes-insert-image" href="#">
-                        <span class="fes-media-icon"></span>
+                <div id="cfm-insert-image-container">
+                    <a class="cfm-button" id="cfm-insert-image" href="#">
+                        <span class="cfm-media-icon"></span>
                         <?php _e( 'Insert Photo', 'edd_cfm' ); ?>
                     </a>
                 </div>
@@ -492,12 +492,12 @@ class CFM_Render_Form {
 
             if ( $rich == 'yes' ) {
 
-                printf( '<span class="fes-rich-validation" data-required="%s" data-type="rich" data-id="%s"></span>', $attr['required'], $attr['name'] );
+                printf( '<span class="cfm-rich-validation" data-required="%s" data-type="rich" data-id="%s"></span>', $attr['required'], $attr['name'] );
                 wp_editor( $value, $attr['name'], array('editor_height' => $attr['rows'], 'quicktags' => false, 'media_buttons' => false, 'editor_class' => $req_class) );
 
             } elseif( $rich == 'teeny' ) {
 
-                printf( '<span class="fes-rich-validation" data-required="%s" data-type="rich" data-id="%s"></span>', $attr['required'], $attr['name'] );
+                printf( '<span class="cfm-rich-validation" data-required="%s" data-type="rich" data-id="%s"></span>', $attr['required'], $attr['name'] );
                 wp_editor( $value, $attr['name'], array('editor_height' => $attr['rows'], 'quicktags' => false, 'media_buttons' => false, 'teeny' => true, 'editor_class' => $req_class) );
             } else {
                 ?>
@@ -519,7 +519,7 @@ class CFM_Render_Form {
 
 
         $allowed_ext = '';
-        $extensions = fes_allowed_extensions();
+        $extensions = cfm_allowed_extensions();
         if ( is_array( $attr['extension'] ) ) {
             foreach ($attr['extension'] as $ext) {
                 $allowed_ext .= $extensions[$ext]['ext'] . ',';
@@ -532,13 +532,13 @@ class CFM_Render_Form {
         ?>
 
             <span class="edd-description"><?php echo $attr['help']; ?></span>
-            <div id="fes-<?php echo $attr['name']; ?>-upload-container">
-                <div class="fes-attachment-upload-filelist">
-                    <a id="fes-<?php echo $attr['name']; ?>-pickfiles" class="button file-selector" href="#"><?php _e( 'Select File(s)', 'edd_cfm' ); ?></a>
+            <div id="cfm-<?php echo $attr['name']; ?>-upload-container">
+                <div class="cfm-attachment-upload-filelist">
+                    <a id="cfm-<?php echo $attr['name']; ?>-pickfiles" class="button file-selector" href="#"><?php _e( 'Select File(s)', 'edd_cfm' ); ?></a>
 
-                    <?php printf( '<span class="fes-file-validation" data-required="%s" data-type="file"></span>', $attr['required'] ); ?>
+                    <?php printf( '<span class="cfm-file-validation" data-required="%s" data-type="file"></span>', $attr['required'] ); ?>
 
-                    <ul class="fes-attachment-list thumbnails">
+                    <ul class="cfm-attachment-list thumbnails">
                         <?php
                         if ( $uploaded_items ) {
                             foreach ($uploaded_items as $attach_id) {
@@ -557,7 +557,7 @@ class CFM_Render_Form {
 
         <script type="text/javascript">
             jQuery(function($) {
-                new CFM_Uploader('fes-<?php echo $attr['name']; ?>-pickfiles', 'fes-<?php echo $attr['name']; ?>-upload-container', <?php echo $attr['count']; ?>, '<?php echo $attr['name']; ?>', '<?php echo $allowed_ext; ?>', <?php echo $attr['max_size'] ?>);
+                new CFM_Uploader('cfm-<?php echo $attr['name']; ?>-pickfiles', 'cfm-<?php echo $attr['name']; ?>-upload-container', <?php echo $attr['count']; ?>, '<?php echo $attr['name']; ?>', '<?php echo $allowed_ext; ?>', <?php echo $attr['max_size'] ?>);
             });
         </script>
         <?php
@@ -653,7 +653,7 @@ class CFM_Render_Form {
         ?>
             <span data-required="<?php echo $attr['required'] ?>" data-type="radio"></span>
 
-            <div class="fes-fields">
+            <div class="cfm-fields">
                 <span class="edd-description"><?php echo $attr['help']; ?></span>
             </div>
             <?php
@@ -694,7 +694,7 @@ class CFM_Render_Form {
         }
         ?>
             <span class="edd-description"><?php echo $attr['help']; ?></span>
-            <input id="fes-<?php echo $attr['name']; ?>" type="url" class="url" data-required="<?php echo $attr['required'] ?>" data-type="text"<?php $this->required_html5( $attr ); ?> name="<?php echo esc_attr( $attr['name'] ); ?>" placeholder="<?php echo esc_attr( $attr['placeholder'] ); ?>" value="<?php echo esc_attr( $value ) ?>" size="<?php echo esc_attr( $attr['size'] ) ?>" />
+            <input id="cfm-<?php echo $attr['name']; ?>" type="url" class="url" data-required="<?php echo $attr['required'] ?>" data-type="text"<?php $this->required_html5( $attr ); ?> name="<?php echo esc_attr( $attr['name'] ); ?>" placeholder="<?php echo esc_attr( $attr['placeholder'] ); ?>" value="<?php echo esc_attr( $value ) ?>" size="<?php echo esc_attr( $attr['size'] ) ?>" />
 
         <?php
     }
@@ -767,8 +767,8 @@ class CFM_Render_Form {
                                         </td>
                                     <?php } ?>
                                     <td>
-                                        <img class="fes-clone-field" alt="<?php esc_attr_e( 'Add another', 'edd_cfm' ); ?>" title="<?php esc_attr_e( 'Add another', 'edd_cfm' ); ?>" src="<?php echo $add; ?>">
-                                        <img class="fes-remove-field" alt="<?php esc_attr_e( 'Remove this choice', 'edd_cfm' ); ?>" title="<?php esc_attr_e( 'Remove this choice', 'edd_cfm' ); ?>" src="<?php echo $remove; ?>">
+                                        <img class="cfm-clone-field" alt="<?php esc_attr_e( 'Add another', 'edd_cfm' ); ?>" title="<?php esc_attr_e( 'Add another', 'edd_cfm' ); ?>" src="<?php echo $add; ?>">
+                                        <img class="cfm-remove-field" alt="<?php esc_attr_e( 'Remove this choice', 'edd_cfm' ); ?>" title="<?php esc_attr_e( 'Remove this choice', 'edd_cfm' ); ?>" src="<?php echo $remove; ?>">
                                     </td>
                                 </tr>
 
@@ -783,8 +783,8 @@ class CFM_Render_Form {
                                     </td>
                                 <?php } ?>
                                 <td>
-                                    <img class="fes-clone-field" alt="<?php esc_attr_e( 'Add another', 'edd_cfm' ); ?>" title="<?php esc_attr_e( 'Add another', 'edd_cfm' ); ?>" src="<?php echo $add; ?>">
-                                    <img class="fes-remove-field" alt="<?php esc_attr_e( 'Remove this choice', 'edd_cfm' ); ?>" title="<?php esc_attr_e( 'Remove this choice', 'edd_cfm' ); ?>" src="<?php echo $remove; ?>">
+                                    <img class="cfm-clone-field" alt="<?php esc_attr_e( 'Add another', 'edd_cfm' ); ?>" title="<?php esc_attr_e( 'Add another', 'edd_cfm' ); ?>" src="<?php echo $add; ?>">
+                                    <img class="cfm-remove-field" alt="<?php esc_attr_e( 'Remove this choice', 'edd_cfm' ); ?>" title="<?php esc_attr_e( 'Remove this choice', 'edd_cfm' ); ?>" src="<?php echo $remove; ?>">
                                 </td>
                             </tr>
 
@@ -805,11 +805,11 @@ class CFM_Render_Form {
                             ?>
                             <tr>
                                 <td>
-                                    <input id="fes-<?php echo $attr['name']; ?>" type="text" data-required="<?php echo $attr['required'] ?>" data-type="text"<?php $this->required_html5( $attr ); ?> name="<?php echo esc_attr( $attr['name'] ); ?>[]" placeholder="<?php echo esc_attr( $attr['placeholder'] ); ?>" value="<?php echo esc_attr( $item ) ?>" size="<?php echo esc_attr( $attr['size'] ) ?>" />
+                                    <input id="cfm-<?php echo $attr['name']; ?>" type="text" data-required="<?php echo $attr['required'] ?>" data-type="text"<?php $this->required_html5( $attr ); ?> name="<?php echo esc_attr( $attr['name'] ); ?>[]" placeholder="<?php echo esc_attr( $attr['placeholder'] ); ?>" value="<?php echo esc_attr( $item ) ?>" size="<?php echo esc_attr( $attr['size'] ) ?>" />
                                 </td>
                                 <td>
-                                    <img style="cursor:pointer; margin:0 3px;" alt="add another choice" title="add another choice" class="fes-clone-field" src="<?php echo $add; ?>">
-                                    <img style="cursor:pointer;" class="fes-remove-field" alt="remove this choice" title="remove this choice" src="<?php echo $remove; ?>">
+                                    <img style="cursor:pointer; margin:0 3px;" alt="add another choice" title="add another choice" class="cfm-clone-field" src="<?php echo $add; ?>">
+                                    <img style="cursor:pointer;" class="cfm-remove-field" alt="remove this choice" title="remove this choice" src="<?php echo $remove; ?>">
                                 </td>
                             </tr>
                         <?php } //endforeach    ?>
@@ -817,11 +817,11 @@ class CFM_Render_Form {
 
                         <tr>
                             <td>
-                                <input id="fes-<?php echo $attr['name']; ?>" type="text" data-required="<?php echo $attr['required'] ?>" data-type="text"<?php $this->required_html5( $attr ); ?> name="<?php echo esc_attr( $attr['name'] ); ?>[]" placeholder="<?php echo esc_attr( $attr['placeholder'] ); ?>" value="<?php echo esc_attr( $attr['default'] ) ?>" size="<?php echo esc_attr( $attr['size'] ) ?>" />
+                                <input id="cfm-<?php echo $attr['name']; ?>" type="text" data-required="<?php echo $attr['required'] ?>" data-type="text"<?php $this->required_html5( $attr ); ?> name="<?php echo esc_attr( $attr['name'] ); ?>[]" placeholder="<?php echo esc_attr( $attr['placeholder'] ); ?>" value="<?php echo esc_attr( $attr['default'] ) ?>" size="<?php echo esc_attr( $attr['size'] ) ?>" />
                             </td>
                             <td>
-                                <img style="cursor:pointer; margin:0 3px;" alt="add another choice" title="add another choice" class="fes-clone-field" src="<?php echo $add; ?>">
-                                <img style="cursor:pointer;" class="fes-remove-field" alt="remove this choice" title="remove this choice" src="<?php echo $remove; ?>">
+                                <img style="cursor:pointer; margin:0 3px;" alt="add another choice" title="add another choice" class="cfm-clone-field" src="<?php echo $add; ?>">
+                                <img style="cursor:pointer;" class="cfm-remove-field" alt="remove this choice" title="remove this choice" src="<?php echo $remove; ?>">
                             </td>
                         </tr>
 
@@ -870,13 +870,13 @@ class CFM_Render_Form {
         $value = $post_id ? $this->get_meta( $post_id, $attr['name'], $type, true ) : '';
         ?>
 			<span class="edd-description"><?php echo $attr['help']; ?></span>
-            <input id="fes-date-<?php echo $attr['name']; ?>" type="text" class="datepicker" data-required="<?php echo $attr['required'] ?>" data-type="text"<?php $this->required_html5( $attr ); ?> name="<?php echo esc_attr( $attr['name'] ); ?>" value="<?php echo esc_attr( $value ) ?>" size="30" />
+            <input id="cfm-date-<?php echo $attr['name']; ?>" type="text" class="datepicker" data-required="<?php echo $attr['required'] ?>" data-type="text"<?php $this->required_html5( $attr ); ?> name="<?php echo esc_attr( $attr['name'] ); ?>" value="<?php echo esc_attr( $value ) ?>" size="30" />
         <script type="text/javascript">
             jQuery(function($) {
         <?php if ( $attr['time'] == 'yes' ) { ?>
-                                $("#fes-date-<?php echo $attr['name']; ?>").datetimepicker({ dateFormat: '<?php echo $attr["format"]; ?>' });
+                                $("#cfm-date-<?php echo $attr['name']; ?>").datetimepicker({ dateFormat: '<?php echo $attr["format"]; ?>' });
         <?php } else { ?>
-                                $("#fes-date-<?php echo $attr['name']; ?>").datepicker({ dateFormat: '<?php echo $attr["format"]; ?>' });
+                                $("#cfm-date-<?php echo $attr['name']; ?>").datepicker({ dateFormat: '<?php echo $attr["format"]; ?>' });
         <?php } ?>
             });
         </script>

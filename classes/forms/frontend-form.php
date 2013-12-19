@@ -56,7 +56,7 @@ class CFM_Frontend_Form_Post extends CFM_Render_Form {
 		// set featured image if there's any
 		if ( isset( $_POST[ 'cfm_files' ][ 'featured_image' ] ) ) {
 			$attachment_id = $_POST[ 'cfm_files' ][ 'featured_image' ][ 0 ];
-			fes_associate_attachment( $attachment_id, $post_id );
+			cfm_associate_attachment( $attachment_id, $post_id );
 			set_post_thumbnail( $post_id, $attachment_id );
 		}
 		// save all custom fields
@@ -77,7 +77,7 @@ class CFM_Frontend_Form_Post extends CFM_Render_Form {
 			// delete any previous value
 			delete_post_meta( $post_id, $file_input[ 'name' ] );
 			foreach ( $file_input[ 'value' ] as $attachment_id ) {
-				fes_associate_attachment( $attachment_id, $post_id );
+				cfm_associate_attachment( $attachment_id, $post_id );
 				add_post_meta( $post_id, $file_input[ 'name' ], $attachment_id );
 			}
 		}
