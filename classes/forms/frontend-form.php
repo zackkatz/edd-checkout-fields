@@ -7,7 +7,7 @@ class CFM_Frontend_Form extends CFM_Render_Form {
 	private static $_instance;
 	
 	function __construct() {
-		add_action( 'edd_insert_payment', array($this,'submit_post'),8,2);
+		add_action( 'edd_insert_payment', array($this,'submit_post'),10,2);
 		add_filter( 'edd_purchase_form_required_fields', array($this, 'req_fields'), 10, 3);
 		remove_action( 'edd_purchase_form_after_user_info', 'edd_user_info_fields' );
 		add_action('edd_purchase_form_after_user_info', array ($this, 'add_fields'));
@@ -47,6 +47,7 @@ class CFM_Frontend_Form extends CFM_Render_Form {
 				remove_filter( 'upload_dir', 'edd_set_upload_dir' );
 			}
 		}
+		return;
 	}
 	
 	public static function update_post_meta( $meta_vars, $post_id, $form_vars) {
@@ -56,19 +57,10 @@ class CFM_Frontend_Form extends CFM_Render_Form {
 		foreach ($form_vars[2] as $key => $value){
 			update_post_meta( $post_id, $value['name'],$_POST[$value['name']]);
 		}
-				var_dump('test4');exit;die();
-		// set featured image if there's any
-		if ( isset( $_POST[ 'cfm_files' ][ 'featured_image' ] ) ) {
-			$attachment_id = $_POST[ 'cfm_files' ][ 'featured_image' ][ 0 ];
-			cfm_associate_attachment( $attachment_id, $post_id );
-			set_post_thumbnail( $post_id, $attachment_id );
-		}
-				var_dump('test3');exit;die();
 		// save all custom fields
 		foreach ( $meta_key_value as $meta_key => $meta_value ) {
 			update_post_meta( $post_id, $meta_key, $meta_value );
 		}
-				var_dump('test2');exit;die();
 		// save any multicolumn repeatable fields
 		foreach ( $multi_repeated as $repeat_key => $repeat_value ) {
 			// first, delete any previous repeatable fields
@@ -78,7 +70,6 @@ class CFM_Frontend_Form extends CFM_Render_Form {
 				add_post_meta( $post_id, $repeat_key, $repeat_field );
 			}
 		}
-		var_dump('test1');exit;die();
 		// save any files attached
 		foreach ( $files as $file_input ) {
 			// delete any previous value
@@ -88,7 +79,6 @@ class CFM_Frontend_Form extends CFM_Render_Form {
 				add_post_meta( $post_id, $file_input[ 'name' ], $attachment_id );
 			}
 		}
-		return;
 	}
 	
 	public static function req_fields( $fields = false ){
@@ -107,4 +97,3 @@ class CFM_Frontend_Form extends CFM_Render_Form {
 		return $fields;
 	}
 }
-new CFM_Frontend_Form;
