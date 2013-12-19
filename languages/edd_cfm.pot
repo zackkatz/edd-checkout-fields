@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: CFM 1.0\n"
-"POT-Creation-Date: 2013-12-19 12:59-0500\n"
-"PO-Revision-Date: 2013-12-19 13:00-0500\n"
+"POT-Creation-Date: 2013-12-19 14:00-0500\n"
+"PO-Revision-Date: 2013-12-19 14:00-0500\n"
 "Last-Translator: Chris Christoff <translate@chriscct7.com>\n"
 "Language-Team: Chris Christoff <hello@chriscct7.com>\n"
 "Language: English\n"
@@ -47,7 +47,7 @@ msgid ""
 msgstr ""
 
 #: ../classes/class-setup.php:111 ../classes/class-setup.php:160
-msgid "Please fix the errors to proceed"
+msgid "Please fill out this required field"
 msgstr ""
 
 #: ../classes/class-setup.php:115 ../classes/class-setup.php:164
