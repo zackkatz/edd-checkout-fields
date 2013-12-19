@@ -8,7 +8,7 @@ class CFM_Frontend_Form extends CFM_Render_Form {
 	
 	function __construct() {
 		add_action( 'edd_insert_payment', array($this,'submit_post'),10,2);
-		add_filter( 'edd_purchase_form_required_fields', array($this, 'req_fields'), 10, 3);
+		//add_filter( 'edd_purchase_form_required_fields', array($this, 'req_fields'), 10, 3);
 		remove_action( 'edd_purchase_form_after_user_info', 'edd_user_info_fields' );
 		add_action('edd_purchase_form_after_user_info', array ($this, 'add_fields'));
 	}
