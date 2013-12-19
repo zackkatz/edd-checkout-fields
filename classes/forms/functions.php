@@ -31,24 +31,16 @@ function fes_associate_attachment( $attachment_id, $post_id ) {
 
 
 /**
- * Show custom fields in post content area (beta)
+ * Show custom fields in static order view (disabled)
  *
  * @global object $post
  * @param string $content
  * @return string
  */
-function fes_show_custom_fields( $content ) {
+function cfm_show_custom_fields() {
     global $post;
 
-    $show_custom = false;//EDD_FES()->fes_options->get_option( 'edd_fes_show_custom_meta');
-	if($post->post_type != 'download'){
-		return $content;
-	}
-    if (!$show_custom) {
-        return $content;
-    }
-
-    $form_id = EDD_FES()->fes_options->get_option( 'fes-submission-form');
+    $form_id = get_option( 'edd_cfm_id');
 
     $html = '<ul class="fes_customs">';
 
@@ -73,12 +65,12 @@ function fes_show_custom_fields( $content ) {
                 continue;
             }
 
-            if ( $attr['input_type'] == 'image_upload' || $attr['input_type'] == 'file_upload' ) {
+            if ($attr['input_type'] == 'file_upload' ) {
                 $image_html = '<li><label>' . $attr['label'] . ':</label> ';
 
                 if ( $field_value ) {
                     foreach ($field_value as $attachment_id) {
-                         $thumb = get_post_field( 'post_title', $attachment_id );
+                        $thumb = get_post_field( 'post_title', $attachment_id );
                         $full_size = wp_get_attachment_url( $attachment_id );
                         $image_html .= sprintf( '<a href="%s">%s</a> ', $full_size, $thumb );
                     }
@@ -95,10 +87,9 @@ function fes_show_custom_fields( $content ) {
 
     $html .= '</ul>';
 
-    return $content . $html;
+    return $html;
 }
 
-add_filter( 'the_content', 'fes_show_custom_fields' );
 
 /**
  * Get attachment ID from a URL
