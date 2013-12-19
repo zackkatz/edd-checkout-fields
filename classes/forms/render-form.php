@@ -426,19 +426,27 @@ class CFM_Render_Form {
             }
         } else {
             $value = $attr['default'];
-
-            if ( $type == 'post' && $attr['name'] == 'tags' ) {
-                $taxonomy = true;
-            }
         }
 		if ($attr['css'] == 'edd_first'){
-			$attr['name'] = $attr['css'];			
+			$attr['name'] = $attr['css'];
+			if ( is_user_logged_in() ){
+				$user_data = get_userdata( get_current_user_id() );
+				$value = $user_data->first_name;
+			}
 		}
 		if ($attr['css'] == 'edd_last'){
 			$attr['name'] = $attr['css'];
+			if ( is_user_logged_in() ){
+				$user_data = get_userdata( get_current_user_id() );
+				$value = $user_data->last_name;
+			}
 		}
 		if ($attr['css'] == 'edd_email'){
 			$attr['name'] = $attr['css'];
+			if ( is_user_logged_in() ){
+				$user_data = get_userdata( get_current_user_id() );
+				$value = $user_data->user_email;
+			}
 		}
         ?>
 			<span class="edd-description"><?php echo $attr['help']; ?></span>
