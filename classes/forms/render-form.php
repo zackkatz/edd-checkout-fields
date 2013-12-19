@@ -220,7 +220,6 @@ class CFM_Render_Form {
      * @param string $type type of the form. post or user
      */
     function render_items( $form_vars, $post_id, $type = 'post', $form_id, $form_settings ) {
-        $edit_ignore = array('recaptcha', 'really_simple_captcha');
         $hidden_fields = array();
 
         foreach ($form_vars as $key => $form_field) {

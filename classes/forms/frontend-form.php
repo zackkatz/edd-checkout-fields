@@ -38,16 +38,13 @@ class CFM_Frontend_Form extends CFM_Render_Form {
 		$form_settings = get_post_meta( $form_id, 'edd-checkout-fields_settings', true );
 		list( $post_vars, $meta_vars) = $form_vars;
 		$post_id = $payment;
-		if ( $post_id ) {
-			self::update_post_meta( $meta_vars, $post_id, $form_vars );
-			// set the post form_id for later usage
-			update_post_meta( $post_id, self::$config_id, $form_id );
-			// send the response (these are options in 2.1, so let's set this array up for that)
-			if ( function_exists( 'edd_set_upload_dir' ) ) {
-				remove_filter( 'upload_dir', 'edd_set_upload_dir' );
-			}
+		self::update_post_meta( $meta_vars, $post_id, $form_vars );
+		// set the post form_id for later usage
+		update_post_meta( $post_id, self::$config_id, $form_id );
+		// send the response (these are options in 2.1, so let's set this array up for that)
+		if ( function_exists( 'edd_set_upload_dir' ) ) {
+			remove_filter( 'upload_dir', 'edd_set_upload_dir' );
 		}
-		return;
 	}
 	
 	public static function update_post_meta( $meta_vars, $post_id, $form_vars) {

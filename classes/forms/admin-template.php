@@ -47,7 +47,7 @@ class CFM_Admin_Template {
      * @param bool $custom_field if it a custom field or not
      * @param array $values saved value
      */
-    public static function common( $id, $field_name_value = '', $custom_field = true, $values = array(), $reqtoggle = true ) {
+    public static function common( $id, $field_name_value = '', $custom_field = true, $values = array(), $reqtoggle = true, $csstoggle = true ) {
         $tpl = '%s[%d][%s]';
         $required_name = sprintf( $tpl, self::$input_name, $id, 'required' );
         $field_name = sprintf( $tpl, self::$input_name, $id, 'name' );
@@ -101,7 +101,7 @@ class CFM_Admin_Template {
             <label><?php _e( 'Help text', 'edd_cfm' ); ?></label>
             <textarea name="<?php echo $help_name; ?>" class="smallipopInput" title="<?php _e( 'Give the user some information about this field', 'edd_cfm' ); ?>"><?php echo $help_value; ?></textarea>
         </div> <!-- .edd-checkout-fields-rows -->
-		<?php if( $reqtoggle ) { ?>
+		<?php if( $reqtoggle && $csstoggle ) { ?>
         <div class="edd-checkout-fields-rows">
             <label><?php _e( 'CSS Class Name', 'edd_cfm' ); ?></label>
             <input type="text" name="<?php echo $css_name; ?>" value="<?php echo $css_value; ?>" class="smallipopInput" title="<?php _e( 'Add a CSS class name for this field', 'edd_cfm' ); ?>">
@@ -724,7 +724,7 @@ function your_function_name( $form_id, $post_id, $form_settings ) {
             <?php self::hidden_field( "[$field_id][template]", 'edd_last' ); ?>
 
             <div class="edd-checkout-fields-holder">
-                <?php self::common( $field_id, 'edd_last', false, $values ); ?>
+                <?php self::common( $field_id, 'edd_last', false, $values, true, false ); ?>
                 <?php self::common_text( $field_id, $values ); ?>
             </div> <!-- .edd-checkout-fields-holder -->
         </li>
