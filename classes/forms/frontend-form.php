@@ -56,16 +56,19 @@ class CFM_Frontend_Form extends CFM_Render_Form {
 		foreach ($form_vars[2] as $key => $value){
 			update_post_meta( $post_id, $value['name'],$_POST[$value['name']]);
 		}
+				var_dump('test4');exit;die();
 		// set featured image if there's any
 		if ( isset( $_POST[ 'cfm_files' ][ 'featured_image' ] ) ) {
 			$attachment_id = $_POST[ 'cfm_files' ][ 'featured_image' ][ 0 ];
 			cfm_associate_attachment( $attachment_id, $post_id );
 			set_post_thumbnail( $post_id, $attachment_id );
 		}
+				var_dump('test3');exit;die();
 		// save all custom fields
 		foreach ( $meta_key_value as $meta_key => $meta_value ) {
 			update_post_meta( $post_id, $meta_key, $meta_value );
 		}
+				var_dump('test2');exit;die();
 		// save any multicolumn repeatable fields
 		foreach ( $multi_repeated as $repeat_key => $repeat_value ) {
 			// first, delete any previous repeatable fields
@@ -75,6 +78,7 @@ class CFM_Frontend_Form extends CFM_Render_Form {
 				add_post_meta( $post_id, $repeat_key, $repeat_field );
 			}
 		}
+		var_dump('test1');exit;die();
 		// save any files attached
 		foreach ( $files as $file_input ) {
 			// delete any previous value
@@ -103,4 +107,4 @@ class CFM_Frontend_Form extends CFM_Render_Form {
 		return $fields;
 	}
 }
-new CFM_Frontend_Form_Post;
+new CFM_Frontend_Form;
