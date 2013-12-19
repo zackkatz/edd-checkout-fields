@@ -1,4 +1,4 @@
-# EDD Checkout Fields Manager (version 1.0) #
+# EDD Checkout Fields Manager (v 1.0) #
 
 ## Who this README file is for ##
 This readme file is to share information to plugin & theme developers.
