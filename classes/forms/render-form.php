@@ -196,7 +196,7 @@ class CFM_Render_Form {
         $label_exclude = array('section_break', 'html', 'action_hook', 'toc');
         $el_name = !empty( $form_field['name'] ) ? $form_field['name'] : '';
         $class_name = !empty( $form_field['css'] ) ? ' ' . $form_field['css'] : '';
-		if ( $form_field['name'] == 'edd_first' || $form_field['name'] == 'edd_last' || $form_field['name'] == 'edd_email' ){
+		if ( isset( $form_field['name'] ) && ( $form_field['name'] == 'edd_first' || $form_field['name'] == 'edd_last' || $form_field['name'] == 'edd_email' ) ){
 			$el_name = '';
 			$class_name = '';
 		}
