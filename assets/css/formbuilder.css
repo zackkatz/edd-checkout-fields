@@ -129,6 +129,31 @@
     height: 1.5em;
     line-height: 1.2em;
 }
-#side-sortables #cfm-metabox-fields .inside {
-    min-height: 420px
+#post-body-content{
+	display: none;
+}
+#cfm-metabox-fields{
+    position: fixed;
+}
+#major-publishing-actions {
+	padding: 0 !important;
+	background: #FFF !important;
+	border-top: none !important;
+}
+#icon-edit{
+	display: none;
+}
+#cfm-metabox-fields {
+	z-index: 9999;
+}
+#publishing-action {
+	margin-bottom: 5px;
+	}
+.hndle {
+	padding-left: 20px !important;
+}
+.cfm-button{
+	width:100px;
+	margin-right:10px !important;
+	margin-left:5px  !important;
 }

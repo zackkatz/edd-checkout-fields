@@ -73,60 +73,6 @@ class CFM_Admin_Form {
                 <div class="cfm-clear"></div>
             </div>
        </div>
-	    <style type="text/css">
-            .wrap .add-new-h2, .wrap .add-new-h2:active {
-                background: #21759b;
-                color: #fff;
-                text-shadow: 0 1px 1px #446E81;
-            }
-			#post-body-content{
-				display: none;
-			}
-           #cfm-metabox-fields{
-                position: fixed;
-            }
-		   #major-publishing-actions {
-				padding: 0 !important;
-				background: #FFF !important;
-				border-top: none !important;
-			}
-		   #post-body.columns-2 #postbox-container-1 {
-				margin-right: 0px;
-				width: 30px;
-				margin-top: 18px;
-			}
-			#icon-edit{
-				display: none;
-			}
-			#poststuff #post-body.columns-2 {
-				margin-right: 100px;
-			}
-			.postbox {
-				min-width: 30px;
-			}
-			#poststuff .postbox-container {
-				width: 92%;
-			}
-			#poststuff {
-				padding-top: 0px;
-			}
-			.wrap div.updated{
-				width: 50%;
-				margin: 0px;
-			}
-			.wrap {
-				margin-top: 0px;
-			}
-			#cfm-metabox-fields .edd-checkout-fields-buttons {
-				margin-bottom: 0px;
-			}
-			#cfm-metabox-fields {
-				z-index: 9999;
-			}
-			#publishing-action {
-				margin-bottom: 5px;
-			}
-        </style>
         <?php
     }
 
@@ -152,21 +98,21 @@ class CFM_Admin_Form {
 		?>
         <div class="cfm-loading hide"></div>
         <div class="edd-checkout-fields-buttons">
-            <!--<button class="button" data-name="edd_first" data-type="textarea"><?php _e( 'First', 'edd_cfm' ); ?></button> -->
-            <button class="button" data-name="edd_last" data-type="textarea"><?php _e( 'Last Name', 'edd_cfm' ); ?></button><br />
-            <!--<button class="button" data-name="edd_email" data-type="category"><?php _e( 'E-mail', 'edd_cfm' ); ?></button><br /> -->
-			<button class="button" data-name="custom_text" data-type="text" title="<?php echo $title; ?>"><?php _e( 'Text', 'edd_cfm' ); ?></button><br />
-            <button class="button" data-name="custom_textarea" data-type="textarea" title="<?php echo $title; ?>"><?php _e( 'Textarea', 'edd_cfm' ); ?></button><br />
-            <button class="button" data-name="custom_select" data-type="select" title="<?php echo $title; ?>"><?php _e( 'Dropdown', 'edd_cfm' ); ?></button><br />
-            <button class="button" data-name="custom_date" data-type="date" title="<?php echo $title; ?>"><?php _e( 'Date', 'edd_cfm' ); ?></button><br />
-            <button class="button" data-name="custom_multiselect" data-type="multiselect" title="<?php echo $title; ?>"><?php _e( 'Multi Select', 'edd_cfm' ); ?></button><br />
-            <button class="button" data-name="custom_radio" data-type="radio" title="<?php echo $title; ?>"><?php _e( 'Radio', 'edd_cfm' ); ?></button><br />
-            <button class="button" data-name="custom_checkbox" data-type="checkbox" title="<?php echo $title; ?>"><?php _e( 'Checkbox', 'edd_cfm' ); ?></button><br />
-            <button class="button" data-name="custom_file" data-type="file" title="<?php echo $title; ?>"><?php _e( 'File Upload', 'edd_cfm' ); ?></button><br />
-            <button class="button" data-name="custom_url" data-type="url" title="<?php echo $title; ?>"><?php _e( 'URL', 'edd_cfm' ); ?></button><br />
-            <button class="button" data-name="custom_repeater" data-type="repeat" title="<?php echo $title; ?>"><?php _e( 'Repeat Field', 'edd_cfm' ); ?></button><br />
-            <button class="button" data-name="custom_html" data-type="html" title="<?php echo $title; ?>"><?php _e( 'HTML', 'edd_cfm' ); ?></button><br />
-            <button class="button" data-name="action_hook" data-type="action" title="<?php echo $title; ?>"><?php _e( 'Do Action', 'edd_cfm' ); ?></button><br />
+            <!--<button class="cfm-button button" data-name="edd_first" data-type="textarea"><?php _e( 'First', 'edd_cfm' ); ?></button> -->
+            <button class="cfm-button button" data-name="edd_last" data-type="textarea"><?php _e( 'Last Name', 'edd_cfm' ); ?></button><br />
+            <!--<button class="cfm-button button" data-name="edd_email" data-type="category"><?php _e( 'E-mail', 'edd_cfm' ); ?></button><br /> -->
+			<button class="cfm-button button" data-name="custom_text" data-type="text" title="<?php echo $title; ?>"><?php _e( 'Text', 'edd_cfm' ); ?></button>
+            <button class="cfm-button button" data-name="custom_textarea" data-type="textarea" title="<?php echo $title; ?>"><?php _e( 'Textarea', 'edd_cfm' ); ?></button><br />
+            <button class="cfm-button button" data-name="custom_select" data-type="select" title="<?php echo $title; ?>"><?php _e( 'Dropdown', 'edd_cfm' ); ?></button>
+            <button class="cfm-button button" data-name="custom_date" data-type="date" title="<?php echo $title; ?>"><?php _e( 'Date', 'edd_cfm' ); ?></button><br />
+            <button class="cfm-button button" data-name="custom_radio" data-type="radio" title="<?php echo $title; ?>"><?php _e( 'Radio', 'edd_cfm' ); ?></button>
+            <button class="cfm-button button" data-name="custom_checkbox" data-type="checkbox" title="<?php echo $title; ?>"><?php _e( 'Checkbox', 'edd_cfm' ); ?></button><br />
+            <button class="cfm-button button" data-name="custom_file" data-type="file" title="<?php echo $title; ?>"><?php _e( 'File Upload', 'edd_cfm' ); ?></button>
+            <button class="cfm-button button" data-name="custom_url" data-type="url" title="<?php echo $title; ?>"><?php _e( 'URL', 'edd_cfm' ); ?></button><br />
+            <button class="cfm-button button" data-name="custom_multiselect" data-type="multiselect" title="<?php echo $title; ?>"><?php _e( 'Multi Select', 'edd_cfm' ); ?></button>
+            <button class="cfm-button button" data-name="custom_repeater" data-type="repeat" title="<?php echo $title; ?>"><?php _e( 'Repeat Field', 'edd_cfm' ); ?></button><br />
+            <button class="cfm-button button" data-name="custom_html" data-type="html" title="<?php echo $title; ?>"><?php _e( 'HTML', 'edd_cfm' ); ?></button>
+            <button class="cfm-button button" data-name="action_hook" data-type="action" title="<?php echo $title; ?>"><?php _e( 'Do Action', 'edd_cfm' ); ?></button><br />
 
 			<?php do_action( 'edd-checkout-fields_buttons_post' ); ?>
 	    </div>
