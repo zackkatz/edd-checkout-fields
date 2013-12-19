@@ -60,13 +60,13 @@ class CFM_Menu {
 
 				<div class="feature-section">
 					<h4><?php _e( '15 Field Types', 'edd_cfm' );?></h4>
-					<p><?php _e( 'The most requested new feature of cfm was to make it easier to add custom fields. After months of hard work, you can now add all sorts of different fields with the push of a button. I\'ll be adding more fields to choose from in future versions based on feedback from you guys.', 'edd_cfm' );?></p>
+					<p><?php _e( 'With 15 field types, you can make whatever you want on the checkout page come to reality in a couple clicks.', 'edd_cfm' );?></p>
 
 					<h4><?php _e( 'File Upload', 'edd_cfm' );?></h4>
-					<p><?php _e( 'Now you can collect all sorts of information about your users. And without having to write a single line of code.', 'edd_cfm' );?></p>
+					<p><?php _e( 'With the file upload field, having users upload files during checkout is quick and simple', 'edd_cfm' );?></p>
 					
 					<h4><?php _e( 'Drag and Drop Re-Ordering of fields', 'edd_cfm' );?></h4>
-					<p><?php _e( 'To change the order of the fields, simply drag and drop! ', 'edd_cfm' );?></p>
+					<p><?php _e( 'To change the order of the fields on the checkout page, simply drag and drop! ', 'edd_cfm' );?></p>
 				</div>
 			</div>
 		</div>
