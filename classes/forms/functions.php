@@ -1,14 +1,14 @@
 <?php
 function fes_allowed_extensions() {
     $extensions = array(
-        'images' => array('ext' => 'jpg,jpeg,gif,png,bmp', 'label' => __( 'Images', 'edd_fes' )),
-        'audio' => array('ext' => 'mp3,wav,ogg,wma,mka,m4a,ra,mid,midi', 'label' => __( 'Audio', 'edd_fes' )),
-        'video' => array('ext' => 'avi,divx,flv,mov,ogv,mkv,mp4,m4v,divx,mpg,mpeg,mpe', 'label' => __( 'Videos', 'edd_fes' )),
-        'pdf' => array('ext' => 'pdf', 'label' => __( 'PDF', 'edd_fes' )),
-        'office' => array('ext' => 'doc,ppt,pps,xls,mdb,docx,xlsx,pptx,odt,odp,ods,odg,odc,odb,odf,rtf,txt', 'label' => __( 'Office Documents', 'edd_fes' )),
+        'images' => array('ext' => 'jpg,jpeg,gif,png,bmp', 'label' => __( 'Images', 'edd_cfm' )),
+        'audio' => array('ext' => 'mp3,wav,ogg,wma,mka,m4a,ra,mid,midi', 'label' => __( 'Audio', 'edd_cfm' )),
+        'video' => array('ext' => 'avi,divx,flv,mov,ogv,mkv,mp4,m4v,divx,mpg,mpeg,mpe', 'label' => __( 'Videos', 'edd_cfm' )),
+        'pdf' => array('ext' => 'pdf', 'label' => __( 'PDF', 'edd_cfm' )),
+        'office' => array('ext' => 'doc,ppt,pps,xls,mdb,docx,xlsx,pptx,odt,odp,ods,odg,odc,odb,odf,rtf,txt', 'label' => __( 'Office Documents', 'edd_cfm' )),
         'zip' => array('ext' => 'zip,gz,gzip,rar,7z', 'label' => __( 'Zip Archives' )),
-        'exe' => array('ext' => 'exe', 'label' => __( 'Executable Files', 'edd_fes' )),
-        'csv' => array('ext' => 'csv', 'label' => __( 'CSV', 'edd_fes' ))
+        'exe' => array('ext' => 'exe', 'label' => __( 'Executable Files', 'edd_cfm' )),
+        'csv' => array('ext' => 'csv', 'label' => __( 'CSV', 'edd_cfm' ))
     );
 
     return apply_filters( 'fes_allowed_extensions', $extensions );

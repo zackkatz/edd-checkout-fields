@@ -26,7 +26,7 @@ class CFM_Admin_Posting extends CFM_Render_Form {
 
         if ( empty( $custom_fields ) ) {
             // TODO: Its probably better not to output anything. To revisit later.
-			//_e( 'No custom fields found.', 'edd_fes' );
+			//_e( 'No custom fields found.', 'edd_cfm' );
             return;
         }
         ?>
@@ -176,7 +176,7 @@ class CFM_Admin_Posting extends CFM_Render_Form {
     }
 	
 	    function submit_button( ) {
-        $form_settings['update_text']= __( 'Update', 'edd_fes' );
+        $form_settings['update_text']= __( 'Update', 'edd_cfm' );
 		?>
         <fieldset class="fes-submit">
             <div class="fes-label">

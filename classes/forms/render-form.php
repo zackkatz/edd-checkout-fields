@@ -95,7 +95,7 @@ class CFM_Render_Form {
             if ( ($value['input_type'] == 'file_upload') || ($value['input_type'] == 'image_upload') ) {
                 $files[] = array(
                     'name' => $value['name'],
-                    'value' => isset( $_POST['fes_files'][$value['name']] ) ? $_POST['fes_files'][$value['name']] : array()
+                    'value' => isset( $_POST['cfm_files'][$value['name']] ) ? $_POST['cfm_files'][$value['name']] : array()
                 );
 
                 // process repeatable fiels
@@ -481,7 +481,7 @@ class CFM_Render_Form {
                 <div id="fes-insert-image-container">
                     <a class="fes-button" id="fes-insert-image" href="#">
                         <span class="fes-media-icon"></span>
-                        <?php _e( 'Insert Photo', 'edd_fes' ); ?>
+                        <?php _e( 'Insert Photo', 'edd_cfm' ); ?>
                     </a>
                 </div>
             <?php } ?>
@@ -534,7 +534,7 @@ class CFM_Render_Form {
             <span class="edd-description"><?php echo $attr['help']; ?></span>
             <div id="fes-<?php echo $attr['name']; ?>-upload-container">
                 <div class="fes-attachment-upload-filelist">
-                    <a id="fes-<?php echo $attr['name']; ?>-pickfiles" class="button file-selector" href="#"><?php _e( 'Select File(s)', 'edd_fes' ); ?></a>
+                    <a id="fes-<?php echo $attr['name']; ?>-pickfiles" class="button file-selector" href="#"><?php _e( 'Select File(s)', 'edd_cfm' ); ?></a>
 
                     <?php printf( '<span class="fes-file-validation" data-required="%s" data-type="file"></span>', $attr['required'] ); ?>
 
@@ -545,7 +545,7 @@ class CFM_Render_Form {
                                 echo EDD_CFM()->upload->attach_html( $attach_id, $attr['name'] );
 
                                 if ( is_admin() ) {
-                                    printf( '<a href="%s">%s</a>', wp_get_attachment_url( $attach_id ), __( 'Download File', 'edd_fes' ) );
+                                    printf( '<a href="%s">%s</a>', wp_get_attachment_url( $attach_id ), __( 'Download File', 'edd_cfm' ) );
                                 }
                             }
                         }
@@ -767,8 +767,8 @@ class CFM_Render_Form {
                                         </td>
                                     <?php } ?>
                                     <td>
-                                        <img class="fes-clone-field" alt="<?php esc_attr_e( 'Add another', 'edd_fes' ); ?>" title="<?php esc_attr_e( 'Add another', 'edd_fes' ); ?>" src="<?php echo $add; ?>">
-                                        <img class="fes-remove-field" alt="<?php esc_attr_e( 'Remove this choice', 'edd_fes' ); ?>" title="<?php esc_attr_e( 'Remove this choice', 'edd_fes' ); ?>" src="<?php echo $remove; ?>">
+                                        <img class="fes-clone-field" alt="<?php esc_attr_e( 'Add another', 'edd_cfm' ); ?>" title="<?php esc_attr_e( 'Add another', 'edd_cfm' ); ?>" src="<?php echo $add; ?>">
+                                        <img class="fes-remove-field" alt="<?php esc_attr_e( 'Remove this choice', 'edd_cfm' ); ?>" title="<?php esc_attr_e( 'Remove this choice', 'edd_cfm' ); ?>" src="<?php echo $remove; ?>">
                                     </td>
                                 </tr>
 
@@ -783,8 +783,8 @@ class CFM_Render_Form {
                                     </td>
                                 <?php } ?>
                                 <td>
-                                    <img class="fes-clone-field" alt="<?php esc_attr_e( 'Add another', 'edd_fes' ); ?>" title="<?php esc_attr_e( 'Add another', 'edd_fes' ); ?>" src="<?php echo $add; ?>">
-                                    <img class="fes-remove-field" alt="<?php esc_attr_e( 'Remove this choice', 'edd_fes' ); ?>" title="<?php esc_attr_e( 'Remove this choice', 'edd_fes' ); ?>" src="<?php echo $remove; ?>">
+                                    <img class="fes-clone-field" alt="<?php esc_attr_e( 'Add another', 'edd_cfm' ); ?>" title="<?php esc_attr_e( 'Add another', 'edd_cfm' ); ?>" src="<?php echo $add; ?>">
+                                    <img class="fes-remove-field" alt="<?php esc_attr_e( 'Remove this choice', 'edd_cfm' ); ?>" title="<?php esc_attr_e( 'Remove this choice', 'edd_cfm' ); ?>" src="<?php echo $remove; ?>">
                                 </td>
                             </tr>
 

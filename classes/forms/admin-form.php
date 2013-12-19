@@ -31,21 +31,19 @@ class CFM_Admin_Form {
     function form_updated_message( $messages ) {
         $message = array(
              0 => '',
-             1 => __( 'Checkout fields updated!', 'edd_fes' ),
-             2 => __( 'Custom field updated.', 'edd_fes' ),
-             3 => __( 'Custom field deleted.', 'edd_fes' ),
-             4 => __( 'Form updated.', 'edd_fes' ),
-             5 => isset($_GET['revision']) ? sprintf( __( 'Form restored to revision from %s', 'edd_fes' ), wp_post_revision_title( (int) $_GET['revision'], false ) ) : false,
-             6 => __( 'Form published.', 'edd_fes' ),
-             7 => __( 'Checkout fields saved!', 'edd_fes' ),
-             8 => __( 'Form submitted.', 'edd_fes' ),
+             1 => __( 'Checkout fields updated!', 'edd_cfm' ),
+             2 => __( 'Custom field updated.', 'edd_cfm' ),
+             3 => __( 'Custom field deleted.', 'edd_cfm' ),
+             4 => __( 'Form updated.', 'edd_cfm' ),
+             5 => isset($_GET['revision']) ? sprintf( __( 'Form restored to revision from %s', 'edd_cfm' ), wp_post_revision_title( (int) $_GET['revision'], false ) ) : false,
+             6 => __( 'Form published.', 'edd_cfm' ),
+             7 => __( 'Checkout fields saved!', 'edd_cfm' ),
+             8 => __( 'Form submitted.', 'edd_cfm' ),
              9 => '',
-            10 => __( 'Form draft updated.', 'edd_fes' ),
+            10 => __( 'Form draft updated.', 'edd_cfm' ),
         );
 
         $messages['edd-checkout-fields'] = $message;
-        $messages['fes_profile'] = $message;
-
         return $messages;
     }
 
@@ -56,8 +54,8 @@ class CFM_Admin_Form {
      */
     function add_meta_boxes() {
 		global $post;
-        add_meta_box( 'fes-metabox-editor', __( 'Submission Form Editor', 'edd_fes' ), array($this, 'metabox_post_form'), 'edd-checkout-fields', 'normal', 'high' );
-        add_meta_box( 'fes-metabox-fields', __( 'Add Field', 'edd_fes' ), array($this, 'form_elements_post'), 'edd-checkout-fields', 'side', 'core' );
+        add_meta_box( 'cfm-metabox-editor', __( 'Submission Form Editor', 'edd_cfm' ), array($this, 'metabox_post_form'), 'edd-checkout-fields', 'normal', 'high' );
+        add_meta_box( 'cfm-metabox-fields', __( 'Add Field', 'edd_cfm' ), array($this, 'form_elements_post'), 'edd-checkout-fields', 'side', 'core' );
 		remove_meta_box('submitdiv', 'edd-checkout-fields', 'side');
         remove_meta_box('slugdiv', 'edd-checkout-fields', 'normal');
 	}
@@ -84,7 +82,7 @@ class CFM_Admin_Form {
 			#post-body-content{
 				display: none;
 			}
-           #fes-metabox-fields{
+           #cfm-metabox-fields{
                 position: fixed;
             }
 		   #major-publishing-actions {
@@ -119,7 +117,7 @@ class CFM_Admin_Form {
 			.wrap {
 				margin-top: 0px;
 			}
-			#fes-metabox-fields .edd-checkout-fields-buttons {
+			#cfm-metabox-fields .edd-checkout-fields-buttons {
 				margin-bottom: 0px;
 			}
         </style>
@@ -128,9 +126,9 @@ class CFM_Admin_Form {
 
      function metabox_post_form( $post ) {
         ?>
-        <h1><?php _e('Checkout Fields','edd_fes');?></h1>
+        <h1><?php _e('Checkout Fields','edd_cfm');?></h1>
         <div class="tab-content">
-            <div id="fes-metabox" class="group">
+            <div id="cfm-metabox" class="group">
                 <?php $this->edit_form_area(); ?>
             </div>
             <?php do_action( 'fes_post_form_tab_content' ); ?>
@@ -144,25 +142,25 @@ class CFM_Admin_Form {
      * @return void
      */
     function form_elements_post() {
-		$title = __( 'Click to add to the editor', 'edd_fes' );
+		$title = __( 'Click to add to the editor', 'edd_cfm' );
 		?>
         <div class="fes-loading hide"></div>
         <div class="edd-checkout-fields-buttons">
-            <button class="button" data-name="edd_first" data-type="textarea"><?php _e( 'First', 'edd_fes' ); ?></button>
-            <button class="button" data-name="edd_last" data-type="textarea"><?php _e( 'Last', 'edd_fes' ); ?></button><br />
-            <button class="button" data-name="edd_email" data-type="category"><?php _e( 'E-mail', 'edd_fes' ); ?></button><br />
-			<button class="button" data-name="custom_text" data-type="text" title="<?php echo $title; ?>"><?php _e( 'Text', 'edd_fes' ); ?></button><br />
-            <button class="button" data-name="custom_textarea" data-type="textarea" title="<?php echo $title; ?>"><?php _e( 'Textarea', 'edd_fes' ); ?></button><br />
-            <button class="button" data-name="custom_select" data-type="select" title="<?php echo $title; ?>"><?php _e( 'Dropdown', 'edd_fes' ); ?></button><br />
-            <button class="button" data-name="custom_date" data-type="date" title="<?php echo $title; ?>"><?php _e( 'Date', 'edd_fes' ); ?></button><br />
-            <button class="button" data-name="custom_multiselect" data-type="multiselect" title="<?php echo $title; ?>"><?php _e( 'Multi Select', 'edd_fes' ); ?></button><br />
-            <button class="button" data-name="custom_radio" data-type="radio" title="<?php echo $title; ?>"><?php _e( 'Radio', 'edd_fes' ); ?></button><br />
-            <button class="button" data-name="custom_checkbox" data-type="checkbox" title="<?php echo $title; ?>"><?php _e( 'Checkbox', 'edd_fes' ); ?></button><br />
-            <button class="button" data-name="custom_file" data-type="file" title="<?php echo $title; ?>"><?php _e( 'File Upload', 'edd_fes' ); ?></button><br />
-            <button class="button" data-name="custom_url" data-type="url" title="<?php echo $title; ?>"><?php _e( 'URL', 'edd_fes' ); ?></button><br />
-            <button class="button" data-name="custom_repeater" data-type="repeat" title="<?php echo $title; ?>"><?php _e( 'Repeat Field', 'edd_fes' ); ?></button><br />
-            <button class="button" data-name="custom_html" data-type="html" title="<?php echo $title; ?>"><?php _e( 'HTML', 'edd_fes' ); ?></button><br />
-            <button class="button" data-name="action_hook" data-type="action" title="<?php echo $title; ?>"><?php _e( 'Do Action', 'edd_fes' ); ?></button><br />
+            <button class="button" data-name="edd_first" data-type="textarea"><?php _e( 'First', 'edd_cfm' ); ?></button>
+            <button class="button" data-name="edd_last" data-type="textarea"><?php _e( 'Last', 'edd_cfm' ); ?></button><br />
+            <button class="button" data-name="edd_email" data-type="category"><?php _e( 'E-mail', 'edd_cfm' ); ?></button><br />
+			<button class="button" data-name="custom_text" data-type="text" title="<?php echo $title; ?>"><?php _e( 'Text', 'edd_cfm' ); ?></button><br />
+            <button class="button" data-name="custom_textarea" data-type="textarea" title="<?php echo $title; ?>"><?php _e( 'Textarea', 'edd_cfm' ); ?></button><br />
+            <button class="button" data-name="custom_select" data-type="select" title="<?php echo $title; ?>"><?php _e( 'Dropdown', 'edd_cfm' ); ?></button><br />
+            <button class="button" data-name="custom_date" data-type="date" title="<?php echo $title; ?>"><?php _e( 'Date', 'edd_cfm' ); ?></button><br />
+            <button class="button" data-name="custom_multiselect" data-type="multiselect" title="<?php echo $title; ?>"><?php _e( 'Multi Select', 'edd_cfm' ); ?></button><br />
+            <button class="button" data-name="custom_radio" data-type="radio" title="<?php echo $title; ?>"><?php _e( 'Radio', 'edd_cfm' ); ?></button><br />
+            <button class="button" data-name="custom_checkbox" data-type="checkbox" title="<?php echo $title; ?>"><?php _e( 'Checkbox', 'edd_cfm' ); ?></button><br />
+            <button class="button" data-name="custom_file" data-type="file" title="<?php echo $title; ?>"><?php _e( 'File Upload', 'edd_cfm' ); ?></button><br />
+            <button class="button" data-name="custom_url" data-type="url" title="<?php echo $title; ?>"><?php _e( 'URL', 'edd_cfm' ); ?></button><br />
+            <button class="button" data-name="custom_repeater" data-type="repeat" title="<?php echo $title; ?>"><?php _e( 'Repeat Field', 'edd_cfm' ); ?></button><br />
+            <button class="button" data-name="custom_html" data-type="html" title="<?php echo $title; ?>"><?php _e( 'HTML', 'edd_cfm' ); ?></button><br />
+            <button class="button" data-name="action_hook" data-type="action" title="<?php echo $title; ?>"><?php _e( 'Do Action', 'edd_cfm' ); ?></button><br />
 
 			<?php do_action( 'edd-checkout-fields_buttons_post' ); ?>
 	    </div>
@@ -209,11 +207,11 @@ class CFM_Admin_Form {
         <input type="hidden" name="edd-checkout-fields_editor" id="edd-checkout-fields_editor" value="<?php echo wp_create_nonce( plugin_basename( __FILE__ ) ); ?>" />
 
         <div style="margin-bottom: 10px">
-          <button class="button fes-collapse"><?php _e( 'Toggle All Fields Open/Close', 'edd_fes' ); ?></button>
+          <button class="button fes-collapse"><?php _e( 'Toggle All Fields Open/Close', 'edd_cfm' ); ?></button>
         </div>
 		<?php if ( empty( $form_inputs ) ){ ?>		
         <div class="fes-updated">
-            <p><?php _e( 'Your checkout form has no fields!', 'edd_fes' ); ?></p>
+            <p><?php _e( 'Your checkout form has no fields!', 'edd_cfm' ); ?></p>
         </div>
 		<?php } ?>
         <ul id="edd-checkout-fields-editor" class="edd-checkout-fields-editor unstyled">
@@ -246,71 +244,71 @@ class CFM_Admin_Form {
 
         switch ($name) {
             case 'custom_text':
-			    CFM_Admin_Template::text_field( $field_id, __( 'Custom field: Text','edd_fes'));
+			    CFM_Admin_Template::text_field( $field_id, __( 'Custom field: Text','edd_cfm'));
                 break;
 
             case 'custom_textarea':
-                CFM_Admin_Template::textarea_field( $field_id, __( 'Custom field: Textarea','edd_fes'));
+                CFM_Admin_Template::textarea_field( $field_id, __( 'Custom field: Textarea','edd_cfm'));
                 break;
 
             case 'custom_select':
-                CFM_Admin_Template::dropdown_field( $field_id, __( 'Custom field: Select','edd_fes'));
+                CFM_Admin_Template::dropdown_field( $field_id, __( 'Custom field: Select','edd_cfm'));
                 break;
 
             case 'custom_multiselect':
-                CFM_Admin_Template::multiple_select( $field_id, __( 'Custom field: Multiselect','edd_fes'));
+                CFM_Admin_Template::multiple_select( $field_id, __( 'Custom field: Multiselect','edd_cfm'));
                 break;
 
             case 'custom_radio':
-                CFM_Admin_Template::radio_field( $field_id, __( 'Custom field: Radio','edd_fes'));
+                CFM_Admin_Template::radio_field( $field_id, __( 'Custom field: Radio','edd_cfm'));
                 break;
 
             case 'custom_checkbox':
-                CFM_Admin_Template::checkbox_field( $field_id, __( 'Custom field: Checkbox','edd_fes'));
+                CFM_Admin_Template::checkbox_field( $field_id, __( 'Custom field: Checkbox','edd_cfm'));
                 break;
 
             case 'custom_file':
-                CFM_Admin_Template::file_upload( $field_id, __( 'Custom field: File Upload','edd_fes'));
+                CFM_Admin_Template::file_upload( $field_id, __( 'Custom field: File Upload','edd_cfm'));
                 break;
 
             case 'custom_url':
-                CFM_Admin_Template::website_url( $field_id, __( 'Custom field: URL','edd_fes'));
+                CFM_Admin_Template::website_url( $field_id, __( 'Custom field: URL','edd_cfm'));
                 break;
 
             case 'custom_email':
-                CFM_Admin_Template::email_address( $field_id, __( 'Custom field: E-Mail','edd_fes'));
+                CFM_Admin_Template::email_address( $field_id, __( 'Custom field: E-Mail','edd_cfm'));
                 break;
 
             case 'custom_repeater':
-                CFM_Admin_Template::repeat_field( $field_id, __( 'Custom field: Repeat Field','edd_fes'));
+                CFM_Admin_Template::repeat_field( $field_id, __( 'Custom field: Repeat Field','edd_cfm'));
                 break;
 
             case 'custom_html':
-                CFM_Admin_Template::custom_html( $field_id, __( 'HTML','edd_fes') );
+                CFM_Admin_Template::custom_html( $field_id, __( 'HTML','edd_cfm') );
                 break;
 
             case 'action_hook':
-                CFM_Admin_Template::action_hook( $field_id, __( 'Action Hook','edd_fes') );
+                CFM_Admin_Template::action_hook( $field_id, __( 'Action Hook','edd_cfm') );
                 break;
 
             case 'custom_date':
-                CFM_Admin_Template::date_field( $field_id, __( 'Custom Field: Date','edd_fes') );
+                CFM_Admin_Template::date_field( $field_id, __( 'Custom Field: Date','edd_cfm') );
                 break;
 
             case 'edd_first':
-                CFM_Admin_Template::edd_first( $field_id, __( 'First Name', 'edd_fes' ) );
+                CFM_Admin_Template::edd_first( $field_id, __( 'First Name', 'edd_cfm' ) );
                 break;
 
             case 'edd_last':
-                CFM_Admin_Template::edd_last( $field_id, __( 'Last Name', 'edd_fes' ) );
+                CFM_Admin_Template::edd_last( $field_id, __( 'Last Name', 'edd_cfm' ) );
                 break;
 
             case 'edd_email':
-                CFM_Admin_Template::edd_email( $field_id, __( 'Email', 'edd_fes' ) );
+                CFM_Admin_Template::edd_email( $field_id, __( 'Email', 'edd_cfm' ) );
                 break;
 
             default:
-                do_action( 'fes_admin_field_' . $name, $type, $field_id );
+                do_action( 'cfm_admin_field_' . $name, $type, $field_id );
                 break;
         }
 

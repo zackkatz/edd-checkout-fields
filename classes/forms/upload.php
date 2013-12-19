@@ -10,20 +10,20 @@ class CFM_Upload {
 
     function __construct() {
 
-        add_action( 'wp_ajax_fes_file_upload', array($this, 'upload_file') );
-        add_action( 'wp_ajax_nopriv_fes_file_upload', array($this, 'upload_file') );
+        add_action( 'wp_ajax_cfm_file_upload', array($this, 'upload_file') );
+        add_action( 'wp_ajax_nopriv_cfm_file_upload', array($this, 'upload_file') );
 
-        add_action( 'wp_ajax_fes_file_del', array($this, 'delete_file') );
-        add_action( 'wp_ajax_nopriv_fes_file_del', array($this, 'delete_file') );
+        add_action( 'wp_ajax_cfm_file_del', array($this, 'delete_file') );
+        add_action( 'wp_ajax_nopriv_cfm_file_del', array($this, 'delete_file') );
     }
 
     function upload_file( $image_only = false ) {
         $upload = array(
-            'name' => $_FILES['fes_file']['name'],
-            'type' => $_FILES['fes_file']['type'],
-            'tmp_name' => $_FILES['fes_file']['tmp_name'],
-            'error' => $_FILES['fes_file']['error'],
-            'size' => $_FILES['fes_file']['size']
+            'name' => $_FILES['cfm_file']['name'],
+            'type' => $_FILES['cfm_file']['type'],
+            'tmp_name' => $_FILES['cfm_file']['tmp_name'],
+            'error' => $_FILES['cfm_file']['error'],
+            'size' => $_FILES['cfm_file']['size']
         );
 
         header('Content-Type: text/html; charset=' . get_option('blog_charset'));
@@ -94,8 +94,8 @@ class CFM_Upload {
 
         $html = '<li class="image-wrap thumbnail" style="width: 150px">';
         $html .= sprintf( '<div class="attachment-name"><img src="%s" alt="%s" /></div>', $image, esc_attr( $attachment->post_title ) );
-        $html .= sprintf( '<div class="caption"><a href="#" class="btn btn-danger btn-small attachment-delete" data-attach_id="%d">%s</a></div>', $attach_id, __( 'Delete', 'edd_fes' ) );
-        $html .= sprintf( '<input type="hidden" name="fes_files[%s][]" value="%d">', $type, $attach_id );
+        $html .= sprintf( '<div class="caption"><a href="#" class="btn btn-danger btn-small attachment-delete" data-attach_id="%d">%s</a></div>', $attach_id, __( 'Delete', 'edd_cfm' ) );
+        $html .= sprintf( '<input type="hidden" name="cfm_files[%s][]" value="%d">', $type, $attach_id );
         $html .= '</li>';
 
         return $html;

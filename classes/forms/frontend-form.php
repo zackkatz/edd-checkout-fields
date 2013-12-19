@@ -43,27 +43,6 @@ class CFM_Frontend_Form_Post extends CFM_Render_Form {
 		if ( $post_id ) {
 			// set the post form_id for later usage
 			update_post_meta( $post_id, self::$config_id, $form_id );
-			// find our if any images in post content and associate them
-			if ( !empty( $postarr[ 'post_content' ] ) ) {
-				$dom = new DOMDocument();
-				$dom->loadHTML( $postarr[ 'post_content' ] );
-				$images = $dom->getElementsByTagName( 'img' );
-				if ( $images->length ) {
-					foreach ( $images as $img ) {
-						$url           = $img->getAttribute( 'src' );
-						$url           = str_replace( array(
-							 '"',
-							"'",
-							"\\" 
-						), '', $url );
-						$attachment_id = fes_get_attachment_id_from_url( $url );
-						if ( $attachment_id ) {
-							fes_associate_attachment( $attachment_id, $post_id );
-						}
-					}
-				}
-			}
-
 			// send the response (these are options in 2.1, so let's set this array up for that)
 			if ( function_exists( 'edd_set_upload_dir' ) ) {
 				remove_filter( 'upload_dir', 'edd_set_upload_dir' );
@@ -75,8 +54,8 @@ class CFM_Frontend_Form_Post extends CFM_Render_Form {
 		// prepare the meta vars
 		list( $meta_key_value, $multi_repeated, $files ) = self::prepare_meta_fields( $meta_vars );
 		// set featured image if there's any
-		if ( isset( $_POST[ 'fes_files' ][ 'featured_image' ] ) ) {
-			$attachment_id = $_POST[ 'fes_files' ][ 'featured_image' ][ 0 ];
+		if ( isset( $_POST[ 'cfm_files' ][ 'featured_image' ] ) ) {
+			$attachment_id = $_POST[ 'cfm_files' ][ 'featured_image' ][ 0 ];
 			fes_associate_attachment( $attachment_id, $post_id );
 			set_post_thumbnail( $post_id, $attachment_id );
 		}

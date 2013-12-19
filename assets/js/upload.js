@@ -26,12 +26,12 @@
             container: container,
             multipart: true,
             multipart_params: {
-                action: 'fes_file_upload'
+                action: 'cfm_file_upload'
             },
             multiple_queues: false,
             multi_selection: false,
             urlstream_upload: true,
-            file_data_name: 'fes_file',
+            file_data_name: 'cfm_file',
             max_file_size: max_file_size + 'kb',
             url: cfm_frontend_upload.plupload.url + '&type=' + type,
             flash_swf_url: cfm_frontend_upload.flash_swf_url,
@@ -138,7 +138,7 @@
                 var data = {
                     'attach_id' : el.data('attach_id'),
                     'nonce' : cfm_frontend_upload.nonce,
-                    'action' : 'fes_file_del'
+                    'action' : 'cfm_file_del'
                 };
 
                 jQuery.post(cfm_frontend_upload.ajaxurl, data, function() {
