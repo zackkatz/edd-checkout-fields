@@ -7,8 +7,8 @@
  * Author URI:          http://www.chriscct7.com
  *
  * Version:             1.0
- * Requires at least:   3.8
- * Tested up to:        3.8
+ * Requires at least:   3.6
+ * Tested up to:        3.6
  *
  * Text Domain:         edd_cfm
  * Domain Path:         /edd_cfm/languages/

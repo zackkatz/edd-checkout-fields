@@ -40,7 +40,7 @@ class CFM_Setup {
 	}
 	public function is_wp_36_and_edd_activated() {
 		global $wp_version;
-		if ( version_compare( $wp_version, '3.8', '< ' ) ) {
+		if ( version_compare( $wp_version, '3.6', '< ' ) ) {
 			if ( is_plugin_active( EDD_cfm()->basename ) ) {
 				deactivate_plugins( EDD_cfm()->basename );
 				unset( $_GET[ 'activate' ] );
@@ -49,7 +49,7 @@ class CFM_Setup {
 					'wp_notice' 
 				) );
 			}
-		} else if ( !class_exists( 'Easy_Digital_Downloads' ) || ( version_compare( EDD_VERSION, '1.9' ) < 0 ) ) {
+		} else if ( !class_exists( 'Easy_Digital_Downloads' ) || ( version_compare( EDD_VERSION, '1.8' ) < 0 ) ) {
 			if ( is_plugin_active( EDD_cfm()->basename ) ) {
 				deactivate_plugins( EDD_cfm()->basename );
 				unset( $_GET[ 'activate' ] );
@@ -65,7 +65,7 @@ class CFM_Setup {
 ?>
 	<div class="updated">
 		<p><?php
-		printf( __( '<strong>Notice:</strong> Easy Digital Downloads Checkout Fields Manager requires Easy Digital Downloads 1.9 or higher in order to function properly.', 'edd_cfm' ) );
+		printf( __( '<strong>Notice:</strong> Easy Digital Downloads Checkout Fields Manager requires Easy Digital Downloads 1.8 or higher in order to function properly.', 'edd_cfm' ) );
 ?>
 		</p>
 	</div>
@@ -75,7 +75,7 @@ class CFM_Setup {
 ?>
 	<div class="updated">
 		<p><?php
-		printf( __( '<strong>Notice:</strong> Easy Digital Downloads Checkout Fields Manager requires WordPress 3.8 or higher in order to function properly.', 'edd_cfm' ) );
+		printf( __( '<strong>Notice:</strong> Easy Digital Downloads Checkout Fields Manager requires WordPress 3.6 or higher in order to function properly.', 'edd_cfm' ) );
 ?>
 		</p>
 	</div>
