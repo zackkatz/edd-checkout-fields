@@ -216,7 +216,7 @@ class CFM_Admin_Template {
      * @param string $name
      * @param array $values
      */
-    function radio_fields( $field_id, $name, $values = array() ) {
+    public static function radio_fields( $field_id, $name, $values = array() ) {
         $selected_name = sprintf( '%s[%d][selected]', self::$input_name, $field_id );
         $input_name = sprintf( '%s[%d][%s]', self::$input_name, $field_id, $name );
 
