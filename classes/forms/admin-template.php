@@ -641,12 +641,12 @@ class CFM_Admin_Template {
                         <input type="text" class="smallipopInput" title="<?php _e( 'Name of the hook', 'edd_cfm' ); ?>" name="<?php echo $title_name; ?>" value="<?php echo esc_attr( $title_value ); ?>" />
 
                         <div class="description" style="margin-top: 8px;">
-                            <?php _e( "An option for developers to add dynamic elements they want. It provides the chance to add whatever input type you want to add in this form.", 'edd_cfm' ); ?>
-                            <?php _e( 'This way, you can bind your own functions to render the form to this action hook. You\'ll be given 3 parameters to play with: $form_id, $post_id, $form_settings.', 'edd_cfm' ); ?>
+                            <?php _e( "This is for developers to add dynamic elements as they want. It provides the chance to add whatever input type you want to add in this form.", 'edd_cfm' ); ?>
+                            <?php _e( 'You can bind your own functions to render the form to this action hook. You\'ll be given 3 parameters to play with: $form_id, $post_id, $form_settings.', 'edd_cfm' ); ?>
 <pre>
 add_action('HOOK_NAME', 'your_function_name', 10, 3 );
 function your_function_name( $form_id, $post_id, $form_settings ) {
-    // do what ever you want
+    // do whatever you want
 }
 </pre>
                         </div>
