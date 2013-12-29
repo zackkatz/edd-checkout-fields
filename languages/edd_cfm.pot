@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: CFM 1.0\n"
-"POT-Creation-Date: 2013-12-19 14:00-0500\n"
-"PO-Revision-Date: 2013-12-19 14:00-0500\n"
+"POT-Creation-Date: 2013-12-28 23:53-0500\n"
+"PO-Revision-Date: 2013-12-28 23:53-0500\n"
 "Last-Translator: Chris Christoff <translate@chriscct7.com>\n"
 "Language-Team: Chris Christoff <hello@chriscct7.com>\n"
 "Language: English\n"
@@ -107,71 +107,71 @@ msgstr ""
 msgid "Add Field"
 msgstr ""
 
-#: ../classes/forms/admin-form.php:151
+#: ../classes/forms/admin-form.php:97
 msgid "Click to add to the editor"
 msgstr ""
 
-#: ../classes/forms/admin-form.php:253
+#: ../classes/forms/admin-form.php:199
 msgid "Custom field: Text"
 msgstr ""
 
-#: ../classes/forms/admin-form.php:257
+#: ../classes/forms/admin-form.php:203
 msgid "Custom field: Textarea"
 msgstr ""
 
-#: ../classes/forms/admin-form.php:261
+#: ../classes/forms/admin-form.php:207
 msgid "Custom field: Select"
 msgstr ""
 
-#: ../classes/forms/admin-form.php:265
+#: ../classes/forms/admin-form.php:211
 msgid "Custom field: Multiselect"
 msgstr ""
 
-#: ../classes/forms/admin-form.php:269
+#: ../classes/forms/admin-form.php:215
 msgid "Custom field: Radio"
 msgstr ""
 
-#: ../classes/forms/admin-form.php:273
+#: ../classes/forms/admin-form.php:219
 msgid "Custom field: Checkbox"
 msgstr ""
 
-#: ../classes/forms/admin-form.php:277
+#: ../classes/forms/admin-form.php:223
 msgid "Custom field: File Upload"
 msgstr ""
 
-#: ../classes/forms/admin-form.php:281
+#: ../classes/forms/admin-form.php:227
 msgid "Custom field: URL"
 msgstr ""
 
-#: ../classes/forms/admin-form.php:285
+#: ../classes/forms/admin-form.php:231
 msgid "Custom field: E-Mail"
 msgstr ""
 
-#: ../classes/forms/admin-form.php:289
+#: ../classes/forms/admin-form.php:235
 msgid "Custom field: Repeat Field"
 msgstr ""
 
-#: ../classes/forms/admin-form.php:293
+#: ../classes/forms/admin-form.php:239
 msgid "HTML"
 msgstr ""
 
-#: ../classes/forms/admin-form.php:297
+#: ../classes/forms/admin-form.php:243
 msgid "Action Hook"
 msgstr ""
 
-#: ../classes/forms/admin-form.php:301
+#: ../classes/forms/admin-form.php:247
 msgid "Custom Field: Date"
 msgstr ""
 
-#: ../classes/forms/admin-form.php:305
+#: ../classes/forms/admin-form.php:251
 msgid "First Name"
 msgstr ""
 
-#: ../classes/forms/admin-form.php:309
+#: ../classes/forms/admin-form.php:255
 msgid "Last Name"
 msgstr ""
 
-#: ../classes/forms/admin-form.php:313
+#: ../classes/forms/admin-form.php:259
 msgid "Email"
 msgstr ""
 
@@ -198,7 +198,7 @@ msgstr ""
 msgid "The date format"
 msgstr ""
 
-#: ../classes/forms/frontend-form.php:89
+#: ../classes/forms/frontend-form.php:91
 msgid "Please enter "
 msgstr ""
 
@@ -234,7 +234,7 @@ msgstr ""
 msgid "CSV"
 msgstr ""
 
-#: ../classes/forms/render-form.php:550
+#: ../classes/forms/render-form.php:545
 msgid "Download File"
 msgstr ""
 
