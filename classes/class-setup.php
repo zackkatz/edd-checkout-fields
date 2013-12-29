@@ -134,7 +134,7 @@ class CFM_Setup {
 	public function admin_enqueue_scripts() {
 		global $pagenow, $post;
 		$current_screen = get_current_screen();
-		if ( $current_screen->post_type === 'edd-checkout-fields' || $current_screen->post_type === 'download' ) {
+		if ( $current_screen->post_type === 'edd-checkout-fields') {
 			$scheme = is_ssl() ? 'https' : 'http';
 			wp_register_script( 'jquery-tiptip', cfm_plugin_url . 'assets/js/jquery-tiptip/jquery.tipTip.min.js', array(
 				 'jquery' 
@@ -182,7 +182,7 @@ class CFM_Setup {
 	
 	public function admin_enqueue_styles() {
 		$current_screen = get_current_screen();
-		if ( $current_screen->post_type === 'edd-checkout-fields' ) {
+		if ( $current_screen->post_type === 'edd-checkout-fields') {
 			wp_enqueue_style( 'jquery-smallipop', cfm_plugin_url . 'assets/css/jquery.smallipop.css' );
 			wp_enqueue_style( 'cfm-formbuilder', cfm_plugin_url . 'assets/css/formbuilder.css' );
 			wp_enqueue_style( 'jquery-ui-core', cfm_plugin_url . 'assets/css/jquery-ui-1.9.1.custom.css' );

@@ -160,3 +160,6 @@
 #message {
 	margin-top: 10px;
 }
+.add-new-h2{
+	display: none !important;
+}
