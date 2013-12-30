@@ -66,9 +66,9 @@ class CFM_Admin_Form {
         <div class="submitbox" id="submitpost" style="float:left">
             <div id="major-publishing-actions">
                 <div id="publishing-action">
-                    <span class="spinner"></span>
                         <input name="original_publish" type="hidden" id="original_publish" value="<?php esc_attr_e( 'Save' ) ?>" />
-                        <input name="save" type="submit" class="button button-primary button-large" id="publish" accesskey="p" value="<?php esc_attr_e( 'Save' ) ?>" />
+                        <input name="save" type="submit" class="button button-primary button-large" style="float:left" id="publish" accesskey="p" value="<?php esc_attr_e( 'Save' ) ?>" />
+						<span class="spinner" style="float:right" ></span>
                 </div>
                 <div class="cfm-clear"></div>
             </div>
