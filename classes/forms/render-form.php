@@ -305,7 +305,7 @@ class CFM_Render_Form {
      */
     function required_mark( $attr ) {
         if ( isset( $attr['required'] ) && $attr['required'] == 'yes' ) {
-            return ' <span class="edd-required">*</span>';
+            return ' <span class="edd-required-indicator">*</span>';
         }
     }
 
