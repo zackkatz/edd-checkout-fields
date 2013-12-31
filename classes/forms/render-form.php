@@ -576,7 +576,7 @@ class CFM_Render_Form {
             $selected = $multiselect ? ( is_array( $selected ) ? $selected : array() ) : $selected;
         }
 
-        $multi = $multiselect ? ' multiple="multiple"' : '';
+        $multi = $multiselect ? ' multiple="multiple" style="width: 220px" ' : '';
         $data_type = $multiselect ? 'multiselect' : 'select';
         $css = $multiselect ? ' class="multiselect"' : '';
 		?>
