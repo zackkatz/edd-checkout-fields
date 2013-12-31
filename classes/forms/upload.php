@@ -33,7 +33,7 @@ class CFM_Upload {
         if ( $attach['success'] ) {
 
             $response = array( 'success' => true );
-            $response['html'] = $this->attach_html( $attach['attach_id'] );
+            $response['html'] = $this->attach_html( $attach['attach_id'],NULL,$upload );
             echo $response['html'];
         } else {
             echo 'error';
@@ -47,7 +47,7 @@ class CFM_Upload {
      * @param string $field_name file input field name
      * @return bool|int attachment id on success, bool false instead
      */
-    function handle_upload( $upload_data ) {
+    function handle_upload( $upload_data,$upload = false) {
 
         $uploaded_file = wp_handle_upload( $upload_data, array('test_form' => false) );
 
@@ -74,7 +74,7 @@ class CFM_Upload {
         return array('success' => false, 'error' => $uploaded_file['error']);
     }
 
-    public static function attach_html( $attach_id, $type = NULL ) {
+    public static function attach_html( $attach_id, $type = NULL, $upload = NULL ) {
         if ( !$type ) {
             $type = isset( $_GET['type'] ) ? $_GET['type'] : 'image';
         }
@@ -89,14 +89,22 @@ class CFM_Upload {
             $image = wp_get_attachment_image_src( $attach_id, 'thumbnail' );
             $image = $image[0];
         } else {
-            $image = wp_mime_type_icon( $attach_id );
+            $image = false;
         }
-
-        $html = '<li class="image-wrap thumbnail" style="width: 150px">';
-        $html .= sprintf( '<div class="attachment-name"><img src="%s" alt="%s" /></div>', $image, esc_attr( $attachment->post_title ) );
-        $html .= sprintf( '<div class="caption"><a href="#" class="btn btn-danger btn-small attachment-delete" data-attach_id="%d">%s</a></div>', $attach_id, __( 'Delete', 'edd_cfm' ) );
-        $html .= sprintf( '<input type="hidden" name="cfm_files[%s][]" value="%d">', $type, $attach_id );
-        $html .= '</li>';
+		if (!$image){
+			$html = '<li class="image-wrap thumbnail" style="width: 150px">';
+			$html .= '<div class="attachment-name">'.$upload['name'].'</div>';
+			$html .= sprintf( '<div class="caption"><a href="#" class="btn btn-danger btn-small attachment-delete" data-attach_id="%d">%s</a></div>', $attach_id, __( 'Delete', 'edd_cfm' ) );
+			$html .= sprintf( '<input type="hidden" name="cfm_files[%s][]" value="%d">', $type, $attach_id );
+			$html .= '</li>';
+		}
+		else{
+	        $html = '<li class="image-wrap thumbnail" style="width: 150px">';
+			$html .= sprintf( '<div class="attachment-name"><img src="%s" alt="%s" /></div>', $image, esc_attr( $attachment->post_title ) );
+			$html .= sprintf( '<div class="caption"><a href="#" class="btn btn-danger btn-small attachment-delete" data-attach_id="%d">%s</a></div>', $attach_id, __( 'Delete', 'edd_cfm' ) );
+			$html .= sprintf( '<input type="hidden" name="cfm_files[%s][]" value="%d">', $type, $attach_id );
+			$html .= '</li>';		
+		}
 
         return $html;
     }
