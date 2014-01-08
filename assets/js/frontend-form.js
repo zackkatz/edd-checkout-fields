@@ -2,8 +2,8 @@
     var CFM_Form = {
         init: function() {
             // clone and remove repeated field
-            $('#edd_checkout_user_info').on('click', 'img.cfm-clone-field', this.cloneField);
-            $('#edd_checkout_user_info').on('click', 'img.cfm-remove-field', this.removeField);
+            $('body').on('click', '#edd_purchase_form_wrap img.cfm-clone-field', this.cloneField);
+            $('body').on('click', '#edd_purchase_form_wrap img.cfm-remove-field', this.removeField);
 
             $('#edd_purchase_form').on('submit', this.formSubmit);
             $('form#post').on('submit', this.adminPostSubmit);
