@@ -54,7 +54,9 @@ class CFM_Frontend_Form extends CFM_Render_Form {
 		list( $meta_key_value, $multi_repeated, $files ) = self::prepare_meta_fields( $meta_vars );
 		// save custom fields
 		foreach ($form_vars[2] as $key => $value){
-			update_post_meta( $post_id, $value['name'],$_POST[$value['name']]);
+			if ( isset( $_POST[$value['name']] ) ){
+				update_post_meta( $post_id, $value['name'],$_POST[$value['name']]);
+			}
 		}
 		// save all custom fields
 		foreach ( $meta_key_value as $meta_key => $meta_value ) {
