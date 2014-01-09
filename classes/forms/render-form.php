@@ -167,10 +167,6 @@ class CFM_Render_Form {
                 <fieldset id="edd_checkout_user_info">
 
                     <?php
-                    if ( !is_user_logged_in() && $form_settings['guest_post'] == 'true' && $form_settings['guest_details'] == 'true' ) {
-                        $this->guest_fields( $form_settings );
-                    }
-
                     if ( !$post_id ) {
                         do_action( 'cfm_add_post_form_top', $form_id, $form_settings );
                     } else {
