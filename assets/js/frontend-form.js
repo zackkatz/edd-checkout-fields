@@ -79,7 +79,7 @@
                 // console.log( $(item).data('type') );
                 var data_type = $(item).data('type')
                     val = '';
-
+                    console.log( data_type );
                 switch(data_type) {
                     case 'rich':
                         var name = $(item).data('id')
@@ -129,6 +129,7 @@
                         break;
 
                     case 'radio':
+
                         var length = $(item).parent().find('input:checked').length;
 
                         if ( !length ) {
