@@ -192,12 +192,8 @@ class CFM_Render_Form {
         $label_exclude = array('section_break', 'html', 'action_hook', 'toc');
         $el_name = !empty( $form_field['name'] ) ? $form_field['name'] : '';
         $class_name = !empty( $form_field['css'] ) ? ' ' . $form_field['css'] : '';
-		if ( isset( $form_field['name'] ) && ( $form_field['name'] == 'edd_first' || $form_field['name'] == 'edd_last' || $form_field['name'] == 'edd_email' ) ){
-			$el_name = '';
-			$class_name = '';
-		}
-
-        printf( '<p id="cfm-el %s%s">', $el_name, $class_name );
+		
+        printf( '<p id="%s_wrap" class="cfm-el %s">', $el_name, $class_name );
 
         if ( isset( $form_field['input_type'] ) && !in_array( $form_field['input_type'], $label_exclude ) ) {
             $this->label( $form_field, $post_id );
@@ -644,11 +640,9 @@ class CFM_Render_Form {
             $selected = explode( self::$separator, $this->get_meta( $post_id, $attr['name'], $type, true ) );
         }
         ?>
-            <span data-required="<?php echo $attr['required'] ?>" data-type="radio"></span>
-
-            <div class="cfm-fields">
-                <span class="edd-description"><?php echo $attr['help']; ?></span>
-            </div>
+            <span data-required="<?php echo $attr['required'] ?>" data-type="checkbox"></span>
+            <span class="edd-description"><?php echo $attr['help']; ?></span>
+            <span class="cfm-fields">
             <?php
             if ( $attr['options'] && count( $attr['options'] ) > 0 ) {
                 foreach ($attr['options'] as $option) {
@@ -662,6 +656,7 @@ class CFM_Render_Form {
                 }
             }
             ?>
+            </span>
 
 
         <?php
