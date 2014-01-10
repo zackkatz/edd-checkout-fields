@@ -1,15 +1,15 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: CFM 1.0\n"
-"POT-Creation-Date: 2013-12-28 23:53-0500\n"
-"PO-Revision-Date: 2013-12-28 23:53-0500\n"
-"Last-Translator: Chris Christoff <translate@chriscct7.com>\n"
+"POT-Creation-Date: 2014-01-09 20:11-0600\n"
+"PO-Revision-Date: 2014-01-09 20:11-0600\n"
+"Last-Translator: Chris Christoff <chriscct7@gmail.com>\n"
 "Language-Team: Chris Christoff <hello@chriscct7.com>\n"
-"Language: English\n"
+"Language: en\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 1.5.5\n"
+"X-Generator: Poedit 1.6.3\n"
 "X-Poedit-KeywordsList: _;gettext;gettext_noop;__;__e\n"
 "X-Poedit-Basepath: .\n"
 "X-Poedit-SourceCharset: UTF-8\n"
@@ -37,13 +37,13 @@ msgstr ""
 #: ../classes/class-setup.php:68
 msgid ""
 "<strong>Notice:</strong> Easy Digital Downloads Checkout Fields Manager "
-"requires Easy Digital Downloads 1.8 or higher in order to function properly."
+"requires Easy Digital Downloads 1.9 or higher in order to function properly."
 msgstr ""
 
 #: ../classes/class-setup.php:78
 msgid ""
 "<strong>Notice:</strong> Easy Digital Downloads Checkout Fields Manager "
-"requires WordPress 3.6 or higher in order to function properly."
+"requires WordPress 3.8 or higher in order to function properly."
 msgstr ""
 
 #: ../classes/class-setup.php:111 ../classes/class-setup.php:160
@@ -198,7 +198,7 @@ msgstr ""
 msgid "The date format"
 msgstr ""
 
-#: ../classes/forms/frontend-form.php:91
+#: ../classes/forms/frontend-form.php:93
 msgid "Please enter "
 msgstr ""
 
@@ -234,10 +234,10 @@ msgstr ""
 msgid "CSV"
 msgstr ""
 
-#: ../classes/forms/render-form.php:545
+#: ../classes/forms/render-form.php:537
 msgid "Download File"
 msgstr ""
 
-#: ../classes/forms/upload.php:97
+#: ../classes/forms/upload.php:97 ../classes/forms/upload.php:104
 msgid "Delete"
 msgstr ""
