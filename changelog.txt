@@ -1,2 +1,5 @@
+1.0.1: 02/03/2014
+* Fixed a conflict with Stripe and Paymill payment gateways
+
 1.0: 12/24/2013
  * Initial release
