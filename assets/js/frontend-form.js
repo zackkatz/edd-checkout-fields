@@ -5,7 +5,7 @@
             $('body').on('click', '#edd_purchase_form_wrap img.cfm-clone-field', this.cloneField);
             $('body').on('click', '#edd_purchase_form_wrap img.cfm-remove-field', this.removeField);
 
-            $('#edd_purchase_form').on('submit', this.formSubmit);
+            $('body').on('submit', '#edd_purchase_form', this.formSubmit);
             $('form#post').on('submit', this.adminPostSubmit);
         },
 
@@ -50,12 +50,11 @@
                 submitButton = form.find('input[type=submit]')
                 form_data = CFM_Form.validateForm(form);
 			
-				if(form_data){
-					var form = $("#edd_purchase_form");
-					form.get(0).submit();
-				}
-				else{
-					
+				if(form_data) {
+					// This can't be submitted like this as it overrides Stripe and Paymill (and any other JS based payment gatway)
+					//var form = $("#edd_purchase_form");
+					//form.get(0).submit();
+				} else {
 				}
         },
 
