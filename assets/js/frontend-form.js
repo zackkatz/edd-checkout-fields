@@ -44,18 +44,18 @@
         },
 
         formSubmit: function(e) {
-            e.preventDefault();
 
             var form = $(this),
                 submitButton = form.find('input[type=submit]')
                 form_data = CFM_Form.validateForm(form);
 			
-				if(form_data) {
-					// This can't be submitted like this as it overrides Stripe and Paymill (and any other JS based payment gatway)
-					//var form = $("#edd_purchase_form");
-					//form.get(0).submit();
-				} else {
-				}
+			if(form_data) {
+				return true;
+			} else {
+				// Prevent the form from submissing is there are errors
+	            e.preventDefault();
+			}
+
         },
 
         validateForm: function( self ) {
