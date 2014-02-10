@@ -1,3 +1,6 @@
+1.0.2: 02/10/2014
+* Fixed a bug with not being able to submit the checkout form
+
 1.0.1: 02/03/2014
 * Fixed a conflict with Stripe and Paymill payment gateways
 
