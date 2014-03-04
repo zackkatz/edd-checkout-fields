@@ -415,13 +415,13 @@ class CFM_Render_Form {
             $value = $attr['default'];
         }
 		if ($attr['name'] == 'edd_first'){
-			if ( is_user_logged_in() && !is_admin() ){
+			if ( is_user_logged_in() ){
 				$user_data = get_userdata( get_current_user_id() );
 				$value = $user_data->first_name;
 			}
 		}
 		if ($attr['name'] == 'edd_last'){
-			if ( is_user_logged_in() && !is_admin() ){
+			if ( is_user_logged_in() ){
 				$user_data = get_userdata( get_current_user_id() );
 				$value = $user_data->last_name;
 			}
@@ -694,7 +694,7 @@ class CFM_Render_Form {
      * @param int|null $post_id
      */
     function email( $attr, $post_id, $type = 'post' ) {
-		if ( is_user_logged_in() && !is_admin() ){
+		if ( is_user_logged_in() ){
 				$user_data = get_userdata( get_current_user_id() );
 				$value = $user_data->user_email;
 		}
