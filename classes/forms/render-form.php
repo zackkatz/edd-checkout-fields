@@ -136,7 +136,7 @@ class CFM_Render_Form {
                 }
 
                 // process other fields
-            } else {
+            } elseif( ! empty( $_POST[ $value['name'] ] ) ) {
 
                 // if it's an array, implode with this->separator
                 if ( is_array( $_POST[$value['name']] ) ) {
