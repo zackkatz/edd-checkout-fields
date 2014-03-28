@@ -14,7 +14,7 @@ class CFM_Admin_Posting extends CFM_Render_Form {
 
     function __construct() {
         add_action('edd_view_order_details_main_after', array($this, 'render_form'));
-		add_action( 'admin_init', array( $this, 'save_meta' ), 999 ); 
+		add_action( 'admin_init', array( $this, 'save_meta' ) ); 
     }
 
 
@@ -55,9 +55,7 @@ class CFM_Admin_Posting extends CFM_Render_Form {
      * @param string $attr
      */
     function label( $attr, $post_id = 0) {
-        ?>
-        <?php echo $attr['label'] . $this->required_mark( $attr ); ?>
-        <?php
+        echo $attr['label'] . $this->required_mark( $attr );
     }
 
     function render_item_before( $form_field, $post_id = 0 ) {
@@ -174,7 +172,7 @@ class CFM_Admin_Posting extends CFM_Render_Form {
         EDD_CFM()->frontend_form_post->update_post_meta( $meta_vars,  absint( $_GET['id']), $form_vars );
     }
 	
-	    function submit_button( ) {
+	function submit_button( ) {
         $form_settings['update_text']= __( 'Update', 'edd_cfm' );
 		?>
         <fieldset class="cfm-submit">
@@ -183,8 +181,8 @@ class CFM_Admin_Posting extends CFM_Render_Form {
             </div>
 
             <?php wp_nonce_field( 'cfm_cf_update' ); ?>
-                <input type="hidden" name="cfm_cf_update" value="cfm_cf_update">
-                <input type="submit" class="button" name="submit" value="<?php echo $form_settings['update_text']; ?>" />
+            <input type="hidden" name="cfm_cf_update" value="cfm_cf_update">
+            <input type="submit" class="button" name="submit" value="<?php echo $form_settings['update_text']; ?>" />
         </fieldset>
         <?php
     }
