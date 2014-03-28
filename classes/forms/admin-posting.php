@@ -14,7 +14,7 @@ class CFM_Admin_Posting extends CFM_Render_Form {
 
     function __construct() {
         add_action('edd_view_order_details_main_after', array($this, 'render_form'));
-		add_action( 'admin_init', array( $this, 'save_meta' ) ); 
+		add_action( 'admin_init', array( $this, 'save_meta' ), 999 ); 
     }
 
 
@@ -31,22 +31,22 @@ class CFM_Admin_Posting extends CFM_Render_Form {
         }
         ?>
 		<div id="edd-checkout-fields" class="postbox">
-		<h3 class="hndle"><?php _e( 'Custom Checkout Fields', 'edd' ); ?></h3>
-			<div class="inside">
-		<form class="edd-checkout-fields-add" action="" method="post">
-        <input type="hidden" name="cfm_cf_update" value="<?php echo wp_create_nonce( plugin_basename( __FILE__ ) ); ?>" />
-        <input type="hidden" name="cfm_cf_form_id" value="<?php echo $form_id; ?>" />
-        <table class="form-table cfm-cf-table">
-            <tbody>
-                <?php
-                $this->render_items( $custom_fields, absint( $_GET['id']) , 'post', $form_id, $form_settings );
-                ?>
-            </tbody>
-        </table>
-		<?php $this->submit_button(); ?>
-		</form>
-		</div>
-		</div>
+            <h3 class="hndle"><?php _e( 'Custom Checkout Fields', 'edd' ); ?></h3>
+            <div class="inside">
+                <form class="edd-checkout-fields-add" action="" method="post">
+                    <input type="hidden" name="cfm_cf_update" value="<?php echo wp_create_nonce( plugin_basename( __FILE__ ) ); ?>" />
+                    <input type="hidden" name="cfm_cf_form_id" value="<?php echo $form_id; ?>" />
+                    <table class="form-table cfm-cf-table">
+                        <tbody>
+                        <?php
+                        $this->render_items( $custom_fields, absint( $_GET['id']) , 'post', $form_id, $form_settings );
+                        ?>
+                        </tbody>
+                    </table>
+                    <?php $this->submit_button(); ?>
+                </form>
+            </div>
+        </div>
         <?php
         $this->scripts_styles();
     }
