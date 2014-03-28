@@ -13,8 +13,8 @@ if ( !defined( 'ABSPATH' ) ) {
 class CFM_Admin_Posting extends CFM_Render_Form {
 
     function __construct() {
-        add_action('edd_view_order_details_main_after', array($this, 'render_form'));
-		add_action( 'admin_init', array( $this, 'save_meta' ) ); 
+        add_action( 'edd_view_order_details_main_after', array( $this, 'render_form' ) );
+		add_action( 'edd_update_edited_purchase', array( $this, 'save_meta' ) ); 
     }
 
 
@@ -160,7 +160,7 @@ class CFM_Admin_Posting extends CFM_Render_Form {
     }
 
     // Save the Metabox Data
-    function save_meta( $post_id) {
+    function save_meta( $post_id ) {
 		
         if ( !isset( $_POST['cfm_cf_update'] ) ) {
             return;
