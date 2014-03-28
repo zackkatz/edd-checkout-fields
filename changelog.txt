@@ -1,3 +1,9 @@
+Version 1.0.4, March 28, 2014
+Fixed a bug with not being able to properly save payment details with CFM active.
+
+Version 1.0.3, March 12, 2014
+Fixed a bug with required checkboxes not being required.
+
 1.0.2: 02/10/2014
 * Fixed a bug with not being able to submit the checkout form
 
