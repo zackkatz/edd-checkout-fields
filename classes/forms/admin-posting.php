@@ -33,18 +33,16 @@ class CFM_Admin_Posting extends CFM_Render_Form {
 		<div id="edd-checkout-fields" class="postbox">
             <h3 class="hndle"><?php _e( 'Custom Checkout Fields', 'edd' ); ?></h3>
             <div class="inside">
-                <form class="edd-checkout-fields-add" action="" method="post">
-                    <input type="hidden" name="cfm_cf_update" value="<?php echo wp_create_nonce( plugin_basename( __FILE__ ) ); ?>" />
-                    <input type="hidden" name="cfm_cf_form_id" value="<?php echo $form_id; ?>" />
-                    <table class="form-table cfm-cf-table">
-                        <tbody>
-                        <?php
-                        $this->render_items( $custom_fields, absint( $_GET['id']) , 'post', $form_id, $form_settings );
-                        ?>
-                        </tbody>
-                    </table>
-                    <?php $this->submit_button(); ?>
-                </form>
+                <input type="hidden" name="cfm_cf_update" value="<?php echo wp_create_nonce( plugin_basename( __FILE__ ) ); ?>" />
+                <input type="hidden" name="cfm_cf_form_id" value="<?php echo $form_id; ?>" />
+                <table class="form-table cfm-cf-table">
+                    <tbody>
+                    <?php
+                    $this->render_items( $custom_fields, absint( $_GET['id']) , 'post', $form_id, $form_settings );
+                    ?>
+                    </tbody>
+                </table>
+                <?php $this->submit_button(); ?>
             </div>
         </div>
         <?php
