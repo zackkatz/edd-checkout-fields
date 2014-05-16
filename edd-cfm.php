@@ -62,6 +62,7 @@ class EDD_Checkout_Fields_Manager {
 		if ( !isset( self::$instance ) && !( self::$instance instanceof EDD_Checkout_Fields_Manager ) ) {
 			self::$instance = new EDD_Checkout_Fields_Manager;
 			self::$instance->define_globals();
+			self::$instance->load_textdomain();
 			self::$instance->includes();
 			self::$instance->setup();
 			// Setup class instances
@@ -110,6 +111,10 @@ class EDD_Checkout_Fields_Manager {
 			require_once cfm_plugin_dir . 'assets/lib/EDD_License_Handler.php';
 		}
 		$license = new EDD_License( __FILE__, cfm_plugin_name, cfm_plugin_version, 'Chris Christoff' );
+	}
+
+	public function load_textdomain() {
+		load_plugin_textdomain( 'edd_cfm', false, dirname( plugin_basename( __FILE__ ) ) . '/languages/' );
 	}
 	
 	public function includes() {

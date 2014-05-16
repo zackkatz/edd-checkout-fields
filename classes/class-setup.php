@@ -13,10 +13,6 @@ class CFM_Setup {
 			 $this,
 			'register_post_type' 
 		) );
-		add_action( 'plugins_loaded', array(
-			 $this,
-			'load_textdomain' 
-		) );
 		add_action( 'wp_enqueue_scripts', array(
 			 $this,
 			'enqueue_scripts' 
@@ -81,10 +77,7 @@ class CFM_Setup {
 	</div>
 	<?php
 	}
-	
-	public function load_textdomain() {
-		load_plugin_textdomain( 'edd_cfm', false, dirname( plugin_basename( __FILE__ ) ) . '/languages/' );
-	}
+
 	
 	public function enqueue_scripts() {
 		global $post;
