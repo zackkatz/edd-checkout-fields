@@ -15,7 +15,7 @@ class CFM_Menu {
 		add_action( 'edd_sale_notification', array( $this, 'email_body'    ),10,2 );
 		add_action( 'edd_purchase_receipt', array( $this, 'email_body'    ),10,2 );
 		add_filter( 'edd_export_csv_cols_payments', array($this, 'columns') );
-		add_filter( 'edd_export_get_data', array($this, 'data') );
+		add_filter( 'edd_export_get_data_payments', array($this, 'data'));
 	}
 	public function columns( $cols ){
 		$submission = array('text','textarea','date','url','email');
@@ -26,7 +26,7 @@ class CFM_Menu {
 			list($post_fields, $taxonomy_fields, $custom_fields) = EDD_CFM()->render_form->get_input_fields( $form_id );
 			foreach($custom_fields as $field){
 				if ( in_array( $field['input_type'], $submission ) ){
-					$cols[] = $field['name'];
+					$cols[$field['name']] = $field['label'];
 				}
 			}
 		}
@@ -36,14 +36,16 @@ class CFM_Menu {
 	public function data( $data ){
 		$submission = array('text','textarea','date','url','email');
 		$submission_meta = array();
-		$post_id = $data['id'];
 		$form_id = get_option( 'edd_cfm_id' );
 		if ( $form_id ){
 			list($post_fields, $taxonomy_fields, $custom_fields) = EDD_CFM()->render_form->get_input_fields( $form_id );
-			foreach($custom_fields as $field){
-				if ( in_array( $field['input_type'], $submission ) ){
-					$name = $field["name"];
-					$data["$n"] = EDD_CFM()->menu->get_post_meta($meta, $post_id);
+			foreach ( $data as $pid => $id ){
+				$post_id = $id['id'];
+				foreach($custom_fields as $field){
+					if ( in_array( $field['input_type'], $submission ) ){
+						$n = $field["name"];
+						$data[$pid][$n] = EDD_CFM()->menu->get_post_meta($n, $post_id);
+					}
 				}
 			}
 		}
