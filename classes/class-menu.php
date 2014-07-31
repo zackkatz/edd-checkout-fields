@@ -42,7 +42,7 @@ class CFM_Menu {
 			list($post_fields, $taxonomy_fields, $custom_fields) = EDD_CFM()->render_form->get_input_fields( $form_id );
 			foreach($custom_fields as $field){
 				if ( in_array( $field['input_type'], $submission ) ){
-					$name = "$field['name']";
+					$name = $field["name"];
 					$data["$n"] = EDD_CFM()->menu->get_post_meta($meta, $post_id);
 				}
 			}
