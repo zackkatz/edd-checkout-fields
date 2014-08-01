@@ -13,7 +13,7 @@ class CFM_Export {
 		add_filter( 'edd_export_get_data_payments', array($this, 'data'));
 	}
 	public function columns( $cols ){
-		$submission = array('text','textarea','date','url','email');
+		$submission = array('text','textarea','date','url','email','radio','select','multiselect','repeat');
 		$submission_meta = array();
 
 		$form_id = get_option( 'edd_cfm_id' );
@@ -29,7 +29,7 @@ class CFM_Export {
 	}
 
 	public function data( $data ){
-		$submission = array('text','textarea','date','url','email');
+		$submission = array('text','textarea','date','url','email','radio','select','multiselect','repeat');
 		$submission_meta = array();
 		$form_id = get_option( 'edd_cfm_id' );
 		if ( $form_id ){
@@ -48,7 +48,7 @@ class CFM_Export {
 	}
 
 	public function email_body( $message, $post_id ){
-		$submission = array('text','textarea','date','url','email');
+		$submission = array('text','textarea','date','url','email','radio','select','multiselect','repeat');
 		$submission_meta = array();
 
 		$form_id = get_option( 'edd_cfm_id' );
