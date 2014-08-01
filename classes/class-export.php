@@ -39,7 +39,7 @@ class CFM_Export {
 				foreach($custom_fields as $field){
 					if ( in_array( $field['input_type'], $submission ) ){
 						$n = $field["name"];
-						$data[$pid][$n] = EDD_CFM()->menu->get_post_meta($n, $post_id);
+						$data[$pid][$n] = EDD_CFM()->export->get_post_meta($n, $post_id);
 					}
 				}
 			}
@@ -62,7 +62,7 @@ class CFM_Export {
 		}
 
 		foreach($submission_meta as $meta ){
-			$message = str_replace('{'.$meta.'}', EDD_CFM()->menu->get_post_meta($meta, $post_id), $message );
+			$message = str_replace('{'.$meta.'}', EDD_CFM()->export->get_post_meta($meta, $post_id), $message );
 		}
 
 		return $message;
