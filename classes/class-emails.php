@@ -2,47 +2,11 @@
 if ( !defined( 'ABSPATH' ) ) {
 	exit;
 }
-
-// This is based off of work by bbPress and also EDD itself.
-class CFM_Export {
+class CFM_Emails {
 
 	public function __construct() {
-		add_filter( 'edd_export_csv_cols_payments', array($this, 'columns') );
-		add_filter( 'edd_export_get_data_payments', array($this, 'data'));
-	}
-	public function columns( $cols ){
-		$submission = array('text','textarea','date','url','email','radio','select','multiselect','repeat');
-		$submission_meta = array();
-
-		$form_id = get_option( 'edd_cfm_id' );
-		if ( $form_id ){
-			list($post_fields, $taxonomy_fields, $custom_fields) = EDD_CFM()->render_form->get_input_fields( $form_id );
-			foreach($custom_fields as $field){
-				if ( in_array( $field['input_type'], $submission ) ){
-					$cols[$field['name']] = $field['label'];
-				}
-			}
-		}
-		return $cols;
-	}
-
-	public function data( $data ){
-		$submission = array('text','textarea','date','url','email','radio','select','multiselect','repeat');
-		$submission_meta = array();
-		$form_id = get_option( 'edd_cfm_id' );
-		if ( $form_id ){
-			list($post_fields, $taxonomy_fields, $custom_fields) = EDD_CFM()->render_form->get_input_fields( $form_id );
-			foreach ( $data as $pid => $id ){
-				$post_id = $id['id'];
-				foreach($custom_fields as $field){
-					if ( in_array( $field['input_type'], $submission ) ){
-						$n = $field["name"];
-						$data[$pid][$n] = EDD_CFM()->export->get_post_meta($n, $post_id);
-					}
-				}
-			}
-		}
-		return $data;	
+		add_action( 'edd_sale_notification', array( $this, 'email_body' ), 10,2 );
+		add_action( 'edd_purchase_receipt', array( $this, 'email_body' ), 10,2 );
 	}
 
 	public function email_body( $message, $post_id ){
@@ -60,7 +24,7 @@ class CFM_Export {
 		}
 
 		foreach($submission_meta as $meta ){
-			$message = str_replace('{'.$meta.'}', EDD_CFM()->export->get_post_meta($meta, $post_id), $message );
+			$message = str_replace('{'.$meta.'}', EDD_CFM()->emails->get_post_meta($meta, $post_id), $message );
 		}
 
 		return $message;
