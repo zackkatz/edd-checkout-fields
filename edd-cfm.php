@@ -42,7 +42,7 @@ class EDD_Checkout_Fields_Manager {
 	public $install;
 	public $menu;
 	public $upload;
-	
+	public $export;
 	/**
 	 * Main EDD_Checkout_Fields_Manager Instance
 	 *
@@ -71,6 +71,7 @@ class EDD_Checkout_Fields_Manager {
 			self::$instance->upload                = new CFM_Upload;
 			self::$instance->frontend_form_post    = new CFM_Frontend_Form;
 			self::$instance->menu                  = new CFM_Menu;
+			self::$instance->export         		= new CFM_Export;
 			if ( is_admin() ) {
 				self::$instance->admin_form            = new CFM_Admin_Form;
 				self::$instance->admin_posting         = new CFM_Admin_Posting;
@@ -124,6 +125,7 @@ class EDD_Checkout_Fields_Manager {
 		require_once cfm_plugin_dir . 'classes/forms/frontend-form.php';
 		require_once cfm_plugin_dir . 'classes/forms/upload.php';
 		require_once cfm_plugin_dir . 'classes/forms/functions.php';
+		require_once cfm_plugin_dir . 'classes/class-export.php';
 		if ( is_admin() ) {
 			require_once cfm_plugin_dir . 'classes/forms/admin-form.php';
 			require_once cfm_plugin_dir . 'classes/forms/admin-posting.php';
