@@ -127,7 +127,8 @@ class CFM_Setup {
 	public function admin_enqueue_scripts() {
 		global $pagenow, $post;
 		$current_screen = get_current_screen();
-		if ( $current_screen->post_type === 'edd-checkout-fields') {
+
+		if ( $current_screen->post_type === 'edd-checkout-fields' || ( isset( $_GET['page'] ) && 'edd-payment-history' == $_GET['page'] ) ) {
 			$scheme = is_ssl() ? 'https' : 'http';
 			wp_register_script( 'jquery-tiptip', cfm_plugin_url . 'assets/js/jquery-tiptip/jquery.tipTip.min.js', array(
 				 'jquery' 
