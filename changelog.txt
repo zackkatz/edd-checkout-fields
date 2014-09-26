@@ -1,3 +1,6 @@
+Version 1.1.1, September 25, 2014
+* Fixed a bug with upload fields not working on the View Order Details screen
+
 Version 1.1, August 1, 2014
 * Added ability to export fields in emails
 * Added ability to export fields in CSV
