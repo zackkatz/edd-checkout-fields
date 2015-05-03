@@ -7,6 +7,7 @@ class CFM_Emails {
 	public function __construct() {
 		add_action( 'edd_sale_notification', array( $this, 'email_body' ), 10,2 );
 		add_action( 'edd_purchase_receipt', array( $this, 'email_body' ), 10,2 );
+		add_action( 'eddc_sale_alert_email', array( $this, 'commissions_email' ), 10 , 6 );
 	}
 
 	public function email_body( $message, $post_id ){
@@ -60,4 +61,26 @@ class CFM_Emails {
             return implode( ', ', get_post_meta( $post->ID, $name ) );
         }
     }
+	
+	public function commissions_email( $message, $user_id, $commission_amount, $rate, $download_id, $commission_id ){
+		$form_id = get_option( 'edd_cfm_id' );
+		if ( $form_id && $commission_id ){
+			$post_id = get_post_meta( $commission_id, '_edd_commission_payment_id', true ); // try to get payment_id from post_id
+			if ( $post_id ){ // if we got the payment
+			list( $post_fields, $taxonomy_fields, $custom_fields ) = EDD_CFM()->render_form->get_input_fields( $form_id );
+				foreach($custom_fields as $meta ){
+					$type = 'normal';
+					if ( $meta['input_type'] == 'file_upload' ){
+						$type = 'file';
+					} else if ( $meta['input_type'] == 'image' ){
+						$type = 'image';
+					} else if ( $meta['input_type'] == 'repeat' ){
+						$type = 'repeat';
+					}
+					$message = str_replace('{'.$meta['name'].'}', EDD_CFM()->emails->get_post_meta( $meta['name'], $post_id, $type ), $message );
+				}
+			}
+		}
+		return $message;
+	}
 }
