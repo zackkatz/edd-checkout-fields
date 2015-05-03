@@ -10,23 +10,21 @@ class CFM_Emails {
 	}
 
 	public function email_body( $message, $post_id ){
-		$submission = array('text','textarea','date','url','email','radio','select','multiselect','repeat');
-		$submission_meta = array();
-
 		$form_id = get_option( 'edd_cfm_id' );
 		if ( $form_id ){
-			list($post_fields, $taxonomy_fields, $custom_fields) = EDD_CFM()->render_form->get_input_fields( $form_id );
-			foreach($custom_fields as $field){
-				if ( in_array( $field['input_type'], $submission ) ){
-					array_push($submission_meta, $field['name']);
+			list( $post_fields, $taxonomy_fields, $custom_fields ) = EDD_CFM()->render_form->get_input_fields( $form_id );
+			foreach($custom_fields as $meta ){
+				$type = 'normal';
+				if ( $meta['input_type'] == 'file_upload' ){
+					$type = 'file';
+				} else if ( $meta['input_type'] == 'image' ){
+					$type = 'image';
+				} else if ( $meta['input_type'] == 'repeat' ){
+					$type = 'repeat';
 				}
+				$message = str_replace('{'.$meta['name'].'}', EDD_CFM()->emails->get_post_meta($meta['name'], $post_id, $type ), $message );
 			}
 		}
-
-		foreach($submission_meta as $meta ){
-			$message = str_replace('{'.$meta.'}', EDD_CFM()->emails->get_post_meta($meta, $post_id), $message );
-		}
-
 		return $message;
 	}
 
@@ -39,7 +37,6 @@ class CFM_Emails {
 
         if ( $type == 'image' || $type == 'file' ) {
             $images = get_post_meta( $post->ID, $name );
-
             if ( $images ) {
                 $html = '';
                 if ( isset( $images[0] ) && is_array( $images[0] ) ){

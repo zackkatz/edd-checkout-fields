@@ -6,15 +6,15 @@
  * Author:              Chris Christoff
  * Author URI:          http://www.chriscct7.com
  *
- * Version:             1.1.1
+ * Version:             1.1.2
  * Requires at least:   3.8
- * Tested up to:        3.8
+ * Tested up to:        4.3
  *
  * Text Domain:         edd_cfm
  * Domain Path:         /edd_cfm/languages/
  *
  * @category            Plugin
- * @copyright           Copyright © 2013 Chris Christoff
+ * @copyright           Copyright © 2015 Chris Christoff
  * @author              Chris Christoff
  * @package             CFM
  */
@@ -92,7 +92,7 @@ class EDD_Checkout_Fields_Manager {
 		}
 		// Plugin Version
 		if ( !defined( 'cfm_plugin_version' ) ) {
-			define( 'cfm_plugin_version', '1.1.1' );
+			define( 'cfm_plugin_version', '1.1.2' );
 		}
 		// Plugin Root File
 		if ( !defined( 'cfm_plugin_file' ) ) {
