@@ -174,7 +174,8 @@ class CFM_Render_Form {
                     }
 
                     $this->render_items( $form_vars, $post_id, 'post', $form_id, $form_settings );
-                    //$this->submit_button( $form_id, $form_settings, $post_id );
+                    do_action( 'edd_purchase_form_before_email' ); 		
+		    do_action( 'edd_purchase_form_after_email' ); 
 
                     if ( !$post_id ) {
                         do_action( 'cfm_add_post_form_bottom', $form_id, $form_settings );
@@ -694,6 +695,7 @@ class CFM_Render_Form {
      * @param int|null $post_id
      */
     function email( $attr, $post_id, $type = 'post' ) {
+    	do_action( 'edd_purchase_form_before_email' );
 		if ( is_user_logged_in() ){
 				$user_data = get_userdata( get_current_user_id() );
 				$value = $user_data->user_email;
@@ -705,6 +707,7 @@ class CFM_Render_Form {
             <input id="edd_email" type="email" class="edd_email" data-required="<?php echo $attr['required'] ?>" data-type="text"<?php $this->required_html5( $attr ); ?> name="edd_email" placeholder="<?php echo esc_attr( $attr['placeholder'] ); ?>" value="<?php echo esc_attr( $value ) ?>" size="<?php echo esc_attr( $attr['size'] ) ?>" />
 
         <?php
+        do_action( 'edd_purchase_form_after_email' );
     }
     /**
      * Prints a repeatable field
