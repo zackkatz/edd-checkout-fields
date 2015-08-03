@@ -174,8 +174,8 @@ class CFM_Render_Form {
                     }
 
                     $this->render_items( $form_vars, $post_id, 'post', $form_id, $form_settings );
-                    do_action( 'edd_purchase_form_before_email' ); 		
-		    do_action( 'edd_purchase_form_after_email' ); 
+                    do_action( 'edd_purchase_form_user_info' ); 		
+		    do_action( 'edd_purchase_form_user_info_fields' ); 
 
                     if ( !$post_id ) {
                         do_action( 'cfm_add_post_form_bottom', $form_id, $form_settings );
