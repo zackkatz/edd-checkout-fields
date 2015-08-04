@@ -6,7 +6,7 @@
  * Author:              Chris Christoff
  * Author URI:          http://www.chriscct7.com
  *
- * Version:             1.1.4
+ * Version:             1.1.5
  * Requires at least:   3.8
  * Tested up to:        4.3
  *
@@ -18,7 +18,7 @@
  * @author              Chris Christoff
  * @package             CFM
  */
- 
+
 if ( !defined( 'ABSPATH' ) ) {
 	exit;
 }
@@ -34,7 +34,7 @@ class EDD_Checkout_Fields_Manager {
 	private static $instance;
 	public $id = 'edd_cfm';
 	public $basename;
-	
+
 	// Setup objects for each class
 	public $render_form;
 	public $admin_form;
@@ -81,7 +81,7 @@ class EDD_Checkout_Fields_Manager {
 		}
 		return self::$instance;
 	}
-	
+
 	public function define_globals() {
 		$this->title    = __( 'Checkout Fields Manager', 'edd_cfm' );
 		$this->file     = __FILE__;
@@ -92,7 +92,7 @@ class EDD_Checkout_Fields_Manager {
 		}
 		// Plugin Version
 		if ( !defined( 'cfm_plugin_version' ) ) {
-			define( 'cfm_plugin_version', '1.1.4' );
+			define( 'cfm_plugin_version', '1.1.5' );
 		}
 		// Plugin Root File
 		if ( !defined( 'cfm_plugin_file' ) ) {
@@ -119,7 +119,7 @@ class EDD_Checkout_Fields_Manager {
 	public function load_textdomain() {
 		load_plugin_textdomain( 'edd_cfm', false, dirname( plugin_basename( __FILE__ ) ) . '/languages/' );
 	}
-	
+
 	public function includes() {
 		require_once cfm_plugin_dir . 'classes/class-setup.php';
 		require_once cfm_plugin_dir . 'classes/class-menu.php';
@@ -135,13 +135,13 @@ class EDD_Checkout_Fields_Manager {
 			require_once cfm_plugin_dir . 'classes/forms/admin-template.php';
 		}
 	}
-	
+
 	public static function install() {
 		require_once cfm_plugin_dir . 'classes/class-install.php';
 		$install = new CFM_Install;
 		$install->init();
 	}
-	
+
 	public function setup() {
 		$this->setup = new CFM_Setup;
 		do_action( 'edd_cfm_setup_actions' );
