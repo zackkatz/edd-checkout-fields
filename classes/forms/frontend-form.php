@@ -24,7 +24,7 @@ class CFM_Frontend_Form extends CFM_Render_Form {
 	
 	public function add_fields() {
 		ob_start();
-		$this->render_form( get_option( 'edd_cfm_id' ) );
+		$this->render_form( get_option( 'edd_cfm_id' ) );		
 		$content = ob_get_contents();
 		ob_end_clean();
 		echo $content;
