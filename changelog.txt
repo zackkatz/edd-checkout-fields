@@ -1,3 +1,6 @@
+Version 1.1.6, August 21, 2015
+* Fixed bug with checkbox fields not being included in export or email tags
+
 Version 1.1.5, August 4, 2015
 * Fixed problem that prevented other extensions from customizing the checkout screen
 
