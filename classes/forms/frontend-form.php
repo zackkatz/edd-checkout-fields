@@ -8,11 +8,12 @@ class CFM_Frontend_Form extends CFM_Render_Form {
 	
 	function __construct() {
 		add_action( 'edd_insert_payment', array($this,'submit_post'),10,2);
-		//add_filter( 'edd_purchase_form_required_fields', array($this, 'req_fields'), 10, 3);
+		add_filter( 'edd_purchase_form_required_fields', array($this, 'req_fields'), 10);
 		remove_action( 'edd_register_fields_before', 'edd_user_info_fields' );
 		add_action( 'edd_register_fields_before', array($this, 'add_fields'));
 		remove_action( 'edd_purchase_form_after_user_info', 'edd_user_info_fields' );
 		add_action('edd_purchase_form_after_user_info', array($this, 'add_fields'));
+
 	}
 	
 	public static function init() {
@@ -82,19 +83,32 @@ class CFM_Frontend_Form extends CFM_Render_Form {
 		}
 	}
 	
-	public static function req_fields( $fields = false ){
-		$form_id       = get_option( 'edd_cfm_id' );
-		$form_vars     = CFM_Render_Form::get_input_fields( $form_id );
-		$new_req = array();
-		foreach( $form_vars[2] as $key => $value){
-			if ( isset ( $value['required'] ) && $value['required'] == 'yes'){
-				$new_req[$value['name']] = array(
-					'error_id' => 'invalid_'.$value['name'],
-					'error_message' => __( 'Please enter ', 'edd' ).strtolower($value['label'])
+	public static function req_fields( $fields = array() ){
+
+		if( isset( $fields['edd_first'] ) ) {
+			unset( $fields['edd_first'] );
+		}
+
+		if( isset( $fields['edd_last'] ) ) {
+			unset( $fields['edd_last'] );
+		}
+
+		$form_id   = get_option( 'edd_cfm_id' );
+		$form_vars = CFM_Render_Form::get_input_fields( $form_id );
+		$new_req   = array();
+
+		foreach ( $form_vars[0] as $key => $value ) {
+			if ( isset ( $value['required'] ) && $value['required'] == 'yes' ) {
+				$new_req[ $value['name'] ] = array(
+					'error_id' => 'invalid_' . $value['name'],
+					'error_message' => sprintf( __( 'Please fill out %s', 'edd_cfm' ), $value['label'] )
 				);
 			}
 		}
-		$fields = array_merge($fields, $new_req);
+
+		$fields = array_merge( $fields, $new_req );
+
 		return $fields;
 	}
+
 }
