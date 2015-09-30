@@ -706,7 +706,7 @@ function your_function_name( $form_id, $post_id, $form_settings ) {
             <?php self::hidden_field( "[$field_id][template]", 'edd_first' ); ?>
 
             <div class="edd-checkout-fields-holder">
-                <?php self::common( $field_id, 'edd_first', false, $values, false ); ?>
+                <?php self::common( $field_id, 'edd_first', false, $values, true ); ?>
                 <?php self::common_text( $field_id, $values ); ?>
             </div> <!-- .edd-checkout-fields-holder -->
         </li>
