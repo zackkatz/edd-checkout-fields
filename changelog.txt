@@ -1,3 +1,8 @@
+Version 1.2, September 30, 2015
+
+* Added an option to make first name optional
+* Fixed an issue with required fields not being passed to EDD checkout properly
+
 Version 1.1.6, August 21, 2015
 * Fixed bug with checkbox fields not being included in export or email tags
 
