@@ -199,7 +199,10 @@ class CFM_Setup {
 		register_post_type( 'edd-checkout-fields', array(
 			'label' => __( 'EDD CFM', 'edd_cfm' ),
 			'public' => false,
-			'show_ui' => false,
+			'show_ui'           => true,
+			'show_in_menu'      => false,
+			'show_in_nav_menus' => false,
+			'show_in_admin_bar' => false,
 			'rewrites' => false,
 			'show_in_menu' => 'cfm-admin-opt',
 			'capability_type' => 'post',
