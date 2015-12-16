@@ -1,3 +1,6 @@
+Version 1.2.1, December 16, 2015
+* Fixed a conflict with WordPress 4.4
+
 Version 1.2, September 30, 2015
 
 * Added an option to make first name optional
