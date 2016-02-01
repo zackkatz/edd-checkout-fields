@@ -1,3 +1,16 @@
+Version 2.0, February 23, 2015
+* New: We hold 
+* Tweak: these truths to be self-evident, that all men are created equal, 
+* New: that they are endowed by their Creator with 
+* Fixed: certain unalienable Rights, 
+* Tweak: that among these are
+* New: Life, 
+* New: Liberty 
+* New: and the pursuit of Happiness
+
+* @todo Fill this out (this should be fun)
+
+
 Version 1.1.4, May 3, 2015
 * Checkout fields manager now supports file uploads attachments on EDD core emails
 

@@ -1,0 +1,388 @@
+.cfm-loading {
+	background: url("../img/wpspin_light.gif") no-repeat;
+	display: inline-block;
+	height: 16px;
+	width: 16px;
+}
+.cfm-loading.hide {
+	display: none;
+}
+.cfm-success {
+	background: #e0ffe0;
+	border: 1px solid #99f199;
+	padding: 10px;
+}
+.cfm-info {
+	background-color: #fef5be;
+	border: 2px solid #fdd425;
+	border-radius: 5px;
+	font-size: 13px;
+	margin: 0 0 10px 0;
+	padding: 5px 10px;
+	moz-border-radius: 5px;
+	webkit-border-radius: 5px;
+}
+div.cfm-form {
+	list-style: none !important;
+	margin: 0 !important;
+}
+div.cfm-form .cfm-submit .button-primary-disabled {
+	background: #298cba !important;
+	border-color: #1b607f !important;
+	box-shadow: none !important;
+	color: #94cde7 !important;
+	cursor: default;
+	text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.1) !important;
+	webkit-box-shadow: none !important;
+}
+div.cfm-form .cfm-submit input[type=submit] {
+	background-color: #21759b;
+	background-image: linear-gradient(to bottom, #2a95c5, #21759b);
+	background-image: -moz-linear-gradient(top, #2a95c5, #21759b);
+	background-image: -ms-linear-gradient(top, #2a95c5, #21759b);
+	background-image: -o-linear-gradient(top, #2a95c5, #21759b);
+	background-image: -webkit-gradient(linear, left top, left bottom, from(#2a95c5), to(#21759b));
+	background-image: -webkit-linear-gradient(top, #2a95c5, #21759b);
+	border: 1px solid #ccc;
+	border-bottom-color: #1e6a8d;
+	border-color: #21759b;
+	border-radius: 3px;
+	box-shadow: inset 0 1px 0 rgba(120, 200, 230, 0.5);
+	color: #fff;
+	font-size: 14px;
+	height: 30px;
+	padding: 5px 15px;
+	text-decoration: none;
+	text-shadow: 0 1px 0 rgba(0, 0, 0, 0.1);
+	moz-border-radius: 3px;
+	webkit-border-radius: 3px;
+	webkit-box-shadow: inset 0 1px 0 rgba(120, 200, 230, 0.5);
+}
+div.cfm-form fieldset.has-error {
+	background: #ffe4e4;
+}
+div.cfm-form fieldset {
+	margin-bottom: 10px;
+	margin-left: 0;
+	padding: 10px;
+}
+div.cfm-form fieldset #wp-post_content-wrap {
+	border: 1px solid #ddd;
+}
+div.cfm-form fieldset .cfm-section-wrap {
+	border-bottom: 0;
+	margin: 70px 0 25px;
+}
+div.cfm-form fieldset .cfm-section-wrap {
+	border-bottom: 1px solid #ccc;
+	margin: 15px 0;
+}
+div.cfm-form fieldset .cfm-section-wrap .cfm-section-details {
+	display: none;
+}
+div.cfm-form fieldset .cfm-section-wrap .cfm-section-details {
+	font-size: 12px;
+	padding: 4px 0 8px;
+}
+div.cfm-form fieldset .cfm-section-wrap h2.cfm-section-title {
+	margin: 0;
+}
+div.cfm-form fieldset .cfm-fields {
+	float: none;
+	margin-top: 10px;
+}
+div.cfm-form fieldset .cfm-fields #cfm-insert-image-container {
+	margin-bottom: 3px;
+}
+div.cfm-form fieldset .cfm-fields #cfm-insert-image-container a#cfm-insert-image {
+	margin-left: 0;
+}
+div.cfm-form fieldset .cfm-fields #cfm-insert-image-container a#cfm-insert-image {
+	border: 1px solid #dfdfdf;
+	border-radius: 3px;
+	font-size: 11px;
+	margin-right: 10px;
+	padding: 4px 6px;
+	text-decoration: none;
+	moz-border-radius: 3px;
+	webkit-border-radius: 3px;
+}
+div.cfm-form fieldset .cfm-fields #cfm-insert-image-container a#cfm-insert-image .cfm-media-icon {
+	height: 12px;
+	width: 12px;
+}
+div.cfm-form fieldset .cfm-fields #cfm-insert-image-container:after {
+	clear: both;
+	content: "";
+	display: table;
+}
+div.cfm-form fieldset .cfm-fields textarea#post_content {
+	height: 250px;
+}
+div.cfm-form fieldset .cfm-fields img.cfm-clone-field,
+div.cfm-form fieldset .cfm-fields img.cfm-remove-field {
+	border: none;
+	box-shadow: none;
+	cursor: pointer;
+	margin: 0 3px;
+}
+div.cfm-form fieldset .cfm-fields input[type=text],
+div.cfm-form fieldset .cfm-fields input[type=email],
+div.cfm-form fieldset .cfm-fields input[type=url],
+div.cfm-form fieldset .cfm-fields input[type=number] {
+	padding: 5px;
+}
+div.cfm-form fieldset .cfm-fields input[type=text],
+div.cfm-form fieldset .cfm-fields input[type=email],
+div.cfm-form fieldset .cfm-fields input[type=url],
+div.cfm-form fieldset .cfm-fields input[type=number],
+div.cfm-form fieldset .cfm-fields textarea {
+	background: #fafafa;
+	border: 1px solid #ddd;
+	box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.1);
+	color: #888;
+	moz-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.1);
+	webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.1);
+}
+div.cfm-form fieldset .cfm-fields input[type=text]:focus,
+div.cfm-form fieldset .cfm-fields input[type=email]:focus,
+div.cfm-form fieldset .cfm-fields input[type=url]:focus,
+div.cfm-form fieldset .cfm-fields input[type=number]:focus,
+div.cfm-form fieldset .cfm-fields textarea:focus {
+	color: #373737;
+}
+div.cfm-form fieldset .cfm-fields select[multiple] {
+	height: auto;
+}
+div.cfm-form fieldset .cfm-fields textarea {
+	padding-left: 3px;
+	width: 98%;
+}
+div.cfm-form fieldset .cfm-fields select {
+	border: 1px solid #dfdfdf;
+	border-radius: 3px;
+	height: 2em;
+	min-width: 150px;
+	padding: 2px;
+	moz-border-radius: 3px;
+	webkit-border-radius: 3px;
+}
+div.cfm-form fieldset .cfm-fields table {
+	width: 100%;
+}
+div.cfm-form fieldset .cfm-fields table,
+div.cfm-form fieldset .cfm-fields td {
+	border: none;
+	margin: 0;
+}
+div.cfm-form fieldset .cfm-label {
+	float: left;
+}
+div.cfm-form fieldset .cfm-label .required {
+	color: red;
+}
+div.cfm-form fieldset .cfm-label .cfm-help {
+	color: #666;
+	font-family: sans-serif;
+	font-size: 12px;
+	font-style: italic;
+	margin: 2px 0 5px 0;
+}
+div.cfm-form fieldset:after {
+	clear: both;
+	content: "";
+	display: table;
+}
+div.cfm-form fieldset {
+	margin-bottom: 2em;
+	padding: 0;
+}
+.cfm-error {
+	background: #ffe4e4;
+	border: 1px solid #ffb1b1;
+	border-radius: 3px;
+	font-size: 13px;
+	margin: 10px 0;
+	margin-left: 10px;
+	padding: 10px;
+	moz-border-radius: 3px;
+	webkit-border-radius: 3px;
+}
+.ui-timepicker-div .ui-widget-header {
+	margin-bottom: 8px;
+}
+.ui-timepicker-div dl {
+	text-align: left;
+}
+.ui-timepicker-div dl dt {
+	height: 25px;
+	margin-bottom: -25px;
+}
+.ui-timepicker-div dl dd {
+	margin: 0 10px 10px 65px;
+}
+.ui-timepicker-div td {
+	font-size: 90%;
+}
+.ui-tpicker-grid-label {
+	background: none;
+	border: none;
+	margin: 0;
+	padding: 0;
+}
+.ui-timepicker-rtl {
+	direction: rtl;
+}
+.ui-timepicker-rtl dl {
+	text-align: right;
+}
+.ui-timepicker-rtl dl dd {
+	margin: 0 65px 10px 10px;
+}
+#pass-strength-result {
+	background-color: #eee;
+	border-color: #ddd !important;
+	border-style: solid;
+	border-width: 1px;
+	display: none;
+	float: left;
+	margin: 0;
+	padding: 3px 5px;
+	text-align: center;
+	width: 200px;
+}
+.cfm-fields .instruction-inside {
+	color: #aaa;
+	text-align: center;
+}
+.cfm-hide {
+	display: none;
+}
+.add_new {
+	margin: 10px 0 0;
+}
+.add_new a:hover {
+	text-decoration: none;
+}
+div.cfm-fields {
+	clear: both;
+}
+div.cfm-label {
+	clear: both;
+}
+div.image-wrap {
+	min-height: 150px;
+}
+.entry-content .cfm-form td {
+	border: 0;
+	padding: 0;
+}
+.cfm-el.radio_group label,
+.cfm-el.checkbox_group label {
+	display: block;
+}
+.entry-content .cfm-form table {
+	border: 0;
+}
+.cfm-form td {
+	border: 0;
+	display: table-cell;
+	padding: 0;
+}
+.cfm-form td:last-child {
+	margin-bottom: 1.75em;
+}
+.wp-editor-container .cfm-form td {
+	display: inline-block !important;
+}
+.cfm-form #wp-post_content-wrap td,
+.cfm-form .multiple td {
+	display: table-cell;
+}
+.cfm-form .multiple tr {
+	display: table-row;
+}
+.cfm-form #wp-post_content-wra .wp_themeSkin .mceButton {
+	height: 25px;
+	width: 25px;
+}
+.cfm-form tr:last-child td {
+	margin-bottom: 0;
+}
+.entry-content .cfm_header {
+	margin-top: 0;
+}
+.entry-content #cfm_half {
+	border-top: 0;
+	margin-right: 4%;
+}
+.entry-content #cfm_half:last-child {
+	margin-right: 0;
+}
+.cfm-submit .cfm-label {
+	display: none;
+}
+.cfm-attachment-list {
+	margin: 10px 0 0;
+}
+.cfm-el.password .cfm-label:nth-child(2n) {
+	margin-top: 25px;
+}
+.cfm-attachment-list {
+	list-style: none;
+}
+.cfm-el.repeatable_field input {
+	width: 90%;
+}
+.cfm-el.repeatable_field td {
+	display: table-cell;
+}
+.cfm-page .entry-content table {
+	border-bottom: 0;
+}
+#cfm-insert-image-container {
+	margin-bottom: 8px;
+}
+.cfm-label label {
+	margin-bottom: 0;
+}
+.cfm-label br {
+	display: none;
+}
+.cfm-label .cfm-help {
+	display: block;
+	margin: 0 0 10px;
+}
+.cfm-el > .cfm-label:not(:first-child) {
+	margin-top: 2em;
+}
+.file_upload td {
+	display: table-cell;
+}
+.cfm-form .delete {
+	text-decoration: none;
+}
+.cfm-form input[type="text"],
+.cfm-form input[type="email"],
+.cfm-form input[type="url"],
+.cfm-form input[type="password"],
+.cfm-form textarea {
+	background: #fff;
+	border: 1px solid #bdc3c7;
+	border-radius: 0;
+	box-shadow: none;
+	-webkit-box-sizing: border-box;
+	box-sizing: border-box;
+	color: #515a63;
+	display: block;
+	line-height: 25px;
+	padding: 10px;
+	width: 100%;
+	-moz-box-siding: border-box;
+}
+div.cfm-form fieldset .cfm-fields td.cfm-repeat-field {
+	display: table-cell !important;
+}
+div.cfm-form fieldset {
+	border: none;
+}
