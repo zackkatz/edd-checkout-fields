@@ -38,4 +38,15 @@ class CFM_Checkout_Form extends CFM_Form {
 		$title = apply_filters( 'cfm_' . $this->name() . '_form_title', $this->title );
 		$this->title = $title;		
 	}
+	
+	public function extending_constructor(){
+		add_action( 'cfm_render_' . $this->name() . '_form_frontend_before_fields', array( $this, 'run_edd_actions' ), 10, 3 );
+	}
+	
+	public function run_edd_actions( $this, $user_id, $profile ){
+		if ( ! $profile ){
+			do_action( 'edd_purchase_form_user_info' ); 
+		    do_action( 'edd_purchase_form_user_info_fields' ); 
+		}
+	}
 }

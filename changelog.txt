@@ -10,6 +10,19 @@ Version 2.0, February 23, 2015
 
 * @todo Fill this out (this should be fun)
 
+Version 1.2.1, December 16, 2015
+* Fixed a conflict with WordPress 4.4
+
+Version 1.2, September 30, 2015
+
+* Added an option to make first name optional
+* Fixed an issue with required fields not being passed to EDD checkout properly
+
+Version 1.1.6, August 21, 2015
+* Fixed bug with checkbox fields not being included in export or email tags
+
+Version 1.1.5, August 4, 2015
+* Fixed problem that prevented other extensions from customizing the checkout screen
 
 Version 1.1.4, May 3, 2015
 * Checkout fields manager now supports file uploads attachments on EDD core emails
