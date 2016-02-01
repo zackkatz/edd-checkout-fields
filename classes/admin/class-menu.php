@@ -49,6 +49,10 @@ class CFM_Menu {
 	 * @return void
 	 */	
 	public function admin_menus() {
+		if ( is_network_admin() ) {
+			return;
+		}
+		
 		if ( current_user_can( 'manage_shop_settings' ) ){
 			foreach ( EDD_CFM()->load_forms as $name => $class ) {
 				$form = new $class( $name, 'name' );
