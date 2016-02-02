@@ -246,8 +246,7 @@ class EDD_Checkout_Fields_Manager {
 				self::$instance->tools         		   = new CFM_Tools;
 				self::$instance->formbuilder_templates = new CFM_Formbuilder_Templates;
 			}
-			//	self::$instance->frontend_profile         = new CFM_Frontend_Customer_Profile;
-			
+			self::$instance->frontend_profile         = new CFM_Frontend_Customer_Profile;
 			self::$instance->checkout         		  = new CFM_Checkout;
 
 			/*
