@@ -60,8 +60,8 @@ class CFM_First_Name_Field extends CFM_Field {
 	}
 
 	public function set_title() {
-		$title = _x( 'First Name', 'FES Field title translation', 'edd_fes' );
-		$title = apply_filters( 'fes_' . $this->name() . '_field_title', $title );
+		$title = _x( 'First Name', 'CFM Field title translation', 'edd_cfm' );
+		$title = apply_filters( 'cfm_' . $this->name() . '_field_title', $title );
 		$this->supports['title'] = $title;		
 	}
 
@@ -84,10 +84,10 @@ class CFM_First_Name_Field extends CFM_Field {
 		$value     = is_user_logged_in() ? $current_user->user_firstname : '';
 		$required  = $this->required();
 		$output    = '';
-		$output    .= sprintf( '<fieldset class="fes-el %1s %2s %3s">', $this->template(), $this->name(), $this->css() );
+		$output    .= sprintf( '<fieldset class="cfm-el %1s %2s %3s">', $this->template(), $this->name(), $this->css() );
 		$output    .= $this->label();
 		ob_start(); ?>
-		<div class="fes-fields">
+		<div class="cfm-fields">
 			<input class="textfield<?php echo $this->required_class(); ?>" id="<?php echo $this->name(); ?>" type="text" data-required="<?php echo $required; ?>" data-type="text"<?php $this->required_html5(); ?> name="<?php echo esc_attr( $this->name() ); ?>" placeholder="<?php echo esc_attr( $this->placeholder() ); ?>" value="<?php echo esc_attr( $value ) ?>" size="<?php echo esc_attr( $this->size() ) ?>" />
 		</div>
 		<?php
@@ -103,13 +103,13 @@ class CFM_First_Name_Field extends CFM_Field {
 		ob_start(); ?>
 		<li class="first_name">
 			<?php $this->legend( $this->title(), $this->get_label(), $removable ); ?>
-			<?php FES_Formbuilder_Templates::hidden_field( "[$index][template]", $this->template() ); ?>
+			<?php CFM_Formbuilder_Templates::hidden_field( "[$index][template]", $this->template() ); ?>
 
-			<?php FES_Formbuilder_Templates::field_div( $index, $this->name(), $this->characteristics, $insert ); ?>
+			<?php CFM_Formbuilder_Templates::field_div( $index, $this->name(), $this->characteristics, $insert ); ?>
 				<?php CFM_Formbuilder_Templates::public_radio( $index, $this->characteristics, "public" ); ?>
 				<?php CFM_Formbuilder_Templates::export_radio( $index, $this->characteristics, "noexport" ); ?>
-				<?php FES_Formbuilder_Templates::standard( $index, $this ); ?>
-				<?php FES_Formbuilder_Templates::common_text( $index, $this->characteristics ); ?>
+				<?php CFM_Formbuilder_Templates::standard( $index, $this ); ?>
+				<?php CFM_Formbuilder_Templates::common_text( $index, $this->characteristics ); ?>
 			</div>
 		</li>
 		<?php

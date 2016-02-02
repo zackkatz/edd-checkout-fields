@@ -80,7 +80,7 @@ class CFM_Tools {
 		<div class="postbox">
 			<h3><span><?php _e( 'Export Checkout Fields', 'edd_cfm' ); ?></span></h3>
 			<div class="inside">
-				<p><?php _e( 'Export the checkout fields for this site as a .json file. This allows you to easily import the configuration into another site.', 'edd_fes' ); ?></p>
+				<p><?php _e( 'Export the checkout fields for this site as a .json file. This allows you to easily import the configuration into another site.', 'edd_cfm' ); ?></p>
 				<form method="post" action="<?php echo admin_url( 'edit.php?post_type=download&page=edd-tools&tab=cfm' ); ?>">
 					<p><input type="hidden" name="edd_action" value="export_cfm_form" /></p>
 					<p>

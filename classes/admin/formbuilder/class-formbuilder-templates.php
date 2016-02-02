@@ -236,7 +236,7 @@ class CFM_Formbuilder_Templates {
 		$css_value          = isset( $values['css'] )? esc_attr( $values['css'] ) : '';
 		$meta_type          = "yes"; // for post meta on custom fields
 
-		$exclude = array( 'email_to_use_for_contact_form', 'name_of_store', 'recaptcha' );
+		$exclude = array( 'recaptcha' );
 		if ( $custom_field && in_array( $field_name_value, $exclude ) ) {
 			$custom_field = false;
 		}

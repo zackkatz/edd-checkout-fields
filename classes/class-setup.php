@@ -319,7 +319,7 @@ class CFM_Setup {
 		require_once cfm_plugin_dir . 'classes/fields/select.php';
 		require_once cfm_plugin_dir . 'classes/fields/toc.php';
 		require_once cfm_plugin_dir . 'classes/fields/url.php';
-		//require_once cfm_plugin_dir . 'classes/fields/user_email.php';
+		require_once cfm_plugin_dir . 'classes/fields/user_email.php';
 
 		/**
 		 * CFM Load Fields Require
@@ -366,7 +366,7 @@ class CFM_Setup {
 			'textarea'        	  => 'CFM_Textarea_Field',
 			'toc'                 => 'CFM_Toc_Field',
 			'url'           	  => 'CFM_Url_Field',
-			//'user_email'          => 'CFM_User_Email_Field',
+			'user_email'          => 'CFM_User_Email_Field',
 		);
 		//);
 		return $fields;

@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
 "Project-Id-Version: Easy Digital Downloads - Checkout Fields Manager\n"
-"POT-Creation-Date: 2016-02-02 01:33-0500\n"
+"POT-Creation-Date: 2016-02-02 01:59-0500\n"
 "PO-Revision-Date: 2015-09-09 19:25-0400\n"
 "Last-Translator: Chris Christoff <support@easydigitaldownloads.com>\n"
 "Language-Team: Chris Christoff <support@easydigitaldownloads.com>\n"
@@ -492,7 +492,7 @@ msgid "Enable time input"
 msgstr ""
 
 #: classes/fields/birthday.php:164 classes/fields/file_upload.php:321
-#: classes/fields/file_upload.php:324 classes/fields/user_email.php:145
+#: classes/fields/file_upload.php:324
 msgid "Please fill out this field."
 msgstr ""
 
@@ -595,7 +595,7 @@ msgid "Please enter a valid URL"
 msgstr ""
 
 #: classes/fields/first_name.php:63
-msgctxt "FES Field title translation"
+msgctxt "CFM Field title translation"
 msgid "First Name"
 msgstr ""
 
@@ -639,8 +639,8 @@ msgstr ""
 msgid "HTML Codes"
 msgstr ""
 
-#: classes/fields/last_name.php:63
-msgctxt "FES Field title translation"
+#: classes/fields/last_name.php:64
+msgctxt "CFM Field title translation"
 msgid "Last Name"
 msgstr ""
 
@@ -782,13 +782,9 @@ msgstr ""
 msgid "Please fill out the %s field."
 msgstr ""
 
-#: classes/fields/user_email.php:43
-msgctxt "FES Field title translation"
+#: classes/fields/user_email.php:41
+msgctxt "CFM Field title translation"
 msgid "User Email"
-msgstr ""
-
-#: classes/fields/user_email.php:140
-msgid "Please enter a valid email address"
 msgstr ""
 
 #: classes/misc-functions.php:211
