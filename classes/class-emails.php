@@ -21,7 +21,7 @@ class CFM_Emails {
 	public function custom_meta_values( $post_id, $message ){
 		$form = '';
 		foreach( EDD_CFM()->load_forms as $template => $class ){
-			$form = EDD_CFM()->helper->get_form_by_name( $template, $id );
+			$form = EDD_CFM()->helper->get_form_by_name( $template, $post_id );
 			foreach( $form->fields as $field ){
 				if ( ! is_object( $field ) ) {
 					continue;
