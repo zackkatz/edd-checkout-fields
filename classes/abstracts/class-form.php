@@ -119,9 +119,6 @@ class CFM_Form {
 			$user_id = get_current_user_id();
 		}
 
-		$user_id  = apply_filters( 'cfm_render_' . $this->name() . '_form_admin_user_id', $user_id, $this );
-		$profile  = apply_filters( 'cfm_render_' . $this->name() . '_form_admin_profile', $profile, $this );
-
 		// See if can use form
 		if ( !$this->can_render_form_admin( $user_id, $profile ) ) {
 			return __( 'Access denied.', 'edd_cfm' );
@@ -137,7 +134,6 @@ class CFM_Form {
 
 		$count = 0;
 		foreach ( $fields as $field ) {
-
 			if ( ! is_object( $field ) ) {
 				continue;
 			}
@@ -149,7 +145,7 @@ class CFM_Form {
 				continue;
 			} else {
 				$count++;
-			}
+			};
 		}
 
 		if ( !empty( $fields ) && $count > 0 ) {
@@ -195,9 +191,6 @@ class CFM_Form {
 			$user_id = get_current_user_id();
 		}
 		
-		$user_id  = apply_filters( 'cfm_render_' . $this->name() . '_form_frontend_user_id', $user_id, $this );
-		$profile  = apply_filters( 'cfm_render_' . $this->name() . '_form_frontend_profile', $profile, $this );
-		
 		// See if can use form
 		if ( !$this->can_render_form_frontend( $user_id, $profile ) ) {
 			return __( 'Access denied.', 'edd_cfm' );
@@ -211,7 +204,6 @@ class CFM_Form {
 		$fields = apply_filters( 'cfm_render_' . $this->name() . '_form_frontend_fields', $fields, $this, $user_id, $profile );
 		$count = 0;
 		foreach ( $fields as $field ) {
-
 			$templates_to_exclude = apply_filters( 'cfm_templates_to_exclude_render_' . $this->name() . '_form_frontend', array(), $profile );
 			if ( is_object( $field ) && ( ( is_array( $templates_to_exclude ) && in_array( $field->template(), $templates_to_exclude ) ) || ! $field->is_public() ) ) {
 				continue;
@@ -261,6 +253,81 @@ class CFM_Form {
 		$output = apply_filters( 'cfm_render_' . $this->name() . '_form_frontend_output_after_fields', $output, $this, $user_id, $profile );
 		return $output;
 	}
+	
+	public function has_fields_to_render( $user_id = -2, $profile = false ) { 
+		if ( cfm_is_admin() ) {
+			return $this->has_fields_to_render_admin( $user_id, $profile );
+		} else {
+			return $this->has_fields_to_render_frontend( $user_id, $profile );
+		}
+	}
+	
+	public function has_fields_to_render_admin( $user_id = -2, $profile = false ) { 
+		if ( $user_id === -2 ) {
+			$user_id = get_current_user_id();
+		}
+		
+		// See if can use form
+		if ( !$this->can_render_form_admin( $user_id, $profile ) ) {
+			return false;
+		}
+
+		$fields = $this->fields;
+		$fields = apply_filters( 'cfm_render_' . $this->name() . '_form_admin_fields', $fields, $this, $user_id, $profile );
+		$count = 0;
+
+		foreach ( $fields as $field ) {
+			if ( ! is_object( $field ) ) {
+				continue;
+			}
+			
+			$templates_to_exclude = apply_filters( 'cfm_templates_to_exclude_render_' . $this->name() . '_form_admin', array(), $profile );
+			if ( is_object( $field ) && ( ( is_array( $templates_to_exclude ) && in_array( $field->template(), $templates_to_exclude ) ) || ! $field->is_public() ) ) {
+				continue;
+			} else if ( is_object( $field ) && $profile && ( ! $field->is_meta() || $field->meta_type() !== 'user' ) ){
+				continue;
+			} else {
+				$count++;
+			}
+		}
+
+		if ( !empty( $fields ) && $count > 0 ) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+	public function has_fields_to_render_frontend( $user_id = -2, $profile = false ) { 
+		if ( $user_id === -2 ) {
+			$user_id = get_current_user_id();
+		}
+		
+		// See if can use form
+		if ( !$this->can_render_form_frontend( $user_id, $profile ) ) {
+			return false;
+		}
+
+		$fields = $this->fields;
+		$fields = apply_filters( 'cfm_render_' . $this->name() . '_form_frontend_fields', $fields, $this, $user_id, $profile );
+		$count = 0;
+		foreach ( $fields as $field ) {
+			$templates_to_exclude = apply_filters( 'cfm_templates_to_exclude_render_' . $this->name() . '_form_frontend', array(), $profile );
+			if ( is_object( $field ) && ( ( is_array( $templates_to_exclude ) && in_array( $field->template(), $templates_to_exclude ) ) || ! $field->is_public() ) ) {
+				continue;
+			} else if ( is_object( $field ) && $profile && ( ! $field->is_meta() || $field->meta_type() !== 'user' ) ){
+				continue;
+			} else {
+				$count++;
+			}
+		}
+
+		if ( !empty( $fields ) && $count > 0 ) {
+			return true;
+		} else {
+			return false;
+		}
+	}	
 	
 	public function validate_form( $values = array(), $user_id = -2, $profile = false ) {
 		$output = false;

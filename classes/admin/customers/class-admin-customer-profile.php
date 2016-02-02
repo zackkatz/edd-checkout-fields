@@ -88,12 +88,16 @@ class CFM_Admin_Customer_Profile {
 						$form = new CFM_Checkout_Form( $form_id, 'id', -2, $customer->user_id );
 
 						echo $form->render_form_admin( get_current_user_id(), true );
-						?>
-						<input type="hidden" name="edd_action" value="admin_customer_profile" />
-						<input type="hidden" name="user_id" value="<?php echo $customer->user_id ;?>" />
-						<br />
-						<input type="submit" id="edit-admin-customer-profile-submit" value="<?php _e( 'Submit', 'edd_cfm' ); ?>" class="button-secondary"/>
-						<span class="spinner"></span>
+						
+						if ( $form->has_fields_to_render_admin( get_current_user_id(), true ) ) {
+							?>
+							<input type="hidden" name="edd_action" value="admin_customer_profile" />
+							<input type="hidden" name="user_id" value="<?php echo $customer->user_id ;?>" />
+							<br />
+							<input type="submit" id="edit-admin-customer-profile-submit" value="<?php _e( 'Submit', 'edd_cfm' ); ?>" class="button-secondary"/>
+							<span class="spinner"></span>
+							<?php 
+						} ?>
 					</span>
 				</form>
 			</div>
