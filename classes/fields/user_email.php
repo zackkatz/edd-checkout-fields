@@ -99,10 +99,7 @@ class CFM_User_Email_Field extends CFM_Field {
 	/** Returns the HTML to render a field for the formbuilder */
 	public function render_formbuilder_field( $index = -2, $insert = false ) {
 		$removable = $this->can_remove_from_formbuilder();
-		ob_start();
-		if ( $force_required ) { ?>
-		<style>.cfm-formbuilder-fields li.user_email .required-field { display: none; }</style>
-		<?php } ?>
+		ob_start();?>
 		<li class="user_email">
 			<?php $this->legend( $this->title(), $this->get_label(), $removable ); ?>
 			<?php CFM_Formbuilder_Templates::hidden_field( "[$index][template]", $this->template() ); ?>
