@@ -45,6 +45,7 @@ class CFM_Checkout {
 		add_action( 'edd_register_fields_before', array( $this, 'render_checkout_form' ) );
 		remove_action( 'edd_purchase_form_after_user_info', 'edd_user_info_fields' );
 		add_action( 'edd_purchase_form_after_user_info', array( $this, 'render_checkout_form' ) );
+		add_action( 'edd_checkout_error_checks', array( $this, 'validate' ), 10, 2 );
 	}
 
 
@@ -75,6 +76,14 @@ class CFM_Checkout {
 		$form = EDD_CFM()->helper->get_form_by_id( $form_id, $user_id );
 		$output .= $form->render_form_frontend( $user_id, false );
 		echo $output;
+	}
+	
+	public function validate( $valid_data, $post_data ){
+		$form_id   = isset( $post_data['form_id'] )   ? absint( $post_data['form_id'] ) : get_option( 'cfm-checkout-form', -2 );
+		// Make the CFM Form
+		$form      = new CFM_Checkout_Form( $form_id, 'id', -2 );
+		// Save the CFM Form
+		$form->validate_form_frontend( $post_data, get_current_user_id(), false );
 	}
 
 	/**
