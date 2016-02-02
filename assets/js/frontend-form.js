@@ -157,14 +157,8 @@
 		},
 		
         adminPostSubmit: function(e) {
-            e.preventDefault();
-
             var form = $(this),
                 form_data = CFM_Form.validateForm(form);
-
-            if (form_data) {
-                return true;
-            }
         },
 
         formSubmit: function(e) {
@@ -183,8 +177,6 @@
         },
 		
 		validateForm: function (self) {
-			CFM_Form.removeErrors(self);
-
 			var temp,
 				form_data = self.serialize(),
 				rich_texts = [];
