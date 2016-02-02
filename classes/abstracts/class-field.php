@@ -257,6 +257,9 @@ class CFM_Field {
 		}
 		
 		$value = $this->get_field_value_frontend( $payment_id, $user_id );
+		if ( ! empty( $value ) && is_array( $value ) ){
+			$value = implode( ", ", $value );
+		}
 		return $value;
 	}	
 

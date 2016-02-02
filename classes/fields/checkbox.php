@@ -36,8 +36,8 @@ class CFM_Checkbox_Field extends CFM_Field {
 		'options'     => '',
 		'selected'    => '',
 		'meta_type'   => 'payment', // 'payment' or 'user' here if is_meta()
-		'public'          => true, // denotes whether a field shows in the admin only
-		'show_in_exports' => true, // denotes whether a field is in the CSV exports
+		'public'          => "public", // denotes whether a field shows in the admin only
+		'show_in_exports' => "export", // denotes whether a field is in the CSV exports
 	);
 
 	public function set_title() {
@@ -91,7 +91,7 @@ class CFM_Checkbox_Field extends CFM_Field {
 		}
 
 		$value     = $this->get_field_value_frontend( $this->payment_id, $this->user_id );
-		if ( ! $profile ) {
+		if ( ! $profile && is_integer( $this->user_id ) && $this->user_id > 0 && ! metadata_exists( 'user', $this->user_id, $this->name() ) ) {
 			$value  = isset( $this->characteristics['selected'] ) ? $this->characteristics['selected'] : array();
 		}
 		if ( !is_array( $value ) ){

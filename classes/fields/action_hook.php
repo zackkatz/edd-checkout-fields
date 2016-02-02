@@ -28,8 +28,8 @@ class CFM_Action_Hook_Field extends CFM_Field {
 		'public'      => false, // can you display this publicly (used by CFM_Field->display_field() )
 		'required'    => false, // is it a required field (default is false)
 		'meta_type'   => 'payment', // 'payment' or 'user' here if is_meta()
-		'public'          => true, // denotes whether a field shows in the admin only
-		'show_in_exports' => true, // denotes whether a field is in the CSV exports
+		'public'          => "public", // denotes whether a field shows in the admin only
+		'show_in_exports' => "export", // denotes whether a field is in the CSV exports
 	);
 
 	public function set_title() {
@@ -76,6 +76,7 @@ class CFM_Action_Hook_Field extends CFM_Field {
 		<li class="action_hook">
 			<?php $this->legend( $this->title(), $this->name(), $removable ); ?>
 			<?php CFM_Formbuilder_Templates::public_radio( $index, $this->characteristics, "public" ); ?>
+			<?php CFM_Formbuilder_Templates::meta_type_radio( $index, $this->characteristics, "payment" ); ?>
 			<?php CFM_Formbuilder_Templates::hidden_field( "[$index][template]", $this->template() ); ?>
 			<?php CFM_Formbuilder_Templates::field_div( $index, $this->name(), $this->characteristics, $insert ); ?>
 				<div class="cfm-form-rows">

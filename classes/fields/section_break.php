@@ -9,11 +9,7 @@ class CFM_Section_Break_Field extends CFM_Field {
 		'multiple'    => true,
 		'is_meta'     => true,  // in object as public (bool) $meta;
 		'forms'       => array(
-			'registration'     => true,
-			'submission'       => true,
-			'vendor-contact'   => false,
-			'profile'          => true,
-			'login'            => false,
+			'checkout'     => true,
 		),
 		'position'    => 'custom',
 		'permissions' => array(
@@ -23,7 +19,6 @@ class CFM_Section_Break_Field extends CFM_Field {
 		),
 		'template'   => 'section_break',
 		'title'       => 'Section Break',
-		'phoenix'    => false,
 	);
 
 	/** @var array Characteristics are things that can change from field to field of the same field type. Like the placeholder between two email fields. Stored in db. */
@@ -35,6 +30,9 @@ class CFM_Section_Break_Field extends CFM_Field {
 		'label'       => '',
 		'description' => '',
 		'css'   	  => '',
+		'meta_type'   => 'payment', // 'payment' or 'user' here if is_meta()
+		'public'          => "public", // denotes whether a field shows in the admin only
+		'show_in_exports' => "noexport", // denotes whether a field is in the CSV exports
 	);
 
 	public function set_title() {
@@ -44,33 +42,13 @@ class CFM_Section_Break_Field extends CFM_Field {
 	}
 
 	public function extending_constructor( ) {
-		// exclude from saving in admin
-		add_filter( 'cfm_templates_to_exclude_save_submission_form_admin', array( $this, 'exclude_field' ), 10, 1  );
-		add_filter( 'cfm_templates_to_exclude_save_profile_form_admin', array( $this, 'exclude_field' ), 10, 1  );
-		add_filter( 'cfm_templates_to_exclude_save_registration_form_admin', array( $this, 'exclude_field' ), 10, 1  );
-		add_filter( 'cfm_templates_to_exclude_save_profile_form_admin', array( $this, 'exclude_field' ), 10, 1  );
-		add_filter( 'cfm_templates_to_exclude_save_vendor_contact_form_admin', array( $this, 'exclude_field' ), 10, 1  );
-
-		// exclude from saving in frontend
-		add_filter( 'cfm_templates_to_exclude_save_submission_form_frontend', array( $this, 'exclude_field' ), 10, 1  );
-		add_filter( 'cfm_templates_to_exclude_save_profile_form_frontend', array( $this, 'exclude_field' ), 10, 1  );
-		add_filter( 'cfm_templates_to_exclude_save_registration_form_frontend', array( $this, 'exclude_field' ), 10, 1  );
-		add_filter( 'cfm_templates_to_exclude_save_profile_form_frontend', array( $this, 'exclude_field' ), 10, 1  );
-		add_filter( 'cfm_templates_to_exclude_save_vendor_contact_form_frontend', array( $this, 'exclude_field' ), 10, 1  );
-
-		// exclude from validating in admin
-		add_filter( 'cfm_templates_to_exclude_validate_submission_form_admin', array( $this, 'exclude_field' ), 10, 1  );
-		add_filter( 'cfm_templates_to_exclude_validate_profile_form_admin', array( $this, 'exclude_field' ), 10, 1  );
-		add_filter( 'cfm_templates_to_exclude_validate_registration_form_admin', array( $this, 'exclude_field' ), 10, 1  );
-		add_filter( 'cfm_templates_to_exclude_validate_profile_form_admin', array( $this, 'exclude_field' ), 10, 1  );
-		add_filter( 'cfm_templates_to_exclude_validate_vendor_contact_form_admin', array( $this, 'exclude_field' ), 10, 1  );
-
-		// exclude from validating in frontend
-		add_filter( 'cfm_templates_to_exclude_validate_submission_form_frontend', array( $this, 'exclude_field' ), 10, 1  );
-		add_filter( 'cfm_templates_to_exclude_validate_profile_form_frontend', array( $this, 'exclude_field' ), 10, 1  );
-		add_filter( 'cfm_templates_to_exclude_validate_registration_form_frontend', array( $this, 'exclude_field' ), 10, 1  );
-		add_filter( 'cfm_templates_to_exclude_validate_profile_form_frontend', array( $this, 'exclude_field' ), 10, 1  );
-		add_filter( 'cfm_templates_to_exclude_validate_vendor_contact_form_frontend', array( $this, 'exclude_field' ), 10, 1  );
+		add_filter( 'cfm_templates_to_exclude_sanitize_checkout_form_admin', array( $this, 'exclude_field' ), 10, 1  );
+		add_filter( 'cfm_templates_to_exclude_validate_checkout_form_admin', array( $this, 'exclude_field' ), 10, 1  );
+		add_filter( 'cfm_templates_to_exclude_save_checkout_form_admin', array( $this, 'exclude_field' ), 10, 1  );
+		
+		add_filter( 'cfm_templates_to_exclude_sanitize_checkout_form_frontend', array( $this, 'exclude_field' ), 10, 1  );
+		add_filter( 'cfm_templates_to_exclude_validate_checkout_form_frontend', array( $this, 'exclude_field' ), 10, 1  );
+		add_filter( 'cfm_templates_to_exclude_save_checkout_form_frontend', array( $this, 'exclude_field' ), 10, 1  );
 	}
 
 	public function exclude_field( $fields ) {
@@ -79,14 +57,11 @@ class CFM_Section_Break_Field extends CFM_Field {
 	}
 
 	/** Returns the Section_Break to render a field in admin */
-	public function render_field_admin( $user_id = -2, $readonly = -2 ) {
+	public function render_field_admin( $user_id = -2, $profile = -2 ) {
 		if ( $user_id === -2 ) {
 			$user_id = get_current_user_id();
 		}
 
-		if ( $readonly === -2 ) {
-			$readonly = $this->readonly;
-		}
 		$output        = '';
 		$output     .= sprintf( '<fieldset class="cfm-el %1s %2s %3s">', $this->template(), $this->name(), $this->css() );
 		ob_start(); ?>
@@ -101,14 +76,11 @@ class CFM_Section_Break_Field extends CFM_Field {
 	}
 
 	/** Returns the Section_Break to render a field in frontend */
-	public function render_field_frontend( $user_id = -2, $readonly = -2 ) {
+	public function render_field_frontend( $user_id = -2, $profile = -2 ) {
 		if ( $user_id === -2 ) {
 			$user_id = get_current_user_id();
 		}
 
-		if ( $readonly === -2 ) {
-			$readonly = $this->readonly;
-		}
 		$output        = '';
 		$output     .= sprintf( '<fieldset class="cfm-el %1s %2s %3s">', $this->template(), $this->name(), $this->css() );
 		ob_start(); ?>
@@ -135,7 +107,9 @@ class CFM_Section_Break_Field extends CFM_Field {
 		ob_start(); ?>
 		<li class="section_break">
 			<?php $this->legend( $this->title(), $this->get_label(), $removable ); ?>
-			<?php CFM_Formbuilder_Templates::public_radio( $index, $this->characteristics, $this->form_name, true ); ?>
+			<?php CFM_Formbuilder_Templates::public_radio( $index, $this->characteristics ); ?>
+			<?php CFM_Formbuilder_Templates::export_radio( $index, $this->characteristics, "noexport" ); ?>
+			<?php CFM_Formbuilder_Templates::meta_type_radio( $index, $this->characteristics, "payment" ); ?>
 			<?php CFM_Formbuilder_Templates::hidden_field( "[$index][template]", $this->template() ); ?>
 			<?php CFM_Formbuilder_Templates::hidden_field( "[$index][name]", $name ); ?>
 			<?php CFM_Formbuilder_Templates::field_div( $index, $this->name(), $this->characteristics, $insert ); ?>
@@ -159,13 +133,11 @@ class CFM_Section_Break_Field extends CFM_Field {
 		return ob_get_clean();
 	}
 
-	public function validate( $values = array(), $save_id = -2, $user_id = -2 ) {
-		$name = $this->name();
-		return apply_filters( 'cfm_validate_' . $this->template() . '_field', $return_value, $values, $name, $save_id, $user_id );
+	public function validate( $values = array(), $payment_id = -2, $user_id = -2 ) {
+		// Nothing to validate
 	}
 
-	public function sanitize( $values = array(), $save_id = -2, $user_id = -2 ) {
-		$name = $this->name();
-		return apply_filters( 'cfm_sanitize_' . $this->template() . '_field', $values, $name, $save_id, $user_id );
+	public function sanitize( $values = array(), $payment_id = -2, $user_id = -2 ) {
+		return $values; // Nothing to sanitize
 	}
 }

@@ -18,7 +18,7 @@ class CFM_Emails {
 		return $message;
 	}
 	
-	public function custom_meta_values( $id, $message ){
+	public function custom_meta_values( $post_id, $message ){
 		$form = '';
 		foreach( EDD_CFM()->load_forms as $template => $class ){
 			$form = EDD_CFM()->helper->get_form_by_name( $template, $id );
@@ -26,7 +26,7 @@ class CFM_Emails {
 				if ( ! is_object( $field ) ) {
 					continue;
 				}
-				$message = str_replace('{'. $field->name() .'}', $field->export_data(), $message );
+				$message = str_replace('{'. $field->name() .'}', $field->export_data( $post_id ), $message );
 			}
 		}
 		return $message;

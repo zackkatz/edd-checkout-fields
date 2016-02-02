@@ -9,22 +9,20 @@ class CFM_Recaptcha_Field extends CFM_Field {
 		'multiple'    => false,
 		'is_meta'     => true,  // in object as public (bool) $meta;
 		'forms'       => array(
-			'registration'     => true,
-			'submission'       => true,
-			'vendor-contact'   => true,
-			'profile'          => true,
-			'login'            => true,
+			'checkout'     => true,
 		),
 		'position'    => 'custom',
 		'permissions' => array(
 			'can_remove_from_formbuilder' => true,
 			'can_change_meta_key'         => false,
 			'can_add_to_formbuilder'      => true,
-			'field_always_required'    => true,
+			'field_always_required'       => true,
 		),
 		'template'   => 'recaptcha',
 		'title'       => 'reCAPTCHA',
-		'phoenix'    => false,
+		'meta_type'   => 'payment', // 'payment' or 'user' here if is_meta()
+		'public'          => "public", // denotes whether a field shows in the admin only
+		'show_in_exports' => "noexport", // denotes whether a field is in the CSV exports
 	);
 
 	/** @var array Characteristics are things that can change from field to field of the same field type. Like the placeholder between two email fields. Stored in db. */
@@ -44,93 +42,48 @@ class CFM_Recaptcha_Field extends CFM_Field {
 	}
 
 	public function extending_constructor( ) {
-		// exclude from submission form in admin
-		add_filter( 'cfm_templates_to_exclude_render_submission_form_admin', array( $this, 'exclude_field' ), 10, 1  );
-		add_filter( 'cfm_templates_to_exclude_validate_submission_form_admin', array( $this, 'exclude_field' ), 10, 1  );
-		add_filter( 'cfm_templates_to_exclude_save_submission_form_admin', array( $this, 'exclude_field' ), 10, 1  );
+		add_filter( 'cfm_templates_to_exclude_render_checkout_form_admin', array( $this, 'exclude_field_admin' ), 10, 1  );
+		add_filter( 'cfm_templates_to_exclude_sanitize_checkout_form_admin', array( $this, 'exclude_field_admin' ), 10, 1  );
+		add_filter( 'cfm_templates_to_exclude_validate_checkout_form_admin', array( $this, 'exclude_field_admin' ), 10, 1  );
+		add_filter( 'cfm_templates_to_exclude_save_checkout_form_admin', array( $this, 'exclude_field_admin' ), 10, 1  );
 
-		// exclude from profile form in admin
-		add_filter( 'cfm_templates_to_exclude_render_profile_form_admin', array( $this, 'exclude_field' ), 10, 1  );
-		add_filter( 'cfm_templates_to_exclude_validate_profile_form_admin', array( $this, 'exclude_field' ), 10, 1  );
-		add_filter( 'cfm_templates_to_exclude_save_profile_form_admin', array( $this, 'exclude_field' ), 10, 1  );
-
-		// exclude from registration form in admin
-		add_filter( 'cfm_templates_to_exclude_render_registration_form_admin', array( $this, 'exclude_field' ), 10, 1  );
-		add_filter( 'cfm_templates_to_exclude_validate_registration_form_admin', array( $this, 'exclude_field' ), 10, 1  );
-		add_filter( 'cfm_templates_to_exclude_save_registration_form_admin', array( $this, 'exclude_field' ), 10, 1  );
-
-		// exclude from submission form in admin
-		add_filter( 'cfm_templates_to_exclude_render_profile_form_admin', array( $this, 'exclude_field' ), 10, 1  );
-		add_filter( 'cfm_templates_to_exclude_validate_profile_form_admin', array( $this, 'exclude_field' ), 10, 1  );
-		add_filter( 'cfm_templates_to_exclude_save_profile_form_admin', array( $this, 'exclude_field' ), 10, 1  );
-
-		// exclude from vendor_contact form in admin
-		add_filter( 'cfm_templates_to_exclude_render_vendor_contact_form_admin', array( $this, 'exclude_field' ), 10, 1  );
-		add_filter( 'cfm_templates_to_exclude_validate_vendor_contact_form_admin', array( $this, 'exclude_field' ), 10, 1  );
-		add_filter( 'cfm_templates_to_exclude_save_vendor_contact_form_admin', array( $this, 'exclude_field' ), 10, 1  );
-
-		// exclude from vendor_contact form in frontend
-		add_filter( 'cfm_templates_to_exclude_render_vendor_contact_form_frontend', array( $this, 'exclude_from_vendor_contact' ), 10, 1  );
-		add_filter( 'cfm_templates_to_exclude_validate_vendor_contact_form_frontend', array( $this, 'exclude_from_vendor_contact' ), 10, 1  );
-		add_filter( 'cfm_templates_to_exclude_save_vendor_contact_form_frontend', array( $this, 'exclude_from_vendor_contact' ), 10, 1  );
-
-		// exclude from login form in admin
-		add_filter( 'cfm_templates_to_exclude_render_login_form_admin', array( $this, 'exclude_field' ), 10, 1  );
-		add_filter( 'cfm_templates_to_exclude_validate_login_form_admin', array( $this, 'exclude_field' ), 10, 1  );
-		add_filter( 'cfm_templates_to_exclude_save_login_form_admin', array( $this, 'exclude_field' ), 10, 1  );
-
-		// exclude from login form in frontend
-		add_filter( 'cfm_templates_to_exclude_render_login_form_frontend', array( $this, 'exclude_from_login' ), 10, 1  );
-		add_filter( 'cfm_templates_to_exclude_validate_login_form_frontend', array( $this, 'exclude_field' ), 10, 1  );
-		add_filter( 'cfm_templates_to_exclude_save_login_form_frontend', array( $this, 'exclude_from_login' ), 10, 1  );
+		add_filter( 'cfm_templates_to_exclude_render_checkout_form_frontend', array( $this, 'exclude_field_frontend' ), 10, 1  );
+		add_filter( 'cfm_templates_to_exclude_sanitize_checkout_form_frontend', array( $this, 'exclude_field_frontend' ), 10, 1  );
+		add_filter( 'cfm_templates_to_exclude_validate_checkout_form_frontend', array( $this, 'exclude_field_frontend' ), 10, 1  );
+		add_filter( 'cfm_templates_to_exclude_save_checkout_form_frontend', array( $this, 'exclude_field_frontend' ), 10, 1  );		
 	}
 
-	public function exclude_field( $fields ) {
+	public function exclude_field_admin( $fields ) {
 		array_push( $fields, 'recaptcha' );
 		return $fields;
 	}
 
-	public function exclude_from_login( $fields ) {
-		$public_key          = EDD_CFM()->helper->get_option( 'cfm-recaptcha-public-key', '' );
-		$private_key           = EDD_CFM()->helper->get_option( 'cfm-recaptcha-private-key', '' );
-		$enabled_login         = (bool) EDD_CFM()->helper->get_option( 'cfm-login-captcha', false );
-		if ( $public_key == '' || $private_key == '' || !$enabled_login ) {
+	public function exclude_field_frontend( $fields ) {
+		$public_key = edd_get_option( 'cfm-recaptcha-public-key', '' );
+		$private_key = edd_get_option( 'cfm-recaptcha-private-key', '' );
+		if ( $public_key == '' || $private_key == '' ) {
 			array_push( $fields, 'recaptcha' );
 		}
 		return $fields;
 	}
-
-	public function exclude_from_vendor_contact( $fields ) {
-		$public_key          = EDD_CFM()->helper->get_option( 'cfm-recaptcha-public-key', '' );
-		$private_key           = EDD_CFM()->helper->get_option( 'cfm-recaptcha-private-key', '' );
-		$enabled_login         = EDD_CFM()->helper->get_option( 'cfm-vendor-contact-captcha', false );
-		if ( $public_key == '' || $private_key == '' || !$enabled_login ) {
-			array_push( $fields, 'recaptcha' );
-		}
-		return $fields;
-	}
-
 
 	/** Returns the Recaptcha to render a field in admin */
-	public function render_field_admin( $user_id = -2, $readonly = -2 ) {
+	public function render_field_admin( $user_id = -2, $profile = -2 ) {
 		// we don't render reCAPTCHA in the backend
 		return '';
 	}
 
 	/** Returns the Recaptcha to render a field in frontend */
-	public function render_field_frontend( $user_id = -2, $readonly = -2 ) {
-		$public_key      = EDD_CFM()->helper->get_option( 'cfm-recaptcha-public-key', '' );
-		$private_key     = EDD_CFM()->helper->get_option( 'cfm-recaptcha-private-key', '' );
-		$theme       = apply_filters( 'cfm_render_recaptcha_field_frontend_theme', 'light' ); // The color theme of the widget. Either dark or light
-		$type       = apply_filters( 'cfm_render_recaptcha_field_frontend_type', 'image' ); // The type of CAPTCHA to serve. Either audio or image
-		$size        = apply_filters( 'cfm_render_recaptcha_field_frontend_size', 'normal' ); // The size of the widget. Either compact  or normal
+	public function render_field_frontend( $user_id = -2, $profile = -2 ) {
+		$public_key      = edd_get_option( 'cfm-recaptcha-public-key', '' );
+		$private_key     = edd_get_option( 'cfm-recaptcha-private-key', '' );
+		$theme           = apply_filters( 'cfm_render_recaptcha_field_frontend_theme', 'light' ); // The color theme of the widget. Either dark or light
+		$type       	 = apply_filters( 'cfm_render_recaptcha_field_frontend_type', 'image' ); // The type of CAPTCHA to serve. Either audio or image
+		$size       	 = apply_filters( 'cfm_render_recaptcha_field_frontend_size', 'normal' ); // The size of the widget. Either compact  or normal
 		if ( $public_key == '' || $private_key == '' ) {
 			return '';
 		}
 
-		if ( $readonly ) {
-			return '';
-		}
 		$output        = '';
 		$output     .= sprintf( '<fieldset class="cfm-el %1s %2s %3s">', $this->template(), $this->name(), $this->css() );
 		$output        .= $this->label( $readonly );
@@ -181,11 +134,13 @@ class CFM_Recaptcha_Field extends CFM_Field {
 					<div class="cfm-form-sub-fields">
 
 						<div class="description" style="margin-top: 8px;">
-							<?php _e( "In order for reCAPTCHA to work you must insert your site key and private key in the CFM settings panel. <a href='https://www.google.com/recaptcha/admin#list' target='_blank'>Create a key</a> first if you don't have any keys.", 'edd_cfm' ); ?>
+							<?php _e( "In order for reCAPTCHA to work you must insert your site key and private key in the EDD settings panel. <a href='https://www.google.com/recaptcha/admin#list' target='_blank'>Create a key</a> first if you don't have any keys.", 'edd_cfm' ); ?>
 						</div>
 					</div>
 				</div>
-				<?php CFM_Formbuilder_Templates::public_radio( $index, $this->characteristics, $this->form_name, true ); ?>
+				<?php CFM_Formbuilder_Templates::public_radio( $index, $this->characteristics, "public" ); ?>
+				<?php CFM_Formbuilder_Templates::export_radio( $index, $this->characteristics, "noexport" ); ?>
+				<?php CFM_Formbuilder_Templates::meta_type_radio( $index, $this->characteristics, "payment" ); ?>
 				<?php CFM_Formbuilder_Templates::standard( $index, $this ); ?>
 			</div>
 		</li>
@@ -194,17 +149,13 @@ class CFM_Recaptcha_Field extends CFM_Field {
 	}
 
 	/** Validates field */
-	public function validate( $values = array(), $save_id = -2, $user_id = -2 ) {
+	public function validate( $values = array(), $payment_id = -2, $user_id = -2 ) {
 		$name = $this->name();
 		$return_value = false;
 
-		if ( $this->readonly ) {
-			return false;
-		}
-
 		if ( !empty( $values[ $name ] ) ) {
 			$recap_challenge = isset( $values[ 'g-recaptcha-response' ] ) ? $values[ 'g-recaptcha-response' ] : '';
-			$private_key     = EDD_CFM()->helper->get_option( 'cfm-recaptcha-private-key', '' );
+			$private_key     = edd_get_option( 'cfm-recaptcha-private-key', '' );
 			try {
 				$url      = 'https://www.google.com/recaptcha/api/siteverify';
 				$data     = array( 'secret' => $private_key, 'response' => $recap_challenge, 'remoteip' => $_SERVER['REMOTE_ADDR'] );
@@ -212,43 +163,42 @@ class CFM_Recaptcha_Field extends CFM_Field {
 				$context  = stream_context_create( $options );
 				$result   = file_get_contents( $url, false, $context );
 				if ( json_decode( $result )->success == false ) {
-					$return_value = __( 'reCAPTCHA validation failed.', 'edd_cfm' );
+					edd_set_error( 'invalid_recaptcha_bad_' . $this->id, __( 'Please retry the reCAPTCHA challenge', 'edd_cfm' ) );
 				}
 			}
 			catch ( Exception $e ) {
-				$return_value = __( 'reCAPTCHA validation failed', 'edd_cfm' );
+				edd_set_error( 'invalid_recaptcha_bad_' . $this->id, __( 'Please retry the reCAPTCHA challenge', 'edd_cfm' ) );
 			}
 		} else {
 			// if the field is required but isn't present
 			if ( $this->required() ) {
-				$return_value = __( 'Please fill out this field.', 'edd_cfm' );
+				edd_set_error( 'invalid_recaptcha_incomplete_' . $this->id, __( 'Please complete the reCAPTCHA challenge', 'edd_cfm' ) );
 			}
 		}
-		return apply_filters( 'cfm_validate_' . $this->template() . '_field', $return_value, $values, $name, $save_id, $user_id );
 	}
 
-	public function sanitize( $values = array(), $save_id = -2, $user_id = -2 ) {
+	public function sanitize( $values = array(), $payment_id = -2, $user_id = -2 ) {
 		$name = $this->name();
 		if ( !empty( $values[ 'g-recaptcha-response' ] ) ) {
 			$values[ $name ] = trim( $values[ 'g-recaptcha-response' ] );
 			$values[ $name ] = sanitize_text_field( $values[ $name ] );
 		}
-		return apply_filters( 'cfm_sanitize_' . $this->template() . '_field', $values, $name, $save_id, $user_id );
+		return apply_filters( 'cfm_sanitize_' . $this->template() . '_field', $values, $name, $payment_id, $user_id );
 	}
 
-	public function get_field_value_admin( $save_id = -2, $user_id = -2, $public = -2 ) {
+	public function get_field_value_admin( $payment_id = -2, $user_id = -2 ) {
 		return ''; // don't get field value
 	}
 
-	public function get_field_value_frontend( $save_id = -2, $user_id = -2, $public = -2 ) {
+	public function get_field_value_frontend( $payment_id = -2, $user_id = -2 ) {
 		return ''; // don't get field value
 	}
 
-	public function save_field_admin( $save_id = -2, $value = array(), $user_id = -2 ) {
+	public function save_field_admin( $payment_id = -2, $value = array(), $user_id = -2 ) {
 		// don't save field value
 	}
 
-	public function save_field_frontend( $save_id = -2, $value = array(), $user_id = -2 ) {
+	public function save_field_frontend( $payment_id = -2, $value = array(), $user_id = -2 ) {
 		// don't save field value
 	}
 }

@@ -36,8 +36,8 @@ class CFM_Country_Field extends CFM_Field {
 		'options'     => array(),
 		'first'       => ' - select -',
 		'meta_type'   => 'payment', // 'payment' or 'user' here if is_meta()
-		'public'          => true, // denotes whether a field shows in the admin only
-		'show_in_exports' => true, // denotes whether a field is in the CSV exports
+		'public'          => "public", // denotes whether a field shows in the admin only
+		'show_in_exports' => "export", // denotes whether a field is in the CSV exports
 	);
 
 
@@ -53,10 +53,10 @@ class CFM_Country_Field extends CFM_Field {
 			$user_id = get_current_user_id();
 		}
 
-		$value     = $this->get_field_value_admin( $this->save_id, $user_id, $readonly );
+		$value     = $this->get_field_value_admin( $this->payment_id, $this->user_id );
 		$output        = '';
 		$output     .= sprintf( '<fieldset class="cfm-el %1s %2s %3s">', $this->template(), $this->name(), $this->css() );
-		$output    .= $this->label( $readonly );
+		$output    .= $this->label();
 		ob_start(); ?>
 		<div class="cfm-fields">
 
@@ -87,7 +87,7 @@ class CFM_Country_Field extends CFM_Field {
 		$value     = $this->get_field_value_frontend(  $this->payment_id, $this->user_id );
 		$required  = $this->required();
 
-		if ( ! $profile ) {
+		if ( ! $profile && is_integer( $this->user_id ) && $this->user_id > 0 && ! metadata_exists( 'user', $this->user_id, $this->name() ) ) {
 			$value = $this->characteristics['selected'];
 		}
 		
@@ -153,7 +153,7 @@ class CFM_Country_Field extends CFM_Field {
 		return ob_get_clean();
 	}
 
-	public function sanitize( $values = array(), $save_id = -2, $user_id = -2 ) {
+	public function sanitize( $values = array(), $payment_id = -2, $user_id = -2 ) {
 		$name = $this->name();
 		if ( !empty( $values[ $name ][0] ) ) {
 			$values[ $name ] = trim( $values[ $name ][0] );
@@ -161,6 +161,6 @@ class CFM_Country_Field extends CFM_Field {
 		} else if ( isset( $values[ $name ][0] ) ){
 			$values[ $name ] = '';
 		}
-		return apply_filters( 'cfm_sanitize_' . $this->template() . '_field', $values, $name, $save_id, $user_id );
+		return apply_filters( 'cfm_sanitize_' . $this->template() . '_field', $values, $name, $payment_id, $user_id );
 	}
 }

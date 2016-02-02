@@ -306,12 +306,12 @@ class CFM_Setup {
 		require_once cfm_plugin_dir . 'classes/fields/date.php';
 		require_once cfm_plugin_dir . 'classes/fields/email.php';
 		//require_once cfm_plugin_dir . 'classes/fields/file_upload.php';
-		//require_once cfm_plugin_dir . 'classes/fields/first_name.php';
+		require_once cfm_plugin_dir . 'classes/fields/first_name.php';
 		require_once cfm_plugin_dir . 'classes/fields/hidden.php';
 		require_once cfm_plugin_dir . 'classes/fields/multiselect.php';
 		require_once cfm_plugin_dir . 'classes/fields/honeypot.php';
 		require_once cfm_plugin_dir . 'classes/fields/html.php';
-		//require_once cfm_plugin_dir . 'classes/fields/last_name.php';
+		require_once cfm_plugin_dir . 'classes/fields/last_name.php';
 		require_once cfm_plugin_dir . 'classes/fields/radio.php';
 		require_once cfm_plugin_dir . 'classes/fields/recaptcha.php';
 		require_once cfm_plugin_dir . 'classes/fields/repeat.php';
@@ -351,11 +351,11 @@ class CFM_Setup {
 			'date'				  => 'CFM_Date_Field',
 			'email'		 		  => 'CFM_Email_Field',
 			//'file_upload'		  => 'CFM_File_Upload_Field',
-			//'first_name'		  => 'CFM_First_Name_Field',
+			'first_name'		  => 'CFM_First_Name_Field',
 			'hidden'			  => 'CFM_Hidden_Field',
 			'honeypot'			  => 'CFM_Honeypot_Field',
 			'html'				  => 'CFM_HTML_Field',
-			//'last_name'			  => 'CFM_Last_Name_Field',
+			'last_name'			  => 'CFM_Last_Name_Field',
 			'multiselect'		  => 'CFM_Multiselect_Field',
 			'radio'		 		  => 'CFM_Radio_Field',
 			'recaptcha'			  => 'CFM_Recaptcha_Field',

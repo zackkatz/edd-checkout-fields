@@ -9,11 +9,7 @@ class CFM_Radio_Field extends CFM_Field {
 		'multiple'    => true,
 		'is_meta'     => true,  // in object as public (bool) $meta;
 		'forms'       => array(
-			'registration'     => true,
-			'submission'       => true,
-			'vendor-contact'   => true,
-			'profile'          => true,
-			'login'            => true,
+			'checkout'     => true,
 		),
 		'position'    => 'custom',
 		'permissions' => array(
@@ -23,7 +19,6 @@ class CFM_Radio_Field extends CFM_Field {
 		),
 		'template'   => 'radio',
 		'title'       => 'Radio',
-		'phoenix'    => true,
 	);
 
 	/** @var array Characteristics are things that can change from field to field of the same field type. Like the placeholder between two radio fields. Stored in db. */
@@ -40,6 +35,9 @@ class CFM_Radio_Field extends CFM_Field {
 		'placeholder' => '',
 		'options'     => '',
 		'selected'    => '',
+		'meta_type'   => 'payment', // 'payment' or 'user' here if is_meta()
+		'public'          => "public", // denotes whether a field shows in the admin only
+		'show_in_exports' => "export", // denotes whether a field is in the CSV exports
 	);
 
 	public function set_title() {
@@ -49,26 +47,16 @@ class CFM_Radio_Field extends CFM_Field {
 	}
 
 	/** Returns the HTML to render a field in admin */
-	public function render_field_admin( $user_id = -2, $readonly = -2 ) {
+	public function render_field_admin( $user_id = -2, $profile = -2 ) {
 		if ( $user_id === -2 ) {
 			$user_id = get_current_user_id();
 		}
 
-		if ( $readonly === -2 ) {
-			$readonly = $this->readonly;
-		}
-
-		$user_id   = apply_filters( 'cfm_render_radio_field_user_id_admin', $user_id, $this->id );
-		$readonly  = apply_filters( 'cfm_render_radio_field_readonly_admin', $readonly, $user_id, $this->id );
-		$value     = $this->get_field_value_admin( $this->save_id, $user_id, $readonly );
-		$selected = isset( $this->characteristics['selected'] ) ? $this->characteristics['selected'] : '';
-
-		if ( $this->save_id > 0 && ( $this->type !== 'post' || ( $this->type === 'post' && get_post_status( $this->save_id ) !== 'auto-draft' ) ) ) {
-			$selected = $this->get_meta( $this->save_id, $this->name(), $this->type );
-		}
+		
+		$value     = $this->get_field_value_admin( $this->payment_id, $this->user_id );
 		$output        = '';
 		$output     .= sprintf( '<fieldset class="cfm-el %1s %2s %3s">', $this->template(), $this->name(), $this->css() );
-		$output    .= $this->label( $readonly );
+		$output    .= $this->label();
 		ob_start(); ?>
 
 		<div class="cfm-fields">
@@ -77,7 +65,7 @@ class CFM_Radio_Field extends CFM_Field {
 			echo '<ul class="cfm-checkbox-checklist">';
 			foreach ( $this->characteristics['options'] as $option ) { 
 				echo '<li>';?>
-						<input name="<?php echo $this->name(); ?>" type="radio" value="<?php echo esc_attr( $option ); ?>"<?php checked( $selected, $option ); ?> />
+						<input name="<?php echo $this->name(); ?>" type="radio" value="<?php echo esc_attr( $option ); ?>" <?php echo in_array( $option, $value ) ? ' checked="checked"' : ''; ?> /> />
 						<?php _e( $option, 'edd_cfm' ); ?>
 					<?php
 				echo '</li>';
@@ -92,28 +80,20 @@ class CFM_Radio_Field extends CFM_Field {
 	}
 
 	/** Returns the HTML to render a field in frontend */
-	public function render_field_frontend( $user_id = -2, $readonly = -2 ) {
+	public function render_field_frontend( $user_id = -2, $profile = -2 ) {
 		if ( $user_id === -2 ) {
 			$user_id = get_current_user_id();
 		}
 
-		if ( $readonly === -2 ) {
-			$readonly = $this->readonly;
+		$value     = $this->get_field_value_frontend( $this->payment_id, $this->user_id );
+		if ( ! $profile && is_integer( $this->user_id ) && $this->user_id > 0 && ! metadata_exists( 'user', $this->user_id, $this->name() ) ) {
+			$value  = isset( $this->characteristics['selected'] ) ? $this->characteristics['selected'] : array();
 		}
-
-		$user_id   = apply_filters( 'cfm_render_radio_field_user_id_frontend', $user_id, $this->id );
-		$readonly  = apply_filters( 'cfm_render_radio_field_readonly_frontend', $readonly, $user_id, $this->id );
-		$value     = $this->get_field_value_frontend( $this->save_id, $user_id, $readonly );
-		$required  = $this->required( $readonly );
-
-		$selected = isset( $this->characteristics['selected'] ) ? $this->characteristics['selected'] : '';
-
-		if ( $this->save_id > 0 ) {
-			$selected = $this->get_meta( $this->save_id, $this->name(), $this->type );
-		}
+		
+		$required  = $this->required();
 		$output        = '';
 		$output     .= sprintf( '<fieldset class="cfm-el %1s %2s %3s">', $this->template(), $this->name(), $this->css() );
-		$output    .= $this->label( $readonly );
+		$output    .= $this->label();
 		ob_start(); ?>
 
 		<div class="cfm-fields">
@@ -122,7 +102,7 @@ class CFM_Radio_Field extends CFM_Field {
 			echo '<ul class="cfm-checkbox-checklist">';
 			foreach ( $this->characteristics['options'] as $option ) { 
 				echo '<li>';?>
-						<input name="<?php echo $this->name(); ?>" type="radio" value="<?php echo esc_attr( $option ); ?>"<?php checked( $selected, $option ); ?> />
+						<input name="<?php echo $this->name(); ?>" type="radio" value="<?php echo esc_attr( $option ); ?>" <?php echo in_array( $option, $value ) ? ' checked="checked"' : ''; ?> /> />
 						<?php _e( $option, 'edd_cfm' ); ?>
 					<?php
 				echo '</li>';
@@ -136,55 +116,6 @@ class CFM_Radio_Field extends CFM_Field {
 		return $output;
 	}
 
-	public function display_field( $user_id = -2, $single = false ) {
-		if ( $user_id === -2 ) {
-			$user_id = get_current_user_id();
-		}
-		$user_id   = apply_filters( 'cfm_display_' . $this->template() . '_field_user_id', $user_id, $this->id );
-		$value     = $this->get_field_value_frontend( $this->save_id, $user_id );
-		ob_start(); ?>
-
-		<?php if ( $single ) { ?>
-		<table class="cfm-display-field-table">
-		<?php } ?>
-
-			<tr class="cfm-display-field-row <?php echo $this->template(); ?>" id="<?php echo $this->name(); ?>">
-				<td class="cfm-display-field-label"><?php echo $this->get_label(); ?></td>
-				<td class="cfm-display-field-values">
-					<?php
-					if ( ! is_array( $value ) ) {
-						$value = explode( '|', $value );
-					} else {
-						$value = array_map( 'trim', $value );
-					}
-					$value = implode( ', ', $value );
-					echo $value; ?>
-				</td>
-			</tr>
-
-		<?php if ( $single ) { ?>
-		</table>
-		<?php } ?>
-		<?php
-		return ob_get_clean();
-	}
-
-	public function formatted_data( $user_id = -2 ) {
-		if ( $user_id === -2 ) {
-			$user_id = get_current_user_id();
-		}
-
-		$user_id   = apply_filters( 'cfm_fomatted_' . $this->template() . '_field_user_id', $user_id, $this->id );
-		$value     = $this->get_field_value_frontend( $this->save_id, $user_id );
-		if ( ! is_array( $value ) ) {
-			$value = explode( '|', $value );
-		} else {
-			$value = array_map( 'trim', $value );
-		}
-		$value = implode( ', ', $value );
-		return $value;
-	}
-
 	/** Returns the HTML to render a field for the formbuilder */
 	public function render_formbuilder_field( $index = -2, $insert = false ) {
 		$removable = $this->can_remove_from_formbuilder();
@@ -194,7 +125,9 @@ class CFM_Radio_Field extends CFM_Field {
 			<?php CFM_Formbuilder_Templates::hidden_field( "[$index][template]", $this->template() ); ?>
 
 			<?php CFM_Formbuilder_Templates::field_div( $index, $this->name(), $this->characteristics, $insert ); ?>
-				<?php CFM_Formbuilder_Templates::public_radio( $index, $this->characteristics, $this->form_name ); ?>
+				<?php CFM_Formbuilder_Templates::public_radio( $index, $this->characteristics ); ?>
+				<?php CFM_Formbuilder_Templates::export_radio( $index, $this->characteristics ); ?>
+				<?php CFM_Formbuilder_Templates::meta_type_radio( $index, $this->characteristics ); ?>
 				<?php CFM_Formbuilder_Templates::standard( $index, $this ); ?>
 
 				<div class="cfm-form-rows">
@@ -208,29 +141,5 @@ class CFM_Radio_Field extends CFM_Field {
 		</li>
 		<?php
 		return ob_get_clean();
-	}
-
-	public function validate( $values = array(), $save_id = -2, $user_id = -2 ) {
-		$name = $this->name();
-		$return_value = false;
-		if ( !empty( $values[ $name ] ) ) {
-			// if the value is set
-
-		} else {
-			// if required but isn't present
-			if ( $this->required() ) {
-				$return_value = __( 'Please fill out this field.', 'edd_cfm' );
-			}
-		}
-		return apply_filters( 'cfm_validate_' . $this->template() . '_field', $return_value, $values, $name, $save_id, $user_id );
-	}
-
-	public function sanitize( $values = array(), $save_id = -2, $user_id = -2 ) {
-		$name = $this->name();
-		if ( !empty( $values[ $name ] ) ) {
-			$values[ $name ] = trim( $values[ $name ] );
-			$values[ $name ] = sanitize_text_field( $values[ $name ] );
-		}
-		return apply_filters( 'cfm_sanitize_' . $this->template() . '_field', $values, $name, $save_id, $user_id );
 	}
 }
