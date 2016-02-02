@@ -106,7 +106,7 @@ class CFM_Helpers {
 	 * @return int Form ID.
 	 */
 	public function get_form_id_by_name( $name ){
-		if ( $name === $checkout ) {
+		if ( $name === 'checkout' ) {
 			return get_option( 'cfm-checkout-form', -2 );
 		} else {
 			return -2;
