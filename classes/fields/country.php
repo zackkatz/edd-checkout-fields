@@ -53,6 +53,9 @@ class CFM_Country_Field extends CFM_Field {
 		}
 
 		$value     = $this->get_field_value_admin( $this->payment_id, $this->user_id );
+		if ( is_array( $value ) ){
+			$value = $value[0];
+		}
 		$output        = '';
 		$output     .= sprintf( '<fieldset class="cfm-el %1s %2s %3s">', $this->template(), $this->name(), $this->css() );
 		$output    .= $this->label();
@@ -89,7 +92,9 @@ class CFM_Country_Field extends CFM_Field {
 		if ( ! $profile && is_integer( $this->user_id ) && $this->user_id > 0 && ! metadata_exists( 'user', $this->user_id, $this->name() ) ) {
 			$value = $this->characteristics['selected'];
 		}
-		
+		if ( is_array( $value ) ){
+			$value = $value[0];
+		}
 		$output        = '';
 		$output     .= sprintf( '<fieldset class="cfm-el %1s %2s %3s">', $this->template(), $this->name(), $this->css() );
 		$output    .= $this->label();
