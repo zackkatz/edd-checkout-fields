@@ -86,7 +86,7 @@ class CFM_Recaptcha_Field extends CFM_Field {
 
 		$output        = '';
 		$output     .= sprintf( '<fieldset class="cfm-el %1s %2s %3s">', $this->template(), $this->name(), $this->css() );
-		$output        .= $this->label( $readonly );
+		$output        .= $this->label();
 		ob_start(); ?>
 		<div class="cfm-fields">
 			<?php wp_enqueue_script( 'recaptcha', 'https://www.google.com/recaptcha/api.js' ); ?>

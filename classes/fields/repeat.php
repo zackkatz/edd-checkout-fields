@@ -59,7 +59,7 @@ class CFM_Repeat_Field extends CFM_Field {
 		$required  = $this->required();
 		$output        = '';
 		$output     .= sprintf( '<fieldset class="cfm-el %1s %2s %3s">', $this->template(), $this->name(), $this->css() );
-		$output    .= $this->label( $readonly );
+		$output    .= $this->label();
 		ob_start(); ?>
 
 		<div class="cfm-fields">
@@ -162,7 +162,7 @@ class CFM_Repeat_Field extends CFM_Field {
 		$required  = $this->required();
 		$output        = '';
 		$output     .= sprintf( '<fieldset class="cfm-el %1s %2s %3s">', $this->template(), $this->name(), $this->css() );
-		$output    .= $this->label( $readonly );
+		$output    .= $this->label();
 		ob_start(); ?>
 		ob_start(); ?>
 
