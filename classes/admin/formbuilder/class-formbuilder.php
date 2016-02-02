@@ -67,29 +67,25 @@ add_filter( 'post_updated_messages', 'cfm_forms_form_updated_message' );
  * @return void
  */
 function cfm_forms_add_meta_boxes() {
-	$tab = isset( $_REQUEST['tab'] ) ? isset( $_REQUEST['tab'] ) : 'fields';
 	$id = get_the_ID();
 	if ( empty( $id ) ){
 		return;
 	}
-
-	if ( $tab === 'fields' ) {
-		add_meta_box( 'cfm-metabox-editor', __( 'Form Editor', 'edd_cfm' ), 'cfm_formbuilder_fields_metabox', 'edd-checkout-fields', 'normal', 'high' );
-		add_meta_box( 'cfm-metabox-save'  , __( 'Save', 'edd_cfm' ), 'cfm_formbuilder_save', 'edd-checkout-fields', 'side', 'core' );
-		$fname = '';
-		foreach ( EDD_CFM()->load_forms as $name => $class ) {
-			$form = new $class( $name, 'name' );
-			if ( $form->id == $id ) {
-				$fname = $form->title();
-				break;
-			}
+	add_meta_box( 'cfm-metabox-editor', __( 'Form Editor', 'edd_cfm' ), 'cfm_formbuilder_fields_metabox', 'edd-checkout-fields', 'normal', 'high' );
+	add_meta_box( 'cfm-metabox-save'  , __( 'Save', 'edd_cfm' ), 'cfm_formbuilder_save', 'edd-checkout-fields', 'side', 'core' );
+	$fname = '';
+	foreach ( EDD_CFM()->load_forms as $name => $class ) {
+		$form = new $class( $name, 'name' );
+		if ( $form->id == $id ) {
+			$fname = $form->title();
+			break;
 		}
-		$metabox_title = sprintf( __( 'Add %s Form Fields', 'edd_cfm' ), $fname );
-		add_meta_box( 'cfm-metabox-fields-custom', __( 'Add Custom Fields', 'edd_cfm' ), 'cfm_formbuilder_sidebar_custom', 'edd-checkout-fields', 'side'  , 'core' );
-		add_meta_box( 'cfm-metabox-fields-extension', __( 'Add Extension Created Fields', 'edd_cfm' ), 'cfm_formbuilder_sidebar_extension', 'edd-checkout-fields', 'side', 'core' );
-		remove_meta_box( 'submitdiv', 'edd-checkout-fields', 'side' );
-		remove_meta_box( 'slugdiv', 'edd-checkout-fields', 'normal' );
 	}
+	$metabox_title = sprintf( __( 'Add %s Form Fields', 'edd_cfm' ), $fname );
+	add_meta_box( 'cfm-metabox-fields-custom', __( 'Add Custom Fields', 'edd_cfm' ), 'cfm_formbuilder_sidebar_custom', 'edd-checkout-fields', 'side'  , 'core' );
+	add_meta_box( 'cfm-metabox-fields-extension', __( 'Add Extension Created Fields', 'edd_cfm' ), 'cfm_formbuilder_sidebar_extension', 'edd-checkout-fields', 'side', 'core' );
+	remove_meta_box( 'submitdiv', 'edd-checkout-fields', 'side' );
+	remove_meta_box( 'slugdiv', 'edd-checkout-fields', 'normal' );
 }
 add_action( 'add_meta_boxes_edd-checkout-fields', 'cfm_forms_add_meta_boxes' );
 
