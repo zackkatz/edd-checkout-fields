@@ -720,9 +720,6 @@ class CFM_Form {
 
 		if ( !empty( $values ) ) {
 			foreach ( $values as $id => $value ) {
-				if ( isset ( $value['label'] ) ) {
-					$values[$id]['label'] = sanitize_key( $value['label'] );
-				}
 				if ( isset ( $value['name'] ) ) {
 					$values[$id]['name'] = sanitize_key( $value['name'] );
 				}
