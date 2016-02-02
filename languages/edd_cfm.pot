@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
 "Project-Id-Version: Easy Digital Downloads - Checkout Fields Manager\n"
-"POT-Creation-Date: 2016-02-02 01:59-0500\n"
+"POT-Creation-Date: 2016-02-02 04:50-0500\n"
 "PO-Revision-Date: 2015-09-09 19:25-0400\n"
 "Last-Translator: Chris Christoff <support@easydigitaldownloads.com>\n"
 "Language-Team: Chris Christoff <support@easydigitaldownloads.com>\n"
@@ -20,27 +20,27 @@ msgstr ""
 "X-Poedit-SearchPath-0: .\n"
 "X-Poedit-SearchPathExcluded-0: *.js\n"
 
-#: classes/abstracts/class-field.php:465 classes/fields/email.php:121
+#: classes/abstracts/class-field.php:466 classes/fields/email.php:121
 #, php-format
 msgid "Please enter a value for %s."
 msgstr ""
 
-#: classes/abstracts/class-field.php:549 classes/fields/text.php:41
+#: classes/abstracts/class-field.php:550 classes/fields/text.php:41
 msgctxt "CFM Field title translation"
 msgid "Text"
 msgstr ""
 
-#: classes/abstracts/class-field.php:609
+#: classes/abstracts/class-field.php:610
 #: classes/admin/formbuilder/class-formbuilder-templates.php:79
 msgid "Click and Drag to rearrange"
 msgstr ""
 
-#: classes/abstracts/class-field.php:613
+#: classes/abstracts/class-field.php:614
 #: classes/admin/formbuilder/class-formbuilder-templates.php:83
 msgid "Remove"
 msgstr ""
 
-#: classes/abstracts/class-field.php:615
+#: classes/abstracts/class-field.php:616
 #: classes/admin/formbuilder/class-formbuilder-templates.php:85
 msgid "Toggle"
 msgstr ""
@@ -65,12 +65,12 @@ msgstr ""
 msgid "There are no fields on the form."
 msgstr ""
 
-#: classes/abstracts/class-form.php:774 classes/forms/checkout.php:37
+#: classes/abstracts/class-form.php:773 classes/forms/checkout.php:37
 msgctxt "CFM Form title translation"
 msgid "Checkout"
 msgstr ""
 
-#: classes/abstracts/class-form.php:781
+#: classes/abstracts/class-form.php:780
 #, php-format
 msgctxt "%s = CFM Form Name (translated)"
 msgid "%s Form"
@@ -82,7 +82,7 @@ msgstr ""
 msgid "Checkout Fields"
 msgstr ""
 
-#: classes/admin/class-tools.php:51 edd-cfm.php:304
+#: classes/admin/class-tools.php:51 edd-cfm.php:302
 msgid "Checkout Fields Manager"
 msgstr ""
 
@@ -273,7 +273,7 @@ msgid ""
 msgstr ""
 
 #: classes/admin/formbuilder/class-formbuilder-templates.php:574
-msgid "Show in exported CSVS"
+msgid "Show in exported CSVs"
 msgstr ""
 
 #: classes/admin/formbuilder/class-formbuilder-templates.php:577
@@ -296,9 +296,10 @@ msgstr ""
 msgid "User Meta (same value for all orders by a particular user)"
 msgstr ""
 
-#: classes/admin/formbuilder/class-formbuilder-templates.php:621
+#: classes/admin/formbuilder/class-formbuilder-templates.php:619
 msgid ""
-"Warning: Do not change this selection once you set it for a particular field."
+"Warning: Do not change where the meta is stored once you set it for a "
+"particular field."
 msgstr ""
 
 #: classes/admin/formbuilder/class-formbuilder.php:32
@@ -318,53 +319,53 @@ msgstr ""
 msgid "Checkout form restored to revision from %s"
 msgstr ""
 
-#: classes/admin/formbuilder/class-formbuilder.php:77
+#: classes/admin/formbuilder/class-formbuilder.php:74
 msgid "Form Editor"
 msgstr ""
 
-#: classes/admin/formbuilder/class-formbuilder.php:78
-#: classes/admin/formbuilder/class-formbuilder.php:210
-#: classes/admin/formbuilder/class-formbuilder.php:211
+#: classes/admin/formbuilder/class-formbuilder.php:75
+#: classes/admin/formbuilder/class-formbuilder.php:206
+#: classes/admin/formbuilder/class-formbuilder.php:207
 msgid "Save"
 msgstr ""
 
-#: classes/admin/formbuilder/class-formbuilder.php:87
+#: classes/admin/formbuilder/class-formbuilder.php:84
 #, php-format
 msgid "Add %s Form Fields"
 msgstr ""
 
-#: classes/admin/formbuilder/class-formbuilder.php:88
+#: classes/admin/formbuilder/class-formbuilder.php:85
 msgid "Add Custom Fields"
 msgstr ""
 
-#: classes/admin/formbuilder/class-formbuilder.php:89
+#: classes/admin/formbuilder/class-formbuilder.php:86
 msgid "Add Extension Created Fields"
 msgstr ""
 
-#: classes/admin/formbuilder/class-formbuilder.php:130
+#: classes/admin/formbuilder/class-formbuilder.php:126
 #, php-format
 msgid "%s Form"
 msgstr ""
 
-#: classes/admin/formbuilder/class-formbuilder.php:135
+#: classes/admin/formbuilder/class-formbuilder.php:131
 #, php-format
 msgid "Your %s form has no fields"
 msgstr ""
 
-#: classes/admin/formbuilder/class-formbuilder.php:141
+#: classes/admin/formbuilder/class-formbuilder.php:137
 msgid "Toggle All Fields Open/Close"
 msgstr ""
 
-#: classes/admin/formbuilder/class-formbuilder.php:273
-#: classes/admin/formbuilder/class-formbuilder.php:340
+#: classes/admin/formbuilder/class-formbuilder.php:269
+#: classes/admin/formbuilder/class-formbuilder.php:336
 msgid "Click to add to the editor"
 msgstr ""
 
-#: classes/admin/formbuilder/class-formbuilder.php:282
+#: classes/admin/formbuilder/class-formbuilder.php:278
 msgid "There are no custom fields for this form"
 msgstr ""
 
-#: classes/admin/formbuilder/class-formbuilder.php:350
+#: classes/admin/formbuilder/class-formbuilder.php:346
 msgid "You do not have any extensions installed that have a CFM custom field"
 msgstr ""
 
@@ -424,31 +425,43 @@ msgstr ""
 msgid "Parent CFM Form"
 msgstr ""
 
-#: classes/class-setup.php:62
+#: classes/class-setup.php:64
 msgid ""
 "Warning: The checkout form isn't set. Go to EDD->Tools->Checkout Fields "
 "Manager, and reset the checkout form."
 msgstr ""
 
-#: classes/class-setup.php:115 classes/class-setup.php:205
+#: classes/class-setup.php:117 classes/class-setup.php:205
 msgid "Please fix the errors to proceed"
 msgstr ""
 
-#: classes/class-setup.php:117 classes/class-setup.php:207
+#: classes/class-setup.php:119 classes/class-setup.php:207
 msgid "Choose a file"
 msgstr ""
 
-#: classes/class-setup.php:118 classes/class-setup.php:208
+#: classes/class-setup.php:120 classes/class-setup.php:208
 #: classes/fields/file_upload.php:109 classes/fields/file_upload.php:201
 msgid "Insert file URL"
 msgstr ""
 
-#: classes/class-setup.php:119 classes/class-setup.php:209
+#: classes/class-setup.php:121 classes/class-setup.php:209
 msgid "You may not add more than "
 msgstr ""
 
-#: classes/class-setup.php:120 classes/class-setup.php:210
+#: classes/class-setup.php:122 classes/class-setup.php:210
 msgid " files!"
+msgstr ""
+
+#: classes/class-setup.php:419 classes/class-setup.php:426
+msgid "Required to use the reCAPTCHA field."
+msgstr ""
+
+#: classes/class-setup.php:420
+msgid "reCAPTCHA Public Key"
+msgstr ""
+
+#: classes/class-setup.php:427
+msgid "reCAPTCHA Private Key"
 msgstr ""
 
 #: classes/fields/action_hook.php:36
@@ -521,23 +534,23 @@ msgctxt "CFM Field title translation"
 msgid "Country"
 msgstr ""
 
-#: classes/fields/country.php:123
+#: classes/fields/country.php:128
 msgid "Vendor Country"
 msgstr ""
 
-#: classes/fields/country.php:125 classes/fields/multiselect.php:140
+#: classes/fields/country.php:130 classes/fields/multiselect.php:140
 #: classes/fields/select.php:124
 msgid ""
 "First element of the select dropdown. Leave this empty if you don't want to "
 "show this field"
 msgstr ""
 
-#: classes/fields/country.php:138 classes/fields/multiselect.php:153
+#: classes/fields/country.php:143 classes/fields/multiselect.php:153
 #: classes/fields/select.php:136
 msgid "Select Text"
 msgstr ""
 
-#: classes/fields/country.php:143
+#: classes/fields/country.php:148
 msgid "Countries"
 msgstr ""
 
@@ -838,17 +851,17 @@ msgstr ""
 msgid "%s"
 msgstr ""
 
-#: edd-cfm.php:276 edd-cfm.php:290
+#: edd-cfm.php:274 edd-cfm.php:288
 msgid "Cheatin&#8217; huh?"
 msgstr ""
 
-#: edd-cfm.php:469
+#: edd-cfm.php:466
 msgid ""
 "<strong>Notice:</strong> Easy Digital Downloads Checkout Fields Manager "
 "requires Easy Digital Downloads 2.5 or higher in order to function properly."
 msgstr ""
 
-#: edd-cfm.php:487
+#: edd-cfm.php:484
 msgid ""
 "<strong>Notice:</strong> Easy Digital Downloads Checkout Fields Manager "
 "requires WordPress 4.2 or higher in order to function properly."
