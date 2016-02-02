@@ -25,7 +25,6 @@ class CFM_Multiselect_Field extends CFM_Field {
 	public $characteristics = array(
 		'name'        => '',
 		'template'   => 'multiselect',
-		'public'      => true,
 		'required'    => false,
 		'label'       => '',
 		'css'         => '',

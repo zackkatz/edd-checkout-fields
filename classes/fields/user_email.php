@@ -30,7 +30,6 @@ class FES_User_Email_Field extends FES_Field {
 	public $characteristics = array(
 		'name'        => 'user_email',
 		'template'   => 'user_email',
-		'public'      => true,
 		'required'    => true,
 		'label'       => '',
 		'css'         => '',
@@ -91,7 +90,9 @@ class FES_User_Email_Field extends FES_Field {
 		$output        = '';
 		$output     .= sprintf( '<fieldset class="fes-el %1s %2s %3s">', $this->template(), $this->name(), $this->css() );
 		$output    .= $this->label( $readonly );
-		ob_start(); ?>
+		ob_start(); 
+		?><?php do_action( 'edd_purchase_form_before_email' ); ?>
+<?php do_action( 'edd_purchase_form_after_email' ); ?>
 		<div class="fes-fields">
 			<input id="<?php echo $this->name(); ?>" type="email" class="email" data-required="<?php echo $required; ?>" data-type="text"<?php $this->required_html5( $readonly ); ?> name="<?php echo esc_attr( $this->name() ); ?>" placeholder="<?php echo esc_attr( $this->placeholder() ); ?>" value="<?php echo esc_attr( $value ) ?>" size="<?php echo esc_attr( $this->size() ) ?>" />
 		</div>

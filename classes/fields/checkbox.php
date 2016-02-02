@@ -25,7 +25,6 @@ class CFM_Checkbox_Field extends CFM_Field {
 	public $characteristics = array(
 		'name'        => '',
 		'template'    => 'checkbox',
-		'public'      => true,
 		'required'    => false,
 		'label'       => '',
 		'css'         => '',

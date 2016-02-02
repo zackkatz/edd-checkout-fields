@@ -30,7 +30,6 @@ class CFM_File_Upload_Field extends CFM_Field {
 	public $characteristics = array(
 		'name'        => '',
 		'template'    => 'file_upload',
-		'public'      => true,
 		'required'    => false,
 		'label'       => '',
 		'css'         => '',

@@ -19,7 +19,6 @@ class CFM_Text_Field extends CFM_Field {
 		),
 		'template'   => 'text',
 		'title'       => 'Text',
-		'export'     => true,
 	);
 
 	/** @var array Characteristics are things that can change from field to field of the same field type. Like the placeholder between two text fields. Stored in db. */
@@ -34,8 +33,8 @@ class CFM_Text_Field extends CFM_Field {
 		'help'        => '',
 		'placeholder' => '',
 		'meta_type'   => 'payment', // 'payment' or 'user' here if is_meta()
-		'public'          => true, // denotes whether a field shows in the admin only
-		'show_in_exports' => true, // denotes whether a field is in the CSV exports
+		'public'          => "public", // denotes whether a field shows in the admin only
+		'show_in_exports' => "export", // denotes whether a field is in the CSV exports
 	);
 
 	public function set_title() {
@@ -45,25 +44,19 @@ class CFM_Text_Field extends CFM_Field {
 	}
 
 	/** Returns the HTML to render a field in admin */
-	public function render_field_admin( $user_id = -2, $readonly = -2 ) {
+	public function render_field_admin( $user_id = -2, $profile = -2 ) {
 		if ( $user_id === -2 ) {
 			$user_id = get_current_user_id();
 		}
-
-		if ( $readonly === -2 ) {
-			$readonly = $this->readonly;
-		}
-
-		$user_id   = apply_filters( 'cfm_render_text_field_user_id_admin', $user_id, $this->id );
-		$readonly  = apply_filters( 'cfm_render_text_field_readonly_admin', $readonly, $user_id, $this->id );
-		$value     = $this->get_field_value_admin( $this->save_id, $user_id, $readonly );
+		
+		$value     = $this->get_field_value_admin( $this->payment_id, $this->user_id );
 
 		$output        = '';
 		$output     .= sprintf( '<fieldset class="cfm-el %1s %2s %3s">', $this->template(), $this->name(), $this->css() );
-		$output    .= $this->label( $readonly );
+		$output    .= $this->label();
 		ob_start(); ?>
 		<div class="cfm-fields">
-		   <input class="textfield<?php echo $this->required_class( $readonly ); ?>" id="<?php echo $this->name(); ?>" type="text" data-required="false" data-type="text" name="<?php echo esc_attr( $this->name() ); ?>" placeholder="<?php echo esc_attr( $this->placeholder() ); ?>" value="<?php echo esc_attr( $value ) ?>" size="<?php echo esc_attr( $this->size() ); ?>" <?php echo $readonly ? 'disabled' : ''; ?> />
+		   <input class="textfield<?php echo $this->required_class( ); ?>" id="<?php echo $this->name(); ?>" type="text" data-required="false" data-type="text" name="<?php echo esc_attr( $this->name() ); ?>" placeholder="<?php echo esc_attr( $this->placeholder() ); ?>" value="<?php echo esc_attr( $value ) ?>" size="<?php echo esc_attr( $this->size() ); ?>"/>
 		</div>
 		<?php
 		$output .= ob_get_clean();
@@ -72,26 +65,20 @@ class CFM_Text_Field extends CFM_Field {
 	}
 
 	/** Returns the HTML to render a field in frontend */
-	public function render_field_frontend( $user_id = -2, $readonly = -2 ) {
+	public function render_field_frontend( $user_id = -2, $profile = -2 ) {
 		if ( $user_id === -2 ) {
 			$user_id = get_current_user_id();
 		}
 
-		if ( $readonly === -2 ) {
-			$readonly = $this->readonly;
-		}
-
-		$user_id   = apply_filters( 'cfm_render_text_field_user_id_frontend', $user_id, $this->id );
-		$readonly  = apply_filters( 'cfm_render_text_field_readonly_frontend', $readonly, $user_id, $this->id );
-		$value     = $this->get_field_value_frontend( $this->save_id, $user_id, $readonly );
-		$required  = $this->required( $readonly );
+		$value     = $this->get_field_value_frontend( $this->payment_id, $this->user_id );
+		$required  = $this->required();
 
 		$output        = '';
 		$output     .= sprintf( '<fieldset class="cfm-el %1s %2s %3s">', $this->template(), $this->name(), $this->css() );
-		$output    .= $this->label( $readonly );
+		$output    .= $this->label();
 		ob_start(); ?>
 		<div class="cfm-fields">
-		   <input class="textfield<?php echo $this->required_class( $readonly ); ?>" id="<?php echo $this->name(); ?>" type="text" data-required="<?php echo $required; ?>" data-type="text"<?php $this->required_html5( $readonly ); ?> name="<?php echo esc_attr( $this->name() ); ?>" placeholder="<?php echo esc_attr( $this->placeholder() ); ?>" value="<?php echo esc_attr( $value ) ?>" size="<?php echo esc_attr( $this->size() ); ?>" <?php echo $readonly ? 'disabled' : ''; ?> />
+		   <input class="textfield<?php echo $this->required_class(); ?>" id="<?php echo $this->name(); ?>" type="text" data-required="<?php echo $required; ?>" data-type="text"<?php $this->required_html5(); ?> name="<?php echo esc_attr( $this->name() ); ?>" placeholder="<?php echo esc_attr( $this->placeholder() ); ?>" value="<?php echo esc_attr( $value ) ?>" size="<?php echo esc_attr( $this->size() ); ?>"/>
 		</div>
 		<?php
 		$output .= ob_get_clean();
@@ -108,7 +95,9 @@ class CFM_Text_Field extends CFM_Field {
 			<?php CFM_Formbuilder_Templates::hidden_field( "[$index][template]", $this->template() ); ?>
 
 			<?php CFM_Formbuilder_Templates::field_div( $index, $this->name(), $this->characteristics, $insert ); ?>
-				<?php CFM_Formbuilder_Templates::public_radio( $index, $this->characteristics, $this->form_name ); ?>
+				<?php CFM_Formbuilder_Templates::public_radio( $index, $this->characteristics ); ?>
+				<?php CFM_Formbuilder_Templates::export_radio( $index, $this->characteristics ); ?>
+				<?php CFM_Formbuilder_Templates::meta_type_radio( $index, $this->characteristics ); ?>
 				<?php CFM_Formbuilder_Templates::standard( $index, $this ); ?>
 				<?php CFM_Formbuilder_Templates::common_text( $index, $this->characteristics ); ?>
 			</div>

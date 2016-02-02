@@ -9,11 +9,7 @@ class CFM_Select_Field extends CFM_Field {
 		'multiple'    => true,
 		'is_meta'     => true,  // in object as public (bool) $meta;
 		'forms'       => array(
-			'registration'     => true,
-			'submission'       => true,
-			'vendor-contact'   => true,
-			'profile'          => true,
-			'login'            => true,
+			'checkout'     => true,
 		),
 		'position'    => 'custom',
 		'permissions' => array(
@@ -23,14 +19,12 @@ class CFM_Select_Field extends CFM_Field {
 		),
 		'template'   => 'select',
 		'title'       => 'Select',
-		'phoenix'    => true,
 	);
 
 	/** @var array Characteristics are things that can change from field to field of the same field type. Like the placeholder between two text fields. Stored in db. */
 	public $characteristics = array(
 		'name'        => '',
 		'template'   => 'select',
-		'public'      => true,
 		'required'    => false,
 		'label'       => '',
 		'css'         => '',
@@ -40,7 +34,10 @@ class CFM_Select_Field extends CFM_Field {
 		'placeholder' => '',
 		'first'       => '- select -',
 		'selected'    => '',
-		'options'     => ''
+		'options'     => '',
+		'meta_type'   => 'payment', // 'payment' or 'user' here if is_meta()
+		'public'          => "public", // denotes whether a field shows in the admin only
+		'show_in_exports' => "export", // denotes whether a field is in the CSV exports
 	);
 
 	public function set_title() {
@@ -50,42 +47,28 @@ class CFM_Select_Field extends CFM_Field {
 	}
 
 	/** Returns the HTML to render a field in admin */
-	public function render_field_admin( $user_id = -2, $readonly = -2 ) {
+	public function render_field_admin( $user_id = -2, $profile = -2 ) {
 		if ( $user_id === -2 ) {
 			$user_id = get_current_user_id();
 		}
 
-		if ( $readonly === -2 ) {
-			$readonly = $this->readonly;
-		}
-
-		$user_id   = apply_filters( 'cfm_render_select_field_user_id_admin', $user_id, $this->id );
-		$readonly  = apply_filters( 'cfm_render_select_field_readonly_admin', $readonly, $user_id, $this->id );
-		$value     = $this->get_field_value_admin( $this->save_id, $user_id, $readonly );
-
-		if ( $this->save_id > 0 ) {
-			$selected = $this->get_meta( $this->save_id, $this->name(), $this->type );
-		} else {
-			$selected = isset( $this->characteristics['selected'] ) ? $this->characteristics['selected'] : '';
-		}
-
-		$data_type = 'select';
-		$css       = '';
+		
+		$value     = $this->get_field_value_admin( $this->payment_id, $this->user_id );
 		$output        = '';
 		$output     .= sprintf( '<fieldset class="cfm-el %1s %2s %3s">', $this->template(), $this->name(), $this->css() );
-		$output    .= $this->label( $readonly );
+		$output    .= $this->label();
 		ob_start(); ?>
 		<div class="cfm-fields">
 
-			<select<?php echo $css; ?> name="<?php echo $this->name(); ?>[]" data-required="false" data-type="<?php echo $data_type; ?>" >
+			<select name="<?php echo $this->name(); ?>[]" data-required="false" data-type="select" >
 				<?php if ( !empty( $this->characteristics['first'] ) ) { ?>
 					<option value=""><?php echo $this->characteristics['first']; ?></option>
 				<?php } ?>
 				<?php
 		if ( $this->characteristics['options'] && count( $this->characteristics['options'] ) > 0 ) {
 			foreach ( $this->characteristics['options'] as $option ) {
-				$current_select = selected( $selected, $option, false ); ?>
-							<option value="<?php echo esc_attr( $option ); ?>"<?php echo $current_select; ?>><?php echo $option; ?></option><?php
+				$current_select = selected( $value, $option, false ); ?>
+				<option value="<?php echo esc_attr( $option ); ?>"<?php echo $current_select; ?>><?php echo $option; ?></option><?php
 			}
 		} ?>
 			</select>
@@ -97,42 +80,31 @@ class CFM_Select_Field extends CFM_Field {
 	}
 
 	/** Returns the HTML to render a field in frontend */
-	public function render_field_frontend( $user_id = -2, $readonly = -2 ) {
+	public function render_field_frontend( $user_id = -2, $profile = -2 ) {
 		if ( $user_id === -2 ) {
 			$user_id = get_current_user_id();
 		}
 
-		if ( $readonly === -2 ) {
-			$readonly = $this->readonly;
+		$value     = $this->get_field_value_frontend( $this->payment_id, $this->user_id );
+		if ( ! $profile && is_integer( $this->user_id ) && $this->user_id > 0 && ! metadata_exists( 'user', $this->user_id, $this->name() ) ) {
+			$value  = isset( $this->characteristics['selected'] ) ? $this->characteristics['selected'] : array();
 		}
-
-		$user_id   = apply_filters( 'cfm_render_select_field_user_id_frontend', $user_id, $this->id );
-		$readonly  = apply_filters( 'cfm_render_select_field_readonly_frontend', $readonly, $user_id, $this->id );
-		$value     = $this->get_field_value_frontend( $this->save_id, $user_id, $readonly );
-		$required  = $this->required( $readonly );
-
-		if ( $this->save_id > 0 ) {
-			$selected = $this->get_meta( $this->save_id, $this->name(), $this->type );
-		} else {
-			$selected = isset( $this->characteristics['selected'] ) ? $this->characteristics['selected'] : '';
-		}
-
-		$data_type = 'select';
-		$css       = '';
+		
+		$required  = $this->required();
 		$output        = '';
 		$output     .= sprintf( '<fieldset class="cfm-el %1s %2s %3s">', $this->template(), $this->name(), $this->css() );
-		$output    .= $this->label( $readonly );
+		$output    .= $this->label();
 		ob_start(); ?>
 		<div class="cfm-fields">
 
-			<select<?php echo $css; ?> name="<?php echo $this->name(); ?>[]" data-required="<?php echo $required; ?>" data-type="<?php echo $data_type; ?>"<?php $this->required_html5( $readonly ); ?>>
+			<select name="<?php echo $this->name(); ?>[]" data-required="<?php echo $required; ?>" data-type="select"<?php $this->required_html5(); ?>>
 				<?php if ( !empty( $this->characteristics['first'] ) ) { ?>
 					<option value=""><?php echo $this->characteristics['first']; ?></option>
 				<?php } ?>
 				<?php
 				if ( $this->characteristics['options'] && count( $this->characteristics['options'] ) > 0 ) {
 					foreach ( $this->characteristics['options'] as $option ) {
-						$current_select = selected( $selected, $option, false ); ?>
+						$current_select = selected( $value, $option, false ); ?>
 						<option value="<?php echo esc_attr( $option ); ?>"<?php echo $current_select; ?>><?php echo $option; ?></option><?php
 					}
 				} ?>
@@ -155,7 +127,9 @@ class CFM_Select_Field extends CFM_Field {
 			<?php $this->legend( $this->title(), $this->get_label(), $removable ); ?>
 			<?php CFM_Formbuilder_Templates::hidden_field( "[$index][template]", $this->template() ); ?>
 			<?php CFM_Formbuilder_Templates::field_div( $index, $this->name(), $this->characteristics, $insert ); ?>
-				<?php CFM_Formbuilder_Templates::public_radio( $index, $this->characteristics, $this->form_name ); ?>
+				<?php CFM_Formbuilder_Templates::public_radio( $index, $this->characteristics ); ?>
+				<?php CFM_Formbuilder_Templates::export_radio( $index, $this->characteristics ); ?>
+				<?php CFM_Formbuilder_Templates::meta_type_radio( $index, $this->characteristics ); ?>
 				<?php CFM_Formbuilder_Templates::standard( $index, $this ); ?>
 
 				<div class="cfm-form-rows">
@@ -176,22 +150,20 @@ class CFM_Select_Field extends CFM_Field {
 		return ob_get_clean();
 	}
 
-	public function validate( $values = array(), $save_id = -2, $user_id = -2 ) {
+	public function validate( $values = array(), $payment_id = -2, $user_id = -2 ) {
 		$name = $this->name();
 		$return_value = false;
 		if ( ! empty( $values[ $name ] ) &&  ( empty( $this->characteristics['placeholder'] ) || ( $values[ $name ] !== $this->characteristics['placeholder'] && $values[ $name ] !== trim( $this->characteristics['placeholder'] ) ) ) ) {
 			// if the value is set
-
 		} else {
 			// if required but isn't present
 			if ( $this->required() ) {
-				$return_value = __( 'Please fill out this field.', 'edd_cfm' );
+				edd_set_error( 'invalid_' . $this->id, sprintf( __( 'Please select a value for %s.', 'edd_cfm' ), $this->get_label() ) );
 			}
 		}
-		return apply_filters( 'cfm_validate_' . $this->template() . '_field', $return_value, $values, $name, $save_id, $user_id );
 	}
 
-	public function sanitize( $values = array(), $save_id = -2, $user_id = -2 ) {
+	public function sanitize( $values = array(), $payment_id = -2, $user_id = -2 ) {
 		$name = $this->name();
 		if ( ! empty( $values[ $name ][0] ) ) {
 			$values[ $name ] = trim( $values[ $name ][0] );
@@ -199,6 +171,6 @@ class CFM_Select_Field extends CFM_Field {
 		} else {
 			$values[ $name ] = '';
 		}
-		return apply_filters( 'cfm_sanitize_' . $this->template() . '_field', $values, $name, $save_id, $user_id );
+		return apply_filters( 'cfm_sanitize_' . $this->template() . '_field', $values, $name, $payment_id, $user_id );
 	}
 }

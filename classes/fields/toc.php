@@ -9,11 +9,7 @@ class CFM_Toc_Field extends CFM_Field {
 		'multiple'    => false,
 		'is_meta'     => true,  // in object as public (bool) $meta;
 		'forms'       => array(
-			'registration'     => true,
-			'submission'       => true,
-			'vendor-contact'   => false,
-			'profile'          => true,
-			'login'            => false,
+			'checkout'     => true,
 		),
 		'position'    => 'custom',
 		'permissions' => array(
@@ -23,18 +19,19 @@ class CFM_Toc_Field extends CFM_Field {
 		),
 		'template'   => 'toc',
 		'title'       => 'Terms & Cond.',
-		'phoenix'    => true,
 	);
 
 	/** @var array Characteristics are things that can change from field to field of the same field type. Like the placeholder between two email fields. Stored in db. */
 	public $characteristics = array(
 		'name'        => 'cfm_accept_toc',
 		'template'   => 'toc',
-		'public'      => false,
 		'required'    => true,
 		'label'       => '',
 		'css'         => '',
 		'description' => '',
+		'meta_type'   => 'payment', // 'payment' or 'user' here if is_meta()
+		'public'          => "public", // denotes whether a field shows in the admin only
+		'show_in_exports' => "noexport", // denotes whether a field is in the CSV exports
 	);
 
 	public function set_title() {
@@ -44,68 +41,36 @@ class CFM_Toc_Field extends CFM_Field {
 	}
 
 	public function extending_constructor( ) {
-		// exclude from render in admin
-		add_filter( 'cfm_templates_to_exclude_render_submission_form_admin', array( $this, 'exclude_field' ), 10, 1  );
-		add_filter( 'cfm_templates_to_exclude_render_profile_form_admin', array( $this, 'exclude_field' ), 10, 1  );
-		add_filter( 'cfm_templates_to_exclude_render_registration_form_admin', array( $this, 'exclude_field' ), 10, 1  );
-		add_filter( 'cfm_templates_to_exclude_render_profile_form_admin', array( $this, 'exclude_field' ), 10, 1  );
-		add_filter( 'cfm_templates_to_exclude_render_vendor_contact_form_admin', array( $this, 'exclude_field' ), 10, 1  );
-
-		// exclude from sanitizing in admin
-		add_filter( 'cfm_templates_to_exclude_sanitize_submission_form_admin', array( $this, 'exclude_field' ), 10, 1  );
-		add_filter( 'cfm_templates_to_exclude_sanitize_profile_form_admin', array( $this, 'exclude_field' ), 10, 1  );
-		add_filter( 'cfm_templates_to_exclude_sanitize_registration_form_admin', array( $this, 'exclude_field' ), 10, 1  );
-		add_filter( 'cfm_templates_to_exclude_sanitize_profile_form_admin', array( $this, 'exclude_field' ), 10, 1  );
-		add_filter( 'cfm_templates_to_exclude_sanitize_vendor_contact_form_admin', array( $this, 'exclude_field' ), 10, 1  );
-
-		// exclude from validating in admin
-		add_filter( 'cfm_templates_to_exclude_validate_submission_form_admin', array( $this, 'exclude_field' ), 10, 1  );
-		add_filter( 'cfm_templates_to_exclude_validate_profile_form_admin', array( $this, 'exclude_field' ), 10, 1  );
-		add_filter( 'cfm_templates_to_exclude_validate_registration_form_admin', array( $this, 'exclude_field' ), 10, 1  );
-		add_filter( 'cfm_templates_to_exclude_validate_profile_form_admin', array( $this, 'exclude_field' ), 10, 1  );
-		add_filter( 'cfm_templates_to_exclude_validate_vendor_contact_form_admin', array( $this, 'exclude_field' ), 10, 1  );
-
-		// exclude from saving in admin
-		add_filter( 'cfm_templates_to_exclude_save_submission_form_admin', array( $this, 'exclude_field' ), 10, 1  );
-		add_filter( 'cfm_templates_to_exclude_save_profile_form_admin', array( $this, 'exclude_field' ), 10, 1  );
-		add_filter( 'cfm_templates_to_exclude_save_registration_form_admin', array( $this, 'exclude_field' ), 10, 1  );
-		add_filter( 'cfm_templates_to_exclude_save_profile_form_admin', array( $this, 'exclude_field' ), 10, 1  );
-		add_filter( 'cfm_templates_to_exclude_save_vendor_contact_form_admin', array( $this, 'exclude_field' ), 10, 1  );				
+		add_filter( 'cfm_templates_to_exclude_render_checkout_form_admin', array( $this, 'exclude_field_admin' ), 10, 1  );
+		add_filter( 'cfm_templates_to_exclude_sanitize_checkout_form_admin', array( $this, 'exclude_field_admin' ), 10, 1  );
+		add_filter( 'cfm_templates_to_exclude_validate_checkout_form_admin', array( $this, 'exclude_field_admin' ), 10, 1  );
+		add_filter( 'cfm_templates_to_exclude_save_checkout_form_admin', array( $this, 'exclude_field_admin' ), 10, 1  );
 	}
 
-	public function exclude_field( $fields ) {
+	public function exclude_field_admin( $fields ) {
 		array_push( $fields, 'toc' );
 		return $fields;
 	}	
 
 	/** Returns the Toc to render a field in admin */
-	public function render_field_admin( $user_id = -2, $readonly = -2 ) {
+	public function render_field_admin( $user_id = -2, $profile = -2 ) {
 		return '';
 	}
 
 	/** Returns the Toc to render a field in frontend */
-	public function render_field_frontend( $user_id = -2, $readonly = -2 ) {
+	public function render_field_frontend( $user_id = -2, $profile = -2 ) {
 		if ( $user_id === -2 ) {
 			$user_id = get_current_user_id();
 		}
 
-		if ( $readonly === -2 ) {
-			$readonly = $this->readonly;
-		}
+		$value = $this->get_field_value_admin( $this->payment_id, $this->user_id );
 
-		$value = get_user_meta( $user_id, 'cfm_accept_toc', true );
-
-		if ( $value || $readonly ) {
+		if ( $value ) {
 			return '';
 		}
-
-		$user_id   = apply_filters( 'cfm_render_toc_field_user_id_frontend', $user_id, $this->id );
-		$readonly  = apply_filters( 'cfm_render_toc_field_readonly_frontend', $readonly, $user_id, $this->id );
-		$value     = $this->get_field_value_frontend( $this->save_id, $user_id, $readonly );
-
 		$output        = '';
 		$output     .= sprintf( '<fieldset class="cfm-el %1s %2s %3s">', $this->template(), $this->name(), $this->css() );
-		$output    .= $this->label( $readonly );
+		$output    .= $this->label();
 		ob_start(); ?>
 		<div class="cfm-label">
 			&nbsp;
@@ -113,7 +78,7 @@ class CFM_Toc_Field extends CFM_Field {
 
 		<div class="cfm-fields">
 			<span data-required="yes" data-type="radio"></span>
-			<textarea rows="10" cols="40" disabled="disabled" name="toc"><?php echo $this->characteristics['description'] ?></textarea>
+			<?php echo $this->characteristics['description'] ?>
 			<label>
 				<input type="checkbox" name="cfm_accept_toc" required="required" /> <?php echo $this->get_label() ?>
 			</label>
@@ -160,7 +125,7 @@ class CFM_Toc_Field extends CFM_Field {
 		return ob_get_clean();
 	}
 
-	public function validate( $values = array(), $save_id = -2, $user_id = -2 ) {
+	public function validate( $values = array(), $payment_id = -2, $user_id = -2 ) {
 		if ( $user_id === -2 ) {
 			$user_id = get_current_user_id();
 		}
@@ -169,27 +134,18 @@ class CFM_Toc_Field extends CFM_Field {
 			// if the value is set
 			// no specific validation
 		} else {
-			$value = get_user_meta( $user_id, 'cfm_accept_toc', true );
-			if ( !$value && !$this->readonly ) {
-				return __( 'Please check this box', 'edd_cfm' );
+			$value = $this->get_field_value_frontend( $this->payment_id, $this->user_id );
+			if ( !$value && empty( $values[ $name ] ) ) {
+				edd_set_error( 'invalid_' . $this->id, sprintf( __( 'Please agree to %s.', 'edd_cfm' ), $this->get_label() ) );
 			}
 		}
-		return apply_filters( 'cfm_validate_' . $this->template() . '_field', false, $values, $name, $save_id, $user_id );
 	}
 
-	public function sanitize( $values = array(), $save_id = -2, $user_id = -2 ) {
+	public function sanitize( $values = array(), $payment_id = -2, $user_id = -2 ) {
 		$name = $this->name();
-		if ( !empty( $values[ $name ] ) ) {
-			$values[ $name ] = 1;
+		if ( ! empty( $values[ $name ] ) ) {
+			$values[ $name ] = 'accepted';
 		}
-		return apply_filters( 'cfm_sanitize_' . $this->template() . '_field', $values, $name, $save_id, $user_id );
+		return apply_filters( 'cfm_sanitize_' . $this->template() . '_field', $values, $name, $payment_id, $user_id );
 	}
-
-	public function save_field_admin( $save_id = -2, $value = '', $user_id = -2 ) {
-		update_user_meta( $user_id, 'cfm_accept_toc', 'accepted' );
-	}
-
-	public function save_field_frontend( $save_id = -2, $value = '', $user_id = -2 ) {
-		update_user_meta( $user_id, 'cfm_accept_toc', 'accepted' );
-	}		
 }

@@ -25,7 +25,6 @@ class CFM_Radio_Field extends CFM_Field {
 	public $characteristics = array(
 		'name'        => '',
 		'template'   => 'radio',
-		'public'      => true,
 		'required'    => false,
 		'label'       => '',
 		'css'         => '',

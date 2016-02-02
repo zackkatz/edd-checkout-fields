@@ -25,7 +25,6 @@ class CFM_Email_Field extends CFM_Field {
 	public $characteristics = array(
 		'name'        => '',
 		'template'    => 'email',
-		'public'      => true,
 		'required'    => false,
 		'label'       => '',
 		'css'         => '',

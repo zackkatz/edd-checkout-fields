@@ -25,7 +25,6 @@ class CFM_HTML_Field extends CFM_Field {
 	public $characteristics = array(
 		'name'        => '',
 		'template'   => 'html',
-		'public'      => true,
 		'required'    => false,
 		'label'       => '',
 		'html'        => '',

@@ -25,7 +25,6 @@ class CFM_Country_Field extends CFM_Field {
 	public $characteristics = array(
 		'name'        => '',
 		'template'   => 'country',
-		'public'      => true,
 		'required'    => false,
 		'label'       => '',
 		'css'         => '',

@@ -25,7 +25,6 @@ class CFM_Date_Field extends CFM_Field {
 	public $characteristics = array(
 		'name'        => '',
 		'template'    => 'date',
-		'public'      => true,
 		'required'    => false,
 		'label'       => '',
 		'format'    => 'mm/dd/yy',
