@@ -256,8 +256,6 @@ class CFM_Setup {
 			wp_enqueue_style( 'cfm-admin-css', cfm_plugin_url . 'assets/css/admin.css' );
 			wp_enqueue_style( 'jquery-smallipop', cfm_plugin_url . 'assets/css/jquery.smallipop.css' );
 			wp_enqueue_style( 'jquery-ui-core', cfm_plugin_url . 'assets/css/jquery-ui-1.9.1.custom.css' );
-			wp_enqueue_style( 'cfm-sw-css', cfm_plugin_url . 'assets/css/spin.css' );
-			wp_enqueue_style( 'cfm-spin-css', cfm_plugin_url . 'assets/css/sw.css' );
 			wp_register_style( 'jquery-chosen', EDD_PLUGIN_URL . 'assets/css/chosen.css', array(), EDD_VERSION );
 			wp_enqueue_style( 'jquery-chosen' );
 		}
