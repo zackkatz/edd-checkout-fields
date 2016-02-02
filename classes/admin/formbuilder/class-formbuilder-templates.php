@@ -535,7 +535,7 @@ class CFM_Formbuilder_Templates {
 				<label><?php _e( 'Show field on frontend checkout field', 'edd_cfm' ); ?></label>
 				<div class="cfm-form-sub-fields">
 					<label for="<?php esc_attr_e( $field_name ); ?>">
-						<input type="radio" id="<?php echo esc_attr( $field_name ); ?>" name="<?php echo esc_attr( $field_name ); ?>" value="public" <?php checked( 'public' == $field_value ); ?> data-type="label" class="smallipopInput" /><?php _e( 'Show this in both the frontend and admin (default)', 'edd_cfm' ); ?>
+						<input type="radio" id="<?php echo esc_attr( $field_name ); ?>" name="<?php echo esc_attr( $field_name ); ?>" value="public" <?php checked( 'public' == $field_value ); ?> data-type="label" class="smallipopInput" /><?php _e( 'Show this in both the frontend and admin (default)', 'edd_cfm' ); ?><br />
 						<input type="radio" id="<?php echo esc_attr( $field_name ); ?>" name="<?php echo esc_attr( $field_name ); ?>" value="admin" <?php checked( 'admin' == $field_value ); ?> data-type="label" class="smallipopInput" /><?php _e( 'Show this field only in the admin. Useful for storing admin-only order data', 'edd_cfm' ); ?>
 						
 					</label>
@@ -574,7 +574,7 @@ class CFM_Formbuilder_Templates {
 				<label><?php _e( 'Show in exported CSVS', 'edd_cfm' ); ?></label>
 				<div class="cfm-form-sub-fields">
 					<label for="<?php esc_attr_e( $field_name ); ?>">
-						<input type="radio" id="<?php echo esc_attr( $field_name ); ?>" name="<?php echo esc_attr( $field_name ); ?>" value="export" <?php checked( 'export' == $field_value ); ?> data-type="label" class="smallipopInput" /><?php _e( 'Show this field in CSV exports (default)', 'edd_cfm' ); ?>
+						<input type="radio" id="<?php echo esc_attr( $field_name ); ?>" name="<?php echo esc_attr( $field_name ); ?>" value="export" <?php checked( 'export' == $field_value ); ?> data-type="label" class="smallipopInput" /><?php _e( 'Show this field in CSV exports (default)', 'edd_cfm' ); ?><br />
 						<input type="radio" id="<?php echo esc_attr( $field_name ); ?>" name="<?php echo esc_attr( $field_name ); ?>" value="noexport" <?php checked( 'noexport' == $field_value ); ?> data-type="label" class="smallipopInput" /><?php _e( 'Do not show this field in CSV exports', 'edd_cfm' ); ?>
 						
 					</label>
@@ -614,11 +614,11 @@ class CFM_Formbuilder_Templates {
 				<label><?php _e( 'Where should this meta be stored', 'edd_cfm' ); ?></label>
 				<div class="cfm-form-sub-fields">
 					<label for="<?php esc_attr_e( $field_name ); ?>">
-						<input type="radio" id="<?php echo esc_attr( $field_name ); ?>" name="<?php echo esc_attr( $field_name ); ?>" value="payment" <?php checked( 'payment' == $field_value ); ?> data-type="label" class="smallipopInput" /><?php _e( 'Payment Meta (different values for all orders by a particular user)', 'edd_cfm' ); ?>
+						<input type="radio" id="<?php echo esc_attr( $field_name ); ?>" name="<?php echo esc_attr( $field_name ); ?>" value="payment" <?php checked( 'payment' == $field_value ); ?> data-type="label" class="smallipopInput" /><?php _e( 'Payment Meta (different values for all orders by a particular user)', 'edd_cfm' ); ?> <br />
 						<input type="radio" id="<?php echo esc_attr( $field_name ); ?>" name="<?php echo esc_attr( $field_name ); ?>" value="user" <?php checked( 'user' == $field_value ); ?> data-type="label" class="smallipopInput" /><?php _e( 'User Meta (same value for all orders by a particular user)', 'edd_cfm' ); ?>
-						
+						<br /><div class="error"><p><?php _e( 'Warning: Do not change where the meta is stored once you set it for a particular field.', 'edd_cfm' ); ?></p></div>
 					</label>
-					<?php _e( 'Warning: Do not change this selection once you set it for a particular field.', 'edd_cfm' ); ?>
+					
 				</div>
 			</div>
 			<?php
