@@ -154,9 +154,7 @@ class CFM_Setup {
 			// CFM outputs minified scripts by default on the frontend. To load full versions, hook into this and return empty string.
 			$minify = ( defined( 'WP_DEBUG' ) && WP_DEBUG ) || ( defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ) ? '' : '.min';
 			$minify = apply_filters( 'cfm_output_minified_versions', $minify );
-			if ( EDD_CFM()->helper->get_option( 'cfm-use-css', true ) ) {
-				wp_enqueue_style( 'cfm-css', cfm_plugin_url . 'assets/css/frontend' . $minify . '.css' );
-			}
+			wp_enqueue_style( 'cfm-css', cfm_plugin_url . 'assets/css/frontend' . $minify . '.css' );
 			wp_enqueue_style( 'jquery-ui', cfm_plugin_url . 'assets/css/jquery-ui-1.9.1.custom.css' );
 		}
 	}
