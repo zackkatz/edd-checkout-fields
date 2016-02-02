@@ -14,7 +14,6 @@
 
 			// on save validation
 			$('form#post').submit(function(e) {
-
 				var errors = false;
 				var regexp = /^[a-zA-Z0-9_-]+$/; // metakeys can only be upperloweralpha + numeric + underscore
 				$('li.custom-field input[data-type="label"]').each( function(index) {
@@ -131,9 +130,7 @@
 				};
 
 			// check if these are already inserted
-			var oneInstance = ['user_login', 'first_name', 'last_name', 'nickname', 'display_name', 'user_email', 'user_url',
-				'user_bio', 'password', 'user_avatar', 'post_title', 'post_content', 'featured_image', 'download_category',
-				'download_tag', 'download_format' ,'multiple_pricing','post_excerpt','eddc_user_paypal', 'edd_ap'];
+			var oneInstance = ['first_name', 'last_name', 'user_email'];
 
 			if ($.inArray(name, oneInstance) >= 0) {
 				if ( $formEditor.find('li.' + name).length ) {
