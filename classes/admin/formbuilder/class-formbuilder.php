@@ -465,5 +465,5 @@ add_action( 'wp_ajax_cfm_formbuilder', 'cfm_forms_ajax_post_add_field' );
  *                 for strcmp).
  */
 function cfm_field_sort( $a,$b ) {
-	return strcmp($a->supports['title'],$b->supports['title']);
+	return strnatcasecmp($a->supports['title'],$b->supports['title']);
 }
