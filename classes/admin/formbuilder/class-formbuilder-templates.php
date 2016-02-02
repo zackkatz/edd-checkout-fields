@@ -521,29 +521,107 @@ class CFM_Formbuilder_Templates {
 	 * @param bool    $hidden Whether or not the public radio is hidden for a particular field.
 	 * @return void
 	 */
-	public static function public_radio( $id, $values = array(), $name = 'login', $hidden = false ) {
+	public static function public_radio( $id, $values = array(), $forced_value = -2 ) {
 		$tpl = '%s[%d][%s]';
 		$field_name  = sprintf( $tpl, 'cfm_input', $id, 'public' );
-		$field_value = $values && isset( $values[ 'public' ] ) ? esc_attr( $values[ 'public' ] ) : false;
-		if ( $field_value == 'on' ) {
-			$field_value = true;
-		}
-		if ( $hidden ) { ?>
+		$field_value = $values && isset( $values[ 'public' ] ) ? esc_attr( $values[ 'public' ] ) : "public";
+		if ( $forced_value !== -2 ) { ?>
 			<div class="cfm-form-rows">
-				<input type="hidden" id="<?php echo esc_attr( $field_name ); ?>" name="<?php echo esc_attr( $field_name ); ?>" <?php checked( $field_value, true ); ?> />
+				<input type="hidden" id="<?php echo esc_attr( $field_name ); ?>" name="<?php echo esc_attr( $field_name ); ?>" value="<?php echo $field_value; ?>" />
 			</div>
 			<?php
 		} else { ?>
 			<div class="cfm-form-rows">
-				<label><?php _e( 'Allow this field to be shown publicly', 'edd_cfm' ); ?></label>
+				<label><?php _e( 'Show field on frontend checkout field', 'edd_cfm' ); ?></label>
 				<div class="cfm-form-sub-fields">
 					<label for="<?php esc_attr_e( $field_name ); ?>">
-						<input type="checkbox" data-type="label" id="<?php echo esc_attr( $field_name ); ?>" name="<?php echo esc_attr( $field_name ); ?>" class="smallipopInput" <?php checked( $field_value, true ); ?>>
-						<?php _e( 'Allows widgets to output data from this field, as well as shows this field\'s value when the CFM setting Show Custom Meta is on.', 'edd_cfm' ); ?>
+						<input type="radio" id="<?php echo esc_attr( $field_name ); ?>" name="<?php echo esc_attr( $field_name ); ?>" value="public" <?php checked( 'public' == $field_value ); ?> data-type="label" class="smallipopInput" /><?php _e( 'Show this in both the frontend and admin (default)', 'edd_cfm' ); ?>
+						<input type="radio" id="<?php echo esc_attr( $field_name ); ?>" name="<?php echo esc_attr( $field_name ); ?>" value="admin" <?php checked( 'admin' == $field_value ); ?> data-type="label" class="smallipopInput" /><?php _e( 'Show this field only in the admin. Useful for storing admin-only order data', 'edd_cfm' ); ?>
+						
 					</label>
 				</div>
 			</div>
 			<?php
 		}
 	}
+	
+	/**
+	 * Show field on the frontend.
+	 *
+	 * The public attribute is used to add admin side order details.
+	 * Consider it an easy way to save custom order data.
+	 *
+	 * @since 2.0.0
+	 * @access public
+	 * 
+	 * @param int     $field_id Order number of the field in formbuilder.
+	 * @param array   $values Characteristics array from an CFM Field object.
+	 * @param string  $name  Type of form the field is on.
+	 * @param bool    $hidden Whether or not the public radio is hidden for a particular field.
+	 * @return void
+	 */
+	public static function export_radio( $id, $values = array(), $forced_value = -2 ) {
+		$tpl = '%s[%d][%s]';
+		$field_name  = sprintf( $tpl, 'cfm_input', $id, 'show_in_exports' );
+		$field_value = $values && isset( $values[ 'show_in_exports' ] ) ? esc_attr( $values[ 'show_in_exports' ] ) : "export";
+		if ( $forced_value !== -2 ) { ?>
+			<div class="cfm-form-rows">
+				<input type="hidden" id="<?php echo esc_attr( $field_name ); ?>" name="<?php echo esc_attr( $field_name ); ?>" value="<?php echo $field_value; ?>" />
+			</div>
+			<?php
+		} else { ?>
+			<div class="cfm-form-rows">
+				<label><?php _e( 'Show in exported CSVS', 'edd_cfm' ); ?></label>
+				<div class="cfm-form-sub-fields">
+					<label for="<?php esc_attr_e( $field_name ); ?>">
+						<input type="radio" id="<?php echo esc_attr( $field_name ); ?>" name="<?php echo esc_attr( $field_name ); ?>" value="export" <?php checked( 'export' == $field_value ); ?> data-type="label" class="smallipopInput" /><?php _e( 'Show this field in CSV exports (default)', 'edd_cfm' ); ?>
+						<input type="radio" id="<?php echo esc_attr( $field_name ); ?>" name="<?php echo esc_attr( $field_name ); ?>" value="noexport" <?php checked( 'noexport' == $field_value ); ?> data-type="label" class="smallipopInput" /><?php _e( 'Do not show this field in CSV exports', 'edd_cfm' ); ?>
+						
+					</label>
+				</div>
+			</div>
+			<?php
+		}
+	}
+	
+	/**
+	 * Show field on the frontend.
+	 *
+	 * The public attribute is used to add admin side order details.
+	 * Consider it an easy way to save custom order data.
+	 *
+	 * @since 2.0.0
+	 * @access public
+	 * 
+	 * @param int     $field_id Order number of the field in formbuilder.
+	 * @param array   $values Characteristics array from an CFM Field object.
+	 * @param string  $name  Type of form the field is on.
+	 * @param bool    $hidden Whether or not the public radio is hidden for a particular field.
+	 * @return void
+	 */
+	public static function meta_type_radio( $id, $values = array(), $forced_value = -2 ) {
+		$tpl = '%s[%d][%s]';
+		$field_name  = sprintf( $tpl, 'cfm_input', $id, 'meta_type' );
+		$field_value = $values && isset( $values[ 'meta_type' ] ) ? esc_attr( $values[ 'meta_type' ] ) : "payment";
+		
+		if ( $forced_value !== -2 ) { ?>
+			<div class="cfm-form-rows">
+				<input type="hidden" id="<?php echo esc_attr( $field_name ); ?>" name="<?php echo esc_attr( $field_name ); ?>" value="<?php echo $field_value; ?>" />
+			</div>
+			<?php
+		} else { ?>
+			<div class="cfm-form-rows">
+				<label><?php _e( 'Where should this meta be stored', 'edd_cfm' ); ?></label>
+				<div class="cfm-form-sub-fields">
+					<label for="<?php esc_attr_e( $field_name ); ?>">
+						<input type="radio" id="<?php echo esc_attr( $field_name ); ?>" name="<?php echo esc_attr( $field_name ); ?>" value="payment" <?php checked( 'payment' == $field_value ); ?> data-type="label" class="smallipopInput" /><?php _e( 'Payment Meta (different values for all orders by a particular user)', 'edd_cfm' ); ?>
+						<input type="radio" id="<?php echo esc_attr( $field_name ); ?>" name="<?php echo esc_attr( $field_name ); ?>" value="user" <?php checked( 'user' == $field_value ); ?> data-type="label" class="smallipopInput" /><?php _e( 'User Meta (same value for all orders by a particular user)', 'edd_cfm' ); ?>
+						
+					</label>
+					<?php _e( 'Warning: Do not change this selection once you set it for a particular field.', 'edd_cfm' ); ?>
+				</div>
+			</div>
+			<?php
+		}
+	}	
 }

@@ -19,7 +19,6 @@ class CFM_Action_Hook_Field extends CFM_Field {
 		),
 		'template'    => 'action_hook', // the type of field
 		'title'       => 'Action Hook',
-		'export'   => true
 	);
 
 	/** @var array Characteristics are things that can change from field to field of the same field type. Like the placeholder between two email fields. Stored in db. */
@@ -40,43 +39,29 @@ class CFM_Action_Hook_Field extends CFM_Field {
 	}
 
 	/** Returns the Action_Hook to render a field in admin */
-	public function render_field_admin( $user_id = -2, $readonly = -2 ) {
+	public function render_field_admin( $user_id = -2, $profile = -2 ) {
 		if ( $user_id === -2 ) {
 			$user_id = get_current_user_id();
 		}
 
-		if ( $readonly === -2 ) {
-			$readonly = $this->readonly;
-		}
-
-		$user_id   = apply_filters( 'cfm_render_action_hook_field_user_id_admin', $user_id, $this->id );
-		$readonly  = apply_filters( 'cfm_render_action_hook_field_readonly_admin', $readonly, $user_id, $this->id );
-
 		$output        = '';
 		$output     .= sprintf( '<fieldset class="cfm-el %1s %2s %3s">', $this->template(), $this->name(), $this->css() );
 		ob_start();
-		do_action( $this->name(), $this->form, $this->save_id, $this );
+		do_action( $this->name(), $this->form, $this->payment_id, $this->user_id, $this );
 		$output .= ob_get_clean();
 		$output .= '</fieldset>';
 		return $output;
 	}
 
 	/** Returns the Action_Hook to render a field in frontend */
-	public function render_field_frontend( $user_id = -2, $readonly = -2 ) {
+	public function render_field_frontend( $user_id = -2, $profile = -2 ) {
 		if ( $user_id === -2 ) {
 			$user_id = get_current_user_id();
 		}
-
-		if ( $readonly === -2 ) {
-			$readonly = $this->readonly;
-		}
-		$user_id   = apply_filters( 'cfm_render_action_hook_field_user_id_frontend', $user_id, $this->id );
-		$readonly  = apply_filters( 'cfm_render_action_hook_field_readonly_frontend', $readonly, $user_id, $this->id );
-
 		$output        = '';
 		$output     .= sprintf( '<fieldset class="cfm-el %1s %2s %3s">', $this->template(), $this->name(), $this->css() );
 		ob_start();
-		do_action( $this->name(), $this->form, $this->save_id, $this );
+		do_action( $this->name(), $this->form, $this->payment_id, $this->user_id, $this );
 		$output .= ob_get_clean();
 		$output .= '</fieldset>';
 		return $output;
@@ -90,9 +75,8 @@ class CFM_Action_Hook_Field extends CFM_Field {
 		ob_start(); ?>
 		<li class="action_hook">
 			<?php $this->legend( $this->title(), $this->name(), $removable ); ?>
-			<?php CFM_Formbuilder_Templates::public_radio( $index, $this->characteristics, $this->form_name, true ); ?>
+			<?php CFM_Formbuilder_Templates::public_radio( $index, $this->characteristics, "public" ); ?>
 			<?php CFM_Formbuilder_Templates::hidden_field( "[$index][template]", $this->template() ); ?>
-
 			<?php CFM_Formbuilder_Templates::field_div( $index, $this->name(), $this->characteristics, $insert ); ?>
 				<div class="cfm-form-rows">
 					<label><?php _e( 'Hook Name', 'edd_cfm' ); ?></label>
@@ -101,13 +85,13 @@ class CFM_Action_Hook_Field extends CFM_Field {
 
 						<div class="description" style="margin-top: 8px;">
 							<?php _e( "This is for developers to add dynamic elements as they want. It provides the chance to add whatever input type you want to add in this form.", 'edd_cfm' ); ?>
-							<?php _e( 'You can bind your own functions to render the form to this action hook. You\'ll be given 3 parameters to play with: $form_id, $post_id, $form_settings.', 'edd_cfm' ); ?>
 							<pre>
-add_action('{hookname}', 'my_function_name}', 10, 3 );
+add_action('{hookname}', 'my_function_name}', 10, 4 );
 // first param: Form Object
-// second param: Save ID of post/user/custom
-// third param: Field Object
-function my_function_name( $form, $save_id, $field ) {
+// second param: Save ID of payment if in scope, else -2
+// third param: Save ID of user if in scope, else -2
+// fourth param: Field Object
+function my_function_name( $form, $payment_id, $user_id, $field ) {
 	// Do whatever you want here
 }
 							</pre>
@@ -121,13 +105,13 @@ function my_function_name( $form, $save_id, $field ) {
 	}
 
 	// note in order for this to run, a hidden text field should be output in the render function with an id of the meta_key, else this won't run
-	public function save_field_admin( $save_id = -2, $value = '', $user_id = -2 ) {
-		do_action( $this->name() . '_save_admin', $save_id, $value, $user_id, $this );
+	public function save_field_admin( $payment_id = -2, $value = '', $user_id = -2 ) {
+		do_action( $this->name() . '_save_admin', $payment_id, $value, $user_id, $this );
 	}
 
 	// note in order for this to run, a hidden text field should be output in the render function with an id of the meta_key, else this won't run
-	public function save_field_frontend( $save_id = -2, $value = '', $user_id = -2 ) {
-		do_action( $this->name() . '_save_frontend', $save_id, $value, $user_id, $this );
+	public function save_field_frontend( $payment_id = -2, $value = '', $user_id = -2 ) {
+		do_action( $this->name() . '_save_frontend', $payment_id, $value, $user_id, $this );
 	}	
 
 	/** Returns formatted data of field in frontend */
@@ -135,11 +119,11 @@ function my_function_name( $form, $save_id, $field ) {
 		return apply_filters( 'cfm_formatted_' . $this->template() . '_field', '', $payment_id, $user_id );
 	}	
 
-	public function validate( $values = array(), $save_id = -2, $user_id = -2 ) {
-		return apply_filters( 'cfm_validate_' . $this->template() . '_field', false, $values,  $this->name(), $save_id, $user_id );
+	public function validate( $values = array(), $payment_id = -2, $user_id = -2 ) {
+		return apply_filters( 'cfm_validate_' . $this->template() . '_field', false, $values,  $this->name(), $payment_id, $user_id );
 	}
 
-	public function sanitize( $values = array(), $save_id = -2, $user_id = -2 ) {
-		return apply_filters( 'cfm_sanitize_' . $this->template() . '_field', $values, $this->name(), $save_id, $user_id );
+	public function sanitize( $values = array(), $payment_id = -2, $user_id = -2 ) {
+		return apply_filters( 'cfm_sanitize_' . $this->template() . '_field', $values, $this->name(), $payment_id, $user_id );
 	}
 }

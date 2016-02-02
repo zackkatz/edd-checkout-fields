@@ -9,11 +9,7 @@ class CFM_Date_Field extends CFM_Field {
 		'multiple'    => true,
 		'is_meta'     => true,  // in object as public (bool) $meta;
 		'forms'       => array(
-			'registration'     => true,
-			'submission'       => true,
-			'vendor-contact'   => false,
-			'profile'          => true,
-			'login'            => false,
+			'checkout'     => true,
 		),
 		'position'    => 'custom',
 		'permissions' => array(
@@ -23,7 +19,6 @@ class CFM_Date_Field extends CFM_Field {
 		),
 		'template'    => 'date',
 		'title'       => 'Date',
-		'phoenix'     => true,
 	);
 
 	/** @var array Characteristics are things that can change from field to field of the same field type. Like the placeholder between two email fields. Stored in db. */
@@ -35,6 +30,9 @@ class CFM_Date_Field extends CFM_Field {
 		'label'       => '',
 		'format'    => 'mm/dd/yy',
 		'time'        => 'no',
+		'meta_type'   => 'payment', // 'payment' or 'user' here if is_meta()
+		'public'          => true, // denotes whether a field shows in the admin only
+		'show_in_exports' => true, // denotes whether a field is in the CSV exports
 	);
 
 

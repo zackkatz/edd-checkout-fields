@@ -38,8 +38,7 @@ class CFM_Field {
 			'can_add_to_formbuilder'      => true,
 		),
 		'template'    => 'text',
-		'title'       => 'Text',
-		'export'     => true,
+		'title'       => 'Text'
 	);
 
 	/** @var array Characteristics are things that can change from field to field of the same field type. Like the placeholder between two text fields. Stored in db. */
@@ -271,9 +270,6 @@ class CFM_Field {
 			$payment_id = $this->payment_id;
 		}
 
-		$user_id  = apply_filters( 'cfm_save_field_values_user_id', $user_id, $payment_id, $values, $user_id );
-		$values  = apply_filters( 'cfm_save_field_values_values', $values, $payment_id, $values, $user_id );
-
 		do_action( 'cfm_save_field_values_before', $payment_id, $values, $user_id );
 
 		if ( isset( $values[ $this->name() ] ) ) {
@@ -302,9 +298,6 @@ class CFM_Field {
 		if ( $payment_id == -2 ) {
 			$payment_id = $this->payment_id;
 		}
-
-		$user_id  = apply_filters( 'cfm_save_field_user_id_admin', $user_id, $this, $payment_id, $value );
-		$value    = apply_filters( 'cfm_save_field_value_admin', $value, $this, $payment_id, $user_id );
 
 		do_action( 'cfm_save_field_before_save_admin', $this, $payment_id, $value, $user_id );
 		if ( (bool) $this->meta ) {
@@ -338,9 +331,6 @@ class CFM_Field {
 		if ( $payment_id == -2 ) {
 			$payment_id = $this->payment_id;
 		}
-
-		$user_id  = apply_filters( 'cfm_save_field_user_id_frontend', $user_id, $this, $payment_id, $value, $user_id );
-		$value    = apply_filters( 'cfm_save_field_value_frontend', $value, $this, $payment_id, $value, $user_id );
 
 		do_action( 'cfm_save_field_before_save_frontend', $this, $payment_id, $value, $user_id );
 
@@ -383,9 +373,6 @@ class CFM_Field {
 			$user_id = get_current_user_id();
 		}
 
-		$user_id  = apply_filters( 'cfm_get_field_value_user_id_admin', $user_id, $this );
-		$payment_id  = apply_filters( 'cfm_get_field_value_payment_id_admin', $payment_id, $this);
-
 		if ( ( $this->is_meta() && $this->meta_type() === 'payment' && $payment_id === -2 ) || 
 		     ( $this->is_meta() && $this->meta_type() === 'user' && $user_id === -2 ) ||
 			 ( !$this->is_meta() && $user_id === -2 ) ){
@@ -424,9 +411,6 @@ class CFM_Field {
 		if ( $user_id === -2 ) {
 			$user_id = get_current_user_id();
 		}
-
-		$user_id  = apply_filters( 'cfm_get_field_value_user_id_frontend', $user_id, $this );
-		$payment_id  = apply_filters( 'cfm_get_field_value_payment_id_frontend', $payment_id, $this);
 
 		if ( ( $this->is_meta() && $this->meta_type() === 'payment' && $payment_id === -2 ) || 
 		     ( $this->is_meta() && $this->meta_type() === 'user' && $user_id === -2 ) ||
@@ -600,7 +584,13 @@ class CFM_Field {
 	}
 
 	public function is_public() {
-		return isset( $this->characteristics['public'] ) ?  $this->characteristics['public'] : false;
+		if ( !empty ( $this->characteristics['public'] ) && $this->characteristics['public'] === "public" ){
+			return true;
+		} else if ( !empty ( $this->characteristics['public'] ) && $this->characteristics['public'] === "admin" ){
+			return false;
+		} else {
+			return true;
+		}
 	}
 
 	public function legend( $title = 'Field Type', $label = '', $removable = true ) {
