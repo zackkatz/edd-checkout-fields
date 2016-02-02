@@ -8,7 +8,7 @@ msgstr ""
 "Last-Translator: Chris Christoff <support@easydigitaldownloads.com>\n"
 "Language-Team: Chris Christoff <support@easydigitaldownloads.com>\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Poedit 1.8.6\n"
 "X-Poedit-Basepath: ..\n"
@@ -932,6 +932,30 @@ msgstr ""
 
 #. Description of the plugin/theme
 msgid "Easily add and control EDD's checkout fields!"
+msgstr ""
+
+#. Author of the plugin/theme
+msgid "Chris Christoff"
+msgstr ""
+
+#. Author URI of the plugin/theme
+msgid "http://www.chriscct7.com"
+msgstr ""
+
+#: edd-cfm.php:86
+msgid "Checkout Fields Manager"
+msgstr ""
+
+#. Plugin Name of the plugin/theme
+msgid "Easy Digital Downloads - Checkout Fields Manager"
+msgstr ""
+
+#. Plugin URI of the plugin/theme
+msgid "https://easydigitaldownloads.com/extension/checkout-fields-manager/"
+msgstr ""
+
+#. Description of the plugin/theme
+msgid "Easily add and control EDD's checkout fields"
 msgstr ""
 
 #. Author of the plugin/theme
