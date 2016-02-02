@@ -456,6 +456,7 @@ class CFM_Field {
 
 	/** Validates field */
 	public function validate( $values = array(), $payment_id = -2, $user_id = -2 ) {
+		$name = $this->name();
 		if ( !empty( $values[ $name ] ) ) {
 			// if the value is set
 			// no specific validation
