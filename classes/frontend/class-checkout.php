@@ -64,7 +64,7 @@ class CFM_Checkout {
 	 */
 	function render_checkout_form( ) {
 		$user_id = get_current_user_id();
-		$form_id = get_option( 'cfm-checkout-form', false );
+		$form_id = get_option( 'cfm-checkout-form', -2 );
 		
 		// load the scripts so others don't have to
 		EDD_CFM()->setup->enqueue_form_assets();
@@ -92,12 +92,12 @@ class CFM_Checkout {
 	 *                    to form rendering functions.
 	 * @return void
 	 */
-	function submit_checkout_form( $id = 0, $values = array(), $args = array() ) {
-		$form_id   = !empty( $values ) && isset( $values['form_id'] )   ? absint( $values['form_id'] )   : ( isset( $_REQUEST['form_id'] )   ? absint( $_REQUEST['form_id'] )   : get_option( 'cfm-checkout-form', false ) );
-		$values    = !empty( $values ) ? $values : $_POST;
+	function submit_checkout_form( $payment_id, $payment_data ) {
+		$form_id   = isset( $_REQUEST['form_id'] )   ? absint( $_REQUEST['form_id'] ) : get_option( 'cfm-checkout-form', -2 );
+		$values    = $_POST;
 		// Make the CFM Form
-		$form      = new CFM_Checkout_Form( $form_id, 'id', $id );
+		$form      = new CFM_Checkout_Form( $form_id, 'id', $payment_id );
 		// Save the CFM Form
-		$form->save_form_frontend( $values, get_current_user_id(), true );
+		$form->save_form_frontend( $values, get_current_user_id(), false );
 	}
 }
