@@ -43,6 +43,8 @@ class CFM_Setup {
 		add_action( 'admin_enqueue_scripts', array( $this, 'admin_enqueue_styles' ) );
 		add_action( 'wp_head', 				 array( $this, 'cfm_version' ) );
 		add_action( 'admin_notices', 		 array( $this, 'no_checkout_form_set' ) );
+		add_filter( 'edd_settings_sections_extensions',     array( $this, 'add_section' ), 10, 1 );
+		add_filter( 'edd_settings_extensions',      array( $this, 'add_settings' ), 10, 1 );
 	}
 
 	/**
@@ -397,4 +399,37 @@ class CFM_Setup {
 
 		return $forms;
 	}
+	
+	public function add_section( $sections ) {
+	    $sections['cfm'] = cfm_plugin_name;
+	    return $sections;
+	}
+	
+	public function add_settings( $settings ) {
+	   $cfm_settings= array(
+		   'cfm' => array(
+			   array(
+					'id' => 'cfm_settings',
+					'name' => '<strong>' . cfm_plugin_name . '</strong>',
+					'type' => 'header'
+				),
+				array(
+					'id'      => 'cfm-recaptcha-public-key',
+					'type'    => 'text',
+					'desc'    => __( 'Required to use the reCAPTCHA field.', 'edd_cfm' ),
+					'name'    => __( 'reCAPTCHA Public Key', 'edd_cfm' ),
+					'section' => 'cfm'
+				),
+				array(
+					'id'      => 'cfm-recaptcha-private-key',
+					'type'    => 'text',
+					'desc'    => __( 'Required to use the reCAPTCHA field.', 'edd_cfm' ),
+					'name'    => __( 'reCAPTCHA Private Key', 'edd_cfm' ),
+					'section' => 'cfm'
+				)
+			)
+	    );
+		return array_merge( $settings, $cfm_settings );	
+	}
+	
 }
