@@ -79,7 +79,7 @@ class CFM_User_Email_Field extends CFM_Field {
 			$user_id = get_current_user_id();
 		}
 		global $current_user;
-		$value     = is_user_logged_in() ? $current_user->user_lastname : '';
+		$value     = is_user_logged_in() ? $current_user->user_email : '';
 		$required  = $this->required();
 		$output        = '';
 		$output     .= sprintf( '<fieldset class="cfm-el %1s %2s %3s">', $this->template(), $this->name(), $this->css() );
