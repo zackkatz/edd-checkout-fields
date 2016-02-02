@@ -73,8 +73,8 @@ class CFM_Checkout {
 
 		// Make the CFM Form
 		$form = EDD_CFM()->helper->get_form_by_id( $form_id, $user_id );
-		$output .= $form->render_form_frontend( $user_id, true );
-		return $output;
+		$output .= $form->render_form_frontend( $user_id, false );
+		echo $output;
 	}
 
 	/**

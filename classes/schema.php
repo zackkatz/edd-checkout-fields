@@ -32,21 +32,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  */
 function cfm_get_default_checkout_form_fields(){
 	$fields = array(
-		1 => array(
-				'template' => 'user_email',
-				'required' => 'yes',
-				'label' => 'Email',
-				'name' => 'edd_email',
-				'is_meta' => true,
-				'help' => 'We will send the purchase receipt to this address.',
-				'css' => '',
-				'placeholder' => '',
-				'default' => '',
-				'size' => '40',
-				'public'  => "public",
-				'show_in_exports' => "noexport",
-			),
-			2 => array(
+			1 => array(
 				'template' => 'first_name',
 				'required' => 'yes',
 				'label' => 'First Name',
@@ -60,13 +46,27 @@ function cfm_get_default_checkout_form_fields(){
 				'public'  => "public", 
 				'show_in_exports' => "noexport",
 			),
-			3 => array(
+			2 => array(
 				'template' => 'last_name',
 				'required' => 'yes',
 				'label' => 'Last Name',
 				'name' => 'edd_last',
 				'is_meta' => true,
 				'help' => 'We will use this as well to personalize your account experience.',
+				'css' => '',
+				'placeholder' => '',
+				'default' => '',
+				'size' => '40',
+				'public'  => "public",
+				'show_in_exports' => "noexport",
+			),
+			3 => array(
+				'template' => 'user_email',
+				'required' => 'yes',
+				'label' => 'Email',
+				'name' => 'edd_email',
+				'is_meta' => true,
+				'help' => 'We will send the purchase receipt to this address.',
 				'css' => '',
 				'placeholder' => '',
 				'default' => '',
