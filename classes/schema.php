@@ -33,43 +33,46 @@ if ( ! defined( 'ABSPATH' ) ) {
 function cfm_get_default_checkout_form_fields(){
 	$fields = array(
 		1 => array(
-				'input_type' => 'email',
-				'template' => 'edd_email',
+				'template' => 'user_email',
 				'required' => 'yes',
 				'label' => 'Email',
 				'name' => 'edd_email',
-				'is_meta' => 'no',
+				'is_meta' => true,
 				'help' => 'We will send the purchase receipt to this address.',
 				'css' => '',
 				'placeholder' => '',
 				'default' => '',
-				'size' => '40' 
+				'size' => '40',
+				'public'  => "public",
+				'show_in_exports' => "noexport",
 			),
 			2 => array(
-				'input_type' => 'text',
-				'template' => 'edd_first',
+				'template' => 'first_name',
 				'required' => 'yes',
 				'label' => 'First Name',
 				'name' => 'edd_first',
-				'is_meta' => 'no',
+				'is_meta' => true,
 				'help' => 'We will use this to personalize your account experience.',
 				'css' => '',
 				'placeholder' => '',
 				'default' => '',
-				'size' => '40' 
+				'size' => '40',
+				'public'  => "public", 
+				'show_in_exports' => "noexport",
 			),
 			3 => array(
-				'input_type' => 'text',
-				'template' => 'edd_last',
+				'template' => 'last_name',
 				'required' => 'yes',
 				'label' => 'Last Name',
 				'name' => 'edd_last',
-				'is_meta' => 'no',
+				'is_meta' => true,
 				'help' => 'We will use this as well to personalize your account experience.',
 				'css' => '',
 				'placeholder' => '',
 				'default' => '',
-				'size' => '40' 
+				'size' => '40',
+				'public'  => "public",
+				'show_in_exports' => "noexport",
 			)
 	);
 	return $fields;
@@ -137,6 +140,30 @@ function cfm_upgrade_field( $field ) {
 
 	// Prettify the template names of our fields (and back convert to template, if did template = input_type above)
 	switch ( $field['template'] ) {
+		case 'edd_first':
+			$field['public'] = "public";
+			$field['show_in_exports'] = "noexport";
+			$field['meta_type'] = "payment";
+			$field['is_meta'] = true;
+			$field['template'] = "last_name";
+			break;
+			
+		case 'edd_last':
+			$field['public'] = "public";
+			$field['show_in_exports'] = "noexport";
+			$field['meta_type'] = "payment";
+			$field['is_meta'] = true;
+			$field['template'] = "last_name";
+			break;
+			
+		case 'edd_email':
+			$field['public'] = "public";
+			$field['show_in_exports'] = "noexport";
+			$field['meta_type'] = "payment";
+			$field['is_meta'] = true;
+			$field['template'] = "user_email";
+			break;
+		
 		case 'checkbox_field':
 			$field['template'] = 'checkbox';
 			break;
