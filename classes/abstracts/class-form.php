@@ -694,7 +694,7 @@ class CFM_Form {
 		$fields = apply_filters( 'cfm_render_' . $this->name() . '_form_formbuilder_fields', $fields );
 
 		if ( !empty( $fields ) ) {
-			if ( current_user_can( 'manage_store_options' ) ) {
+			if ( current_user_can( 'manage_shop_settings' ) ) {
 				foreach ( $fields as $index => $field ) {
 					$output .= apply_filters( 'cfm_render_' . $this->name() . '_form_formbuilder_before_field', '', $index, $field );
 					$output .= $field->render_formbuilder_field( $index, $field );
@@ -714,21 +714,21 @@ class CFM_Form {
 			$post_id = get_the_ID();
 		}
 
-		if ( ! current_user_can( 'manage_store_options' ) ) {
+		if ( ! current_user_can( 'manage_shop_settings' ) ) {
 			return $post_id;
 		}
 
 		if ( !empty( $values ) ) {
 			foreach ( $values as $id => $value ) {
 				if ( isset ( $value['label'] ) ) {
-					$value['label'] = sanitize_key( $value['label'] );
+					$values[$id]['label'] = sanitize_key( $value['label'] );
 				}
 				if ( isset ( $value['name'] ) ) {
-					$value['name'] = sanitize_key( $value['name'] );
+					$values[$id]['name'] = sanitize_key( $value['name'] );
 				}
 			}
 		}
-
+		
 		$values  = apply_filters( 'cfm_save_' . $this->name() . '_form_formbuilder_fields_values', $values );
 
 		do_action( 'cfm_save_' . $this->name() . '_form_formbuilder_fields_before_save', $values );
