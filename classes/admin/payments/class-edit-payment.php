@@ -78,7 +78,7 @@ class CFM_Edit_Payment {
 			<h3 class="hndle">
 				<span><?php _e( 'Custom Fields', 'edd_cfm' ); ?></span>
 			</h3>
-			<div class="inside edd-clearfix">
+			<div class="inside edd-clearfix cfm-form">
 			<?php
 				// let's output the CFM Form
 				echo $form->render_form_admin( get_current_user_id() );

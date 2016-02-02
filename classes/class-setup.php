@@ -181,7 +181,7 @@ class CFM_Setup {
 		if ( is_object( $current_screen ) && isset( $current_screen->post_type ) && $current_screen->post_type === 'edd-checkout-fields' ) { 
 			$is_cfm_page    = true;
 			$is_formbuilder = true;
-		} else if ( is_object( $current_screen ) && isset( $current_screen->post_type ) && $current_screen->post_type === 'edd_payment' ) { 
+		} else if ( is_object( $current_screen ) && isset( $current_screen->id ) && $current_screen->id === 'download_page_edd-payment-history' ) { 
 			$is_cfm_page    = true;
 			$is_formbuilder = false;
 		} 
@@ -242,7 +242,7 @@ class CFM_Setup {
 		if ( is_object( $current_screen ) && isset( $current_screen->post_type ) && $current_screen->post_type === 'edd-checkout-fields' ) { 
 			$is_cfm_page    = true;
 			$is_formbuilder = true;
-		} else if ( is_object( $current_screen ) && isset( $current_screen->post_type ) && $current_screen->post_type === 'edd_payment' ) { 
+		} else if ( is_object( $current_screen ) && isset( $current_screen->id ) && $current_screen->id === 'download_page_edd-payment-history' ) { 
 			$is_cfm_page    = true;
 			$is_formbuilder = false;
 		} 

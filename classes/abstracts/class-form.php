@@ -542,6 +542,7 @@ class CFM_Form {
 			return false;
 		} else {
 			$this->before_form_save( $this->payment_id, $values, $user_id, $profile );
+			$fields = $this->fields;
 			foreach ( $fields as $field ) {
 
 				if ( ! is_object( $field ) ) {
