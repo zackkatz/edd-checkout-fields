@@ -237,7 +237,6 @@ class EDD_Checkout_Fields_Manager {
 			// Setup class instances
 			self::$instance->helper 			   = new CFM_Helpers;
 			self::$instance->emails                = new CFM_Emails;
-			self::$instance->export                = new CFM_Export;
 
 			if ( cfm_is_admin() ) {
 				self::$instance->menu                  = new CFM_Menu;
@@ -248,7 +247,7 @@ class EDD_Checkout_Fields_Manager {
 				self::$instance->formbuilder_templates = new CFM_Formbuilder_Templates;
 			} else {
 			//	self::$instance->frontend_profile         = new CFM_Frontend_Customer_Profile;
-			//	self::$instance->checkout         		  = new CFM_Checkout;
+				self::$instance->checkout         		  = new CFM_Checkout;
 			}
 
 			/*
