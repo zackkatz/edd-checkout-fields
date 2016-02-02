@@ -47,7 +47,7 @@ class CFM_Last_Name_Field extends CFM_Field {
 	}
 	
 	public function exclude( $templates, $profile ) {
-		array_push( $templates, $this->template );
+		array_push( $templates, $this->template() );
 		return $templates;
 	}
 	
@@ -55,7 +55,7 @@ class CFM_Last_Name_Field extends CFM_Field {
 		if ( $profile !== true ){
 			
 		} else {
-			array_push( $templates, $this->template );
+			array_push( $templates, $this->template() );
 		}
 		return $templates;
 	}
