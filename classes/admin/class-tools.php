@@ -41,9 +41,9 @@ class CFM_Tools {
 	public function __construct() {
 		add_filter( 'edd_tools_tabs', array( $this, 'add_cfm_tab' ), 10, 1 );
 		add_action( 'edd_tools_tab_cfm', array( $this, 'cfm_tab' ) );
-		add_action( 'edd_export_cfm_form', array( $this,'reset' ) );
+		add_action( 'edd_export_cfm_form', array( $this,'export' ) );
 		add_action( 'edd_import_cfm_form', array( $this,'import' ) );
-		add_action( 'edd_reset_cfm_form', array( $this,'export' ) );
+		add_action( 'edd_reset_cfm_form', array( $this,'reset' ) );
 	}
 	
 	public function add_cfm_tab( $tabs ){
@@ -93,7 +93,7 @@ class CFM_Tools {
 		<div class="postbox">
 			<h3><span><?php _e( 'Import Checkout Fields', 'edd_cfm' ); ?></span></h3>
 			<div class="inside">
-				<p><?php _e( 'Import the checkout fields from a .json file. This file can be obtained by exporting the checkout fields on another site using the form above.', 'easy-digital-downloads' ); ?></p>
+				<p><?php _e( 'Import the checkout fields from a .json file. This file can be obtained by exporting the checkout fields on another site using the form above.', 'edd_cfm' ); ?></p>
 				<form method="post" enctype="multipart/form-data" action="<?php echo admin_url( 'edit.php?post_type=download&page=edd-tools&tab=cfm' ); ?>">
 					<p>
 						<input type="file" name="import_file"/>
@@ -115,7 +115,7 @@ class CFM_Tools {
 	 * @since       1.7
 	 * @return      void
 	 */
-	public function reset() {
+	public function reset( ) {
 		if( empty( $_POST['edd_reset_cfm_form_nonce'] ) ) {
 			return;
 		}
