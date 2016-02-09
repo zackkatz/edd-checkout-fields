@@ -64,12 +64,13 @@ class CFM_Textarea_Field extends CFM_Field {
 		$rows =isset( $this->characteristics['rows'] ) ? $this->characteristics['rows'] : 8;
 		$cols =isset( $this->characteristics['cols'] ) ? $this->characteristics['cols'] : 50;
 		if ( isset( $this->characteristics['rich'] ) && $this->characteristics['rich'] == 'yes' ) {
-			$options = array( 'editor_height' => $rows, 'quicktags' => false, 'editor_class' => $req_class );
+			$options = array( 'editor_height' => $rows, 'quicktags' => false, 'editor_class' => $req_class, 'media_buttons' => false );
 			printf( '<span class="cfm-rich-validation" data-required="%s" data-type="rich" data-id="%s"></span>', $this->characteristics['required'], $this->name() );
 			wp_editor( $value, $this->name(), $options );
 
 		} elseif ( isset( $this->characteristics['rich'] ) && $this->characteristics['rich'] == 'teeny' ) {
-			$options = array( 'editor_height' => $rows, 'quicktags' => false, 'teeny' => true, 'editor_class' => $req_class );
+			$options = array( 'editor_height' => $rows, 'quicktags' => false, 'teeny' => true, 'editor_class' => $req_class, 'media_buttons' => false );
+			
 			printf( '<span class="cfm-rich-validation" data-required="%s" data-type="rich" data-id="%s"></span>', $this->characteristics['required'], $this->name() );
 			wp_editor( $value, $this->name(), $options );
 		} else {  ?>
