@@ -86,7 +86,7 @@ class CFM_Repeat_Field extends CFM_Field {
 										<input type="text" name="<?php echo esc_attr( $this->name() ) . '[' . $row . '][' . $count . ']'; ?>" value="<?php echo esc_attr( $value[ $row ][ $count ] ); ?>" size="<?php echo esc_attr( $this->size() ); ?>" data-required="<?php echo $required; ?>" data-type="text"<?php $this->required_html5(); ?> />
 									</td>
 								<?php } ?>
-								<td class="cfm-repeat-field">
+								<td class="cfm-repeat-field cfm-repeat-field-actions">
 									<img class="cfm-clone-field" alt="<?php esc_attr_e( 'Add another', 'edd_cfm' ); ?>" title="<?php esc_attr_e( 'Add another', 'edd_cfm' ); ?>" src="<?php echo $add; ?>">
 									<img class="cfm-remove-field" alt="<?php esc_attr_e( 'Remove this choice', 'edd_cfm' ); ?>" title="<?php esc_attr_e( 'Remove this choice', 'edd_cfm' ); ?>" src="<?php echo $remove; ?>">
 								</td>
@@ -97,10 +97,10 @@ class CFM_Repeat_Field extends CFM_Field {
 						<tr data-key="<?php echo $row_count; ?>">
 							<?php for ( $count = 0; $count < $num_columns; $count++ ) { ?>
 								<td class="cfm-repeat-field">
-									<input type="text" name="<?php echo esc_attr( $this->name() ) . '[0][' . $count . ']'; ?>" size="<?php echo esc_attr( $this->size() ) ?>"  value="<?php echo $value[0][ $count ]; ?>" data-required="<?php echo $required; ?>" data-type="text"<?php $this->required_html5(); ?> />
+									<input type="text" name="<?php echo esc_attr( $this->name() ) . '[0][' . $count . ']'; ?>" size="<?php echo esc_attr( $this->size() ) ?>" data-required="<?php echo $required; ?>" data-type="text"<?php $this->required_html5(); ?> />
 								</td>
 							<?php } ?>
-							<td class="cfm-repeat-field">
+							<td class="cfm-repeat-field cfm-repeat-field-actions">
 								<img class="cfm-clone-field" alt="<?php esc_attr_e( 'Add another', 'edd_cfm' ); ?>" title="<?php esc_attr_e( 'Add another', 'edd_cfm' ); ?>" src="<?php echo $add; ?>">
 								<img class="cfm-remove-field" alt="<?php esc_attr_e( 'Remove this choice', 'edd_cfm' ); ?>" title="<?php esc_attr_e( 'Remove this choice', 'edd_cfm' ); ?>" src="<?php echo $remove; ?>">
 							</td>
@@ -183,7 +183,7 @@ class CFM_Repeat_Field extends CFM_Field {
 											<input type="text" name="<?php echo esc_attr( $this->name() ) . '[' . $row . '][' . $count . ']'; ?>" value="<?php echo esc_attr( $value[ $row ][ $count ] ); ?>" size="<?php echo esc_attr( $this->size() ); ?>" data-required="<?php echo $required; ?>" data-type="text"<?php $this->required_html5(); ?> />
 										</td>
 									<?php } ?>
-									<td class="cfm-repeat-field">
+									<td class="cfm-repeat-field cfm-repeat-field-actions">
 										<img class="cfm-clone-field" alt="<?php esc_attr_e( 'Add another', 'edd_cfm' ); ?>" title="<?php esc_attr_e( 'Add another', 'edd_cfm' ); ?>" src="<?php echo $add; ?>">
 										<img class="cfm-remove-field" alt="<?php esc_attr_e( 'Remove this choice', 'edd_cfm' ); ?>" title="<?php esc_attr_e( 'Remove this choice', 'edd_cfm' ); ?>" src="<?php echo $remove; ?>">
 									</td>
@@ -194,10 +194,10 @@ class CFM_Repeat_Field extends CFM_Field {
 							<tr data-key="<?php echo $row_count; ?>">
 								<?php for ( $count = 0; $count < $num_columns; $count++ ) { ?>
 									<td class="cfm-repeat-field">
-										<input type="text" name="<?php echo esc_attr( $this->name() ) . '[0][' . $count . ']'; ?>" size="<?php echo esc_attr( $this->size() ) ?>"  value="<?php echo $value[0][ $count ]; ?>" data-required="<?php echo $required; ?>" data-type="text"<?php $this->required_html5(); ?> />
+										<input type="text" name="<?php echo esc_attr( $this->name() ) . '[0][' . $count . ']'; ?>" size="<?php echo esc_attr( $this->size() ) ?>" data-required="<?php echo $required; ?>" data-type="text"<?php $this->required_html5(); ?> />
 									</td>
 								<?php } ?>
-								<td class="cfm-repeat-field">
+								<td class="cfm-repeat-field cfm-repeat-field-actions">
 									<img class="cfm-clone-field" alt="<?php esc_attr_e( 'Add another', 'edd_cfm' ); ?>" title="<?php esc_attr_e( 'Add another', 'edd_cfm' ); ?>" src="<?php echo $add; ?>">
 									<img class="cfm-remove-field" alt="<?php esc_attr_e( 'Remove this choice', 'edd_cfm' ); ?>" title="<?php esc_attr_e( 'Remove this choice', 'edd_cfm' ); ?>" src="<?php echo $remove; ?>">
 								</td>
@@ -216,7 +216,7 @@ class CFM_Repeat_Field extends CFM_Field {
 							 <td class="cfm-repeat-field">
 								 <input id="cfm-<?php echo esc_attr( $this->name() ); ?>" type="text" data-required="<?php echo $required; ?>" data-type="text"<?php $this->required_html5(); ?> name="<?php echo esc_attr( $this->name() ); ?>[]" placeholder="<?php echo esc_attr( $this->placeholder() ); ?>" value="<?php echo esc_attr( $item ) ?>" size="<?php echo esc_attr( $this->size() ) ?>" />
 							 </td>
-							 <td class="cfm-repeat-field">
+							 <td class="cfm-repeat-field cfm-repeat-field-actions">
 								 <img style="cursor:pointer; margin:0 3px;" alt="add another choice" title="add another choice" class="cfm-clone-field" src="<?php echo $add; ?>">
 								 <img style="cursor:pointer;" class="cfm-remove-field" alt="remove this choice" title="remove this choice" src="<?php echo $remove; ?>">
 							 </td>
@@ -228,7 +228,7 @@ class CFM_Repeat_Field extends CFM_Field {
 								 <td class="cfm-repeat-field">
 									 <input id="cfm-<?php echo esc_attr( $this->name() ); ?>" type="text" data-required="<?php echo $required; ?>" data-type="text"<?php $this->required_html5(); ?> name="<?php echo esc_attr( $this->name() ); ?>[]" placeholder="<?php echo esc_attr( $this->placeholder() ); ?>" value="<?php echo esc_attr( $this->characteristics['default'] ) ?>" size="<?php echo esc_attr( $this->size() ); ?>" />
 								 </td>
-								 <td class="cfm-repeat-field">
+								 <td class="cfm-repeat-field cfm-repeat-field-actions">
 									 <img style="cursor:pointer; margin:0 3px;" alt="add another choice" title="<?php _e( 'add another choice', 'edd_cfm' ); ?>" class="cfm-clone-field" src="<?php echo $add; ?>">
 									 <img style="cursor:pointer;" class="cfm-remove-field" alt="remove this choice" title="<?php _e( 'remove this choice', 'edd_cfm' ); ?>" src="<?php echo $remove; ?>">
 								 </td>
