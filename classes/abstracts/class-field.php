@@ -492,7 +492,7 @@ class CFM_Field {
 
 	public function required_class() {
 		if ( $this->required()) {
-			return apply_filters( 'cfm_required_class', ' edd-required-indicator' );
+			return apply_filters( 'cfm_required_class', ' required' );
 		}
 	}
 
@@ -500,16 +500,18 @@ class CFM_Field {
 		return isset( $this->characteristics['label'] ) ?  $this->characteristics['label'] : '';
 	}
 
-	public function label() {
+	public function label( $show_help = -2 ) {
+		if ( $show_help === -2 ){
+			$show_help = false;
+		}
+		$show_help = ( bool ) $show_help;
 		$name  = $this->name();
 		$label = $this->get_label();
 		ob_start(); ?>
-		<div class="cfm-label">
-			<label for="cfm-<?php echo isset( $name ) ? $name : 'cls'; ?>"><?php echo $label . $this->required_mark(); ?></label>
-			<?php if ( $this->help() ) : ?>
-			<span class="cfm-help"><?php echo $this->help(); ?></span>
-		  <?php endif; ?>
-		</div>
+		<label class="edd-label" for="<?php echo isset( $name ) ? $name : 'cls'; ?>"><?php echo $label . $this->required_mark(); ?></label>
+		<?php if ( $show_help && $this->help() ) { ?>
+			<span class="edd-description"><?php echo $this->help(); ?></span>
+		<?php } ?>
 		<?php
 		return ob_get_clean();
 	}

@@ -55,27 +55,24 @@ class CFM_Select_Field extends CFM_Field {
 		
 		$value     = $this->get_field_value_admin( $this->payment_id, $this->user_id );
 		$output        = '';
-		$output     .= sprintf( '<fieldset class="cfm-el %1s %2s %3s">', $this->template(), $this->name(), $this->css() );
-		$output    .= $this->label();
+		$output     .= sprintf( '<p class="cfm-el %1s %2s %3s">', esc_attr( $this->template() ), esc_attr( $this->name() ), esc_attr( $this->css() ) );
+		$output    .= $this->label( false );
 		ob_start(); ?>
-		<div class="cfm-fields">
-
-			<select name="<?php echo $this->name(); ?>[]" data-required="false" data-type="select" >
-				<?php if ( !empty( $this->characteristics['first'] ) ) { ?>
-					<option value=""><?php echo $this->characteristics['first']; ?></option>
-				<?php } ?>
-				<?php
-		if ( $this->characteristics['options'] && count( $this->characteristics['options'] ) > 0 ) {
-			foreach ( $this->characteristics['options'] as $option ) {
-				$current_select = selected( $value, $option, false ); ?>
-				<option value="<?php echo esc_attr( $option ); ?>"<?php echo $current_select; ?>><?php echo $option; ?></option><?php
-			}
-		} ?>
-			</select>
-		</div>
+		<select name="<?php echo esc_attr( $this->name() ); ?>[]" id="<?php echo esc_attr( $this->name() ); ?>" class="select edd-input" data-required="false" data-type="select" >
+			<?php if ( !empty( $this->characteristics['first'] ) ) { ?>
+				<option value=""><?php echo $this->characteristics['first']; ?></option>
+			<?php } ?>
+			<?php
+			if ( $this->characteristics['options'] && count( $this->characteristics['options'] ) > 0 ) {
+				foreach ( $this->characteristics['options'] as $option ) {
+					$current_select = selected( $value, $option, false ); ?>
+					<option value="<?php echo esc_attr( $option ); ?>"<?php echo $current_select; ?>><?php echo $option; ?></option><?php
+				}
+			} ?>
+		</select>
 		<?php
 		$output .= ob_get_clean();
-		$output .= '</fieldset>';
+		$output .= '</p>';
 		return $output;
 	}
 
@@ -92,27 +89,24 @@ class CFM_Select_Field extends CFM_Field {
 		
 		$required  = $this->required();
 		$output        = '';
-		$output     .= sprintf( '<fieldset class="cfm-el %1s %2s %3s">', $this->template(), $this->name(), $this->css() );
-		$output    .= $this->label();
+		$output     .= sprintf( '<p class="cfm-el %1s %2s %3s">', esc_attr( $this->template() ), esc_attr( $this->name() ), esc_attr( $this->css() ) );
+		$output    .= $this->label( ! (bool) $profile );
 		ob_start(); ?>
-		<div class="cfm-fields">
-
-			<select name="<?php echo $this->name(); ?>[]" data-required="<?php echo $required; ?>" data-type="select"<?php $this->required_html5(); ?>>
-				<?php if ( !empty( $this->characteristics['first'] ) ) { ?>
-					<option value=""><?php echo $this->characteristics['first']; ?></option>
-				<?php } ?>
-				<?php
-				if ( $this->characteristics['options'] && count( $this->characteristics['options'] ) > 0 ) {
-					foreach ( $this->characteristics['options'] as $option ) {
-						$current_select = selected( $value, $option, false ); ?>
-						<option value="<?php echo esc_attr( $option ); ?>"<?php echo $current_select; ?>><?php echo $option; ?></option><?php
-					}
-				} ?>
-			</select>
-		</div>
+		<select name="<?php echo esc_attr( $this->name() ); ?>[]" id="<?php echo esc_attr( $this->name() ); ?>" class="select edd-input <?php echo $this->required_class(); ?>" data-required="<?php echo $required; ?>" data-type="select"<?php $this->required_html5(); ?>>
+			<?php if ( !empty( $this->characteristics['first'] ) ) { ?>
+				<option value=""><?php echo $this->characteristics['first']; ?></option>
+			<?php } ?>
+			<?php
+			if ( $this->characteristics['options'] && count( $this->characteristics['options'] ) > 0 ) {
+				foreach ( $this->characteristics['options'] as $option ) {
+					$current_select = selected( $value, $option, false ); ?>
+					<option value="<?php echo esc_attr( $option ); ?>"<?php echo $current_select; ?>><?php echo $option; ?></option><?php
+				}
+			} ?>
+		</select>
 		<?php
 		$output .= ob_get_clean();
-		$output .= '</fieldset>';
+		$output .= '</p>';
 		return $output;
 	}
 
@@ -131,6 +125,7 @@ class CFM_Select_Field extends CFM_Field {
 				<?php CFM_Formbuilder_Templates::export_radio( $index, $this->characteristics ); ?>
 				<?php CFM_Formbuilder_Templates::meta_type_radio( $index, $this->characteristics ); ?>
 				<?php CFM_Formbuilder_Templates::standard( $index, $this ); ?>
+				<?php CFM_Formbuilder_Templates::css( $index, $this->characteristics ); ?>
 
 				<div class="cfm-form-rows">
 					<label><?php _e( 'Select Text', 'edd_cfm' ); ?></label>

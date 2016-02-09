@@ -62,28 +62,25 @@ class CFM_Multiselect_Field extends CFM_Field {
 		}
 
 		$output        = '';
-		$output     .= sprintf( '<fieldset class="cfm-el %1s %2s %3s">', $this->template(), $this->name(), $this->css() );
-		$output    .= $this->label();
+		$output     .= sprintf( '<p class="cfm-el %1s %2s %3s">', esc_attr( $this->template() ), esc_attr( $this->name() ), esc_attr( $this->css() ) );
+		$output    .= $this->label( false );
 		ob_start(); ?>
-
-		<div class="cfm-fields">
-			<select class="multiselect" name="<?php echo $this->name(); ?>[]" multiple="multiple" data-required="false" data-type="multiselect">
-				<?php if ( !empty( $this->characteristics['first'] ) ) { ?>
-					<option value=""><?php echo $this->characteristics['first']; ?></option>
-				<?php } ?>
-				<?php
-		if ( $this->characteristics['options'] && count( $this->characteristics['options'] ) > 0 ) {
-			foreach ( $this->characteristics['options'] as $option ) { 
-				$is_selected = in_array( $option, $value );
-				?>
+		<select name="<?php echo esc_attr( $this->name() ); ?>[]" id="<?php echo esc_attr( $this->name() ); ?>" class="multiselect select edd-input" multiple="multiple" data-required="false" data-type="multiselect">
+			<?php if ( !empty( $this->characteristics['first'] ) ) { ?>
+				<option value=""><?php echo $this->characteristics['first']; ?></option>
+			<?php } ?>
+			<?php
+			if ( $this->characteristics['options'] && count( $this->characteristics['options'] ) > 0 ) {
+				foreach ( $this->characteristics['options'] as $option ) { 
+					$is_selected = in_array( $option, $value );
+					?>
 				<option value="<?php echo esc_attr( $option ); ?>"<?php selected( $is_selected, true ); ?>><?php echo $option; ?></option><?php
-			}
-		} ?>
-			</select>
-		</div>
+				}
+			} ?>
+		</select>
 		<?php
 		$output .= ob_get_clean();
-		$output .= '</fieldset>';
+		$output .= '</p>';
 		return $output;
 	}
 
@@ -107,28 +104,25 @@ class CFM_Multiselect_Field extends CFM_Field {
 		}		
 
 		$output        = '';
-		$output     .= sprintf( '<fieldset class="cfm-el %1s %2s %3s">', $this->template(), $this->name(), $this->css() );
-		$output    .= $this->label();
+		$output     .= sprintf( '<p class="cfm-el %1s %2s %3s">', esc_attr( $this->template() ), esc_attr( $this->name() ), esc_attr( $this->css() ) );
+		$output    .= $this->label( ! (bool) $profile );
 		ob_start(); ?>
-
-		<div class="cfm-fields">
-			<select class="multiselect" name="<?php echo $this->name(); ?>[]" multiple="multiple" data-required="<?php echo $required; ?>" data-type="multiselect"<?php $this->required_html5(); ?>>
-				<?php if ( !empty( $this->characteristics['first'] ) ) { ?>
-					<option value=""><?php echo $this->characteristics['first']; ?></option>
-				<?php } ?>
-				<?php
-				if ( $this->characteristics['options'] && count( $this->characteristics['options'] ) > 0 ) {
-					foreach ( $this->characteristics['options'] as $option ) {
-						$is_selected = in_array( $option, $value );
-						?>
-						<option value="<?php echo esc_attr( $option ); ?>"<?php selected( $is_selected, true ); ?>><?php echo $option; ?></option><?php
-					}
-				} ?>
-			</select>
-		</div>
+		<select name="<?php echo esc_attr( $this->name() ); ?>[]" id="<?php echo esc_attr( $this->name() ); ?>" class="multiselect select edd-input <?php echo $this->required_class(); ?>" multiple="multiple" data-required="<?php echo $required; ?>" data-type="multiselect"<?php $this->required_html5(); ?>>
+			<?php if ( !empty( $this->characteristics['first'] ) ) { ?>
+				<option value=""><?php echo $this->characteristics['first']; ?></option>
+			<?php } ?>
+			<?php
+			if ( $this->characteristics['options'] && count( $this->characteristics['options'] ) > 0 ) {
+				foreach ( $this->characteristics['options'] as $option ) {
+					$is_selected = in_array( $option, $value );
+					?>
+					<option value="<?php echo esc_attr( $option ); ?>"<?php selected( $is_selected, true ); ?>><?php echo $option; ?></option><?php
+				}
+			} ?>
+		</select>
 		<?php
 		$output .= ob_get_clean();
-		$output .= '</fieldset>';
+		$output .= '</p>';
 		return $output;
 	}
 
@@ -148,6 +142,7 @@ class CFM_Multiselect_Field extends CFM_Field {
 				<?php CFM_Formbuilder_Templates::export_radio( $index, $this->characteristics ); ?>
 				<?php CFM_Formbuilder_Templates::meta_type_radio( $index, $this->characteristics ); ?>
 				<?php CFM_Formbuilder_Templates::standard( $index, $this ); ?>
+				<?php CFM_Formbuilder_Templates::css( $index, $this->characteristics ); ?>
 
 				<div class="cfm-form-rows">
 					<label><?php _e( 'Select Text', 'edd_cfm' ); ?></label>

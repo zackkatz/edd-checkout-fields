@@ -143,6 +143,8 @@ class CFM_Form {
 				continue;
 			} else if ( is_object( $field ) && $profile && ( ! $field->is_meta() || $field->meta_type() !== 'user' ) ){
 				continue;
+			} else if ( is_object( $field ) && ! $profile && ( ! $field->is_meta() || $field->meta_type() !== 'payment' ) ){
+				continue;
 			} else {
 				$count++;
 			};
@@ -160,12 +162,16 @@ class CFM_Form {
 
 				$output .= apply_filters( 'cfm_render_' . $this->name() . '_form_admin_fields_before_field', '', $field, $this, $user_id, $profile );
 
-				if ( is_object( $field ) && method_exists( $field, 'render_field_admin' ) ) {
-					$output .= $field->render_field_admin( $user_id, $profile );
-				}
-				
 				if ( is_object( $field ) && $profile && ( ! $field->is_meta() || $field->meta_type() !== 'user' ) ){
 					continue;
+				}
+				
+				if ( is_object( $field ) && ! $profile && ( ! $field->is_meta() || $field->meta_type() !== 'payment' ) ){
+					continue;
+				}				
+				
+				if ( is_object( $field ) && method_exists( $field, 'render_field_admin' ) ) {
+					$output .= $field->render_field_admin( $user_id, $profile );
 				}
 
 				$output .= apply_filters( 'cfm_render_' . $this->name() . '_form_admin_fields_after_field', '', $field, $this, $user_id, $profile );
@@ -215,7 +221,11 @@ class CFM_Form {
 		}
 
 		if ( !empty( $fields ) && $count > 0 ) {
-			$output .= '<div class="cfm-form cfm-' . $this->name() . '-form-div">';
+			if ( ! $profile ) {
+				$output .= '<fieldset id="edd_checkout_user_info" class="cfm-form"><span><legend>' . __('Personal Info', 'edd' ) . '</legend></span>';
+			} else { 
+				$output .= '<div class="cfm-form cfm-' . $this->name() . '-form-div">';
+			}
 
 			foreach ( $fields as $field ) {
 				$templates_to_exclude = apply_filters( 'cfm_templates_to_exclude_render_' . $this->name() . '_form_frontend', array(), $profile );
@@ -243,7 +253,11 @@ class CFM_Form {
 			$output .= '<input type="hidden" name="cfm_user_id" value="' . $user_id . '">';
 			$output .= '<input type="hidden" name="cfm_action" value="submit-' . $this->name() . '-form">';
 			$output .= '<input type="hidden" name="cfm_profile" value="' . json_encode( $profile ) . '">';
-			$output .= '</div>';
+			if ( ! $profile ) {
+				$output .= '</fieldset>';
+			} else { 
+				$output .= '</div>';
+			}
 		} else {
 			$output .= __( 'The form has no fields!', 'edd_cfm' );
 		}

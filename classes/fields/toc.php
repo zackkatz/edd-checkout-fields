@@ -37,7 +37,7 @@ class CFM_Toc_Field extends CFM_Field {
 	public function set_title() {
 		$title = _x( 'Terms & Cond.', 'CFM Field title translation', 'edd_cfm' );
 		$title = apply_filters( 'cfm_' . $this->name() . '_field_title', $title );
-		$this->supports['title'] = $title;		
+		$this->supports['title'] = $title;
 	}
 
 	public function extending_constructor( ) {
@@ -69,23 +69,17 @@ class CFM_Toc_Field extends CFM_Field {
 			return '';
 		}
 		$output        = '';
-		$output     .= sprintf( '<fieldset class="cfm-el %1s %2s %3s">', $this->template(), $this->name(), $this->css() );
-		$output    .= $this->label();
+		$output     .= sprintf( '<p class="cfm-el %1s %2s %3s">', esc_attr( $this->template() ), esc_attr( $this->name() ), esc_attr( $this->css() ) );
+		//$output    .= $this->label( ! (bool) $profile );
 		ob_start(); ?>
-		<div class="cfm-label">
-			&nbsp;
-		</div>
-
-		<div class="cfm-fields">
-			<span data-required="yes" data-type="radio"></span>
-			<?php echo $this->characteristics['description'] ?>
-			<label>
-				<input type="checkbox" name="cfm_accept_toc" required="required" /> <?php echo $this->get_label() ?>
-			</label>
-		</div>
+		<span data-required="yes" data-type="radio"></span>
+		<?php echo $this->characteristics['description'] ?>
+		<label>
+			<input type="checkbox" name="cfm_accept_toc" required="required" /> <?php echo $this->get_label() ?>
+		</label>
 		<?php
 		$output .= ob_get_clean();
-		$output .= '</fieldset>';
+		$output .= '</p>';
 		return $output;
 	}
 
@@ -115,10 +109,7 @@ class CFM_Toc_Field extends CFM_Field {
 					<textarea class="smallipopInput" title="<?php _e( 'Insert terms and condtions here.', 'edd_cfm' ); ?>" name="<?php echo $description_name; ?>" rows="3"><?php echo esc_html( $description_value ); ?></textarea>
 				</div>
 
-				<div class="cfm-form-rows">
-					<label><?php _e( 'CSS Class Name', 'edd_cfm' ); ?></label>
-					<input type="text" name="<?php echo $css_name; ?>" value="<?php echo $css_value; ?>" class="smallipopInput" title="<?php _e( 'Add a CSS class name for this field', 'edd_cfm' ); ?>">
-				</div>
+				<?php CFM_Formbuilder_Templates::css( $index, $this->characteristics ); ?>
 			</div>
 		</li>
 		<?php

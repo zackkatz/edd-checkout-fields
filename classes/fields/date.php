@@ -29,6 +29,7 @@ class CFM_Date_Field extends CFM_Field {
 		'label'       => '',
 		'format'    => 'mm/dd/yy',
 		'time'        => 'no',
+		'css'         => '',
 		'meta_type'   => 'payment', // 'payment' or 'user' here if is_meta()
 		'public'          => "public", // denotes whether a field shows in the admin only
 		'show_in_exports' => "export", // denotes whether a field is in the CSV exports
@@ -49,24 +50,22 @@ class CFM_Date_Field extends CFM_Field {
 		
 		$value     = $this->get_field_value_frontend( $this->payment_id, $this->user_id );
 		$output     = '';
-		$output     .= sprintf( '<fieldset class="cfm-el %1s %2s %3s">', $this->template(), $this->name(), $this->css() );
-		$output    .= $this->label();
+		$output     .= sprintf( '<p class="cfm-el %1s %2s %3s">', esc_attr( $this->template() ), esc_attr( $this->name() ), esc_attr( $this->css() ) );
+		$output    .= $this->label( false );
 		ob_start(); ?>
-		<div class="cfm-fields">
-			<input id="<?php echo $this->name(); ?>" type="text" class="datepicker" data-required="false" data-type="text" name="<?php echo esc_attr( $this->name() ); ?>" value="<?php echo esc_attr( $value ) ?>" size="30" />
-		</div>
+		<input name="<?php echo esc_attr( $this->name() ); ?>" id="<?php echo esc_attr( $this->name() ); ?>" type="text" class="datepicker text edd-input" data-required="false" data-type="text" value="<?php echo esc_attr( $value ) ?>" />
 		<script type="text/javascript">
 			jQuery(function($) {
 			<?php if ( $this->characteristics['time'] == 'yes' ) { ?>
-				$("#<?php echo $this->name(); ?>").datetimepicker({ dateFormat: '<?php echo $this->characteristics['format']; ?>' });
+				$("#<?php echo esc_attr( $this->name() ); ?>").datetimepicker({ dateFormat: '<?php echo $this->characteristics['format']; ?>' });
 			<?php } else { ?>
-				$("#<?php echo $this->name(); ?>").datepicker({ dateFormat: '<?php echo $this->characteristics['format']; ?>' });
+				$("#<?php echo esc_attr( $this->name() ); ?>").datepicker({ dateFormat: '<?php echo $this->characteristics['format']; ?>' });
 			<?php } ?>
 			});
 		</script>
 		<?php
 		$output .= ob_get_clean();
-		$output .= '</fieldset>';
+		$output .= '</p>';
 		return $output;
 	}
 
@@ -79,24 +78,23 @@ class CFM_Date_Field extends CFM_Field {
 		$value     = $this->get_field_value_frontend( $this->payment_id, $this->user_id );
 		$required  = $this->required();
 		$output        = '';
-		$output     .= sprintf( '<fieldset class="cfm-el %1s %2s %3s">', $this->template(), $this->name(), $this->css() );
-		$output    .= $this->label();
+		$output     .= sprintf( '<p class="cfm-el %1s %2s %3s">', esc_attr( $this->template() ), esc_attr( $this->name() ), esc_attr( $this->css() ) );
+		$output    .= $this->label( ! (bool) $profile );
 		ob_start(); ?>
-		<div class="cfm-fields">
-			<input id="<?php echo $this->name(); ?>" type="text" class="datepicker" data-required="<?php echo $required; ?>" data-type="text"<?php $this->required_html5(); ?> name="<?php echo esc_attr( $this->name() ); ?>" value="<?php echo esc_attr( $value ) ?>" size="30" />
-		</div>
+		
+		<input name="<?php echo esc_attr( $this->name() ); ?>"  id="<?php echo esc_attr( $this->name() ); ?>" type="text" class="datepicker text edd-input <?php echo $this->required_class(); ?>" data-required="<?php echo $required; ?>" data-type="text"<?php $this->required_html5(); ?> value="<?php echo esc_attr( $value ) ?>" />
 		<script type="text/javascript">
 			jQuery(function($) {
 			<?php if ( $this->characteristics['time'] == 'yes' ) { ?>
-				$("#<?php echo $this->name(); ?>").datetimepicker({ dateFormat: '<?php echo $this->characteristics['format']; ?>' });
+				$("#<?php echo esc_attr( $this->name() ); ?>").datetimepicker({ dateFormat: '<?php echo $this->characteristics['format']; ?>' });
 			<?php } else { ?>
-				$("#<?php echo $this->name(); ?>").datepicker({ dateFormat: '<?php echo $this->characteristics['format']; ?>' });
+				$("#<?php echo esc_attr( $this->name() ); ?>").datepicker({ dateFormat: '<?php echo $this->characteristics['format']; ?>' });
 			<?php } ?>
 			});
 		</script>
 		<?php
 		$output .= ob_get_clean();
-		$output .= '</fieldset>';
+		$output .= '</p>';
 		return $output;
 	}
 
@@ -117,6 +115,7 @@ class CFM_Date_Field extends CFM_Field {
 				<?php CFM_Formbuilder_Templates::export_radio( $index, $this->characteristics ); ?>
 				<?php CFM_Formbuilder_Templates::meta_type_radio( $index, $this->characteristics ); ?>
 				<?php CFM_Formbuilder_Templates::standard( $index, $this ); ?>
+				<?php CFM_Formbuilder_Templates::css( $index, $this->characteristics ); ?>
 
 				<div class="cfm-form-rows">
 					<label><?php _e( 'Date Format', 'edd_cfm' ); ?></label>

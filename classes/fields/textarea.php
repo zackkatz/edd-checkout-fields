@@ -35,7 +35,6 @@ class CFM_Textarea_Field extends CFM_Field {
 		'cols'        => '50',
 		'rows'        => '8',
 		'rich'        => '',
-		'insert_image' => false,
 		'meta_type'   => 'payment', // 'payment' or 'user' here if is_meta()
 		'public'          => "public", // denotes whether a field shows in the admin only
 		'show_in_exports' => "export", // denotes whether a field is in the CSV exports
@@ -58,35 +57,27 @@ class CFM_Textarea_Field extends CFM_Field {
 		$required  = $this->required();
 
 		$output        = '';
-		$output     .= sprintf( '<fieldset class="cfm-el %1s %2s %3s">', $this->template(), $this->name(), $this->css() );
-		$output    .= $this->label();
+		$output     .= sprintf( '<p class="cfm-el %1s %2s %3s">', esc_attr( $this->template() ), esc_attr( $this->name() ), esc_attr( $this->css() ) );
+		$output    .= $this->label( false );
 		ob_start(); ?>
-		<div class="cfm-fields">
 		<?php
 		$rows =isset( $this->characteristics['rows'] ) ? $this->characteristics['rows'] : 8;
 		$cols =isset( $this->characteristics['cols'] ) ? $this->characteristics['cols'] : 50;
 		if ( isset( $this->characteristics['rich'] ) && $this->characteristics['rich'] == 'yes' ) {
 			$options = array( 'editor_height' => $rows, 'quicktags' => false, 'editor_class' => $req_class );
-			if ( isset( $this->characteristics['insert_image'] ) && $this->characteristics['insert_image'] ) {
-				$options['media_buttons'] = true;
-			}
 			printf( '<span class="cfm-rich-validation" data-required="%s" data-type="rich" data-id="%s"></span>', $this->characteristics['required'], $this->name() );
 			wp_editor( $value, $this->name(), $options );
 
 		} elseif ( isset( $this->characteristics['rich'] ) && $this->characteristics['rich'] == 'teeny' ) {
 			$options = array( 'editor_height' => $rows, 'quicktags' => false, 'teeny' => true, 'editor_class' => $req_class );
-			if ( isset( $this->characteristics['insert_image'] ) && $this->characteristics['insert_image'] ) {
-				$options['media_buttons'] = true;
-			}
 			printf( '<span class="cfm-rich-validation" data-required="%s" data-type="rich" data-id="%s"></span>', $this->characteristics['required'], $this->name() );
 			wp_editor( $value, $this->name(), $options );
 		} else {  ?>
-				<textarea class="textareafield" id="<?php echo $this->name(); ?>" name="<?php echo $this->name(); ?>" data-required="false" data-type="textarea" placeholder="<?php echo esc_attr( $this->placeholder() ); ?>" rows="<?php echo esc_attr( $rows ); ?>" cols="<?php echo esc_attr( $cols ); ?>"><?php echo esc_textarea( $value ) ?></textarea>
-			<?php } ?>
-		</div>
+			<textarea name="<?php echo esc_attr( $this->name() ); ?>" id="<?php echo esc_attr( $this->name() ); ?>" class="textarea edd-input" data-required="false" data-type="textarea" placeholder="<?php echo esc_attr( $this->placeholder() ); ?>" rows="<?php echo esc_attr( $rows ); ?>" cols="<?php echo esc_attr( $cols ); ?>"><?php echo esc_textarea( $value ) ?></textarea>
+		<?php } ?>
 		<?php
 		$output .= ob_get_clean();
-		$output .= '</fieldset>';
+		$output .= '</p>';
 		return $output;
 	}
 
@@ -101,35 +92,27 @@ class CFM_Textarea_Field extends CFM_Field {
 		$req_class = $required ? 'required' : 'rich-editor';
 
 		$output        = '';
-		$output     .= sprintf( '<fieldset class="cfm-el %1s %2s %3s">', $this->template(), $this->name(), $this->css() );
-		$output    .= $this->label();
+		$output     .= sprintf( '<p class="cfm-el %1s %2s %3s">', esc_attr( $this->template() ), esc_attr( $this->name() ), esc_attr( $this->css() ) );
+		$output    .= $this->label( ! (bool) $profile );
 		ob_start(); ?>
-		<div class="cfm-fields">
 		<?php
 		$rows =isset( $this->characteristics['rows'] ) ? $this->characteristics['rows'] : 8;
 		$cols =isset( $this->characteristics['cols'] ) ? $this->characteristics['cols'] : 50;
 		if ( isset( $this->characteristics['rich'] ) && $this->characteristics['rich'] == 'yes' ) {
 			$options = array( 'editor_height' => $rows, 'quicktags' => false, 'editor_class' => $req_class );
-			if ( isset( $this->characteristics['insert_image'] ) && $this->characteristics['insert_image'] ) {
-				$options['media_buttons'] = true;
-			}
 			printf( '<span class="cfm-rich-validation" data-required="%s" data-type="rich" data-id="%s"></span>', $this->characteristics['required'], $this->name() );
 			wp_editor( $value, $this->name(), $options );
 
 		} elseif ( isset( $this->characteristics['rich'] ) && $this->characteristics['rich'] == 'teeny' ) {
 			$options = array( 'editor_height' => $rows, 'quicktags' => false, 'teeny' => true, 'editor_class' => $req_class );
-			if ( isset( $this->characteristics['insert_image'] ) && $this->characteristics['insert_image'] ) {
-				$options['media_buttons'] = true;
-			}
 			printf( '<span class="cfm-rich-validation" data-required="%s" data-type="rich" data-id="%s"></span>', $this->characteristics['required'], $this->name() );
 			wp_editor( $value, $this->name(), $options );
 		} else {  ?>
-				<textarea class="textareafield<?php echo $this->required_class(); ?>" id="<?php echo $this->name(); ?>" name="<?php echo $this->name(); ?>" data-required="<?php echo $required; ?>" data-type="textarea"<?php $this->required_html5(); ?> placeholder="<?php echo esc_attr( $this->placeholder() ); ?>" rows="<?php echo esc_attr( $rows ); ?>" cols="<?php echo esc_attr( $cols ); ?>"><?php echo esc_textarea( $value ) ?></textarea>
-			<?php } ?>
-		</div>
+				<textarea name="<?php echo esc_attr( $this->name() ); ?>" id="<?php echo esc_attr( $this->name() ); ?>" class="textarea edd-input <?php echo $this->required_class(); ?>" data-required="<?php echo $required; ?>" data-type="textarea"<?php $this->required_html5(); ?> placeholder="<?php echo esc_attr( $this->placeholder() ); ?>" rows="<?php echo esc_attr( $rows ); ?>" cols="<?php echo esc_attr( $cols ); ?>"><?php echo esc_textarea( $value ) ?></textarea>
+		<?php } ?>
 		<?php
 		$output .= ob_get_clean();
-		$output .= '</fieldset>';
+		$output .= '</p>';
 		return $output;
 	}
 
@@ -146,6 +129,7 @@ class CFM_Textarea_Field extends CFM_Field {
 				<?php CFM_Formbuilder_Templates::export_radio( $index, $this->characteristics ); ?>
 				<?php CFM_Formbuilder_Templates::meta_type_radio( $index, $this->characteristics ); ?>
 				<?php CFM_Formbuilder_Templates::standard( $index, $this ); ?>
+				<?php CFM_Formbuilder_Templates::css( $index, $this->characteristics ); ?>
 				<?php CFM_Formbuilder_Templates::common_textarea( $index, $this->characteristics ); ?>
 			</div>
 		</li>

@@ -29,7 +29,6 @@ class CFM_Honeypot_Field extends CFM_Field {
 		'required'    => false,
 		'label'       => '',
 		'description' => '',
-		'css'     => '',
 		'meta_type'   => 'payment', // 'payment' or 'user' here if is_meta()
 		'public'          => "public", // denotes whether a field shows in the admin only
 		'show_in_exports' => "noexport", // denotes whether a field is in the CSV exports
@@ -71,12 +70,12 @@ class CFM_Honeypot_Field extends CFM_Field {
 		}
 
 		$output        = '';
-		$output     .= sprintf( '<fieldset class="cfm-el %1s %2s %3s">', $this->template(), $this->name(), $this->css() );
+		$output     .= sprintf( '<p class="cfm-el %1s %2s %3s">', esc_attr( $this->template() ), esc_attr( $this->name() ), esc_attr( $this->css() ) );
 		ob_start(); ?>
-			<input type="hidden" name="honeypot" value=""/>
+		<input type="hidden" name="honeypot" value=""/>
 		<?php
 		$output .= ob_get_clean();
-		$output .= '</fieldset>';
+		$output .= '</p>';
 		return $output;
 	}
 
@@ -91,7 +90,6 @@ class CFM_Honeypot_Field extends CFM_Field {
 			<?php CFM_Formbuilder_Templates::meta_type_radio( $index, $this->characteristics, "payment" ); ?>
 			<?php CFM_Formbuilder_Templates::hidden_field( "[$index][template]", $this->template() ); ?>
 			<?php CFM_Formbuilder_Templates::field_div( $index, $this->name(), $this->characteristics, $insert ); ?>
-				<?php _e( 'There are no settings required for this field', 'edd_cfm' ); ?>
 			</div>
 		</li>
 		<?php

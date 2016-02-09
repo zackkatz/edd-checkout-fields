@@ -63,7 +63,7 @@ function cfm_get_default_checkout_form_fields(){
 			3 => array(
 				'template' => 'user_email',
 				'required' => 'yes',
-				'label' => 'Email',
+				'label' => 'Email Address',
 				'name' => 'edd_email',
 				'is_meta' => true,
 				'help' => 'We will send the purchase receipt to this address.',

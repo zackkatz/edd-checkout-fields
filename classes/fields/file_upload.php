@@ -78,7 +78,7 @@ class CFM_File_Upload_Field extends CFM_Field {
 		}
 
 		$output        = '';
-		$output     .= sprintf( '<fieldset class="cfm-el %1s %2s %3s">', $this->template(), $this->name(), $this->css() );
+		$output     .= sprintf( '<p class="cfm-el %1s %2s %3s">', esc_attr( $this->template() ), esc_attr( $this->name() ), esc_attr( $this->css() ) );
 		$output    .= $this->label( $readonly );
 		ob_start(); ?>
 			<div class="cfm-fields">
@@ -137,7 +137,7 @@ class CFM_File_Upload_Field extends CFM_Field {
 		 	</div> <!-- .cfm-fields -->
 		<?php
 		$output .= ob_get_clean();
-		$output .= '</fieldset>';
+		$output .= '</p>';
 		return $output;
 	}
 
@@ -170,7 +170,7 @@ class CFM_File_Upload_Field extends CFM_Field {
 			$max_files = $this->characteristics['count'];
 		}
 		$output        = '';
-		$output     .= sprintf( '<fieldset class="cfm-el %1s %2s %3s">', $this->template(), $this->name(), $this->css() );
+		$output     .= sprintf( '<p class="cfm-el %1s %2s %3s">', esc_attr( $this->template() ), esc_attr( $this->name() ), esc_attr( $this->css() ) );
 		$output    .= $this->label( $readonly );
 		ob_start(); ?>
 			<div class="cfm-fields">
@@ -224,7 +224,7 @@ class CFM_File_Upload_Field extends CFM_Field {
 		 	</div> <!-- .cfm-fields -->
 		<?php
 		$output .= ob_get_clean();
-		$output .= '</fieldset>';
+		$output .= '</p>';
 		return $output;
 	}
 
@@ -293,6 +293,7 @@ class CFM_File_Upload_Field extends CFM_Field {
 						<?php CFM_Formbuilder_Templates::field_div( $index, $this->name(), $this->characteristics, $insert ); ?>
 								<?php CFM_Formbuilder_Templates::public_radio( $index, $this->characteristics, $this->form_name ); ?>
 								<?php CFM_Formbuilder_Templates::standard( $index, $this ); ?>
+								<?php CFM_Formbuilder_Templates::css( $index, $this->characteristics ); ?>
 
 								<div class="cfm-form-rows">
 										<label><?php _e( 'Max. files', 'edd_cfm' ); ?></label>

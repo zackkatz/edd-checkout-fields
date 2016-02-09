@@ -63,15 +63,15 @@ class CFM_Section_Break_Field extends CFM_Field {
 		}
 
 		$output        = '';
-		$output     .= sprintf( '<fieldset class="cfm-el %1s %2s %3s">', $this->template(), $this->name(), $this->css() );
+		$output     .= sprintf( '<p class="cfm-el %1s %2s %3s">', esc_attr( $this->template() ), esc_attr( $this->name() ), esc_attr( $this->css() ) );
 		ob_start(); ?>
 		<div class="cfm-section-wrap">
-				<h2 class="cfm-section-title"><?php echo $this->get_label(); ?></h2>
-				<div class="cfm-section-details"><?php echo $this->characteristics['description']; ?></div>
+			<h2 class="cfm-section-title"><?php echo $this->get_label(); ?></h2>
+			<div class="cfm-section-details"><?php echo $this->characteristics['description']; ?></div>
 		</div>
 		<?php
 		$output .= ob_get_clean();
-		$output .= '</fieldset>';
+		$output .= '</p>';
 		return $output;
 	}
 
@@ -82,15 +82,15 @@ class CFM_Section_Break_Field extends CFM_Field {
 		}
 
 		$output        = '';
-		$output     .= sprintf( '<fieldset class="cfm-el %1s %2s %3s">', $this->template(), $this->name(), $this->css() );
+		$output     .= sprintf( '<p class="cfm-el %1s %2s %3s">', esc_attr( $this->template() ), esc_attr( $this->name() ), esc_attr( $this->css() ) );
 		ob_start(); ?>
 		<div class="cfm-section-wrap">
-				<h2 class="cfm-section-title"><?php echo $this->get_label(); ?></h2>
-				<div class="cfm-section-details"><?php echo $this->characteristics['description']; ?></div>
+			<h2 class="cfm-section-title"><?php echo $this->get_label(); ?></h2>
+			<div class="cfm-section-details"><?php echo $this->characteristics['description']; ?></div>
 		</div>
 		<?php
 		$output .= ob_get_clean();
-		$output .= '</fieldset>';
+		$output .= '</p>';
 		return $output;
 	}
 
@@ -107,12 +107,12 @@ class CFM_Section_Break_Field extends CFM_Field {
 		ob_start(); ?>
 		<li class="section_break">
 			<?php $this->legend( $this->title(), $this->get_label(), $removable ); ?>
+			<?php CFM_Formbuilder_Templates::field_div( $index, $this->name(), $this->characteristics, $insert ); ?>
 			<?php CFM_Formbuilder_Templates::public_radio( $index, $this->characteristics ); ?>
 			<?php CFM_Formbuilder_Templates::export_radio( $index, $this->characteristics, "noexport" ); ?>
 			<?php CFM_Formbuilder_Templates::meta_type_radio( $index, $this->characteristics, "payment" ); ?>
 			<?php CFM_Formbuilder_Templates::hidden_field( "[$index][template]", $this->template() ); ?>
 			<?php CFM_Formbuilder_Templates::hidden_field( "[$index][name]", $name ); ?>
-			<?php CFM_Formbuilder_Templates::field_div( $index, $this->name(), $this->characteristics, $insert ); ?>
 				<div class="cfm-form-rows">
 					<label><?php _e( 'Title', 'edd_cfm' ); ?></label>
 					<input type="text" class="smallipopInput" title="Title of the section" name="<?php echo $title_name; ?>" value="<?php echo esc_attr( $title_value ); ?>" />
@@ -123,10 +123,7 @@ class CFM_Section_Break_Field extends CFM_Field {
 					<textarea class="smallipopInput" title="Some details text about the section" name="<?php echo $description_name; ?>" rows="3"><?php echo esc_html( $description_value ); ?></textarea>
 				</div>
 
-				<div class="cfm-form-rows">
-					<label><?php _e( 'CSS Class Name', 'edd_cfm' ); ?></label>
-					<input type="text" name="<?php echo $css_name; ?>" value="<?php echo $css_value; ?>" class="smallipopInput" title="<?php _e( 'Add a CSS class name for this field', 'edd_cfm' ); ?>">
-				</div>
+			<?php CFM_Formbuilder_Templates::css( $index, $this->characteristics ); ?>
 			</div>
 		</li>
 		<?php

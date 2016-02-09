@@ -58,50 +58,32 @@ class CFM_Repeat_Field extends CFM_Field {
 		$remove    = cfm_assets_url. 'img/remove.png';
 		$required  = $this->required();
 		$output        = '';
-		$output     .= sprintf( '<fieldset class="cfm-el %1s %2s %3s">', $this->template(), $this->name(), $this->css() );
-		$output    .= $this->label();
+		$output     .= sprintf( '<p class="cfm-el %1s %2s %3s">', esc_attr( $this->template() ), esc_attr( $this->name() ), esc_attr( $this->css() ) );
+		$output    .= $this->label( false );
 		ob_start(); ?>
-
-		<div class="cfm-fields">
-
-			<?php if ( isset( $this->characteristics['multiple'] ) ) { ?>
-				<table>
-					<thead>
-						<tr>
-							<?php
-							$num_columns = count( $this->characteristics['columns'] );
-							foreach ( $this->characteristics['columns'] as $column ) { ?>
-								<th><?php echo $column; ?></th>
-							<?php } ?>
-							<th>
-								<?php _e( 'Actions', 'edd_cfm' ); ?>
-							</th>
-						</tr>
-
-					</thead>
-					<tbody>
+		<?php if ( isset( $this->characteristics['multiple'] ) ) { ?>
+			<table>
+				<thead>
+					<tr>
 						<?php
-						$row_count = count( $value ) > 0 ? count( $value ) - 1 : 0;
-						if ( $row_count > 0 ) {
-							for ( $row = 0; $row <= $row_count; $row++ ) { ?>
-								<tr data-key="<?php echo $row; ?>">
-									<?php for ( $count = 0; $count < $num_columns; $count++ ) { ?>
-										<td class="cfm-repeat-field">
-											<input type="text" name="<?php echo $this->name() . '[' . $row . '][' . $count . ']'; ?>" value="<?php echo esc_attr( $value[ $row ][ $count ] ); ?>" size="<?php echo esc_attr( $this->size() ); ?>" data-required="<?php echo $required; ?>" data-type="text"<?php $this->required_html5(); ?> />
-										</td>
-									<?php } ?>
-									<td class="cfm-repeat-field">
-										<img class="cfm-clone-field" alt="<?php esc_attr_e( 'Add another', 'edd_cfm' ); ?>" title="<?php esc_attr_e( 'Add another', 'edd_cfm' ); ?>" src="<?php echo $add; ?>">
-										<img class="cfm-remove-field" alt="<?php esc_attr_e( 'Remove this choice', 'edd_cfm' ); ?>" title="<?php esc_attr_e( 'Remove this choice', 'edd_cfm' ); ?>" src="<?php echo $remove; ?>">
-									</td>
-								</tr>
-								<?php
-							}
-						} else { ?>
-							<tr data-key="<?php echo $row_count; ?>">
+						$num_columns = count( $this->characteristics['columns'] );
+						foreach ( $this->characteristics['columns'] as $column ) { ?>
+							<th><?php echo $column; ?></th>
+						<?php } ?>
+						<th>
+							<?php _e( 'Actions', 'edd_cfm' ); ?>
+						</th>
+					</tr>
+				</thead>
+				<tbody>
+					<?php
+					$row_count = count( $value ) > 0 ? count( $value ) - 1 : 0;
+					if ( $row_count > 0 ) {
+						for ( $row = 0; $row <= $row_count; $row++ ) { ?>
+							<tr data-key="<?php echo $row; ?>">
 								<?php for ( $count = 0; $count < $num_columns; $count++ ) { ?>
 									<td class="cfm-repeat-field">
-										<input type="text" name="<?php echo $this->name() . '[0][' . $count . ']'; ?>" size="<?php echo esc_attr( $this->size() ) ?>"  value="<?php echo $value[0][ $count ]; ?>" data-required="<?php echo $required; ?>" data-type="text"<?php $this->required_html5(); ?> />
+										<input type="text" name="<?php echo esc_attr( $this->name() ) . '[' . $row . '][' . $count . ']'; ?>" value="<?php echo esc_attr( $value[ $row ][ $count ] ); ?>" size="<?php echo esc_attr( $this->size() ); ?>" data-required="<?php echo $required; ?>" data-type="text"<?php $this->required_html5(); ?> />
 									</td>
 								<?php } ?>
 								<td class="cfm-repeat-field">
@@ -109,44 +91,55 @@ class CFM_Repeat_Field extends CFM_Field {
 									<img class="cfm-remove-field" alt="<?php esc_attr_e( 'Remove this choice', 'edd_cfm' ); ?>" title="<?php esc_attr_e( 'Remove this choice', 'edd_cfm' ); ?>" src="<?php echo $remove; ?>">
 								</td>
 							</tr>
-
-						<?php } ?>
-
-					</tbody>
-				</table>
-			<?php } else { ?>
-				<table>
-					<?php
-					if ( $value && count( $value ) > 1 ) {
-						foreach ( $value as $item ) { ?>
+							<?php
+						}
+					} else { ?>
+						<tr data-key="<?php echo $row_count; ?>">
+							<?php for ( $count = 0; $count < $num_columns; $count++ ) { ?>
+								<td class="cfm-repeat-field">
+									<input type="text" name="<?php echo esc_attr( $this->name() ) . '[0][' . $count . ']'; ?>" size="<?php echo esc_attr( $this->size() ) ?>"  value="<?php echo $value[0][ $count ]; ?>" data-required="<?php echo $required; ?>" data-type="text"<?php $this->required_html5(); ?> />
+								</td>
+							<?php } ?>
+							<td class="cfm-repeat-field">
+								<img class="cfm-clone-field" alt="<?php esc_attr_e( 'Add another', 'edd_cfm' ); ?>" title="<?php esc_attr_e( 'Add another', 'edd_cfm' ); ?>" src="<?php echo $add; ?>">
+								<img class="cfm-remove-field" alt="<?php esc_attr_e( 'Remove this choice', 'edd_cfm' ); ?>" title="<?php esc_attr_e( 'Remove this choice', 'edd_cfm' ); ?>" src="<?php echo $remove; ?>">
+							</td>
+						</tr>
+					<?php } ?>
+				</tbody>
+			</table>
+		<?php } else { ?>
+			<table>
+				<?php
+				if ( $value && count( $value ) > 1 ) {
+					foreach ( $value as $item ) { ?>
+					 <tr>
+						 <td class="cfm-repeat-field">
+							 <input id="cfm-<?php echo esc_attr( $this->name() ); ?>" type="text" data-required="<?php echo $required; ?>" data-type="text"<?php $this->required_html5(); ?> name="<?php echo esc_attr( $this->name() ); ?>[]" placeholder="<?php echo esc_attr( $this->placeholder() ); ?>" value="<?php echo esc_attr( $item ) ?>" size="<?php echo esc_attr( $this->size() ) ?>" />
+						 </td>
+						 <td class="cfm-repeat-field">
+							 <img style="cursor:pointer; margin:0 3px;" alt="add another choice" title="add another choice" class="cfm-clone-field" src="<?php echo $add; ?>">
+							 <img style="cursor:pointer;" class="cfm-remove-field" alt="remove this choice" title="remove this choice" src="<?php echo $remove; ?>">
+						 </td>
+					 </tr>
+							<?php
+					} //endforeach
+				} else { ?>
 						 <tr>
 							 <td class="cfm-repeat-field">
-								 <input id="cfm-<?php echo $this->name(); ?>" type="text" data-required="<?php echo $required; ?>" data-type="text"<?php $this->required_html5(); ?> name="<?php echo esc_attr( $this->name() ); ?>[]" placeholder="<?php echo esc_attr( $this->placeholder() ); ?>" value="<?php echo esc_attr( $item ) ?>" size="<?php echo esc_attr( $this->size() ) ?>" />
+								 <input id="cfm-<?php echo esc_attr( $this->name() ); ?>" type="text" data-required="<?php echo $required; ?>" data-type="text"<?php $this->required_html5(); ?> name="<?php echo esc_attr( $this->name() ); ?>[]" placeholder="<?php echo esc_attr( $this->placeholder() ); ?>" value="<?php echo esc_attr( $this->characteristics['default'] ) ?>" size="<?php echo esc_attr( $this->size() ); ?>" />
 							 </td>
 							 <td class="cfm-repeat-field">
-								 <img style="cursor:pointer; margin:0 3px;" alt="add another choice" title="add another choice" class="cfm-clone-field" src="<?php echo $add; ?>">
-								 <img style="cursor:pointer;" class="cfm-remove-field" alt="remove this choice" title="remove this choice" src="<?php echo $remove; ?>">
+								 <img style="cursor:pointer; margin:0 3px;" alt="add another choice" title="<?php _e( 'add another choice', 'edd_cfm' ); ?>" class="cfm-clone-field" src="<?php echo $add; ?>">
+								 <img style="cursor:pointer;" class="cfm-remove-field" alt="remove this choice" title="<?php _e( 'remove this choice', 'edd_cfm' ); ?>" src="<?php echo $remove; ?>">
 							 </td>
 						 </tr>
-								<?php
-						} //endforeach
-					} else { ?>
-							 <tr>
-								 <td class="cfm-repeat-field">
-									 <input id="cfm-<?php echo $this->name(); ?>" type="text" data-required="<?php echo $required; ?>" data-type="text"<?php $this->required_html5(); ?> name="<?php echo esc_attr( $this->name() ); ?>[]" placeholder="<?php echo esc_attr( $this->placeholder() ); ?>" value="<?php echo esc_attr( $this->characteristics['default'] ) ?>" size="<?php echo esc_attr( $this->size() ); ?>" />
-								 </td>
-								 <td class="cfm-repeat-field">
-									 <img style="cursor:pointer; margin:0 3px;" alt="add another choice" title="<?php _e( 'add another choice', 'edd_cfm' ); ?>" class="cfm-clone-field" src="<?php echo $add; ?>">
-									 <img style="cursor:pointer;" class="cfm-remove-field" alt="remove this choice" title="<?php _e( 'remove this choice', 'edd_cfm' ); ?>" src="<?php echo $remove; ?>">
-								 </td>
-							 </tr>
-					<?php } ?>
-				</table>
+				<?php } ?>
+			</table>
 		<?php } ?>
-		</div>
 		<?php
 		$output .= ob_get_clean();
-		$output .= '</fieldset>';
+		$output .= '</p>';
 		return $output;
 	}
 
@@ -161,13 +154,9 @@ class CFM_Repeat_Field extends CFM_Field {
 		$remove    = cfm_assets_url. 'img/remove.png';
 		$required  = $this->required();
 		$output        = '';
-		$output     .= sprintf( '<fieldset class="cfm-el %1s %2s %3s">', $this->template(), $this->name(), $this->css() );
+		$output     .= sprintf( '<p class="cfm-el %1s %2s %3s">', esc_attr( $this->template() ), esc_attr( $this->name() ), esc_attr( $this->css() ) );
 		$output    .= $this->label();
 		ob_start(); ?>
-		ob_start(); ?>
-
-		<div class="cfm-fields">
-
 			<?php if ( isset( $this->characteristics['multiple'] ) ) { ?>
 				<table>
 					<thead>
@@ -191,7 +180,7 @@ class CFM_Repeat_Field extends CFM_Field {
 								<tr data-key="<?php echo $row; ?>">
 									<?php for ( $count = 0; $count < $num_columns; $count++ ) { ?>
 										<td class="cfm-repeat-field">
-											<input type="text" name="<?php echo $this->name() . '[' . $row . '][' . $count . ']'; ?>" value="<?php echo esc_attr( $value[ $row ][ $count ] ); ?>" size="<?php echo esc_attr( $this->size() ); ?>" data-required="<?php echo $required; ?>" data-type="text"<?php $this->required_html5(); ?> />
+											<input type="text" name="<?php echo esc_attr( $this->name() ) . '[' . $row . '][' . $count . ']'; ?>" value="<?php echo esc_attr( $value[ $row ][ $count ] ); ?>" size="<?php echo esc_attr( $this->size() ); ?>" data-required="<?php echo $required; ?>" data-type="text"<?php $this->required_html5(); ?> />
 										</td>
 									<?php } ?>
 									<td class="cfm-repeat-field">
@@ -205,7 +194,7 @@ class CFM_Repeat_Field extends CFM_Field {
 							<tr data-key="<?php echo $row_count; ?>">
 								<?php for ( $count = 0; $count < $num_columns; $count++ ) { ?>
 									<td class="cfm-repeat-field">
-										<input type="text" name="<?php echo $this->name() . '[0][' . $count . ']'; ?>" size="<?php echo esc_attr( $this->size() ) ?>"  value="<?php echo $value[0][ $count ]; ?>" data-required="<?php echo $required; ?>" data-type="text"<?php $this->required_html5(); ?> />
+										<input type="text" name="<?php echo esc_attr( $this->name() ) . '[0][' . $count . ']'; ?>" size="<?php echo esc_attr( $this->size() ) ?>"  value="<?php echo $value[0][ $count ]; ?>" data-required="<?php echo $required; ?>" data-type="text"<?php $this->required_html5(); ?> />
 									</td>
 								<?php } ?>
 								<td class="cfm-repeat-field">
@@ -225,7 +214,7 @@ class CFM_Repeat_Field extends CFM_Field {
 						foreach ( $value as $item ) { ?>
 						 <tr>
 							 <td class="cfm-repeat-field">
-								 <input id="cfm-<?php echo $this->name(); ?>" type="text" data-required="<?php echo $required; ?>" data-type="text"<?php $this->required_html5(); ?> name="<?php echo esc_attr( $this->name() ); ?>[]" placeholder="<?php echo esc_attr( $this->placeholder() ); ?>" value="<?php echo esc_attr( $item ) ?>" size="<?php echo esc_attr( $this->size() ) ?>" />
+								 <input id="cfm-<?php echo esc_attr( $this->name() ); ?>" type="text" data-required="<?php echo $required; ?>" data-type="text"<?php $this->required_html5(); ?> name="<?php echo esc_attr( $this->name() ); ?>[]" placeholder="<?php echo esc_attr( $this->placeholder() ); ?>" value="<?php echo esc_attr( $item ) ?>" size="<?php echo esc_attr( $this->size() ) ?>" />
 							 </td>
 							 <td class="cfm-repeat-field">
 								 <img style="cursor:pointer; margin:0 3px;" alt="add another choice" title="add another choice" class="cfm-clone-field" src="<?php echo $add; ?>">
@@ -237,7 +226,7 @@ class CFM_Repeat_Field extends CFM_Field {
 					} else { ?>
 							 <tr>
 								 <td class="cfm-repeat-field">
-									 <input id="cfm-<?php echo $this->name(); ?>" type="text" data-required="<?php echo $required; ?>" data-type="text"<?php $this->required_html5(); ?> name="<?php echo esc_attr( $this->name() ); ?>[]" placeholder="<?php echo esc_attr( $this->placeholder() ); ?>" value="<?php echo esc_attr( $this->characteristics['default'] ) ?>" size="<?php echo esc_attr( $this->size() ); ?>" />
+									 <input id="cfm-<?php echo esc_attr( $this->name() ); ?>" type="text" data-required="<?php echo $required; ?>" data-type="text"<?php $this->required_html5(); ?> name="<?php echo esc_attr( $this->name() ); ?>[]" placeholder="<?php echo esc_attr( $this->placeholder() ); ?>" value="<?php echo esc_attr( $this->characteristics['default'] ) ?>" size="<?php echo esc_attr( $this->size() ); ?>" />
 								 </td>
 								 <td class="cfm-repeat-field">
 									 <img style="cursor:pointer; margin:0 3px;" alt="add another choice" title="<?php _e( 'add another choice', 'edd_cfm' ); ?>" class="cfm-clone-field" src="<?php echo $add; ?>">
@@ -247,10 +236,9 @@ class CFM_Repeat_Field extends CFM_Field {
 					<?php } ?>
 				</table>
 		<?php } ?>
-		</div>
 		<?php
 		$output .= ob_get_clean();
-		$output .= '</fieldset>';
+		$output .= '</p>';
 		return $output;
 	}
 
@@ -280,6 +268,7 @@ class CFM_Repeat_Field extends CFM_Field {
 				<?php CFM_Formbuilder_Templates::export_radio( $index, $this->characteristics ); ?>
 				<?php CFM_Formbuilder_Templates::meta_type_radio( $index, $this->characteristics ); ?>
 				<?php CFM_Formbuilder_Templates::standard( $index, $this ); ?>
+				<?php CFM_Formbuilder_Templates::css( $index, $this->characteristics ); ?>
 
 				<div class="cfm-form-rows">
 					<label><?php _e( 'Multiple Column', 'edd_cfm' ); ?></label>

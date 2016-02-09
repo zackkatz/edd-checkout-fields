@@ -195,7 +195,6 @@ class CFM_Formbuilder_Templates {
 	 * @return void
 	 */
 	public static function standard( $index, $field ) {
-		// this is a quick port from the old common function. We'll clean this function up in 2.4
 		$field_name_value = $field->name();
 		$custom_field     = $field->supports['position'] == 'custom';
 		$values           = $field->characteristics;
@@ -207,7 +206,6 @@ class CFM_Formbuilder_Templates {
 		$field_name       = sprintf( $tpl, 'cfm_input', $index, 'name' );
 		$label_name       = sprintf( $tpl, 'cfm_input', $index, 'label' );
 		$help_name        = sprintf( $tpl, 'cfm_input', $index, 'help' );
-		$css_name         = sprintf( $tpl, 'cfm_input', $index, 'css' );
 
 		if ( $force_required ) {
 			$required = true;
@@ -233,7 +231,6 @@ class CFM_Formbuilder_Templates {
 		$template           = !empty( $values['template'] ) ? $values['template'] : $template;
 		$label_value        = isset( $values['label'] ) && ! empty( $values['label'] ) ? esc_attr( $values['label'] ) : esc_attr( ucwords( str_replace( '_', ' ', $template ) ) );
 		$help_value         = isset( $values['help'] )? esc_textarea( $values['help'] ) : '';
-		$css_value          = isset( $values['css'] )? esc_attr( $values['css'] ) : '';
 		$meta_type          = "yes"; // for post meta on custom fields
 
 		$exclude = array( 'recaptcha' );
@@ -272,14 +269,8 @@ class CFM_Formbuilder_Templates {
 
 		<div class="cfm-form-rows">
 			<label><?php _e( 'Help text', 'edd_cfm' ); ?></label>
-			<textarea name="<?php echo $help_name; ?>" class="smallipopInput" title="<?php _e( 'Give the user some information about this field', 'edd_cfm' ); ?>"><?php echo $help_value; ?></textarea>
+			<textarea name="<?php echo $help_name; ?>" class="smallipopInput" title="<?php _e( 'Shown on the checkout only', 'edd_cfm' ); ?>"><?php echo $help_value; ?></textarea>
 		</div>
-		<?php if ( !isset( $values['no_css'] ) || !$values['no_css'] ) { ?>
-		<div class="cfm-form-rows">
-			<label><?php _e( 'CSS Class Name', 'edd_cfm' ); ?></label>
-			<input type="text" name="<?php echo $css_name; ?>" value="<?php echo $css_value; ?>" class="smallipopInput" title="<?php _e( 'Add a CSS class name for this field', 'edd_cfm' ); ?>">
-		</div>
-		<?php } ?>
 		<?php
 	}
 
@@ -623,5 +614,29 @@ class CFM_Formbuilder_Templates {
 			</div>
 			<?php
 		}
-	}	
+	}
+	
+	/**
+	 * Field CSS settings.
+	 *
+	 * CSS class to output if desired.
+	 *
+	 * @since 2.0.0
+	 * @access public
+	 * 
+	 * @param int        $id    Order number of the field in formbuilder.
+	 * @param values     $values CFM object formbuilder values.
+	 * @return void
+	 */
+	public static function css( $index, $values ) {
+		$tpl              = '%s[%d][%s]';
+		$css_name         = sprintf( $tpl, 'cfm_input', $index, 'css' );
+		$css_value          = isset( $values['css'] )? esc_attr( $values['css'] ) : '';
+		?>
+		<div class="cfm-form-rows">
+			<label><?php _e( 'CSS Class Name', 'edd_cfm' ); ?></label>
+			<input type="text" name="<?php echo $css_name; ?>" value="<?php echo $css_value; ?>" class="smallipopInput" title="<?php _e( 'Add a CSS class name for this field', 'edd_cfm' ); ?>">
+		</div>
+		<?php
+	}
 }

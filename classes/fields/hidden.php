@@ -48,18 +48,16 @@ class CFM_Hidden_Field extends CFM_Field {
 		}
 
 		$output        = '';
-		$output     .= sprintf( '<fieldset class="cfm-el %1s %2s %3s">', $this->template(), $this->name(), $this->css() );
+		$output     .= sprintf( '<p class="cfm-el %1s %2s %3s">', esc_attr( $this->template() ), esc_attr( $this->name() ), esc_attr( $this->css() ) );
 		ob_start(); ?>
-		<div class="cfm-fields">
-			<?php
+		<?php
 		$name       = $this->name();
 		$meta_value = $this->characteristics['meta_value'];
 		printf( '<input type="hidden" name="%s" value="%s">', esc_attr( $name ), esc_attr( $meta_value ) );
 		echo "\r\n"; ?>
-		</div>
 		<?php
 		$output .= ob_get_clean();
-		$output .= '</fieldset>';
+		$output .= '</p>';
 		return $output;
 	}
 
@@ -70,18 +68,16 @@ class CFM_Hidden_Field extends CFM_Field {
 		}
 
 		$output        = '';
-		$output     .= sprintf( '<fieldset class="cfm-el %1s %2s %3s">', $this->template(), $this->name(), $this->css() );
+		$output     .= sprintf( '<p class="cfm-el %1s %2s %3s">', esc_attr( $this->template() ), esc_attr( $this->name() ), esc_attr( $this->css() ) );
 		ob_start(); ?>
-		<div class="cfm-fields">
-			<?php
+		<?php
 		$name       = $this->name();
 		$meta_value = $this->characteristics['meta_value'];
 		printf( '<input type="hidden" name="%s" value="%s">', esc_attr( $name ), esc_attr( $meta_value ) );
 		echo "\r\n"; ?>
-		</div>
 		<?php
 		$output .= ob_get_clean();
-		$output .= '</fieldset>';
+		$output .= '</p>';
 		return $output;
 	}
 

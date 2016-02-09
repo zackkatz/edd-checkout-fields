@@ -28,6 +28,7 @@ class CFM_HTML_Field extends CFM_Field {
 		'required'    => false,
 		'label'       => '',
 		'html'        => '',
+		'css'         => '',
 		'meta_type'   => 'payment', // 'payment' or 'user' here if is_meta()
 		'public'          => "public", // denotes whether a field shows in the admin only
 		'show_in_exports' => "noexport", // denotes whether a field is in the CSV exports
@@ -62,14 +63,13 @@ class CFM_HTML_Field extends CFM_Field {
 		}
 
 		$output        = '';
-		$output     .= sprintf( '<fieldset class="cfm-el %1s %2s %3s">', $this->template(), $this->name(), $this->css() );
+		$output     .= sprintf( '<p class="cfm-el %1s %2s %3s">', esc_attr( $this->template() ), esc_attr( $this->name() ), esc_attr( $this->css() ) );
+		$output    .= $this->label( false );
 		ob_start(); ?>
-		<div class="cfm-fields">
-			<?php echo do_shortcode( $this->characteristics['html'] ); ?>
-		</div>
+		<?php echo do_shortcode( $this->characteristics['html'] ); ?>
 		<?php
 		$output .= ob_get_clean();
-		$output .= '</fieldset>';
+		$output .= '</p>';
 		return $output;
 	}
 
@@ -80,14 +80,13 @@ class CFM_HTML_Field extends CFM_Field {
 		}
 
 		$output        = '';
-		$output     .= sprintf( '<fieldset class="cfm-el %1s %2s %3s">', $this->template(), $this->name(), $this->css() );
+		$output     .= sprintf( '<p class="cfm-el %1s %2s %3s">', esc_attr( $this->template() ), esc_attr( $this->name() ), esc_attr( $this->css() ) );
+		$output    .= $this->label( ! (bool) $profile );
 		ob_start(); ?>
-		<div class="cfm-fields">
-			<?php echo do_shortcode( $this->characteristics['html'] ); ?>
-		</div>
+		<?php echo do_shortcode( $this->characteristics['html'] ); ?>
 		<?php
 		$output .= ob_get_clean();
-		$output .= '</fieldset>';
+		$output .= '</p>';
 		return $output;
 	}
 
@@ -102,19 +101,20 @@ class CFM_HTML_Field extends CFM_Field {
 		ob_start(); ?>
 		<li class="html">
 			<?php $this->legend( $this->title(), $this->get_label(), $removable ); ?>
+			<?php CFM_Formbuilder_Templates::field_div( $index, $this->name(), $this->characteristics, $insert ); ?>
 			<?php CFM_Formbuilder_Templates::public_radio( $index, $this->characteristics ); ?>
 			<?php CFM_Formbuilder_Templates::export_radio( $index, $this->characteristics, "noexport" ); ?>
 			<?php CFM_Formbuilder_Templates::meta_type_radio( $index, $this->characteristics, "payment" ); ?>
 			<?php CFM_Formbuilder_Templates::hidden_field( "[$index][template]", $this->template() ); ?>
 			<?php CFM_Formbuilder_Templates::hidden_field( "[$index][name]", $name ); ?>
-			<?php CFM_Formbuilder_Templates::field_div( $index, $this->name(), $this->characteristics, $insert ); ?>
+			<?php CFM_Formbuilder_Templates::css( $index, $this->characteristics ); ?>
 				<div class="cfm-form-rows">
 					<label><?php _e( 'Title', 'edd_cfm' ); ?></label>
 					<input type="text" class="smallipopInput" title="Title of the section" name="<?php echo $title_name; ?>" value="<?php echo esc_attr( $title_value ); ?>" />
 				</div>
 
 				<div class="cfm-form-rows">
-					<label><?php _e( 'HTML Codes', 'edd_cfm' ); ?></label>
+					<label><?php _e( 'HTML', 'edd_cfm' ); ?></label>
 					<textarea class="smallipopInput" title="Paste your HTML code & WordPress shortcodes here" name="<?php echo $html_name; ?>" rows="10"><?php echo esc_html( $html_value ); ?></textarea>
 				</div>
 			</div>

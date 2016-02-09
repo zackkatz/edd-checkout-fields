@@ -59,27 +59,24 @@ class CFM_Checkbox_Field extends CFM_Field {
 		
 		$required  = $this->required();
 		$output    = '';
-		$output   .= sprintf( '<fieldset class="cfm-el %1s %2s %3s">', $this->template(), $this->name(), $this->css() );
-		$output   .= $this->label();
-		ob_start(); ?>
-		<div class="cfm-fields">
-			<?php
-			if ( isset( $this->characteristics['options'] ) && count( $this->characteristics['options'] ) > 0 ) {
-				echo '<ul class="cfm-checkbox-checklist">';
-				foreach ( $this->characteristics['options'] as $option ) {
-					echo '<li>';?>
-						<input type="checkbox" name="<?php echo $this->name(); ?>[]" value="<?php echo esc_attr( $option ); ?>"<?php echo in_array( $option, $value ) ? ' checked="checked"' : ''; ?> />
-						<?php echo __( $option, 'edd_cfm' ); ?>
-					<?php
-					echo '</li>';
-				}
-				echo '</ul>';
+		$output   .= sprintf( '<p class="cfm-el %1s %2s %3s">', esc_attr( $this->template() ), esc_attr( $this->name() ), esc_attr( $this->css() ) );
+		$output   .= $this->label( false );
+		ob_start();
+		if ( isset( $this->characteristics['options'] ) && count( $this->characteristics['options'] ) > 0 ) {
+			echo '<ul class="cfm-checkbox-checklist">';
+			foreach ( $this->characteristics['options'] as $option ) {
+				echo '<li>';?>
+					<input name="<?php echo esc_attr( $this->name() ); ?>[]"  id="<?php echo esc_attr( $this->name() ); ?>" type="checkbox" class="checkbox" value="<?php echo esc_attr( $option ); ?>"<?php echo in_array( $option, $value ) ? ' checked="checked"' : ''; ?> />
+					<?php echo __( $option, 'edd_cfm' ); ?>
+				<?php
+				echo '</li>';
 			}
-			?>
-		</div>
+			echo '</ul>';
+		}
+		?>
 		<?php
 		$output .= ob_get_clean();
-		$output .= '</fieldset>';
+		$output .= '</p>';
 		return $output;
 	}
 
@@ -100,29 +97,26 @@ class CFM_Checkbox_Field extends CFM_Field {
 		
 		$required  = $this->required();
 		$output    = '';
-		$output   .= sprintf( '<fieldset class="cfm-el %1s %2s %3s">', $this->template(), $this->name(), $this->css() );
-		$output   .= $this->label();
+		$output   .= sprintf( '<p class="cfm-el %1s %2s %3s">', esc_attr( $this->template() ), esc_attr( $this->name() ), esc_attr( $this->css() ) );
+		$output   .= $this->label( $profile );
 
 		ob_start(); ?>
-		<div class="cfm-fields">
-			<span data-required="<?php echo $required; ?>" data-type="radio"></span>
-			<?php
-			if ( isset( $this->characteristics['options'] ) && count( $this->characteristics['options'] ) > 0 ) {
-				echo '<ul class="cfm-checkbox-checklist">';
-				foreach ( $this->characteristics['options'] as $option ) {
-					echo '<li><label>';?>
-						<input type="checkbox" name="<?php echo $this->name(); ?>[]" value="<?php echo esc_attr( $option ); ?>"<?php echo in_array( $option, $value ) ? ' checked="checked"' : ''; ?> />
-						<?php echo __( $option, 'edd_cfm' ); ?>
-					<?php
-					echo '</label></li>';
-				}
-				echo '</ul>';
+		<?php
+		if ( isset( $this->characteristics['options'] ) && count( $this->characteristics['options'] ) > 0 ) {
+			echo '<ul class="cfm-checkbox-checklist">';
+			foreach ( $this->characteristics['options'] as $option ) {
+				echo '<li>';?>
+					<input name="<?php echo esc_attr( $this->name() ); ?>[]"  id="<?php echo esc_attr( $this->name() ); ?>" type="checkbox" class="checkbox <?php echo $this->required_class(); ?>" value="<?php echo esc_attr( $option ); ?>"<?php echo in_array( $option, $value ) ? ' checked="checked"' : ''; ?> />
+					<?php echo __( $option, 'edd_cfm' ); ?>
+				<?php
+				echo '</li>';
 			}
-			?>
-		</div>
+			echo '</ul>';
+		}
+		?>
 		<?php
 		$output .= ob_get_clean();
-		$output .= '</fieldset>';
+		$output .= '</p>';
 		return $output;
 	}
 	
@@ -154,6 +148,7 @@ class CFM_Checkbox_Field extends CFM_Field {
 				<?php CFM_Formbuilder_Templates::export_radio( $index, $this->characteristics ); ?>
 				<?php CFM_Formbuilder_Templates::meta_type_radio( $index, $this->characteristics ); ?>
 				<?php CFM_Formbuilder_Templates::standard( $index, $this ); ?>
+				<?php CFM_Formbuilder_Templates::css( $index, $this->characteristics ); ?>
 				<div class="cfm-form-rows">
 					<label><?php _e( 'Options', 'edd_cfm' ); ?></label>
 

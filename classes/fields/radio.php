@@ -54,27 +54,27 @@ class CFM_Radio_Field extends CFM_Field {
 		
 		$value     = $this->get_field_value_admin( $this->payment_id, $this->user_id );
 		$output        = '';
-		$output     .= sprintf( '<fieldset class="cfm-el %1s %2s %3s">', $this->template(), $this->name(), $this->css() );
-		$output    .= $this->label();
+		$output     .= sprintf( '<p class="cfm-el %1s %2s %3s">', esc_attr( $this->template() ), esc_attr( $this->name() ), esc_attr( $this->css() ) );
+		$output    .= $this->label( false );
+		if ( !is_array( $value ) ){
+			$value[0] = $value;
+		}
 		ob_start(); ?>
-
-		<div class="cfm-fields">
 		<?php
 		if ( $this->characteristics['options'] && count( $this->characteristics['options'] ) > 0 ) {
-			echo '<ul class="cfm-checkbox-checklist">';
+			echo '<ul class="cfm-checkbox-checklist" class="radio edd-input">';
 			foreach ( $this->characteristics['options'] as $option ) { 
 				echo '<li>';?>
-						<input name="<?php echo $this->name(); ?>" type="radio" value="<?php echo esc_attr( $option ); ?>" <?php echo in_array( $option, $value ) ? ' checked="checked"' : ''; ?> /> />
+						<input name="<?php echo esc_attr( $this->name() ); ?>" id="<?php echo esc_attr( $this->name() ); ?>" type="radio" class="radio edd-input" value="<?php echo esc_attr( $option ); ?>" <?php echo in_array( $option, $value ) ? ' checked="checked"' : ''; ?> />
 						<?php _e( $option, 'edd_cfm' ); ?>
 					<?php
 				echo '</li>';
 			}
 			echo '</ul>';
 		} ?>
-		</div>
 		<?php
 		$output .= ob_get_clean();
-		$output .= '</fieldset>';
+		$output .= '</p>';
 		return $output;
 	}
 
@@ -91,27 +91,27 @@ class CFM_Radio_Field extends CFM_Field {
 		
 		$required  = $this->required();
 		$output        = '';
-		$output     .= sprintf( '<fieldset class="cfm-el %1s %2s %3s">', $this->template(), $this->name(), $this->css() );
-		$output    .= $this->label();
+		$output     .= sprintf( '<p class="cfm-el %1s %2s %3s">', esc_attr( $this->template() ), esc_attr( $this->name() ), esc_attr( $this->css() ) );
+		$output    .= $this->label( ! (bool) $profile );
+		if ( !is_array( $value ) ){
+			$value[0] = $value;
+		}
 		ob_start(); ?>
-
-		<div class="cfm-fields">
 		<?php
 		if ( $this->characteristics['options'] && count( $this->characteristics['options'] ) > 0 ) {
-			echo '<ul class="cfm-checkbox-checklist">';
+			echo '<ul class="cfm-checkbox-checklist" class="radio edd-input ' . $this->required_class() . '">';
 			foreach ( $this->characteristics['options'] as $option ) { 
 				echo '<li>';?>
-						<input name="<?php echo $this->name(); ?>" type="radio" value="<?php echo esc_attr( $option ); ?>" <?php echo in_array( $option, $value ) ? ' checked="checked"' : ''; ?> /> />
+						<input name="<?php echo $this->name(); ?>" type="radio" value="<?php echo esc_attr( $option ); ?>" <?php echo in_array( $option, $value ) ? ' checked="checked"' : ''; ?> />
 						<?php _e( $option, 'edd_cfm' ); ?>
 					<?php
 				echo '</li>';
 			}
 			echo '</ul>';
 		} ?>
-		</div>
 		<?php
 		$output .= ob_get_clean();
-		$output .= '</fieldset>';
+		$output .= '</p>';
 		return $output;
 	}
 
@@ -128,6 +128,7 @@ class CFM_Radio_Field extends CFM_Field {
 				<?php CFM_Formbuilder_Templates::export_radio( $index, $this->characteristics ); ?>
 				<?php CFM_Formbuilder_Templates::meta_type_radio( $index, $this->characteristics ); ?>
 				<?php CFM_Formbuilder_Templates::standard( $index, $this ); ?>
+				<?php CFM_Formbuilder_Templates::css( $index, $this->characteristics ); ?>
 
 				<div class="cfm-form-rows">
 					<label><?php _e( 'Options', 'edd_cfm' ); ?></label>

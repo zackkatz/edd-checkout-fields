@@ -82,17 +82,15 @@ class CFM_User_Email_Field extends CFM_Field {
 		$value     = is_user_logged_in() ? $current_user->user_email : '';
 		$required  = $this->required();
 		$output        = '';
-		$output     .= sprintf( '<fieldset class="cfm-el %1s %2s %3s">', $this->template(), $this->name(), $this->css() );
-		$output    .= $this->label();
-		ob_start(); 
-		?><?php do_action( 'edd_purchase_form_before_email' ); ?>
-<?php do_action( 'edd_purchase_form_after_email' ); ?>
-		<div class="cfm-fields">
-			<input id="<?php echo $this->name(); ?>" type="email" class="email" data-required="<?php echo $required; ?>" data-type="text"<?php $this->required_html5(); ?> name="<?php echo esc_attr( $this->name() ); ?>" placeholder="<?php echo esc_attr( $this->placeholder() ); ?>" value="<?php echo esc_attr( $value ) ?>" size="<?php echo esc_attr( $this->size() ) ?>" />
-		</div>
+		$output     .= '<p id="edd-email-wrap">';
+		$output    .= $this->label( ! (bool) $profile );
+		ob_start(); ?>
+		<?php do_action( 'edd_purchase_form_before_email' ); ?>
+		<?php do_action( 'edd_purchase_form_after_email' ); ?>
+			<input name="<?php echo esc_attr( $this->name() ); ?>" id="<?php echo esc_attr( $this->name() ); ?>" class="email text edd-input <?php echo $this->required_class(); ?>" type="email" data-required="<?php echo $required; ?>" data-type="text"<?php $this->required_html5(); ?> placeholder="<?php echo esc_attr( $this->placeholder() ); ?>" value="<?php echo esc_attr( $value ) ?>" size="<?php echo esc_attr( $this->size() ) ?>" />
 		<?php
 		$output .= ob_get_clean();
-		$output .= '</fieldset>';
+		$output .= '</p>';
 		return $output;
 	}
 
@@ -108,6 +106,7 @@ class CFM_User_Email_Field extends CFM_Field {
 				<?php CFM_Formbuilder_Templates::public_radio( $index, $this->characteristics, "public" ); ?>
 				<?php CFM_Formbuilder_Templates::export_radio( $index, $this->characteristics, "noexport" ); ?>
 				<?php CFM_Formbuilder_Templates::standard( $index, $this ); ?>
+				<?php CFM_Formbuilder_Templates::css( $index, $this->characteristics ); ?>
 				<?php CFM_Formbuilder_Templates::common_text( $index, $this->characteristics ); ?>
 			</div>
 		</li>

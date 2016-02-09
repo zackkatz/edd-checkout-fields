@@ -27,6 +27,7 @@ class CFM_Action_Hook_Field extends CFM_Field {
 		'template'    => 'action_hook',
 		'public'      => false, // can you display this publicly (used by CFM_Field->display_field() )
 		'required'    => false, // is it a required field (default is false)
+		'css'         => '',
 		'meta_type'   => 'payment', // 'payment' or 'user' here if is_meta()
 		'public'          => "public", // denotes whether a field shows in the admin only
 		'show_in_exports' => "export", // denotes whether a field is in the CSV exports
@@ -45,11 +46,11 @@ class CFM_Action_Hook_Field extends CFM_Field {
 		}
 
 		$output        = '';
-		$output     .= sprintf( '<fieldset class="cfm-el %1s %2s %3s">', $this->template(), $this->name(), $this->css() );
+		$output     .= sprintf( '<p class="cfm-el %1s %2s %3s">', esc_attr( $this->template() ), esc_attr( $this->name() ), esc_attr( $this->css() ) );
 		ob_start();
 		do_action( $this->name(), $this->form, $this->payment_id, $this->user_id, $this );
 		$output .= ob_get_clean();
-		$output .= '</fieldset>';
+		$output .= '</p>';
 		return $output;
 	}
 
@@ -59,11 +60,11 @@ class CFM_Action_Hook_Field extends CFM_Field {
 			$user_id = get_current_user_id();
 		}
 		$output        = '';
-		$output     .= sprintf( '<fieldset class="cfm-el %1s %2s %3s">', $this->template(), $this->name(), $this->css() );
+		$output     .= sprintf( '<p class="cfm-el %1s %2s %3s">', esc_attr( $this->template() ), esc_attr( $this->name() ), esc_attr( $this->css() ) );
 		ob_start();
 		do_action( $this->name(), $this->form, $this->payment_id, $this->user_id, $this );
 		$output .= ob_get_clean();
-		$output .= '</fieldset>';
+		$output .= '</p>';
 		return $output;
 	}
 
@@ -79,6 +80,7 @@ class CFM_Action_Hook_Field extends CFM_Field {
 			<?php CFM_Formbuilder_Templates::meta_type_radio( $index, $this->characteristics, "payment" ); ?>
 			<?php CFM_Formbuilder_Templates::hidden_field( "[$index][template]", $this->template() ); ?>
 			<?php CFM_Formbuilder_Templates::field_div( $index, $this->name(), $this->characteristics, $insert ); ?>
+			<?php CFM_Formbuilder_Templates::css( $index, $this->characteristics ); ?>
 				<div class="cfm-form-rows">
 					<label><?php _e( 'Hook Name', 'edd_cfm' ); ?></label>
 					<div class="cfm-form-sub-fields">
