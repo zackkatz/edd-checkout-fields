@@ -254,7 +254,6 @@ class CFM_Setup {
 				wp_enqueue_style( 'cfm-formbuilder', cfm_plugin_url . 'assets/css/formbuilder.css' );
 			}
 			edd_register_styles();
-			wp_enqueue_style( 'cfm-css', cfm_plugin_url . 'assets/css/frontend.css' );
 			wp_enqueue_style( 'cfm-admin-css', cfm_plugin_url . 'assets/css/admin.css' );
 			wp_enqueue_style( 'jquery-smallipop', cfm_plugin_url . 'assets/css/jquery.smallipop.css' );
 			wp_enqueue_style( 'jquery-ui-core', cfm_plugin_url . 'assets/css/jquery-ui-1.9.1.custom.css' );
