@@ -4,6 +4,9 @@ class CFM_Toc_Field extends CFM_Field {
 	/** @var bool For 3rd parameter of get_post/user_meta */
 	public $single = true;
 
+	/** @var string Version of field */
+	public $version = '1.0.0';
+
 	/** @var array Supports are things that are the same for all fields of a field type. Like whether or not a field type supports jQuery Phoenix. Stored in obj, not db. */
 	public $supports = array(
 		'multiple'    => false,

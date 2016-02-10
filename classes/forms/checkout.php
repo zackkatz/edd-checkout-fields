@@ -19,6 +19,9 @@ class CFM_Checkout_Form extends CFM_Form {
 	/** @var unknown Type of form: 'user', 'post', 'custom'. Dictates where the fields save their values. */
 	public $type = 'post';
 
+	/** @var string Version of form */
+	public $version = '1.0.0';
+
 	/** @var array Array of things it supports */
 	public $supports = array(
 		'formbuilder' => array(
