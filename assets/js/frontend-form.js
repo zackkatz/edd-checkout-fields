@@ -199,3 +199,15 @@
 	});
 
 })(jQuery);
+webshim.setOptions('forms-ext', {
+	replaceUI: true,
+	types: 'date datetime',
+	date: {
+		openOnFocus: true,
+	},
+	datetime: {
+		openOnFocus: true,
+	}
+});
+//start polyfilling
+webshim.polyfill('forms forms-ext');

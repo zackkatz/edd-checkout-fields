@@ -102,13 +102,13 @@ class CFM_Setup {
 		if ( !cfm_is_frontend() ) {
 			return;
 		}
-		global $post;
-		if ( is_page( get_option( 'cfm-checkout-form', false ) ) || $override ) {
+		if ( edd_is_checkout() || $override ) {
 			wp_enqueue_script( 'jquery' );
 			wp_enqueue_script( 'underscore' );
 			// CFM outputs minified scripts by default on the frontend. To load full versions, hook into this and return empty string.
 			$minify = ( defined( 'WP_DEBUG' ) && WP_DEBUG ) || ( defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ) ? '' : '.min';
 			$minify = apply_filters( 'cfm_output_minified_versions', $minify );
+			wp_enqueue_script( 'cfm-polyfiller', cfm_plugin_url . 'assets/js/polyfiller.js', array( 'jquery' ) );
 			wp_enqueue_script( 'cfm_form', cfm_plugin_url . 'assets/js/frontend-form' . $minify . '.js', array(
 					'jquery'
 				), cfm_plugin_version );
@@ -129,7 +129,6 @@ class CFM_Setup {
 			wp_enqueue_script( 'comment-reply' );
 			wp_enqueue_script( 'jquery-ui-autocomplete' );
 			wp_enqueue_script( 'suggest' );
-			wp_enqueue_script( 'cfm-polyfiller', cfm_plugin_url . 'assets/js/polyfiller.js', array( 'jquery' ) );
 		}
 	}
 
@@ -150,8 +149,8 @@ class CFM_Setup {
 		if ( !cfm_is_frontend() ) {
 			return;
 		}
-		global $post;
-		if ( is_page( get_option( 'cfm-checkout-form', false ) ) || $override ) {
+
+		if ( edd_is_checkout() || $override ) {
 			// CFM outputs minified scripts by default on the frontend. To load full versions, hook into this and return empty string.
 			$minify = ( defined( 'WP_DEBUG' ) && WP_DEBUG ) || ( defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ) ? '' : '.min';
 			$minify = apply_filters( 'cfm_output_minified_versions', $minify );

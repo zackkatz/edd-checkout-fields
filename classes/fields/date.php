@@ -70,21 +70,6 @@ class CFM_Date_Field extends CFM_Field {
 		$output     .= sprintf( '<p class="cfm-el %1s %2s %3s">', esc_attr( $this->template() ), esc_attr( $this->name() ), esc_attr( $this->css() ) );
 		$output    .= $this->label( false );
 		ob_start(); ?>
-		
-		<script type="text/javascript">
-		webshim.setOptions('forms-ext', {
-			replaceUI: true,
-			types: 'date datetime',
-			date: {
-				openOnFocus: true,
-			},
-			datetime: {
-				openOnFocus: true,
-			}
-		});
-		//start polyfilling
-		webshim.polyfill('forms forms-ext');
-		</script>
 		<?php if ( $this->characteristics['time'] == 'yes' ) { ?>
 			<input name="<?php echo esc_attr( $this->name() ); ?>"  id="<?php echo esc_attr( $this->name() ); ?>" type="datetime-local" class="datepicker show-yearbtns show-uparrow text edd-input" data-datetime-local-stepfactor="1" data-datetime-local-open-on-focus="true" data-datetime-start-view="<?php echo $view; ?>" data-required="false" data-datetime-size="<?php echo $size; ?>" data-type="text" value="<?php echo esc_attr( $datetime ); ?>"  />
 		<?php } else { ?>
@@ -107,7 +92,7 @@ class CFM_Date_Field extends CFM_Field {
 		$datetime  = date_format( $value, "Y-m-d" ) . 'T'. date_format( $value, "H:i" );
 		$size 	   = ! empty( $this->characteristics['size'] ) ? absint( $this->characteristics['size'] ) : 1;
 		$view      = ! empty( $this->characteristics['view'] ) ? $this->characteristics['view'] : "day";
-		
+		$required  = $this->required();
 		if ( $view === 'month' ){
 			$view = 1;
 		} else if( $view === 'year' ){
@@ -120,21 +105,6 @@ class CFM_Date_Field extends CFM_Field {
 		$output     .= sprintf( '<p class="cfm-el %1s %2s %3s">', esc_attr( $this->template() ), esc_attr( $this->name() ), esc_attr( $this->css() ) );
 		$output    .= $this->label( $profile );
 		ob_start(); ?>
-		
-		<script type="text/javascript">
-		webshim.setOptions('forms-ext', {
-			replaceUI: true,
-			types: 'date datetime',
-			date: {
-				openOnFocus: true,
-			},
-			datetime: {
-				openOnFocus: true,
-			}
-		});
-		//start polyfilling
-		webshim.polyfill('forms forms-ext');
-		</script>
 		<?php if ( $this->characteristics['time'] == 'yes' ) { ?>
 			<input name="<?php echo esc_attr( $this->name() ); ?>"  id="<?php echo esc_attr( $this->name() ); ?>" type="datetime-local" class="datepicker show-yearbtns show-uparrow text edd-input <?php echo $this->required_class(); ?>" data-datetime-local-stepfactor="1" data-datetime-local-open-on-focus="true" data-datetime-start-view="<?php echo $view; ?>" <?php $this->required_html5(); ?> data-required="<?php echo $required; ?>" data-datetime-size="<?php echo $size; ?>" data-type="text" value="<?php echo esc_attr( $datetime ); ?>"  />
 		<?php } else { ?>

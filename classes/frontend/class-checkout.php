@@ -63,12 +63,14 @@ class CFM_Checkout {
 	 *                    to form rendering functions.
 	 * @return string HTML of profile form.
 	 */
-	function render_checkout_form( ) {
+	public function render_checkout_form( ) {
 		$user_id = get_current_user_id();
 		$form_id = get_option( 'cfm-checkout-form', -2 );
 		
 		// load the scripts so others don't have to
 		EDD_CFM()->setup->enqueue_form_assets();
+		add_action( 'wp_enqueue_scripts',	 array( EDD_CFM()->setup, 'enqueue_scripts' ) );
+		add_action( 'wp_enqueue_scripts',	 array( EDD_CFM()->setup, 'enqueue_styles'  ) );
 
 		$output = '';
 
