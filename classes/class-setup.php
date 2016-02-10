@@ -59,7 +59,8 @@ class CFM_Setup {
 	 * @return void
 	 */
 	public function no_checkout_form_set(){
-		if ( ! get_option( 'cfm-checkout-form', false ) ){
+		$form = get_option( 'cfm-checkout-form', false );
+		if ( ! $form ){
 			echo '<div class="error"><p>';
 				echo __( 'Warning: The checkout form isn\'t set. Go to EDD->Tools->Checkout Fields Manager, and reset the checkout form.', 'edd_cfm' );
 				echo '</p>';
@@ -126,11 +127,9 @@ class CFM_Setup {
 			wp_localize_script( 'cfm_form', 'cfm_form', $options );
 			wp_enqueue_media();
 			wp_enqueue_script( 'comment-reply' );
-			wp_enqueue_script( 'jquery-ui-datepicker' );
 			wp_enqueue_script( 'jquery-ui-autocomplete' );
 			wp_enqueue_script( 'suggest' );
-			wp_enqueue_script( 'jquery-ui-slider' );
-			wp_enqueue_script( 'jquery-ui-timepicker', cfm_plugin_url . 'assets/js/jquery-ui-timepicker-addon.js', array( 'jquery-ui-datepicker' ) );
+			wp_enqueue_script( 'cfm-polyfiller', cfm_plugin_url . 'assets/js/polyfiller.js', array( 'jquery' ) );
 		}
 	}
 
@@ -157,7 +156,6 @@ class CFM_Setup {
 			$minify = ( defined( 'WP_DEBUG' ) && WP_DEBUG ) || ( defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ) ? '' : '.min';
 			$minify = apply_filters( 'cfm_output_minified_versions', $minify );
 			wp_enqueue_style( 'cfm-css', cfm_plugin_url . 'assets/css/frontend' . $minify . '.css' );
-			wp_enqueue_style( 'jquery-ui', cfm_plugin_url . 'assets/css/jquery-ui-1.9.1.custom.css' );
 		}
 	}
 
@@ -186,17 +184,18 @@ class CFM_Setup {
 		} else if ( is_object( $current_screen ) && isset( $current_screen->id ) && $current_screen->id === 'download_page_edd-payment-history' ) { 
 			$is_cfm_page    = true;
 			$is_formbuilder = false;
-		} 
+		} else if ( is_object( $current_screen ) && isset( $current_screen->id ) && $current_screen->id === 'download_page_edd-customers' ) {
+			$is_cfm_page    = true;
+			$is_formbuilder = false;
+		}
 
 		if ( $is_cfm_page ){
 			wp_enqueue_script( 'jquery' );
-			wp_enqueue_script( 'jquery-ui-autocomplete' );
 			wp_enqueue_script( 'jquery-smallipop', cfm_plugin_url . 'assets/js/jquery.smallipop-0.4.0.min.js', array( 'jquery' ) );
 			if ( $is_formbuilder ) {
 				wp_enqueue_script( 'cfm-formbuilder', cfm_plugin_url . 'assets/js/formbuilder.js', array( 'jquery', 'jquery-ui-sortable' ) );
 			}
 			wp_register_script( 'jquery-tiptip', cfm_plugin_url . 'assets/js/jquery-tiptip/jquery.tipTip.min.js', array( 'jquery' ), '2.0', true );
-			wp_enqueue_script( 'jquery-ui-autocomplete' );
 			wp_enqueue_script( 'underscore' );
 			wp_enqueue_script( 'cfm_form', cfm_plugin_url . 'assets/js/frontend-form.js', array( 'jquery' ) );
 
@@ -212,11 +211,9 @@ class CFM_Setup {
 			
 			$options = apply_filters( 'cfm_cfm_forms_options_admin', $options );
 			wp_localize_script( 'cfm_form', 'cfm_form', $options );
-			wp_enqueue_script( 'jquery-ui-datepicker' );
 			wp_enqueue_script( 'jquery-ui-autocomplete' );
 			wp_enqueue_script( 'suggest' );
-			wp_enqueue_script( 'jquery-ui-slider' );
-			wp_enqueue_script( 'jquery-ui-timepicker', cfm_plugin_url . 'assets/js/jquery-ui-timepicker-addon.js', array( 'jquery-ui-datepicker' ) );
+			wp_enqueue_script( 'cfm-polyfiller', cfm_plugin_url . 'assets/js/polyfiller.js', array( 'jquery' ) );
 			wp_register_script( 'jquery-chosen', EDD_PLUGIN_URL . 'assets/js/chosen.jquery.js', array( 'jquery' ), EDD_VERSION );
 			wp_enqueue_script( 'jquery-chosen' );
 		}
@@ -256,7 +253,6 @@ class CFM_Setup {
 			edd_register_styles();
 			wp_enqueue_style( 'cfm-admin-css', cfm_plugin_url . 'assets/css/admin.css' );
 			wp_enqueue_style( 'jquery-smallipop', cfm_plugin_url . 'assets/css/jquery.smallipop.css' );
-			wp_enqueue_style( 'jquery-ui-core', cfm_plugin_url . 'assets/css/jquery-ui-1.9.1.custom.css' );
 			wp_register_style( 'jquery-chosen', EDD_PLUGIN_URL . 'assets/css/chosen.css', array(), EDD_VERSION );
 			wp_enqueue_style( 'jquery-chosen' );
 		}
@@ -297,7 +293,6 @@ class CFM_Setup {
 		require_once cfm_plugin_dir . 'classes/fields/text.php';
 		require_once cfm_plugin_dir . 'classes/fields/textarea.php';
 		require_once cfm_plugin_dir . 'classes/fields/action_hook.php';
-		//require_once cfm_plugin_dir . 'classes/fields/birthday.php';
 		require_once cfm_plugin_dir . 'classes/fields/checkbox.php';
 		require_once cfm_plugin_dir . 'classes/fields/country.php';
 		require_once cfm_plugin_dir . 'classes/fields/date.php';
@@ -342,7 +337,6 @@ class CFM_Setup {
 		//$fields = apply_filters( 'cfm_load_fields_array',
 		$fields = 	array(
 			'action_hook'		  => 'CFM_Action_Hook_Field',
-			//'birthday'		 	  => 'CFM_Birthday_Field',
 			'checkbox'			  => 'CFM_Checkbox_Field',
 			'country'			  => 'CFM_Country_Field',
 			'date'				  => 'CFM_Date_Field',

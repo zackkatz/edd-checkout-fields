@@ -120,7 +120,7 @@ class CFM_Admin_Customer_Profile {
 	 *                    to form rendering functions.
 	 * @return void
 	 */
-	function save( $values = array() ) {
+	public function save( $values = array() ) {
 		$form_id   = !empty( $values ) && isset( $values['form_id'] )   ? absint( $values['form_id'] )   : ( isset( $_REQUEST['form_id'] )   ? absint( $_REQUEST['form_id'] )   : get_option( 'cfm-checkout-form', false ) );
 		$values    = !empty( $values ) ? $values : $_POST;
 		$user_id = -2;

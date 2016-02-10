@@ -380,6 +380,7 @@ class EDD_Checkout_Fields_Manager {
 
 		if ( is_admin() ){
 			require_once cfm_plugin_dir . 'classes/schema.php';
+			require_once cfm_plugin_dir . 'classes/admin/class-update.php';
 			require_once cfm_plugin_dir . 'classes/admin/customers/class-admin-customer-profile.php';
 			require_once cfm_plugin_dir . 'classes/admin/formbuilder/class-formbuilder.php';
 			require_once cfm_plugin_dir . 'classes/admin/formbuilder/class-formbuilder-templates.php';

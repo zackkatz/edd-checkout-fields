@@ -95,10 +95,7 @@ class CFM_Install {
 			 * mistake.
 			 */
 			$this->schema_corrector();
-		}	
-
-		// This is the version of the CFM db schema
-		update_option( 'cfm_db_version', '2.0' );
+		}
 
 		// This is the version of CFM installed
 		update_option( 'cfm_current_version', '2.0' );

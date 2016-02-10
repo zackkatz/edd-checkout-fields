@@ -104,33 +104,33 @@ class CFM_Form {
 		$this->supports = $supports;
 	}
 
-	public function render_form( $user_id = -2 ) {
+	public function render_form( $current_user_id = -2 ) {
 		$output = '';
 		if ( cfm_is_admin() ) {
-			$output .= $this->render_form_admin( $user_id );
+			$output .= $this->render_form_admin( $current_user_id );
 		} else {
-			$output .= $this->render_form_frontend( $user_id );
+			$output .= $this->render_form_frontend( $current_user_id );
 		}
 		return $output;
 	}
 
-	public function render_form_admin( $user_id = -2, $profile = false ) {
-		if ( $user_id === -2 ) {
-			$user_id = get_current_user_id();
+	public function render_form_admin( $current_user_id = -2, $profile = false ) {
+		if ( $current_user_id === -2 ) {
+			$current_user_id = get_current_user_id();
 		}
 
 		// See if can use form
-		if ( !$this->can_render_form_admin( $user_id, $profile ) ) {
+		if ( !$this->can_render_form_admin( $current_user_id, $profile ) ) {
 			return __( 'Access denied.', 'edd_cfm' );
 		}
 
 		$output = '';
 
-		$output = apply_filters( 'cfm_render_' . $this->name() . '_form_admin_output_before_fields', $output, $this, $user_id, $profile );
-		do_action( 'cfm_render_' . $this->name() . '_form_admin_before_fields', $this, $user_id, $profile );
-		do_action( 'cfm_render_form_above_' . $this->name() . '_form', $this->payment_id );
+		$output = apply_filters( 'cfm_render_' . $this->name() . '_form_admin_output_before_fields', $output, $this, $current_user_id, $profile );
+		do_action( 'cfm_render_' . $this->name() . '_form_admin_before_fields', $this, $current_user_id, $profile );
+		do_action( 'cfm_render_form_above_' . $this->name() . '_form', $this->payment_id, $this->user_id );
 		$fields = $this->fields;
-		$fields = apply_filters( 'cfm_render_' . $this->name() . '_form_admin_fields', $fields, $this, $user_id, $profile );
+		$fields = apply_filters( 'cfm_render_' . $this->name() . '_form_admin_fields', $fields, $this, $current_user_id, $profile );
 
 		$count = 0;
 		foreach ( $fields as $field ) {
@@ -160,7 +160,7 @@ class CFM_Form {
 					continue;
 				}
 
-				$output .= apply_filters( 'cfm_render_' . $this->name() . '_form_admin_fields_before_field', '', $field, $this, $user_id, $profile );
+				$output .= apply_filters( 'cfm_render_' . $this->name() . '_form_admin_fields_before_field', '', $field, $this, $current_user_id, $profile );
 
 				if ( is_object( $field ) && $profile && ( ! $field->is_meta() || $field->meta_type() !== 'user' ) ){
 					continue;
@@ -168,17 +168,17 @@ class CFM_Form {
 				
 				if ( is_object( $field ) && ! $profile && ( ! $field->is_meta() || $field->meta_type() !== 'payment' ) ){
 					continue;
-				}				
+				}
 				
 				if ( is_object( $field ) && method_exists( $field, 'render_field_admin' ) ) {
-					$output .= $field->render_field_admin( $user_id, $profile );
+					$output .= $field->render_field_admin( $current_user_id, $profile );
 				}
 
-				$output .= apply_filters( 'cfm_render_' . $this->name() . '_form_admin_fields_after_field', '', $field, $this, $user_id, $profile );
+				$output .= apply_filters( 'cfm_render_' . $this->name() . '_form_admin_fields_after_field', '', $field, $this, $current_user_id, $profile );
 			}
 			$output .= wp_nonce_field( 'cfm-' . $this->name() .'-form', 'cfm-' . $this->name() .'-form', false, false );
 			$output .= '<input type="hidden" name="cfm_form_id" value="' . $this->id . '">';
-			$output .= '<input type="hidden" name="cfm_user_id" value="' . $user_id . '">';
+			$output .= '<input type="hidden" name="cfm_user_id" value="' . $current_user_id . '">';
 			$output .= '<input type="hidden" name="cfm_action" value="submit-' . $this->name() . '-form">';
 			$output .= '<input type="hidden" name="cfm_profile" value="' . json_encode( $profile ) . '">';
 			$output .= '</div>';
@@ -186,28 +186,28 @@ class CFM_Form {
 			$output .= __( 'The form has no custom fields!', 'edd_cfm' );
 		}
 
-		do_action( 'cfm_render_' . $this->name() . '_form_admin_after_fields', $this, $user_id, $profile );
-		do_action( 'cfm_render_form_below_' . $this->name() . '_form', $this->payment_id );
-		$output = apply_filters( 'cfm_render_' . $this->name() . '_form_admin_output_after_fields', $output, $this, $user_id, $profile );
+		do_action( 'cfm_render_' . $this->name() . '_form_admin_after_fields', $this, $current_user_id, $profile );
+		do_action( 'cfm_render_form_below_' . $this->name() . '_form', $this->payment_id, $this->user_id );
+		$output = apply_filters( 'cfm_render_' . $this->name() . '_form_admin_output_after_fields', $output, $this, $current_user_id, $profile );
 		return $output;
 	}
 
-	public function render_form_frontend( $user_id = -2, $profile = false ) {
-		if ( $user_id === -2 ) {
-			$user_id = get_current_user_id();
+	public function render_form_frontend( $current_user_id = -2, $profile = false ) {
+		if ( $current_user_id === -2 ) {
+			$current_user_id = get_current_user_id();
 		}
 		
 		// See if can use form
-		if ( !$this->can_render_form_frontend( $user_id, $profile ) ) {
+		if ( !$this->can_render_form_frontend( $current_user_id, $profile ) ) {
 			return __( 'Access denied.', 'edd_cfm' );
 		}
 
 		$output = '';
-		$output = apply_filters( 'cfm_render_' . $this->name() . '_form_frontend_output_before_fields', $output, $this, $user_id, $profile );
-		do_action( 'cfm_render_' . $this->name() . '_form_frontend_before_fields', $this, $user_id, $profile );
-		do_action( 'cfm_render_form_above_' . $this->name() . '_form', $this->payment_id, $profile );
+		$output = apply_filters( 'cfm_render_' . $this->name() . '_form_frontend_output_before_fields', $output, $this, $current_user_id, $profile );
+		do_action( 'cfm_render_' . $this->name() . '_form_frontend_before_fields', $this, $current_user_id, $profile );
+		do_action( 'cfm_render_form_above_' . $this->name() . '_form', $this->payment_id, $this->user_id, $profile );
 		$fields = $this->fields;
-		$fields = apply_filters( 'cfm_render_' . $this->name() . '_form_frontend_fields', $fields, $this, $user_id, $profile );
+		$fields = apply_filters( 'cfm_render_' . $this->name() . '_form_frontend_fields', $fields, $this, $current_user_id, $profile );
 		$count = 0;
 		foreach ( $fields as $field ) {
 			$templates_to_exclude = apply_filters( 'cfm_templates_to_exclude_render_' . $this->name() . '_form_frontend', array(), $profile );
@@ -236,21 +236,21 @@ class CFM_Form {
 				if ( is_object( $field ) && $profile && ( ! $field->is_meta() || $field->meta_type() !== 'user' ) ){
 					continue;
 				}
-				$output .= apply_filters( 'cfm_render_' . $this->name() . '_form_frontend_fields_before_field', '', $field, $this, $user_id, $profile );
+				$output .= apply_filters( 'cfm_render_' . $this->name() . '_form_frontend_fields_before_field', '', $field, $this, $current_user_id, $profile );
 
 				if ( is_object( $field ) && method_exists( $field, 'render_field_frontend' ) ) {
-					$output .= $field->render_field_frontend( $user_id, $profile );
+					$output .= $field->render_field_frontend( $current_user_id, $profile );
 				} else if ( isset( $field['template'] ) ) {
 					_cfm_deprecated( 'Outputting using a non CFM Field is deprecated. Support will be removed in 2.4.' );
 					ob_start();
 					do_action( 'cfm_render_field_' . $field['template'], $this->characteristics, $this->payment_id, '' );
 					$output .= ob_get_clean();
 				}
-				$output .= apply_filters( 'cfm_render_' . $this->name() . '_form_frontend_fields_after_field', '', $field, $this, $user_id, $profile );
+				$output .= apply_filters( 'cfm_render_' . $this->name() . '_form_frontend_fields_after_field', '', $field, $this, $current_user_id, $profile );
 			}
 			$output .= wp_nonce_field( 'cfm-' . $this->name() .'-form', 'cfm-' . $this->name() .'-form', false, false );
 			$output .= '<input type="hidden" name="cfm_form_id" value="' . $this->id . '">';
-			$output .= '<input type="hidden" name="cfm_user_id" value="' . $user_id . '">';
+			$output .= '<input type="hidden" name="cfm_user_id" value="' . $current_user_id . '">';
 			$output .= '<input type="hidden" name="cfm_action" value="submit-' . $this->name() . '-form">';
 			$output .= '<input type="hidden" name="cfm_profile" value="' . json_encode( $profile ) . '">';
 			if ( ! $profile ) {
@@ -262,32 +262,32 @@ class CFM_Form {
 			$output .= __( 'The form has no fields!', 'edd_cfm' );
 		}
 
-		do_action( 'cfm_render_' . $this->name() . '_form_frontend_after_fields', $this, $user_id, $profile );
-		do_action( 'cfm_render_form_below_' . $this->name() . '_form', $this->payment_id );
-		$output = apply_filters( 'cfm_render_' . $this->name() . '_form_frontend_output_after_fields', $output, $this, $user_id, $profile );
+		do_action( 'cfm_render_' . $this->name() . '_form_frontend_after_fields', $this, $current_user_id, $profile );
+		do_action( 'cfm_render_form_below_' . $this->name() . '_form', $this->payment_id, $this->user_id );
+		$output = apply_filters( 'cfm_render_' . $this->name() . '_form_frontend_output_after_fields', $output, $this, $current_user_id, $profile );
 		return $output;
 	}
 	
-	public function has_fields_to_render( $user_id = -2, $profile = false ) { 
+	public function has_fields_to_render( $current_user_id = -2, $profile = false ) { 
 		if ( cfm_is_admin() ) {
-			return $this->has_fields_to_render_admin( $user_id, $profile );
+			return $this->has_fields_to_render_admin( $current_user_id, $profile );
 		} else {
-			return $this->has_fields_to_render_frontend( $user_id, $profile );
+			return $this->has_fields_to_render_frontend( $current_user_id, $profile );
 		}
 	}
 	
-	public function has_fields_to_render_admin( $user_id = -2, $profile = false ) { 
-		if ( $user_id === -2 ) {
-			$user_id = get_current_user_id();
+	public function has_fields_to_render_admin( $current_user_id = -2, $profile = false ) { 
+		if ( $current_user_id === -2 ) {
+			$current_user_id = get_current_user_id();
 		}
 		
 		// See if can use form
-		if ( !$this->can_render_form_admin( $user_id, $profile ) ) {
+		if ( !$this->can_render_form_admin( $current_user_id, $profile ) ) {
 			return false;
 		}
 
 		$fields = $this->fields;
-		$fields = apply_filters( 'cfm_render_' . $this->name() . '_form_admin_fields', $fields, $this, $user_id, $profile );
+		$fields = apply_filters( 'cfm_render_' . $this->name() . '_form_admin_fields', $fields, $this, $current_user_id, $profile );
 		$count = 0;
 
 		foreach ( $fields as $field ) {
@@ -299,6 +299,8 @@ class CFM_Form {
 			if ( is_object( $field ) && ( ( is_array( $templates_to_exclude ) && in_array( $field->template(), $templates_to_exclude ) ) || ! $field->is_public() ) ) {
 				continue;
 			} else if ( is_object( $field ) && $profile && ( ! $field->is_meta() || $field->meta_type() !== 'user' ) ){
+				continue;
+			} else if ( is_object( $field ) && ! $profile && ( ! $field->is_meta() || $field->meta_type() !== 'payment' ) ){
 				continue;
 			} else {
 				$count++;
@@ -312,18 +314,18 @@ class CFM_Form {
 		}
 	}
 
-	public function has_fields_to_render_frontend( $user_id = -2, $profile = false ) { 
-		if ( $user_id === -2 ) {
-			$user_id = get_current_user_id();
+	public function has_fields_to_render_frontend( $current_user_id = -2, $profile = false ) { 
+		if ( $current_user_id === -2 ) {
+			$current_user_id = get_current_user_id();
 		}
 		
 		// See if can use form
-		if ( !$this->can_render_form_frontend( $user_id, $profile ) ) {
+		if ( !$this->can_render_form_frontend( $current_user_id, $profile ) ) {
 			return false;
 		}
 
 		$fields = $this->fields;
-		$fields = apply_filters( 'cfm_render_' . $this->name() . '_form_frontend_fields', $fields, $this, $user_id, $profile );
+		$fields = apply_filters( 'cfm_render_' . $this->name() . '_form_frontend_fields', $fields, $this, $current_user_id, $profile );
 		$count = 0;
 		foreach ( $fields as $field ) {
 			$templates_to_exclude = apply_filters( 'cfm_templates_to_exclude_render_' . $this->name() . '_form_frontend', array(), $profile );
@@ -343,19 +345,19 @@ class CFM_Form {
 		}
 	}	
 	
-	public function validate_form( $values = array(), $user_id = -2, $profile = false ) {
+	public function validate_form( $values = array(), $current_user_id = -2, $profile = false ) {
 		$output = false;
 		if ( cfm_is_admin() ) {
-			$output = $this->validate_form_admin( $values, $user_id, $profile );
+			$output = $this->validate_form_admin( $values, $current_user_id, $profile );
 		} else {
-			$output = $this->validate_form_frontend( $values, $user_id, $profile );
+			$output = $this->validate_form_frontend( $values, $current_user_id, $profile );
 		}
 		return $output;
 	}
 	
-	public function validate_form_admin( $values = array(), $user_id = -2, $profile = false ) {
-		if ( $user_id === -2 ) {
-			$user_id = get_current_user_id();
+	public function validate_form_admin( $values = array(), $current_user_id = -2, $profile = false ) {
+		if ( $current_user_id === -2 ) {
+			$current_user_id = get_current_user_id();
 		}
 
 		if ( !defined( 'DOING_CFM_FORM_SUBMISSION' ) ) {
@@ -366,24 +368,24 @@ class CFM_Form {
 			define( 'DOING_CFM_FORM_SUBMISSION_LOCATION', 'admin' );
 		}
 
-		$user_id  = apply_filters( 'cfm_save_' . $this->name() . '_form_admin_user_id', $user_id, $this, $this->payment_id );
-		$values   = apply_filters( 'cfm_save_' . $this->name() . '_form_admin_values', $values, $this, $this->payment_id );
-		$profile   = apply_filters( 'cfm_save_' . $this->name() . '_form_admin_profile', $profile, $this, $this->payment_id );
+		$current_user_id  = apply_filters( 'cfm_save_' . $this->name() . '_form_admin_user_id', $current_user_id, $this, $this->payment_id, $this->user_id );
+		$values   = apply_filters( 'cfm_save_' . $this->name() . '_form_admin_values', $values, $this, $this->payment_id, $this->user_id );
+		$profile   = apply_filters( 'cfm_save_' . $this->name() . '_form_admin_profile', $profile, $this, $this->payment_id, $this->user_id );
 		
 		if ( !( cfm_is_admin() ) || ( !isset( $_REQUEST['cfm-' . $this->name() .'-form'] ) || !wp_verify_nonce( $_REQUEST['cfm-' . $this->name() .'-form'], 'cfm-' . $this->name() .'-form' ) ) ) {
 			return;
 		}
 
 		// See if can save form
-		if ( ! $this->can_save_form_admin( $user_id, $profile ) ) {
+		if ( ! $this->can_save_form_admin( $current_user_id, $profile ) ) {
 			edd_set_error( 'cfm_unauthorized_save_admin', __( 'You are not permitted to do this.', 'edd_cfm' ) );
 			return false;
 		}
 
-		do_action( 'cfm_save_' . $this->name() . '_form_admin_values_before_save', $this, $user_id, $this->payment_id );
+		do_action( 'cfm_save_' . $this->name() . '_form_admin_values_before_save', $this, $current_user_id, $this->payment_id, $this->user_id );
 
 		$fields = $this->fields;
-		$fields = apply_filters( 'cfm_save_' . $this->name() . '_form_admin_fields', $fields,  $this, $user_id, $this->payment_id );
+		$fields = apply_filters( 'cfm_save_' . $this->name() . '_form_admin_fields', $fields,  $this, $current_user_id, $this->payment_id, $this->user_id );
 
 		if ( !empty( $fields ) ) {
 			foreach ( $fields as $field ) {
@@ -399,7 +401,11 @@ class CFM_Form {
 				if ( is_object( $field ) && $profile && ( ! $field->is_meta() || $field->meta_type() !== 'user' ) ){
 					continue;
 				}
-				$values = $field->sanitize( $values, $this->payment_id, $user_id ); // this works like an apply_filters. Simply tack your error onto errors if needed
+				
+				if ( is_object( $field ) && ! $profile && ( ! $field->is_meta() || $field->meta_type() !== 'payment' ) ){
+					continue;
+				}
+				$values = $field->sanitize( $values, $this->payment_id, $this->user_id ); // this works like an apply_filters. Simply tack your error onto errors if needed
 			}
 			
 			foreach ( $fields as $field ) {
@@ -416,13 +422,13 @@ class CFM_Form {
 					continue;
 				}
 				
-				if ( is_object( $field ) && $profile && ( ! $field->is_meta() || $field->meta_type() !== 'user' ) ){
+				if ( is_object( $field ) && ! $profile && ( ! $field->is_meta() || $field->meta_type() !== 'payment' ) ){
 					continue;
 				}
-				$field->validate( $values, $this->payment_id, $user_id );
+				$field->validate( $values, $this->payment_id, $this->user_id );
 			}
 			
-			$this->before_form_error_check_admin( $this->payment_id, $values, $user_id, $profile );
+			$this->before_form_error_check_admin( $this->payment_id, $this->user_id, $values, $current_user_id, $profile );
 			$errors = edd_get_errors();
 			
 			if ( $errors ) {
@@ -436,9 +442,9 @@ class CFM_Form {
 		}
 	}
 
-	public function validate_form_frontend( $values = array(), $user_id = -2, $profile = false ) {
-		if ( $user_id === -2 ) {
-			$user_id = get_current_user_id();
+	public function validate_form_frontend( $values = array(), $current_user_id = -2, $profile = false ) {
+		if ( $current_user_id === -2 ) {
+			$current_user_id = get_current_user_id();
 		}
 
 		if ( !defined( 'DOING_CFM_FORM_SUBMISSION' ) ) {
@@ -449,24 +455,24 @@ class CFM_Form {
 			define( 'DOING_CFM_FORM_SUBMISSION_LOCATION', 'frontend' );
 		}
 
-		$user_id  = apply_filters( 'cfm_save_' . $this->name() . '_form_frontend_user_id', $user_id, $this, $this->payment_id );
-		$values   = apply_filters( 'cfm_save_' . $this->name() . '_form_frontend_values', $values, $this, $this->payment_id );
-		$profile   = apply_filters( 'cfm_save_' . $this->name() . '_form_frontend_profile', $profile, $this, $this->payment_id );
+		$current_user_id  = apply_filters( 'cfm_save_' . $this->name() . '_form_frontend_user_id', $current_user_id, $this, $this->payment_id, $this->user_id );
+		$values   = apply_filters( 'cfm_save_' . $this->name() . '_form_frontend_values', $values, $this, $this->payment_id, $this->user_id );
+		$profile   = apply_filters( 'cfm_save_' . $this->name() . '_form_frontend_profile', $profile, $this, $this->payment_id, $this->user_id );
 
 		if ( ( cfm_is_admin() ) || ( !isset( $_REQUEST['cfm-' . $this->name() .'-form'] ) || !wp_verify_nonce( $_REQUEST['cfm-' . $this->name() .'-form'], 'cfm-' . $this->name() .'-form' ) ) ) {
 			return;
 		}
 
 		// See if can save form
-		if ( ! $this->can_save_form_frontend( $user_id, $profile ) ) {
+		if ( ! $this->can_save_form_frontend( $current_user_id, $profile ) ) {
 			edd_set_error( 'cfm_unauthorized_save_frontend', __( 'You are not permitted to do this.', 'edd_cfm' ) );
 			return false;
 		}
 
-		do_action( 'cfm_save_' . $this->name() . '_form_frontend_values_before_save', $this, $user_id, $this->payment_id );
+		do_action( 'cfm_save_' . $this->name() . '_form_frontend_values_before_save', $this, $current_user_id, $this->payment_id, $this->user_id );
 
 		$fields = $this->fields;
-		$fields = apply_filters( 'cfm_save_' . $this->name() . '_form_frontend_fields', $fields,  $this, $user_id, $this->payment_id );
+		$fields = apply_filters( 'cfm_save_' . $this->name() . '_form_frontend_fields', $fields,  $this, $current_user_id, $this->payment_id, $this->user_id );
 
 		if ( !empty( $fields ) ) {
 			foreach ( $fields as $field ) {
@@ -482,7 +488,7 @@ class CFM_Form {
 				if ( is_object( $field ) && $profile && ( ! $field->is_meta() || $field->meta_type() !== 'user' ) ){
 					continue;
 				}
-				$values = $field->sanitize( $values, $this->payment_id, $user_id ); // this works like an apply_filters. Simply tack your error onto errors if needed
+				$values = $field->sanitize( $values, $this->payment_id, $this->user_id ); // this works like an apply_filters. Simply tack your error onto errors if needed
 			}
 			
 			foreach ( $fields as $field ) {
@@ -498,10 +504,10 @@ class CFM_Form {
 				if ( is_object( $field ) && $profile && ( ! $field->is_meta() || $field->meta_type() !== 'user' ) ){
 					continue;
 				}
-				$field->validate( $values, $this->payment_id, $user_id );
+				$field->validate( $values, $this->payment_id, $this->user_id );
 			}
 			
-			$this->before_form_error_check_frontend( $this->payment_id, $values, $user_id, $profile );
+			$this->before_form_error_check_frontend( $this->payment_id, $this->user_id, $values, $current_user_id, $profile );
 			
 			$errors = edd_get_errors();
 			if ( $errors ) {
@@ -515,19 +521,19 @@ class CFM_Form {
 		}
 	}
 
-	public function save_form( $values = array(), $user_id = -2 ) {
+	public function save_form( $values = array(), $current_user_id = -2 ) {
 		$output = false;
 		if ( cfm_is_admin() ) {
-			$output = $this->save_form_admin( $values, $user_id );
+			$output = $this->save_form_admin( $values, $current_user_id );
 		} else {
-			$output = $this->save_form_frontend( $values, $user_id );
+			$output = $this->save_form_frontend( $values, $current_user_id );
 		}
 		return $output;
 	}
 
-	public function save_form_admin( $values = array(), $user_id = -2, $profile = false ) {
-		if ( $user_id === -2 ) {
-			$user_id = get_current_user_id();
+	public function save_form_admin( $values = array(), $current_user_id = -2, $profile = false ) {
+		if ( $current_user_id === -2 ) {
+			$current_user_id = get_current_user_id();
 		}
 
 		if ( !defined( 'DOING_CFM_FORM_SUBMISSION' ) ) {
@@ -538,16 +544,16 @@ class CFM_Form {
 			define( 'DOING_CFM_FORM_SUBMISSION_LOCATION', 'admin' );
 		}
 
-		$user_id  = apply_filters( 'cfm_save_' . $this->name() . '_form_admin_user_id', $user_id, $this, $this->payment_id );
-		$values   = apply_filters( 'cfm_save_' . $this->name() . '_form_admin_values', $values, $this, $this->payment_id );
-		$profile   = apply_filters( 'cfm_save_' . $this->name() . '_form_admin_profile', $profile, $this, $this->payment_id );
+		$current_user_id  = apply_filters( 'cfm_save_' . $this->name() . '_form_admin_user_id', $current_user_id, $this, $this->payment_id, $this->user_id );
+		$values   = apply_filters( 'cfm_save_' . $this->name() . '_form_admin_values', $values, $this, $this->payment_id, $this->user_id );
+		$profile   = apply_filters( 'cfm_save_' . $this->name() . '_form_admin_profile', $profile, $this, $this->payment_id, $this->user_id );
 		
 		if ( !( cfm_is_admin() ) || ( !isset( $_REQUEST['cfm-' . $this->name() .'-form'] ) || !wp_verify_nonce( $_REQUEST['cfm-' . $this->name() .'-form'], 'cfm-' . $this->name() .'-form' ) ) ) {
 			return;
 		}
 
 		// See if can save form
-		if ( ! $this->can_save_form_admin( $user_id, $profile ) ) {
+		if ( ! $this->can_save_form_admin( $current_user_id, $profile ) ) {
 			return false;
 		}
 		
@@ -555,8 +561,27 @@ class CFM_Form {
 		if ( $errors ) {
 			return false;
 		} else {
-			$this->before_form_save( $this->payment_id, $values, $user_id, $profile );
+			$this->before_form_save( $this->payment_id, $this->user_id, $values, $current_user_id, $profile );
 			$fields = $this->fields;
+			foreach ( $fields as $field ) {
+				if ( ! is_object( $field ) ) {
+					continue;
+				}
+
+				$templates_to_exclude = apply_filters( 'cfm_templates_to_exclude_sanitize_' . $this->name() . '_form_admin', array(), $profile );
+				if ( is_array( $templates_to_exclude ) && in_array( $field->supports['template'], $templates_to_exclude ) ) {
+					continue;
+				}
+				
+				if ( is_object( $field ) && $profile && ( ! $field->is_meta() || $field->meta_type() !== 'user' ) ){
+					continue;
+				}
+				
+				if ( is_object( $field ) && ! $profile && ( ! $field->is_meta() || $field->meta_type() !== 'payment' ) ){
+					continue;
+				}
+				$values = $field->sanitize( $values, $this->payment_id, $this->user_id ); // this works like an apply_filters. Simply tack your error onto errors if needed
+			}			
 			foreach ( $fields as $field ) {
 
 				if ( ! is_object( $field ) ) {
@@ -572,19 +597,23 @@ class CFM_Form {
 					continue;
 				}
 				
-				$field->save_field_values( $this->payment_id, $values, $user_id );
+				if ( is_object( $field ) && ! $profile && ( ! $field->is_meta() || $field->meta_type() !== 'payment' ) ){
+					continue;
+				}
+				
+				$field->save_field_values( $this->payment_id, $this->user_id, $values, $current_user_id );
 			}
-			$this->after_form_save_admin( $this->payment_id, $values, $user_id, $profile );
-			do_action( 'cfm_save_' . $this->name() . '_form_admin_values_after_save', $values, $this, $user_id, $this->payment_id );
-			do_action( 'cfm_save_' . $this->name() . '_form_after_admin', $values, $user_id );
-			do_action( 'cfm_save_' . $this->name() . '_form_values_after_save', $this, $user_id, $this->payment_id );
+			$this->after_form_save_admin( $this->payment_id, $this->user_id, $values, $current_user_id, $profile );
+			do_action( 'cfm_save_' . $this->name() . '_form_admin_values_after_save', $values, $this, $current_user_id, $this->payment_id, $this->user_id);
+			do_action( 'cfm_save_' . $this->name() . '_form_after_admin', $values, $current_user_id );
+			do_action( 'cfm_save_' . $this->name() . '_form_values_after_save', $this, $current_user_id, $this->payment_id, $this->user_id );
 			return true;
 		}
 	}
 
-	public function save_form_frontend( $values = array(), $user_id = -2, $profile = false ) {
-		if ( $user_id === -2 ) {
-			$user_id = get_current_user_id();
+	public function save_form_frontend( $values = array(), $current_user_id = -2, $profile = false ) {
+		if ( $current_user_id === -2 ) {
+			$current_user_id = get_current_user_id();
 		}
 
 		if ( !defined( 'DOING_CFM_FORM_SUBMISSION' ) ) {
@@ -595,16 +624,16 @@ class CFM_Form {
 			define( 'DOING_CFM_FORM_SUBMISSION_LOCATION', 'frontend' );
 		}
 
-		$user_id  = apply_filters( 'cfm_save_' . $this->name() . '_form_frontend_user_id', $user_id, $this, $this->payment_id );
-		$values   = apply_filters( 'cfm_save_' . $this->name() . '_form_frontend_values', $values, $this, $this->payment_id );
-		$profile   = apply_filters( 'cfm_save_' . $this->name() . '_form_frontend_profile', $profile, $this, $this->payment_id );
+		$current_user_id  = apply_filters( 'cfm_save_' . $this->name() . '_form_frontend_user_id', $current_user_id, $this, $this->payment_id, $this->user_id );
+		$values   = apply_filters( 'cfm_save_' . $this->name() . '_form_frontend_values', $values, $this, $this->payment_id, $this->user_id );
+		$profile   = apply_filters( 'cfm_save_' . $this->name() . '_form_frontend_profile', $profile, $this, $this->payment_id, $this->user_id );
 
 		if ( ( cfm_is_admin() ) || ( !isset( $_REQUEST['cfm-' . $this->name() .'-form'] ) || !wp_verify_nonce( $_REQUEST['cfm-' . $this->name() .'-form'], 'cfm-' . $this->name() .'-form' ) ) ) {
 			return;
 		}
 
 		// See if can save form
-		if ( ! $this->can_save_form_frontend( $user_id, $profile ) ) {
+		if ( ! $this->can_save_form_frontend( $current_user_id, $profile ) ) {
 			return false;
 		}
 		
@@ -612,8 +641,23 @@ class CFM_Form {
 		if ( $errors ) {
 			return false;
 		} else {
-			$this->before_form_save( $this->payment_id, $values, $user_id, $profile );
+			$this->before_form_save( $this->payment_id, $this->user_id, $values, $current_user_id, $profile );
 			$fields = $this->fields;
+			foreach ( $fields as $field ) {
+				if ( ! is_object( $field ) ) {
+					continue;
+				}
+
+				$templates_to_exclude = apply_filters( 'cfm_templates_to_exclude_sanitize_' . $this->name() . '_form_frontend', array(), $profile );
+				if ( is_object( $field ) && ( ( is_array( $templates_to_exclude ) && in_array( $field->template(), $templates_to_exclude ) ) || ! $field->is_public() ) ){
+					continue;
+				}
+				
+				if ( is_object( $field ) && $profile && ( ! $field->is_meta() || $field->meta_type() !== 'user' ) ){
+					continue;
+				}
+				$values = $field->sanitize( $values, $this->payment_id, $this->user_id ); // this works like an apply_filters. Simply tack your error onto errors if needed
+			}			
 			foreach ( $fields as $field ) {
 
 				if ( ! is_object( $field ) ) {
@@ -628,80 +672,80 @@ class CFM_Form {
 				if ( is_object( $field ) && $profile && ( ! $field->is_meta() || $field->meta_type() !== 'user' ) ){
 					continue;
 				}
-				$field->save_field_values( $this->payment_id, $values, $user_id, $profile );
+				$field->save_field_values( $this->payment_id, $this->user_id, $values, $current_user_id, $profile );
 			}
-			$this->after_form_save_frontend( $this->payment_id, $values, $user_id, $profile );
-			do_action( 'cfm_save_' . $this->name() . '_form_frontend_values_after_save', $values, $this, $user_id, $this->payment_id );
-			do_action( 'cfm_save_' . $this->name() . '_form_after_frontend', $values, $user_id );
-			do_action( 'cfm_save_' . $this->name() . '_form_values_after_save', $this, $user_id, $this->payment_id );
+			$this->after_form_save_frontend( $this->payment_id, $this->user_id, $values, $current_user_id, $profile );
+			do_action( 'cfm_save_' . $this->name() . '_form_frontend_values_after_save', $values, $this, $current_user_id, $this->payment_id, $this->user_id );
+			do_action( 'cfm_save_' . $this->name() . '_form_after_frontend', $values, $current_user_id );
+			do_action( 'cfm_save_' . $this->name() . '_form_values_after_save', $this, $current_user_id, $this->payment_id, $this->user_id );
 			return true;
 		}
 	}
 
-	public function before_form_error_check( $payment_id = -2, $values = array(), $user_id = -2, $profile = false ) {
+	public function before_form_error_check( $payment_id = -2, $user_id = -2, $values = array(), $current_user_id = -2, $profile = false ) {
 		if ( cfm_is_admin() ) {
-			$this->before_form_error_check_admin( $payment_id, $values, $user_id, $profile );
+			$this->before_form_error_check_admin( $payment_id, $user_id, $values, $current_user_id, $profile );
 		} else {
-			$this->before_form_error_check_frontend( $payment_id, $values, $user_id, $profile );
+			$this->before_form_error_check_frontend( $payment_id, $user_id, $values, $current_user_id, $profile );
 		}
 	}
 
-	public function before_form_error_check_frontend( $payment_id = -2, $values = array(), $user_id = -2, $profile = false ) {
-		if ( $user_id === -2 ) {
-			$user_id = get_current_user_id();
+	public function before_form_error_check_frontend( $payment_id = -2, $user_id = -2, $values = array(), $current_user_id = -2, $profile = false ) {
+		if ( $current_user_id === -2 ) {
+			$current_user_id = get_current_user_id();
 		}
-		do_action( 'cfm_before_' . $this->name() . '_form_error_check_action_frontend', $payment_id, $values, $user_id, $profile );
+		do_action( 'cfm_before_' . $this->name() . '_form_error_check_action_frontend', $payment_id, $user_id, $values, $current_user_id, $profile );
 	}
 
-	public function before_form_error_check_admin( $payment_id = -2, $values = array(), $user_id = -2, $profile = false ) {
-		if ( $user_id === -2 ) {
-			$user_id = get_current_user_id();
+	public function before_form_error_check_admin( $payment_id = -2, $user_id = -2, $values = array(), $current_user_id = -2, $profile = false ) {
+		if ( $current_user_id === -2 ) {
+			$current_user_id = get_current_user_id();
 		}
-		do_action( 'cfm_before_' . $this->name() . '_form_error_check_action_admin', $payment_id, $values, $user_id, $profile );
+		do_action( 'cfm_before_' . $this->name() . '_form_error_check_action_admin', $payment_id, $user_id, $values, $current_user_id, $profile );
 	}
 
-	public function before_form_save( $payment_id = -2, $values = array(), $user_id = -2, $profile = false ) {
+	public function before_form_save( $payment_id = -2, $user_id = -2, $values = array(), $current_user_id = -2, $profile = false ) {
 		if ( cfm_is_admin() ) {
-			$this->before_form_save_admin( $payment_id, $values, $user_id, $profile );
+			$this->before_form_save_admin( $payment_id, $user_id, $values, $current_user_id, $profile );
 		} else {
-			$this->before_form_save_frontend( $payment_id, $values, $user_id, $profile );
+			$this->before_form_save_frontend( $payment_id, $user_id, $values, $current_user_id, $profile );
 		}
 	}
 
-	public function before_form_save_frontend( $payment_id = -2, $values = array(), $user_id = -2, $profile = false ) {
-		if ( $user_id === -2 ) {
-			$user_id = get_current_user_id();
+	public function before_form_save_frontend( $payment_id = -2, $user_id = -2, $values = array(), $current_user_id = -2, $profile = false ) {
+		if ( $current_user_id === -2 ) {
+			$current_user_id = get_current_user_id();
 		}
-		do_action( 'cfm_before_' . $this->name() . '_form_save_frontend', $payment_id, $values, $user_id, $profile );
+		do_action( 'cfm_before_' . $this->name() . '_form_save_frontend', $payment_id, $user_id, $values, $current_user_id, $profile );
 	}
 
-	public function before_form_save_admin( $payment_id = -2, $values = array(), $user_id = -2, $profile = false ) {
-		if ( $user_id === -2 ) {
-			$user_id = get_current_user_id();
+	public function before_form_save_admin( $payment_id = -2, $user_id = -2, $values = array(), $current_user_id = -2, $profile = false ) {
+		if ( $current_user_id === -2 ) {
+			$current_user_id = get_current_user_id();
 		}
-		do_action( 'cfm_before_' . $this->name() . '_form_save_admin', $payment_id, $values, $user_id, $profile );
+		do_action( 'cfm_before_' . $this->name() . '_form_save_admin', $payment_id, $user_id, $values, $current_user_id, $profile );
 	}
 
-	public function after_form_save( $payment_id = -2, $values = array(), $user_id = -2, $profile = false ) {
+	public function after_form_save( $payment_id = -2, $user_id = -2, $values = array(), $current_user_id = -2, $profile = false ) {
 		if ( cfm_is_admin() ) {
-			$this->after_form_save_admin( $payment_id, $values, $user_id, $profile );
+			$this->after_form_save_admin( $payment_id, $user_id, $values, $current_user_id, $profile );
 		} else {
-			$this->after_form_save_frontend( $payment_id, $values, $user_id, $profile );
+			$this->after_form_save_frontend( $payment_id, $user_id, $values, $current_user_id, $profile );
 		}
 	}
 
-	public function after_form_save_frontend($payment_id = -2, $values = array(), $user_id = -2, $profile = false ) {
-		if ( $user_id === -2 ) {
-			$user_id = get_current_user_id();
+	public function after_form_save_frontend($payment_id = -2, $user_id = -2, $values = array(), $current_user_id = -2, $profile = false ) {
+		if ( $current_user_id === -2 ) {
+			$current_user_id = get_current_user_id();
 		}
-		do_action( 'cfm_after_' . $this->name() . '_form_save_frontend', $payment_id, $values, $user_id, $profile );
+		do_action( 'cfm_after_' . $this->name() . '_form_save_frontend', $payment_id, $user_id, $values, $current_user_id, $profile );
 	}
 
-	public function after_form_save_admin( $payment_id = -2, $values = array(), $user_id = -2, $profile = false ) {
-		if ( $user_id === -2 ) {
-			$user_id = get_current_user_id();
+	public function after_form_save_admin( $payment_id = -2, $user_id = -2, $values = array(), $current_user_id = -2, $profile = false ) {
+		if ( $current_user_id === -2 ) {
+			$current_user_id = get_current_user_id();
 		}
-		do_action( 'cfm_after_' . $this->name() . '_form_save_admin', $payment_id, $values, $user_id, $profile );
+		do_action( 'cfm_after_' . $this->name() . '_form_save_admin', $payment_id, $user_id, $values, $current_user_id, $profile );
 	}
 
 	public function render_formbuilder_fields() {
@@ -758,6 +802,14 @@ class CFM_Form {
 		$fields                = !empty( $fields ) ? $fields : array();
 		$this->load_fields( $fields );
 	}
+	
+	/** Used when you need to change the user_id of the form and all of it's fields */
+	public function change_user_id( $user_id ) {
+		$this->user_id 		   = $user_id;
+		$fields                = get_post_meta( $this->id, 'cfm-form', true );
+		$fields                = !empty( $fields ) ? $fields : array();
+		$this->load_fields( $fields );
+	}	
 
 	public function has_formbuilder() {
 		if ( isset( $this->supports['formbuilder'] ) ) {
@@ -797,36 +849,36 @@ class CFM_Form {
 		}
 	}
 
-	public function can_render_form( $user_id = -2, $profile = false ) {
+	public function can_render_form( $current_user_id = -2, $profile = false ) {
 		$output = false;
 		if ( cfm_is_admin() ) {
-			$output = $this->can_render_form_admin( $user_id, $profile );
+			$output = $this->can_render_form_admin( $current_user_id, $profile );
 		} else {
-			$output = $this->can_render_form_frontend( $user_id, $profile );
+			$output = $this->can_render_form_frontend( $current_user_id, $profile );
 		}
 		return $output;
 	}
 	
 
 	
-	public function can_render_form_admin( $user_id = -2, $profile = false ) {
-		if ( $user_id === -2 ) {
-			$user_id = get_current_user_id();
+	public function can_render_form_admin( $current_user_id = -2, $profile = false ) {
+		if ( $current_user_id === -2 ) {
+			$current_user_id = get_current_user_id();
 		}
-		if ( user_can( $user_id, 'manage_shop_settings' ) ){
+		if ( user_can( $current_user_id, 'manage_shop_settings' ) ){
 			return true;
 		} else {
 			return false;
 		}
 	}
 	
-	public function can_render_form_frontend( $user_id = -2, $profile = false ) {
-		if ( $user_id === -2 ) {
-			$user_id = get_current_user_id();
+	public function can_render_form_frontend( $current_user_id = -2, $profile = false ) {
+		if ( $current_user_id === -2 ) {
+			$current_user_id = get_current_user_id();
 		}
 		
 		if ( $profile ) {
-			if ( $user_id === get_current_user_id() ) {
+			if ( $current_user_id === get_current_user_id() ) {
 				return true;
 			} else {
 				return false;
@@ -836,22 +888,22 @@ class CFM_Form {
 		}
 	}
 
-	public function can_save_form( $user_id = -2, $profile = false ) {
+	public function can_save_form( $current_user_id = -2, $profile = false ) {
 		$output = false;
 		if ( cfm_is_admin() ) {
-			$output = $this->can_save_form_admin( $user_id, $profile );
+			$output = $this->can_save_form_admin( $current_user_id, $profile );
 		} else {
-			$output = $this->can_save_form_frontend( $user_id, $profile );
+			$output = $this->can_save_form_frontend( $current_user_id, $profile );
 		}
 		return $output;
 	}
 	
-	public function can_save_form_admin( $user_id = -2, $profile = false ) {
-		if ( $user_id === -2 ) {
-			$user_id = get_current_user_id();
+	public function can_save_form_admin( $current_user_id = -2, $profile = false ) {
+		if ( $current_user_id === -2 ) {
+			$current_user_id = get_current_user_id();
 		}
 		
-		if ( user_can( $user_id, 'manage_shop_settings' ) ){
+		if ( user_can( $current_user_id, 'manage_shop_settings' ) ){
 			return true;
 		} else {
 			return false;
@@ -859,13 +911,13 @@ class CFM_Form {
 	}
 	
 
-	public function can_save_form_frontend( $user_id = -2, $profile = false ) {
-		if ( $user_id === -2 ) {
-			$user_id = get_current_user_id();
+	public function can_save_form_frontend( $current_user_id = -2, $profile = false ) {
+		if ( $current_user_id === -2 ) {
+			$current_user_id = get_current_user_id();
 		}
 		
 		if ( $profile ) {
-			if ( $user_id === get_current_user_id() ) {
+			if ( $current_user_id === get_current_user_id() ) {
 				return true;
 			} else {
 				return false;

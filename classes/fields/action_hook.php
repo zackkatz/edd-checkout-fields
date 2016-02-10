@@ -108,13 +108,13 @@ function my_function_name( $form, $payment_id, $user_id, $field ) {
 	}
 
 	// note in order for this to run, a hidden text field should be output in the render function with an id of the meta_key, else this won't run
-	public function save_field_admin( $payment_id = -2, $value = '', $user_id = -2 ) {
-		do_action( $this->name() . '_save_admin', $payment_id, $value, $user_id, $this );
+	public function save_field_admin( $payment_id = -2, $user_id = -2, $value = '', $current_user_id = -2 ) {
+		do_action( $this->name() . '_save_admin', $payment_id, $user_id, $value, $current_user_id, $this );
 	}
 
 	// note in order for this to run, a hidden text field should be output in the render function with an id of the meta_key, else this won't run
-	public function save_field_frontend( $payment_id = -2, $value = '', $user_id = -2 ) {
-		do_action( $this->name() . '_save_frontend', $payment_id, $value, $user_id, $this );
+	public function save_field_frontend( $payment_id = -2, $user_id = -2, $value = '', $current_user_id = -2 ) {
+		do_action( $this->name() . '_save_frontend', $payment_id, $user_id, $value, $current_user_id, $this );
 	}	
 
 	/** Returns formatted data of field in frontend */

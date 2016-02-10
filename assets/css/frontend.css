@@ -36,7 +36,6 @@ td.cfm-repeat-field.cfm-repeat-field-actions {
 fieldset.cfm-form input[type="text"],
 fieldset.cfm-form input[type="email"],
 fieldset.cfm-form input[type="url"],
-fieldset.cfm-form input[type="password"],
 fieldset.cfm-form textarea {
 	width: 100%;
 	line-height: normal;

@@ -219,25 +219,25 @@ class CFM_Field {
 	}
 
 	/** Returns the HTML to render a field */
-	public function render_field( $user_id = -2, $profile = false ) {
+	public function render_field( $current_user_id = -2, $profile = false ) {
 		$output = '';
 		if ( cfm_is_admin() ) {
-			$output .= $this->render_field_admin( $user_id, $profile );
+			$output .= $this->render_field_admin( $current_user_id, $profile );
 		} else {
-			$output .= $this->render_field_frontend( $user_id, $profile );
+			$output .= $this->render_field_frontend( $current_user_id, $profile );
 		}
 
 		return $output;
 	}
 
 	/** Returns the HTML to render a field in admin */
-	public function render_field_admin( $user_id = -2, $profile = -2 ) {
+	public function render_field_admin( $current_user_id = -2, $profile = -2 ) {
 		// defined in the extending fields
 		return '';
 	}
 
 	/** Returns the HTML to render a field in frontend */
-	public function render_field_frontend( $user_id = -2, $profile = -2 ) {
+	public function render_field_frontend( $current_user_id = -2, $profile = -2 ) {
 		// defined in the extending fields
 		return '';
 	}
@@ -264,45 +264,53 @@ class CFM_Field {
 	}	
 
 	/** Saves field by extracting value from array of values (for all fields of a form) */
-	public function save_field_values( $payment_id = -2, $values = array(), $user_id = -2 ) {
-		if ( $user_id === -2 ) {
-			$user_id = get_current_user_id();
+	public function save_field_values( $payment_id = -2, $user_id = -2, $values = array(), $current_user_id = -2 ) {
+		if ( $current_user_id === -2 ) {
+			$current_user_id = get_current_user_id();
 		}
 
 		if ( $payment_id == -2 ) {
 			$payment_id = $this->payment_id;
 		}
+		
+		if ( $user_id == -2 ) {
+			$user_id = $this->user_id;
+		}
 
-		do_action( 'cfm_save_field_values_before', $payment_id, $values, $user_id );
+		do_action( 'cfm_save_field_values_before', $payment_id, $user_id, $values, $current_user_id );
 
 		if ( isset( $values[ $this->name() ] ) ) {
-			$this->save_field( $payment_id, $values[ $this->name() ], $user_id );
+			$this->save_field( $payment_id, $user_id, $values[ $this->name() ], $current_user_id );
 		} else {
-			$this->save_field( $payment_id, '', $user_id );
+			$this->save_field( $payment_id, $user_id, '', $current_user_id );
 		}
-		do_action( 'cfm_save_field_values_after', $payment_id, $values, $user_id );
+		do_action( 'cfm_save_field_values_after', $payment_id, $user_id, $values, $current_user_id );
 	}
 
 	/** Saves field */
-	public function save_field( $payment_id = -2, $value = '', $user_id = -2 ) {
+	public function save_field( $payment_id = -2, $user_id = -2, $value = '', $current_user_id = -2 ) {
 		if ( cfm_is_admin() ) {
-			$this->save_field_admin( $payment_id, $value, $user_id );
+			$this->save_field_admin( $payment_id, $user_id, $value, $current_user_id );
 		} else {
-			$this->save_field_frontend( $payment_id, $value, $user_id );
+			$this->save_field_frontend( $payment_id, $user_id, $value, $current_user_id );
 		}
 	}
 
 	/** Saves field in admin */
-	public function save_field_admin( $payment_id = -2, $value = '', $user_id = -2 ) {
-		if ( $user_id === -2 ) {
-			$user_id = get_current_user_id();
+	public function save_field_admin( $payment_id = -2, $user_id = -2, $value = '', $current_user_id = -2 ) {
+		if ( $current_user_id === -2 ) {
+			$current_user_id = get_current_user_id();
 		}
 
 		if ( $payment_id == -2 ) {
 			$payment_id = $this->payment_id;
 		}
+		
+		if ( $user_id == -2 ) {
+			$user_id = $this->user_id;
+		}
 
-		do_action( 'cfm_save_field_before_save_admin', $this, $payment_id, $value, $user_id );
+		do_action( 'cfm_save_field_before_save_admin', $this, $payment_id, $user_id, $value, $current_user_id );
 		if ( (bool) $this->meta ) {
 			$meta_type = $this->meta_type();
 			if ( $meta_type === 'user' ){
@@ -322,20 +330,24 @@ class CFM_Field {
 		}
 
 		$this->value = $value;
-		do_action( 'cfm_save_field_after_save_admin', $this, $payment_id, $value, $user_id );
+		do_action( 'cfm_save_field_after_save_admin', $this, $payment_id, $user_id, $value, $current_user_id );
 	}
 
 	/** Saves field in frontend */
-	public function save_field_frontend( $payment_id = -2, $value = '', $user_id = -2 ) {
-		if ( $user_id === -2 ) {
-			$user_id = get_current_user_id();
+	public function save_field_frontend( $payment_id = -2, $user_id = -2, $value = '', $current_user_id = -2 ) {
+		if ( $current_user_id === -2 ) {
+			$current_user_id = get_current_user_id();
 		}
 
 		if ( $payment_id == -2 ) {
 			$payment_id = $this->payment_id;
 		}
-
-		do_action( 'cfm_save_field_before_save_frontend', $this, $payment_id, $value, $user_id );
+		
+		if ( $user_id == -2 ) {
+			$user_id = $this->user_id;
+		}
+		
+		do_action( 'cfm_save_field_before_save_frontend', $this, $payment_id, $user_id, $value, $current_user_id );
 
 		if ( (bool) $this->meta ) {
 			$meta_type = $this->meta_type();
@@ -356,7 +368,7 @@ class CFM_Field {
 		}
 
 		$this->value = $value;
-		do_action( 'cfm_save_field_after_save_frontend', $this, $payment_id, $value, $user_id );
+		do_action( 'cfm_save_field_after_save_frontend', $this, $payment_id, $user_id, $value, $current_user_id );
 	}
 
 	/** Gets field value */

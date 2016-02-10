@@ -27,8 +27,11 @@ class CFM_Date_Field extends CFM_Field {
 		'template'    => 'date',
 		'required'    => false,
 		'label'       => '',
-		'format'    => 'mm/dd/yy',
 		'time'        => 'no',
+		'view'		  => 'day',
+		'size'		  => '1',
+		'min'         => '',
+		'max'         => '',
 		'css'         => '',
 		'meta_type'   => 'payment', // 'payment' or 'user' here if is_meta()
 		'public'          => "public", // denotes whether a field shows in the admin only
@@ -48,22 +51,45 @@ class CFM_Date_Field extends CFM_Field {
 			$user_id = get_current_user_id();
 		}
 		
-		$value     = $this->get_field_value_frontend( $this->payment_id, $this->user_id );
-		$output     = '';
+		$value     = $this->get_field_value_admin( $this->payment_id, $this->user_id );
+		$value 	   = new DateTime( $value );
+		$date 	   = date_format( $value, "Y-m-d" );
+		$datetime  = date_format( $value, "Y-m-d" ) . 'T'. date_format( $value, "H:i" );
+		$size 	   = ! empty( $this->characteristics['size'] ) ? absint( $this->characteristics['size'] ) : 1;
+		$view      = ! empty( $this->characteristics['view'] ) ? $this->characteristics['view'] : "day";
+		
+		if ( $view === 'month' ){
+			$view = 1;
+		} else if( $view === 'year' ){
+			$view = 0;
+		} else{
+			$view = 2; // day
+		}
+
+		$output        = '';
 		$output     .= sprintf( '<p class="cfm-el %1s %2s %3s">', esc_attr( $this->template() ), esc_attr( $this->name() ), esc_attr( $this->css() ) );
 		$output    .= $this->label( false );
 		ob_start(); ?>
-		<input name="<?php echo esc_attr( $this->name() ); ?>" id="<?php echo esc_attr( $this->name() ); ?>" type="text" class="datepicker text edd-input" data-required="false" data-type="text" value="<?php echo esc_attr( $value ) ?>" />
+		
 		<script type="text/javascript">
-			jQuery(function($) {
-			<?php if ( $this->characteristics['time'] == 'yes' ) { ?>
-				$("#<?php echo esc_attr( $this->name() ); ?>").datetimepicker({ dateFormat: '<?php echo $this->characteristics['format']; ?>' });
-			<?php } else { ?>
-				$("#<?php echo esc_attr( $this->name() ); ?>").datepicker({ dateFormat: '<?php echo $this->characteristics['format']; ?>' });
-			<?php } ?>
-			});
+		webshim.setOptions('forms-ext', {
+			replaceUI: true,
+			types: 'date datetime',
+			date: {
+				openOnFocus: true,
+			},
+			datetime: {
+				openOnFocus: true,
+			}
+		});
+		//start polyfilling
+		webshim.polyfill('forms forms-ext');
 		</script>
-		<?php
+		<?php if ( $this->characteristics['time'] == 'yes' ) { ?>
+			<input name="<?php echo esc_attr( $this->name() ); ?>"  id="<?php echo esc_attr( $this->name() ); ?>" type="datetime-local" class="datepicker show-yearbtns show-uparrow text edd-input" data-datetime-local-stepfactor="1" data-datetime-local-open-on-focus="true" data-datetime-start-view="<?php echo $view; ?>" data-required="false" data-datetime-size="<?php echo $size; ?>" data-type="text" value="<?php echo esc_attr( $datetime ); ?>"  />
+		<?php } else { ?>
+			<input name="<?php echo esc_attr( $this->name() ); ?>"  id="<?php echo esc_attr( $this->name() ); ?>" type="date" class="datepicker show-yearbtns show-uparrow text edd-input" data-date-start-view="<?php echo $view; ?>" data-date-size="<?php echo $size; ?>" data-type="text" data-type="text" value="<?php echo esc_attr( $date ) ?>" data-required="false" data-date-open-on-focus="true" />
+		<?php }
 		$output .= ob_get_clean();
 		$output .= '</p>';
 		return $output;
@@ -76,23 +102,44 @@ class CFM_Date_Field extends CFM_Field {
 		}
 
 		$value     = $this->get_field_value_frontend( $this->payment_id, $this->user_id );
-		$required  = $this->required();
+		$value 	   = new DateTime( $value );
+		$date 	   = date_format( $value, "Y-m-d" );
+		$datetime  = date_format( $value, "Y-m-d" ) . 'T'. date_format( $value, "H:i" );
+		$size 	   = ! empty( $this->characteristics['size'] ) ? absint( $this->characteristics['size'] ) : 1;
+		$view      = ! empty( $this->characteristics['view'] ) ? $this->characteristics['view'] : "day";
+		
+		if ( $view === 'month' ){
+			$view = 1;
+		} else if( $view === 'year' ){
+			$view = 0;
+		} else{
+			$view = 2; // day
+		}
+
 		$output        = '';
 		$output     .= sprintf( '<p class="cfm-el %1s %2s %3s">', esc_attr( $this->template() ), esc_attr( $this->name() ), esc_attr( $this->css() ) );
-		$output    .= $this->label( ! (bool) $profile );
+		$output    .= $this->label( $profile );
 		ob_start(); ?>
 		
-		<input name="<?php echo esc_attr( $this->name() ); ?>"  id="<?php echo esc_attr( $this->name() ); ?>" type="text" class="datepicker text edd-input <?php echo $this->required_class(); ?>" data-required="<?php echo $required; ?>" data-type="text"<?php $this->required_html5(); ?> value="<?php echo esc_attr( $value ) ?>" />
 		<script type="text/javascript">
-			jQuery(function($) {
-			<?php if ( $this->characteristics['time'] == 'yes' ) { ?>
-				$("#<?php echo esc_attr( $this->name() ); ?>").datetimepicker({ dateFormat: '<?php echo $this->characteristics['format']; ?>' });
-			<?php } else { ?>
-				$("#<?php echo esc_attr( $this->name() ); ?>").datepicker({ dateFormat: '<?php echo $this->characteristics['format']; ?>' });
-			<?php } ?>
-			});
+		webshim.setOptions('forms-ext', {
+			replaceUI: true,
+			types: 'date datetime',
+			date: {
+				openOnFocus: true,
+			},
+			datetime: {
+				openOnFocus: true,
+			}
+		});
+		//start polyfilling
+		webshim.polyfill('forms forms-ext');
 		</script>
-		<?php
+		<?php if ( $this->characteristics['time'] == 'yes' ) { ?>
+			<input name="<?php echo esc_attr( $this->name() ); ?>"  id="<?php echo esc_attr( $this->name() ); ?>" type="datetime-local" class="datepicker show-yearbtns show-uparrow text edd-input <?php echo $this->required_class(); ?>" data-datetime-local-stepfactor="1" data-datetime-local-open-on-focus="true" data-datetime-start-view="<?php echo $view; ?>" <?php $this->required_html5(); ?> data-required="<?php echo $required; ?>" data-datetime-size="<?php echo $size; ?>" data-type="text" value="<?php echo esc_attr( $datetime ); ?>"  />
+		<?php } else { ?>
+			<input name="<?php echo esc_attr( $this->name() ); ?>"  id="<?php echo esc_attr( $this->name() ); ?>" type="date" class="datepicker show-yearbtns show-uparrow text edd-input <?php echo $this->required_class(); ?>" data-date-start-view="<?php echo $view; ?>" data-date-size="<?php echo $size; ?>" data-type="text" data-type="text" value="<?php echo esc_attr( $date ) ?>" <?php $this->required_html5(); ?> data-required="<?php echo $required; ?>" data-date-open-on-focus="true" />
+		<?php }
 		$output .= ob_get_clean();
 		$output .= '</p>';
 		return $output;
@@ -103,8 +150,10 @@ class CFM_Date_Field extends CFM_Field {
 		$removable    = $this->can_remove_from_formbuilder();
 		$format_name  = sprintf( '%s[%d][format]', 'cfm_input', $index );
 		$time_name    = sprintf( '%s[%d][time]', 'cfm_input', $index );
+		$view_name    = sprintf( '%s[%d][view]', 'cfm_input', $index );
 		$format_value = $this->characteristics['format'];
 		$time_value   = $this->characteristics['time'];
+		$view         = ! empty( $this->characteristics['view'] ) ? $this->characteristics['view'] : 'day';
 		$help         = esc_attr( __( 'The date format', 'edd_cfm' ) ); ?>
 		<li class="custom-field custom_image">
 			<?php $this->legend( $this->title(), $this->get_label(), $removable ); ?>
@@ -118,13 +167,12 @@ class CFM_Date_Field extends CFM_Field {
 				<?php CFM_Formbuilder_Templates::css( $index, $this->characteristics ); ?>
 
 				<div class="cfm-form-rows">
-					<label><?php _e( 'Date Format', 'edd_cfm' ); ?></label>
+					<label><?php _e( 'Date Format To Store Values In', 'edd_cfm' ); ?></label>
 					<input type="text" class="smallipopInput" name="<?php echo $format_name; ?>" value="<?php echo $format_value; ?>" title="<?php echo $help; ?>">
 				</div>
 
 				<div class="cfm-form-rows">
 					<label><?php _e( 'Time', 'edd_cfm' ); ?></label>
-
 					<div class="cfm-form-sub-fields">
 						<label>
 							<?php CFM_Formbuilder_Templates::hidden_field( "[$index][time]", 'no' ); ?>
@@ -133,9 +181,19 @@ class CFM_Date_Field extends CFM_Field {
 						</label>
 					</div>
 				</div>
+				
+				<div class="cfm-form-rows">
+					<label><?php _e( 'Start View', 'edd_cfm' ); ?></label>
+					<div class="cfm-form-sub-fields">
+						<label for="view">
+							<input type="radio" id="<?php echo esc_attr( $view_name ); ?>" name="<?php echo esc_attr( $view_name ); ?>" value="day" <?php checked( "day" ===  $view ); ?> data-type="label" /><?php _e( 'Day', 'edd_cfm' ); ?> <br />
+							<input type="radio" id="<?php echo esc_attr( $view_name ); ?>" name="<?php echo esc_attr( $view_name ); ?>" value="month" <?php checked( "month" === $view ); ?> data-type="label" /><?php _e( 'Month', 'edd_cfm' ); ?> <br />
+							<input type="radio" id="<?php echo esc_attr( $view_name ); ?>" name="<?php echo esc_attr( $view_name ); ?>" value="year" <?php checked( "year" ===  $view ); ?> data-type="label" /><?php _e( 'Year', 'edd_cfm' ); ?> <br />
+						</label>
+					</div>
+				</div>
 			</div>
 		</li>
-
 		<?php
 		return ob_get_clean();
 	}
@@ -143,7 +201,7 @@ class CFM_Date_Field extends CFM_Field {
 	public function sanitize( $values = array(), $payment_id = -2, $user_id = -2 ) {
 		$name = $this->name();
 		if ( !empty( $values[ $name ] ) ) {
-			$values[ $name ] = trim( $values[ $name ] );
+			$value 			 = trim( $values[ $name ] );
 		}
 		return apply_filters( 'cfm_sanitize_' . $this->template() . '_field', $values, $name, $payment_id, $user_id );
 	}

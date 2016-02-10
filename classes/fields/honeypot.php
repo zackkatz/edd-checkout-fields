@@ -120,11 +120,11 @@ class CFM_Honeypot_Field extends CFM_Field {
 		return ''; // don't get field value
 	}
 
-	public function save_field_admin( $payment_id = -2, $value = array(), $user_id = -2 ) {
+	public function save_field_admin( $payment_id = -2, $user_id = -2, $value = array(), $current_user_id = -2 ) {
 		// don't save field value
 	}
 
-	public function save_field_frontend( $payment_id = -2, $value = array(), $user_id = -2 ) {
+	public function save_field_frontend( $payment_id = -2, $user_id = -2, $value = array(), $current_user_id = -2 ) {
 		// don't save field value
 	}
 }
