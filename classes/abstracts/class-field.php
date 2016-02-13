@@ -400,7 +400,7 @@ class CFM_Field {
 			return $value;
 		}
 
-		$value;
+		$value = false;
 
 		if ( (bool) $this->meta ) {
 				$meta_type = $this->meta_type();
@@ -439,7 +439,7 @@ class CFM_Field {
 			return $value;
 		}
 
-		$value;
+		$value = false;
 
 		if ( (bool) $this->meta ) {
 				$meta_type = $this->meta_type();
