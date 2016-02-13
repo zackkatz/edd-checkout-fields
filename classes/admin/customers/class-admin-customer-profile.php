@@ -38,8 +38,10 @@ class CFM_Admin_Customer_Profile {
 	 * @return void
 	 */	
 	function __construct() {
-		add_filter( 'edd_customer_tabs', array( $this, 'tab' ), 10, 1 );
-		add_filter( 'edd_customer_views', array( $this, 'view' ), 10, 1 );
+		if ( edd_no_guest_checkout() || ( defined( 'WP_DEBUG' ) && WP_DEBUG ) ) {
+			add_filter( 'edd_customer_tabs', array( $this, 'tab' ), 10, 1 );
+			add_filter( 'edd_customer_views', array( $this, 'view' ), 10, 1 );
+		}
 	}
 	
 	public function tab( $tabs ){
@@ -76,6 +78,10 @@ class CFM_Admin_Customer_Profile {
 			</div>
 			<h3><?php _e( 'Checkout Fields', 'edd_cfm' ); ?></h3>
 			<div class="edd-item-info customer-info">
+				<?php 
+				if ( $customer->user_id === '0' ){
+					echo __( 'User meta can only be saved for logged in customers.', 'edd_cfm' );
+				} else { ?>
 				<form method="post" id="edit-admin-customer-profile-form" class="cfm-form">
 					<span>
 						<?php 
@@ -100,6 +106,7 @@ class CFM_Admin_Customer_Profile {
 						} ?>
 					</span>
 				</form>
+				<?php } ?>
 			</div>
 		</div>
 		<?php
