@@ -594,8 +594,9 @@ class CFM_Formbuilder_Templates {
 		$tpl = '%s[%d][%s]';
 		$field_name  = sprintf( $tpl, 'cfm_input', $id, 'meta_type' );
 		$field_value = $values && isset( $values[ 'meta_type' ] ) ? esc_attr( $values[ 'meta_type' ] ) : "payment";
-		
-		if ( $forced_value !== -2 ) { ?>
+		// if edd_no_guest_checkout() is true it means a site requires guest checkout. Since CFM requires user accounts to save user meta
+		// we can only allow payment meta fields if a site allows guest checkouts. We force payment meta if a site allows guest checkout and WP_Debug is either not defined or set to false
+		if ( $forced_value !== -2 ||  ( ! edd_no_guest_checkout() && ( !defined( 'WP_DEBUG' ) || !WP_DEBUG )  ) ) { ?>
 			<div class="cfm-form-rows">
 				<input type="hidden" id="<?php echo esc_attr( $field_name ); ?>" name="<?php echo esc_attr( $field_name ); ?>" value="<?php echo $field_value; ?>" />
 			</div>
