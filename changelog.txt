@@ -19,8 +19,8 @@
 * New: The ability to make admin-side only fields (for things like storing extra information about orders)
 * New: Introduce cfm_is_key() and many more array helper functions
 * New: Formbuilder now divides fields into custom and extension field metaboxes
-* New: Raised minimum EDD requirement to 2.3
-* New: Raised minimum WP requirement to 4.2
+* New: Raised minimum EDD requirement to 2.4
+* New: Raised minimum WP requirement to 4.3
 * New: CSS class can now be added to all fields in CFM
 * New: You can now toggle which fields are added by default to the CSV exports
 * New: You can now use any CFM field in the EDD emails.

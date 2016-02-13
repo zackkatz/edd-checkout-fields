@@ -7,8 +7,8 @@
  * Author URI:          http://www.chriscct7.com
  *
  * Version:             2.0.0
- * Requires at least:   4.2
- * Tested up to:        4.4
+ * Requires at least:   4.3
+ * Tested up to:        4.5
  *
  * Text Domain:         edd_cfm
  * Domain Path:         /languages/
@@ -204,10 +204,10 @@ class EDD_Checkout_Fields_Manager {
 		global $wp_version;
 
 		// If the WordPress site doesn't meet the correct EDD and WP version requirements, deactivate and show notice.
-		if ( version_compare( $wp_version, '4.2', '<' ) ) {
+		if ( version_compare( $wp_version, '4.3', '<' ) ) {
 			add_action( 'admin_notices', array( 'EDD_Checkout_Fields_Manager','wp_notice' ) );
 			return;
-		} else if ( !class_exists( 'Easy_Digital_Downloads' ) || version_compare( EDD_VERSION, '2.4', '<' ) ) {
+		} else if ( !class_exists( 'Easy_Digital_Downloads' ) || version_compare( EDD_VERSION, '2.5', '<' ) ) {
 			add_action( 'admin_notices', array( 'EDD_Checkout_Fields_Manager','edd_notice' ) );
 			return;
 		}
@@ -482,7 +482,7 @@ class EDD_Checkout_Fields_Manager {
 	 */
 	public static function wp_notice() { ?>
 		<div class="updated">
-			<p><?php printf( __( '<strong>Notice:</strong> Easy Digital Downloads Checkout Fields Manager requires WordPress 4.2 or higher in order to function properly.', 'edd_cfm' ) ); ?></p>
+			<p><?php printf( __( '<strong>Notice:</strong> Easy Digital Downloads Checkout Fields Manager requires WordPress 4.3 or higher in order to function properly.', 'edd_cfm' ) ); ?></p>
 		</div>
 		<?php
 	}
@@ -527,11 +527,11 @@ function CFM_Install() {
 	global $wp_version;
 
 	// If the WordPress site doesn't meet the correct EDD and WP version requirements, don't activate CFM
-	if ( version_compare( $wp_version, '4.2', '<' ) ) {
+	if ( version_compare( $wp_version, '4.3', '<' ) ) {
 		if ( is_plugin_active( EDD_CFM()->basename ) ) {
 			return;
 		}
-	} else if ( !class_exists( 'Easy_Digital_Downloads' ) || version_compare( EDD_VERSION, '2.4', '<' ) ) {
+	} else if ( !class_exists( 'Easy_Digital_Downloads' ) || version_compare( EDD_VERSION, '2.5', '<' ) ) {
 		if ( is_plugin_active( EDD_CFM()->basename ) ) {
 			return;
 		}
