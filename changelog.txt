@@ -56,7 +56,7 @@
 * Fixed: Undefined index errors with some of the fields
 * Fixed: There is now no way to bypass a required checkbox field
 * Fixed: A console.log which was accidentily left in a JS file has been removed
-* Tweak: Do Action fields is now called Action Hook
+* Tweak: The "Do Action" field is now called "Action Hook"
 
 = 1.2.1, December 16, 2015 =
 * Fixed: a conflict with WordPress 4.4
