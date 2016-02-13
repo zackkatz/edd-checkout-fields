@@ -60,7 +60,9 @@ class CFM_Radio_Field extends CFM_Field {
 		$output     .= sprintf( '<p class="cfm-el %1s %2s %3s">', esc_attr( $this->template() ), esc_attr( $this->name() ), esc_attr( $this->css() ) );
 		$output    .= $this->label( false );
 		if ( !is_array( $value ) ){
-			$value[0] = $value;
+			$values = array();
+			array_push( $values, $value );
+			$value = $values;
 		}
 		ob_start(); ?>
 		<?php
@@ -97,7 +99,9 @@ class CFM_Radio_Field extends CFM_Field {
 		$output     .= sprintf( '<p class="cfm-el %1s %2s %3s">', esc_attr( $this->template() ), esc_attr( $this->name() ), esc_attr( $this->css() ) );
 		$output    .= $this->label( ! (bool) $profile );
 		if ( !is_array( $value ) ){
-			$value[0] = $value;
+			$values = array();
+			array_push( $values, $value );
+			$value = $values;
 		}
 		ob_start(); ?>
 		<?php
