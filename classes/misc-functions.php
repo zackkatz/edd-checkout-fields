@@ -564,9 +564,26 @@ function cfm_turn_on_file_filter(){
 	if ( !EDD()->session->get( 'CFM_FILE_UPLOAD' ) ) {
 		EDD()->session->set( 'CFM_FILE_UPLOAD', true );
 	}
+	$formid = isset( $_POST['formid'] ) ? absint( $_POST['formid'] ) : 0;
+	if ( !EDD()->session->get( 'CFM_FILE_UPLOAD_FORMID' ) ) {
+		EDD()->session->set( 'CFM_FILE_UPLOAD_FORMID', $formid );
+	}
+	$name = isset( $_POST['name'] ) ? sanitize_key( $_POST['name'] ) : 0;
+	if ( !EDD()->session->get( 'CFM_FILE_UPLOAD_FIELD_NAME' ) ) {
+		EDD()->session->set( 'CFM_FILE_UPLOAD_FIELD_NAME', $name );
+	}
 }
 add_action( 'wp_ajax_cfm_turn_on_file_filter', 'cfm_turn_on_file_filter' );
 add_action( 'wp_ajax_nopriv_cfm_turn_on_file_filter', 'cfm_turn_on_file_filter' );
+add_filter( 'user_has_cap', 'user_can_upload_checkout', 10, 3 );
+function user_can_upload_checkout( $allcaps, $cap, $args ){
+	if ( EDD()->session->get( 'CFM_FILE_UPLOAD' )  ) {
+		$allcaps['upload_files'] = 1;
+	}
+	return $allcaps;
+}
+
+
 
 /**
  * Turn off File Filter.
@@ -582,6 +599,12 @@ function cfm_turn_off_file_filter(){
 	if ( EDD()->session->get( 'CFM_FILE_UPLOAD' )  ) {
 		EDD()->session->set( 'CFM_FILE_UPLOAD', false );
 	}
+	if ( !EDD()->session->get( 'CFM_FILE_UPLOAD_FORMID' ) ) {
+		EDD()->session->set( 'CFM_FILE_UPLOAD_FORMID', false );
+	}
+	if ( !EDD()->session->get( 'CFM_FILE_UPLOAD_FIELD_NAME' ) ) {
+		EDD()->session->set( 'CFM_FILE_UPLOAD_FIELD_NAME', false );
+	}
 }
 add_action( 'wp_ajax_cfm_turn_off_file_filter', 'cfm_turn_off_file_filter' );
 add_action( 'wp_ajax_nopriv_cfm_turn_off_file_filter', 'cfm_turn_off_file_filter' );
@@ -594,3 +617,122 @@ function cfm_customers_view_save( $args ){
 	EDD_CFM()->admin_profile->save( $args );
 }
 add_action( 'edd_admin_customer_profile', 'cfm_customers_view_save', 10, 1  );
+
+
+/**
+ * Checks if a user is logged in, if not it redirects them to the login page.
+ *
+ * @since 1.5.0
+ */
+function auth_redirect() {
+	if ( EDD()->session->get( 'CFM_FILE_UPLOAD' ) && cfm_is_frontend_ajax_request() ) {
+		return;
+	}
+	
+	// Checks if a user is logged in, if not redirects them to the login page
+	$secure = ( is_ssl() || force_ssl_admin() );
+		/**
+	 * Filter whether to use a secure authentication redirect.
+	 *
+	 * @since 3.1.0
+	 *
+	 * @param bool $secure Whether to use a secure authentication redirect. Default false.
+	 */
+	$secure = apply_filters( 'secure_auth_redirect', $secure );
+		// If https is required and request is http, redirect
+	if ( $secure && !is_ssl() && false !== strpos($_SERVER['REQUEST_URI'], 'wp-admin') ) {
+		if ( 0 === strpos( $_SERVER['REQUEST_URI'], 'http' ) ) {
+			wp_redirect( set_url_scheme( $_SERVER['REQUEST_URI'], 'https' ) );
+			exit();
+		} else {
+			wp_redirect( 'https://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] );
+			exit();
+		}
+	}
+		if ( is_user_admin() ) {
+		$scheme = 'logged_in';
+	} else {
+		/**
+		 * Filter the authentication redirect scheme.
+		 *
+		 * @since 2.9.0
+		 *
+		 * @param string $scheme Authentication redirect scheme. Default empty.
+		 */
+		$scheme = apply_filters( 'auth_redirect_scheme', '' );
+	}
+		if ( $user_id = wp_validate_auth_cookie( '',  $scheme) ) {
+		/**
+		 * Fires before the authentication redirect.
+		 *
+		 * @since 2.8.0
+		 *
+		 * @param int $user_id User ID.
+		 */
+		do_action( 'auth_redirect', $user_id );
+			// If the user wants ssl but the session is not ssl, redirect.
+		if ( !$secure && get_user_option('use_ssl', $user_id) && false !== strpos($_SERVER['REQUEST_URI'], 'wp-admin') ) {
+			if ( 0 === strpos( $_SERVER['REQUEST_URI'], 'http' ) ) {
+				wp_redirect( set_url_scheme( $_SERVER['REQUEST_URI'], 'https' ) );
+				exit();
+			} else {
+				wp_redirect( 'https://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] );
+				exit();
+			}
+		}
+			return;  // The cookie is good so we're done
+	}
+		// The cookie is no good so force login
+	nocache_headers();
+		$redirect = ( strpos( $_SERVER['REQUEST_URI'], '/options.php' ) && wp_get_referer() ) ? wp_get_referer() : set_url_scheme( 'http://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] );
+		$login_url = wp_login_url($redirect, true);
+		wp_redirect($login_url);
+	exit();
+}
+
+add_filter( 'wp_handle_upload_prefilter','cfm_file_restrictions_error_message' );
+function cfm_file_restrictions_error_message( $file ) {
+	if ( ! EDD()->session->get( 'CFM_FILE_UPLOAD' ) ) {
+		return $file;
+	}
+	$formid = EDD()->session->get( 'CFM_FILE_UPLOAD_FORMID' );
+	$fieldname  = EDD()->session->get( 'CFM_FILE_UPLOAD_FIELD_NAME' );
+	$fields = get_post_meta( $formid, 'cfm-form', true );
+	$characteristics = array();
+	foreach ( $fields as $field ) {
+		if ( $field['name'] == $fieldname ) {
+			$characteristics = $field;
+		}
+	}
+	
+	if ( !empty( $characteristics['max_size'] ) ){
+		$size = $file['size'];
+		$size = $size / 1024;
+		if ( $size >  $characteristics['max_size'] ){
+			$file['error'] = sprintf( __( 'Please upload files no larger than %s KB', 'edd_cfm'), $characteristics['max_size'] );
+			return $file;
+		}
+	}
+	if ( !empty( $characteristics['extension'] ) ){
+		$extensions = cfm_allowed_extensions();
+		$file_type = wp_check_filetype( $file['name'] );
+		$file_type = $file_type["ext"];
+		$pass      = false;
+		$allowed_types = array();
+		foreach ( $characteristics['extension'] as $type ){
+			$check = $extensions[ $type ]["ext"];
+			$check = explode( ',', $check );
+			if ( in_array( $file_type, $check ) ){
+				$pass = true;
+				break;
+			}
+			$allowed_types = array_merge( $allowed_types, $check );
+		}
+		if ( !$pass ){
+			$allowed_types = implode( ', ', $allowed_types );
+			$file['error'] = sprintf( __( 'Please upload files with one of these extensions: %s', 'edd_cfm' ), $allowed_types   );
+			return $file;
+		}
+	}
+	return $file;
+}

@@ -45,6 +45,10 @@ class CFM_Setup {
 		add_action( 'admin_notices', 		 array( $this, 'no_checkout_form_set' ) );
 		add_filter( 'edd_settings_sections_extensions',     array( $this, 'add_section' ), 10, 1 );
 		add_filter( 'edd_settings_extensions',      array( $this, 'add_settings' ), 10, 1 );
+		
+		add_filter( 'media_upload_tabs', 	 array( $this, 'remove_media_library_tab' ) );
+		add_action( 'wp_footer', 			 array( $this, 'edd_lockup_uploaded' ) );
+		add_filter( 'parse_query', 			 array( $this, 'restrict_media' ) );		
 	}
 
 	/**
@@ -196,7 +200,7 @@ class CFM_Setup {
 			}
 			wp_register_script( 'jquery-tiptip', cfm_plugin_url . 'assets/js/jquery-tiptip/jquery.tipTip.min.js', array( 'jquery' ), '2.0', true );
 			wp_enqueue_script( 'underscore' );
-			wp_enqueue_script( 'cfm_form', cfm_plugin_url . 'assets/js/frontend-form.js', array( 'jquery' ) );
+			
 
 			$options = array(
 				'ajaxurl' => admin_url( 'admin-ajax.php' ),
@@ -209,10 +213,12 @@ class CFM_Setup {
 			);
 			
 			$options = apply_filters( 'cfm_cfm_forms_options_admin', $options );
-			wp_localize_script( 'cfm_form', 'cfm_form', $options );
+			
 			wp_enqueue_script( 'jquery-ui-autocomplete' );
 			wp_enqueue_script( 'suggest' );
 			wp_enqueue_script( 'cfm-polyfiller', cfm_plugin_url . 'assets/js/polyfiller.js', array( 'jquery' ) );
+			wp_enqueue_script( 'cfm_form', cfm_plugin_url . 'assets/js/frontend-form.js', array( 'jquery', 'cfm-polyfiller' ) );
+			wp_localize_script( 'cfm_form', 'cfm_form', $options );
 			wp_register_script( 'jquery-chosen', EDD_PLUGIN_URL . 'assets/js/chosen.jquery.js', array( 'jquery' ), EDD_VERSION );
 			wp_enqueue_script( 'jquery-chosen' );
 		}
@@ -279,7 +285,7 @@ class CFM_Setup {
 	 * Loads the abstract and then all of the extended
 	 * CFM Fields.
 	 *
-	 * @since 2.3.0
+	 * @since 2.0.0
 	 * @access public
 	 *
 	 * @return void
@@ -296,7 +302,7 @@ class CFM_Setup {
 		require_once cfm_plugin_dir . 'classes/fields/country.php';
 		require_once cfm_plugin_dir . 'classes/fields/date.php';
 		require_once cfm_plugin_dir . 'classes/fields/email.php';
-		//require_once cfm_plugin_dir . 'classes/fields/file_upload.php';
+		require_once cfm_plugin_dir . 'classes/fields/file_upload.php';
 		require_once cfm_plugin_dir . 'classes/fields/first_name.php';
 		require_once cfm_plugin_dir . 'classes/fields/hidden.php';
 		require_once cfm_plugin_dir . 'classes/fields/multiselect.php';
@@ -329,7 +335,7 @@ class CFM_Setup {
 		 * To add a custom CFM Field, you should hook into this 
 		 * filter and add your template -> class relationship.
 		 *
-		 * @since 2.1.0
+		 * @since 2.0.0
 		 *
 		 * @param array $fields Template -> Class array.
 		 */
@@ -340,7 +346,7 @@ class CFM_Setup {
 			'country'			  => 'CFM_Country_Field',
 			'date'				  => 'CFM_Date_Field',
 			'email'		 		  => 'CFM_Email_Field',
-			//'file_upload'		  => 'CFM_File_Upload_Field',
+			'file_upload'		  => 'CFM_File_Upload_Field',
 			'first_name'		  => 'CFM_First_Name_Field',
 			'hidden'			  => 'CFM_Hidden_Field',
 			'honeypot'			  => 'CFM_Honeypot_Field',
@@ -423,5 +429,64 @@ class CFM_Setup {
 	    );
 		return array_merge( $settings, $cfm_settings );	
 	}
-	
+	/**
+	 * FES Lock Uploaded.
+	 *
+	 * Locks the media modal on the frontend
+	 * to start on the upload window.
+	 *
+	 * @since 2.0.0
+	 * @access public
+	 *
+	 * @return void
+	 */
+	public function edd_lockup_uploaded() {
+	}
+
+	/**
+	 * FES Remove Media Library Tab.
+	 *
+	 * Removes the library, gallery, type, type url,
+	 * and url tabs from the media library on the 
+	 * frontend if the current user is not an admin.
+	 *
+	 * @since 2.0.0
+	 * @access public
+	 *
+	 * @param array $tabs Tabs to show on the media modal.
+	 * @return array Tabs to show on the media modal.
+	 */
+	public function remove_media_library_tab( $tabs ) {
+		if ( !EDD()->session->get( 'CFM_FILE_UPLOAD' ) ) {
+			return $tabs;
+		}
+		unset( $tabs['library'] );
+		unset( $tabs['gallery'] );
+		unset( $tabs['type'] );
+		unset( $tabs['type_url'] );
+		
+		return $tabs;
+	}
+
+	/**
+	 * FES Restrict Media.
+	 *
+	 * Prevents vendors from seeing media files that aren't theirs
+	 * if the current user isn't an admin.
+	 *
+	 * @since 2.0.0
+	 * @access public
+	 *
+	 * @param array $wp_query Query to retrieve media items.
+	 * @return void
+	 */
+	public function restrict_media( $wp_query ) {
+		if ( !EDD()->session->get( 'CFM_FILE_UPLOAD' ) ) {
+			return;
+		}		
+		if ( $wp_query->get( 'post_type' ) == 'attachment' ) {
+			exit;
+		}
+	}
+
 }

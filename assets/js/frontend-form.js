@@ -79,6 +79,7 @@
 
 			downloadable_frame = wp.media({
 				title: cfm_form.file_title,
+				frame: 'select',
 				button: {
 					text: cfm_form.file_button
 				},
@@ -87,12 +88,16 @@
 
 			downloadable_frame.on('open',function() {
 				// turn on file filter
-				$.post(cfm_form.ajaxurl,{ action:'cfm_turn_on_file_filter'}, function (res) { });
+				var fid   = self.closest('tr').find('input.cfm-file-value').attr("data-formid");
+				var fname = self.closest('tr').find('input.cfm-file-value').attr("data-fieldname");
+				$.post(cfm_form.ajaxurl,{ action:'cfm_turn_on_file_filter', formid: fid, name: fname }, function (res) { });
 			});
 
 			downloadable_frame.on('close',function() {
 				// turn on file filter
-				$.post(cfm_form.ajaxurl,{ action:'cfm_turn_off_file_filter'}, function (res) { });
+				var fid   = self.closest('tr').find('input.cfm-file-value').attr("data-formid");
+				var fname = self.closest('tr').find('input.cfm-file-value').attr("data-fieldname");
+				$.post(cfm_form.ajaxurl,{ action:'cfm_turn_off_file_filter', formid: fid, name: fname }, function (res) { });
 			});
 
 			downloadable_frame.on('select', function () {
@@ -156,25 +161,25 @@
 		   return false;
 		},
 		
-        adminPostSubmit: function(e) {
-            var form = $(this),
-                form_data = CFM_Form.validateForm(form);
-        },
+		adminPostSubmit: function(e) {
+			var form = $(this),
+				form_data = CFM_Form.validateForm(form);
+		},
 
-        formSubmit: function(e) {
+		formSubmit: function(e) {
 
-            var form = $(this),
-                submitButton = form.find('input[type=submit]')
-                form_data = CFM_Form.validateForm(form);
+			var form = $(this),
+				submitButton = form.find('input[type=submit]')
+				form_data = CFM_Form.validateForm(form);
 			
 			if(form_data) {
 				return true;
 			} else {
 				// Prevent the form from submitting is there are errors
-	            e.preventDefault();
+				e.preventDefault();
 			}
 
-        },
+		},
 		
 		validateForm: function (self) {
 			var temp,

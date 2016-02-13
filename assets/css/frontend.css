@@ -43,3 +43,6 @@ fieldset.cfm-form textarea {
 .cfm-form  td.cfm-repeat-field {
 	display: table-cell;
 }
+.attachments-browser .media-toolbar{
+	display: none !important;
+}
