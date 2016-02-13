@@ -55,9 +55,14 @@ class CFM_Date_Field extends CFM_Field {
 		}
 		
 		$value     = $this->get_field_value_admin( $this->payment_id, $this->user_id );
-		$value 	   = new DateTime( $value );
-		$date 	   = date_format( $value, "Y-m-d" );
-		$datetime  = date_format( $value, "Y-m-d" ) . 'T'. date_format( $value, "H:i" );
+		if ( $value ) {
+			$value 	   = new DateTime( $value );
+			$date 	   = date_format( $value, "Y-m-d" );
+			$datetime  = date_format( $value, "Y-m-d" ) . 'T'. date_format( $value, "H:i" );
+		} else{
+			$date = '';
+			$datetime = '';
+		}
 		$size 	   = ! empty( $this->characteristics['size'] ) ? absint( $this->characteristics['size'] ) : 1;
 		$view      = ! empty( $this->characteristics['view'] ) ? $this->characteristics['view'] : "day";
 		
@@ -90,9 +95,14 @@ class CFM_Date_Field extends CFM_Field {
 		}
 
 		$value     = $this->get_field_value_frontend( $this->payment_id, $this->user_id );
-		$value 	   = new DateTime( $value );
-		$date 	   = date_format( $value, "Y-m-d" );
-		$datetime  = date_format( $value, "Y-m-d" ) . 'T'. date_format( $value, "H:i" );
+		if ( $value ) {
+			$value 	   = new DateTime( $value );
+			$date 	   = date_format( $value, "Y-m-d" );
+			$datetime  = date_format( $value, "Y-m-d" ) . 'T'. date_format( $value, "H:i" );
+		} else{
+			$date = '';
+			$datetime = '';
+		}
 		$size 	   = ! empty( $this->characteristics['size'] ) ? absint( $this->characteristics['size'] ) : 1;
 		$view      = ! empty( $this->characteristics['view'] ) ? $this->characteristics['view'] : "day";
 		$required  = $this->required();
