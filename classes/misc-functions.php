@@ -740,8 +740,8 @@ if ( !function_exists( 'auth_redirect' ) ) {
 }
 
 
-add_filter( 'edd_purchase_form_required_fields', 'custom_validation',10, 1 );
-function custom_validation( $required_fields ) {
+add_filter( 'edd_purchase_form_required_fields', 'cfm_checkout_custom_validation',10, 1 );
+function cfm_checkout_custom_validation( $required_fields ) {
 	$form_id = get_option( 'cfm-checkout-form', -2 );
 	$fields = get_post_meta( $form_id, 'cfm-form', true );
 
