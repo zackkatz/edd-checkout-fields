@@ -636,5 +636,9 @@ class CFM_Field {
 	public function extending_constructor( ) {
 		// used by extending fields who need it
 	}
+	
+	public can_export(){
+		return isset( $this->characteristics['show_in_exports'] ) &&  $this->characteristics['show_in_exports'] === 'export' ?  true : false;
+	}
 
 }
