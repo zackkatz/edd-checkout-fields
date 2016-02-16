@@ -638,7 +638,7 @@ class CFM_Field {
 	}
 	
 	public can_export(){
-		return isset( $this->characteristics['show_in_exports'] ) &&  $this->characteristics['show_in_exports'] === 'export' ?  true : false;
+		return ( isset( $this->characteristics['show_in_exports'] ) &&  $this->characteristics['show_in_exports'] === 'export' ) ?  true : false;
 	}
 
 }
