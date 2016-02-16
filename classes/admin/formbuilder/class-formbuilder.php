@@ -279,6 +279,11 @@ function cfm_formbuilder_sidebar_custom() { ?>
 		}
 	} ?>
   </div>
+  <script>
+	(function($) {
+			$('#menu-posts-download').addClass( 'wp-has-current-submenu wp-menu-open' );
+		})( jQuery );
+	</script>
   <?php
 }
 

@@ -18,8 +18,7 @@ class CFM_Last_Name_Field extends CFM_Field {
 		'permissions' => array(
 			'can_remove_from_formbuilder' => false,
 			'can_change_meta_key'         => false,
-			'can_add_to_formbuilder'      => true,
-			'field_always_required'       => true,
+			'can_add_to_formbuilder'      => true
 		),
 		'template'  => 'last_name',
 		'title'     => 'Last Name',

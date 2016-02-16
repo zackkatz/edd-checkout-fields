@@ -738,3 +738,82 @@ if ( !function_exists( 'auth_redirect' ) ) {
 		return $file;
 	}
 }
+
+
+add_filter( 'edd_purchase_form_required_fields', 'custom_validation',10, 1 );
+function custom_validation( $required_fields ) {
+	$form_id = get_option( 'cfm-checkout-form', -2 );
+	$fields = get_post_meta( $form_id, 'cfm-form', true );
+
+	$found_field = false;
+	foreach( $fields as $field ){
+		if ( $field['name'] !== 'edd_first' ){
+			continue;
+		}
+		$found_field = true;
+		
+		$required = false;
+		$required = isset( $field['required'] ) ? $field['required'] : 'no';
+		if ( $required === 'no' ) {
+			$required = false;
+		}
+		$required = (bool) $required;
+		
+		
+		if ( $required ){
+			if ( !isset( $required_fields['edd_first'] ) ){
+				 $required_fields['edd_first'] = array(   
+					'error_id' => 'invalid_first_name',
+					'error_message' => __( 'Please enter your first name', 'easy-digital-downloads' )
+				);
+			}
+		} else {
+			if ( isset( $required_fields['edd_first'] ) ){
+				unset( $required_fields['edd_first'] );
+			}
+		}
+	}
+	
+	if ( !$found_field ){
+		if ( isset( $required_fields['edd_first'] ) ){
+			unset( $required_fields['edd_first'] );
+		}
+	}
+	
+	$found_field = false;
+	foreach( $fields as $field ){
+		if ( $field['name'] !== 'edd_last' ){
+			continue;
+		}
+		$found_field = true;
+		
+		$required = false;
+		$required = isset( $field['required'] ) ? $field['required'] : 'no';
+		if ( $required === 'no' ) {
+			$required = false;
+		}
+		$required = (bool) $required;
+		
+		
+		if ( $required ){
+			if ( !isset( $required_fields['edd_last'] ) ){
+				 $required_fields['edd_last'] = array(   
+					'error_id' => 'invalid_last_name',
+					'error_message' => __( 'Please enter your last name.', 'easy-digital-downloads' )
+				);
+			}
+		} else {
+			if ( isset( $required_fields['edd_last'] ) ){
+				unset( $required_fields['edd_last'] );
+			}
+		}
+	}
+	
+	if ( !$found_field ){
+		if ( isset( $required_fields['edd_last'] ) ){
+			unset( $required_fields['edd_last'] );
+		}
+	}	
+	
+	return $required_fields;
+}
