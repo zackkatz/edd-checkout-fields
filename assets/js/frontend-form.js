@@ -2,8 +2,8 @@
 	var CFM_Form = {
 		init: function () {
 			// clone and remove repeated field
-			$('.cfm-form').on('click', 'img.cfm-clone-field', this.cloneField);
-			$('.cfm-form').on('click', 'img.cfm-remove-field', this.removeField);
+			$('body').on('click', 'img.cfm-clone-field', this.cloneField);
+			$('body').on('click', 'img.cfm-remove-field', this.removeField);
 
 			// form submissions
 				// frontend
@@ -18,10 +18,10 @@
 						// @todo
 
 			// download links
-			$('.cfm-fields').on('click', 'a.upload_file_button', this.fileDownloadable);
+			$('body').on('click', 'a.upload_file_button', this.fileDownloadable);
 
 			// Repeatable file inputs
-			$('.cfm-fields').on('click', 'a.insert-file-row', function (e) {
+			$('body').on('click', 'a.insert-file-row', function (e) {
 				e.preventDefault();
 				var clickedID = $(this).attr('id');
 				var max = $('#cfm-upload-max-files-'+clickedID ).val();
@@ -50,7 +50,7 @@
 				return false;
 			});
 
-			$('.cfm-fields').on('click', 'a.edd-cfm-delete', function (e) {
+			$('body').on('click', 'a.edd-cfm-delete', function (e) {
 				e.preventDefault();
 				var option = $(this).parents('.cfm-single-variation');
 				var optionContainer = $(this).parents('[class^=cfm-variations-list-]');
