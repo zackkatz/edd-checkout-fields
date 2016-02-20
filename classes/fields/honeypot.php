@@ -93,6 +93,7 @@ class CFM_Honeypot_Field extends CFM_Field {
 			<?php CFM_Formbuilder_Templates::meta_type_radio( $index, $this->characteristics, "payment" ); ?>
 			<?php CFM_Formbuilder_Templates::hidden_field( "[$index][template]", $this->template() ); ?>
 			<?php CFM_Formbuilder_Templates::field_div( $index, $this->name(), $this->characteristics, $insert ); ?>
+			<?php _e( 'There are no settings for this field', 'edd_cfm'); ?>
 			</div>
 		</li>
 		<?php
