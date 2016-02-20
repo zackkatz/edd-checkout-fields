@@ -13,9 +13,6 @@ class CFM_Checkout_Form extends CFM_Form {
 	/** @var string Title of the form */
 	public $title = 'Checkout';
 
-	/** @var int The id of the object the form value is saved to. For a submission form, the $save_id is the post's ID, etc. */
-	public $save_id = null;
-
 	/** @var unknown Type of form: 'user', 'post', 'custom'. Dictates where the fields save their values. */
 	public $type = 'post';
 
@@ -49,7 +46,7 @@ class CFM_Checkout_Form extends CFM_Form {
 	public function run_edd_actions( $form_object, $user_id, $profile ){
 		if ( ! $profile ){
 			do_action( 'edd_purchase_form_user_info' ); 
-		    do_action( 'edd_purchase_form_user_info_fields' ); 
+			do_action( 'edd_purchase_form_user_info_fields' ); 
 		}
 	}
 }
