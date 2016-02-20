@@ -103,15 +103,13 @@ class CFM_Toc_Field extends CFM_Field {
 
 			<?php CFM_Formbuilder_Templates::field_div( $index, $this->name(), $this->characteristics, $insert ); ?>
 				<div class="cfm-form-rows">
-					<label><?php _e( 'Label', 'edd_cfm' ); ?></label>
-					<input type="text" name="<?php echo $title_name; ?>" value="<?php echo esc_attr( $title_value ); ?>" />
-				</div>
-
-				<div class="cfm-form-rows">
 					<label><?php _e( 'Terms & Conditions', 'edd_cfm' ); ?></label>
 					<textarea class="smallipopInput" title="<?php _e( 'Insert terms and condtions here.', 'edd_cfm' ); ?>" name="<?php echo $description_name; ?>" rows="3"><?php echo esc_html( $description_value ); ?></textarea>
 				</div>
-
+				<div class="cfm-form-rows">
+					<label><?php _e( 'Agreement Checkbox Label', 'edd_cfm' ); ?></label>
+					<input type="text" name="<?php echo $title_name; ?>" value="<?php echo esc_attr( $title_value ); ?>" />
+				</div>
 				<?php CFM_Formbuilder_Templates::css( $index, $this->characteristics ); ?>
 			</div>
 		</li>
