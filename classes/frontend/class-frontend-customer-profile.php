@@ -52,10 +52,6 @@ class CFM_Frontend_Customer_Profile {
 	 * @since 2.0.0
 	 * @access public
 	 * 
-	 * @param int  $post_id User id to edit.
-	 * @param bool $readonly Whether the form is readonly.
-	 * @param array $args Additional arguments to send 
-	 *                    to form rendering functions.
 	 * @return string HTML of profile form.
 	 */
 	public function render() {
@@ -78,11 +74,12 @@ class CFM_Frontend_Customer_Profile {
 	
 	public function validate() {
 		$user_id = get_current_user_id();
-		$form_id   = isset( $_REQUEST['form_id'] )   ? absint( $_REQUEST['form_id'] )   : get_option( 'cfm-checkout-form', false );
+		$form_id = isset( $_REQUEST['form_id'] )   ? absint( $_REQUEST['form_id'] )   : get_option( 'cfm-checkout-form', false );
+		$values  = $_POST;
 		// Make the CFM Form
 		$form      = new CFM_Checkout_Form( $form_id, 'id', -2, $user_id );
 		// Save the CFM Form
-		$form->validate_form_frontend( $post_data, $user_id, true );
+		$form->validate_form_frontend( $values, $user_id, true );
 	}	
 
 	/**
@@ -94,19 +91,17 @@ class CFM_Frontend_Customer_Profile {
 	 * @since 2.0.0
 	 * @access public
 	 * 
-	 * @param int  $id User id to edit.
-	 * @param array $values Values to save.
-	 * @param array $args Additional arguments to send 
-	 *                    to form rendering functions.
 	 * @return void
 	 */
 	public function save() {
 		$user_id = get_current_user_id();
 		$form_id   = isset( $_REQUEST['form_id'] )   ? absint( $_REQUEST['form_id'] )   : get_option( 'cfm-checkout-form', false );
 		$values    = $_POST;
+
 		// Make the CFM Form
+		
 		$form      = new CFM_Checkout_Form( $form_id, 'id', -2, $user_id );
 		// Save the CFM Form
-		$form->save_form_frontend( $values, user_id, true );
+		$form->save_form_frontend( $values, $user_id, true );
 	}
 }
