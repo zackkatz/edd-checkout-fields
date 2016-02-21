@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
 "Project-Id-Version: Easy Digital Downloads - Checkout Fields Manager\n"
-"POT-Creation-Date: 2016-02-13 00:00-0500\n"
+"POT-Creation-Date: 2016-02-21 12:51-0500\n"
 "PO-Revision-Date: 2015-09-09 19:25-0400\n"
 "Last-Translator: Chris Christoff <support@easydigitaldownloads.com>\n"
 "Language-Team: Chris Christoff <support@easydigitaldownloads.com>\n"
@@ -70,12 +70,12 @@ msgstr ""
 msgid "There are no fields on the form."
 msgstr ""
 
-#: classes/abstracts/class-form.php:839 classes/forms/checkout.php:40
+#: classes/abstracts/class-form.php:841 classes/forms/checkout.php:37
 msgctxt "CFM Form title translation"
 msgid "Checkout"
 msgstr ""
 
-#: classes/abstracts/class-form.php:846
+#: classes/abstracts/class-form.php:848
 #, php-format
 msgctxt "%s = CFM Form Name (translated)"
 msgid "%s Form"
@@ -393,7 +393,7 @@ msgid "Toggle All Fields Open/Close"
 msgstr ""
 
 #: classes/admin/formbuilder/class-formbuilder.php:269
-#: classes/admin/formbuilder/class-formbuilder.php:336
+#: classes/admin/formbuilder/class-formbuilder.php:341
 msgid "Click to add to the editor"
 msgstr ""
 
@@ -401,7 +401,7 @@ msgstr ""
 msgid "There are no custom fields for this form"
 msgstr ""
 
-#: classes/admin/formbuilder/class-formbuilder.php:346
+#: classes/admin/formbuilder/class-formbuilder.php:351
 msgid "You do not have any extensions installed that have a CFM custom field"
 msgstr ""
 
@@ -689,7 +689,11 @@ msgctxt "CFM Field title translation"
 msgid "Honeypot"
 msgstr ""
 
-#: classes/fields/honeypot.php:106
+#: classes/fields/honeypot.php:96
+msgid "There are no settings for this field"
+msgstr ""
+
+#: classes/fields/honeypot.php:107
 #, php-format
 msgid "Nice try bot, but you failed the %s."
 msgstr ""
@@ -707,7 +711,7 @@ msgstr ""
 msgid "HTML"
 msgstr ""
 
-#: classes/fields/last_name.php:68
+#: classes/fields/last_name.php:67
 msgctxt "CFM Field title translation"
 msgid "Last Name"
 msgstr ""
@@ -819,18 +823,18 @@ msgid "Terms & Cond."
 msgstr ""
 
 #: classes/fields/toc.php:106
-msgid "Label"
-msgstr ""
-
-#: classes/fields/toc.php:111
 msgid "Terms & Conditions"
 msgstr ""
 
-#: classes/fields/toc.php:112
+#: classes/fields/toc.php:107
 msgid "Insert terms and condtions here."
 msgstr ""
 
-#: classes/fields/toc.php:133
+#: classes/fields/toc.php:110
+msgid "Agreement Checkbox Label"
+msgstr ""
+
+#: classes/fields/toc.php:131
 #, php-format
 msgid "Please agree to %s."
 msgstr ""
@@ -906,14 +910,22 @@ msgstr ""
 msgid "%s"
 msgstr ""
 
-#: classes/misc-functions.php:712
+#: classes/misc-functions.php:713
 #, php-format
 msgid "Please upload files no larger than %s KB"
 msgstr ""
 
-#: classes/misc-functions.php:733
+#: classes/misc-functions.php:734
 #, php-format
 msgid "Please upload files with one of these extensions: %s"
+msgstr ""
+
+#: classes/misc-functions.php:767
+msgid "Please enter your first name"
+msgstr ""
+
+#: classes/misc-functions.php:802
+msgid "Please enter your last name."
 msgstr ""
 
 #: edd-cfm.php:274 edd-cfm.php:288
