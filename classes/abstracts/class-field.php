@@ -389,7 +389,7 @@ class CFM_Field {
 		}
 
 		if ( ( $this->is_meta() && $this->meta_type() === 'payment' && $payment_id === -2 ) || 
-		     ( $this->is_meta() && $this->meta_type() === 'user' && $user_id === -2 ) ||
+			 ( $this->is_meta() && $this->meta_type() === 'user' && $user_id === -2 ) ||
 			 ( !$this->is_meta() && $user_id === -2 ) ){
 			// if the place we are saving to doesn't have a save_id we are on a draft and therefore don't have a value
 			// if there's a default lets use that
@@ -428,7 +428,7 @@ class CFM_Field {
 		}
 
 		if ( ( $this->is_meta() && $this->meta_type() === 'payment' && $payment_id === -2 ) || 
-		     ( $this->is_meta() && $this->meta_type() === 'user' && $user_id === -2 ) ||
+			 ( $this->is_meta() && $this->meta_type() === 'user' && $user_id === -2 ) ||
 			 ( !$this->is_meta() && $user_id === -2 ) ){
 			// if the place we are saving to doesn't have a save_id we are on a draft and therefore don't have a value
 			// if there's a default lets use that
@@ -444,10 +444,10 @@ class CFM_Field {
 		if ( (bool) $this->meta ) {
 				$meta_type = $this->meta_type();
 				if ( $meta_type === 'user' ){
-					$value = get_user_meta( $payment_id, $this->id, $this->single );
+					$value = get_user_meta( $user_id, $this->id, $this->single );
 				} else {
 					// payment meta
-					$value = get_post_meta( $user_id, $this->id, $this->single );
+					$value = get_post_meta( $payment_id, $this->id, $this->single );
 				}
 		} else {
 			$user  = get_userdata( $user_id );
