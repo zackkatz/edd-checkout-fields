@@ -36,7 +36,7 @@ class CFM_Date_Field extends CFM_Field {
 		'min'         => '',
 		'max'         => '',
 		'css'         => '',
-		'format'    => 'mm/dd/yy'
+		'format'    => 'mm/dd/yy',
 		'meta_type'   => 'payment', // 'payment' or 'user' here if is_meta()
 		'public'          => "public", // denotes whether a field shows in the admin only
 		'show_in_exports' => "export", // denotes whether a field is in the CSV exports
