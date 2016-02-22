@@ -135,9 +135,9 @@ class CFM_Date_Field extends CFM_Field {
 		$format_name  = sprintf( '%s[%d][format]', 'cfm_input', $index );
 		$time_name    = sprintf( '%s[%d][time]', 'cfm_input', $index );
 		$view_name    = sprintf( '%s[%d][view]', 'cfm_input', $index );
-		$format_value = ! isset( $this->characteristics['format'] ) ? $this->characteristics['format'] : 'mm/dd/yy';
-		$time_value   = ! isset( $this->characteristics['time'] ) ? $this->characteristics['time'] : 'no';
-		$view         = ! isset( $this->characteristics['view'] ) ? $this->characteristics['view'] : 'day';
+		$format_value = isset( $this->characteristics['format'] ) ? $this->characteristics['format'] : 'mm/dd/yy';
+		$time_value   = isset( $this->characteristics['time'] ) ? $this->characteristics['time'] : 'no';
+		$view         = isset( $this->characteristics['view'] ) ? $this->characteristics['view'] : 'day';
 		$help         = esc_attr( __( 'The date format', 'edd_cfm' ) ); ?>
 		<li class="custom-field custom_image">
 			<?php $this->legend( $this->title(), $this->get_label(), $removable ); ?>
