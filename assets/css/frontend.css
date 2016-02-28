@@ -1,0 +1,48 @@
+.cfm-checkbox-checklist {
+	list-style: none;
+	margin: 0;
+}
+td.cfm-repeat-field.cfm-repeat-field-actions {
+    text-align: center;
+    vertical-align: middle;
+}
+.cfm-form  select[multiple] {
+	height: auto;
+}
+
+.cfm-form  select {
+	border: 1px solid #dfdfdf;
+	border-radius: 3px;
+	height: 2em;
+	min-width: 150px;
+	padding: 2px;
+	moz-border-radius: 3px;
+	webkit-border-radius: 3px;
+}
+.cfm-form  table {
+	width: 100%;
+}
+.cfm-form  table,
+.cfm-form  td {
+	border: none;
+	margin: 0;
+}
+.cfm-hide {
+	display: none;
+}
+.cfm-form .delete {
+	text-decoration: none;
+}
+fieldset.cfm-form input[type="text"],
+fieldset.cfm-form input[type="email"],
+fieldset.cfm-form input[type="url"],
+fieldset.cfm-form textarea {
+	width: 100%;
+	line-height: normal;
+}
+.cfm-form  td.cfm-repeat-field {
+	display: table-cell;
+}
+.attachments-browser .media-toolbar{
+	display: none !important;
+}

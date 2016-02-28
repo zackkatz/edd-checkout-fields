@@ -1,525 +1,947 @@
-# Copyright (C) 2015 Chris Christoff
-# This file is distributed under the same license as the Easy Digital Downloads - Checkout Fields Manager package.
+#, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: Easy Digital Downloads - Checkout Fields Manager 1.1.5\n"
-"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/edd-cfm\n"
-"POT-Creation-Date: 2015-08-04 15:40:07+00:00\n"
+"Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
+"Project-Id-Version: Easy Digital Downloads - Checkout Fields Manager\n"
+"POT-Creation-Date: 2016-02-28 15:54-0500\n"
+"PO-Revision-Date: 2015-09-09 19:25-0400\n"
+"Last-Translator: Chris Christoff <support@easydigitaldownloads.com>\n"
+"Language-Team: Chris Christoff <support@easydigitaldownloads.com>\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=utf-8\n"
+"Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"PO-Revision-Date: 2015-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
-"X-Generator: grunt-wp-i18n 0.5.3\n"
+"X-Generator: Poedit 1.8.7\n"
+"X-Poedit-Basepath: ..\n"
+"X-Poedit-WPHeader: edd-cfm.php\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"X-Poedit-KeywordsList: __;_e;_n:1,2;_x:1,2c;_ex:1,2c;_nx:4c,1,2;esc_attr__;"
+"esc_attr_e;esc_attr_x:1,2c;esc_html__;esc_html_e;esc_html_x:1,2c;_n_noop:1,2;"
+"_nx_noop:3c,1,2;__ngettext_noop:1,2\n"
+"X-Poedit-SearchPath-0: .\n"
+"X-Poedit-SearchPathExcluded-0: *.js\n"
 
-#: assets/lib/EDD_License_Handler.php:126
-msgid "%1$s License Key"
+#: classes/abstracts/class-field.php:478 classes/fields/email.php:121
+#: classes/fields/file_upload.php:302 classes/fields/file_upload.php:305
+#, php-format
+msgid "Please enter a value for %s."
 msgstr ""
 
-#: assets/lib/EDD_License_Handler.php:256
-msgid "Deactivate License"
-msgstr ""
-
-#: classes/class-menu.php:54
-msgid "Welcome to EDD Checkout Fields Manager %s!"
-msgstr ""
-
-#: classes/class-menu.php:55
-msgid "Thank you for updating to the latest version!"
-msgstr ""
-
-#: classes/class-menu.php:57
-msgid "What's New:"
-msgstr ""
-
-#: classes/class-menu.php:60
-msgid "15 Field Types"
-msgstr ""
-
-#: classes/class-menu.php:61
-msgid ""
-"With 15 field types, you can make whatever you want on the checkout page "
-"come to reality in a couple clicks."
-msgstr ""
-
-#: classes/class-menu.php:63 classes/forms/admin-form.php:110
-msgid "File Upload"
-msgstr ""
-
-#: classes/class-menu.php:64
-msgid ""
-"With the file upload field, having users upload files during checkout is "
-"quick and simple"
-msgstr ""
-
-#: classes/class-menu.php:66
-msgid "Drag and Drop Re-Ordering of fields"
-msgstr ""
-
-#: classes/class-menu.php:67
-msgid ""
-"To change the order of the fields on the checkout page, simply drag and "
-"drop! "
-msgstr ""
-
-#: classes/class-setup.php:64
-msgid ""
-"<strong>Notice:</strong> Easy Digital Downloads Checkout Fields Manager "
-"requires Easy Digital Downloads 1.9 or higher in order to function properly."
-msgstr ""
-
-#: classes/class-setup.php:74
-msgid ""
-"<strong>Notice:</strong> Easy Digital Downloads Checkout Fields Manager "
-"requires WordPress 3.8 or higher in order to function properly."
-msgstr ""
-
-#: classes/class-setup.php:104 classes/class-setup.php:154
-msgid "Please fill out this required field"
-msgstr ""
-
-#: classes/class-setup.php:108 classes/class-setup.php:158
-msgid "Are you sure?"
-msgstr ""
-
-#: classes/class-setup.php:116 classes/class-setup.php:166
-#: classes/forms/admin-template.php:473
-msgid "Allowed Files"
-msgstr ""
-
-#: classes/class-setup.php:200
-msgid "EDD CFM"
-msgstr ""
-
-#: classes/forms/admin-form.php:34
-msgid "Checkout fields updated!"
-msgstr ""
-
-#: classes/forms/admin-form.php:35
-msgid "Custom field updated."
-msgstr ""
-
-#: classes/forms/admin-form.php:36
-msgid "Custom field deleted."
-msgstr ""
-
-#: classes/forms/admin-form.php:37
-msgid "Form updated."
-msgstr ""
-
-#: classes/forms/admin-form.php:38
-msgid "Form restored to revision from %s"
-msgstr ""
-
-#: classes/forms/admin-form.php:39
-msgid "Form published."
-msgstr ""
-
-#: classes/forms/admin-form.php:40
-msgid "Checkout fields saved!"
-msgstr ""
-
-#: classes/forms/admin-form.php:41
-msgid "Form submitted."
-msgstr ""
-
-#: classes/forms/admin-form.php:43
-msgid "Form draft updated."
-msgstr ""
-
-#: classes/forms/admin-form.php:57
-msgid "Submission Form Editor"
-msgstr ""
-
-#: classes/forms/admin-form.php:58
-msgid "Add Field"
-msgstr ""
-
-#: classes/forms/admin-form.php:69 classes/forms/admin-form.php:70
-msgid "Save"
-msgstr ""
-
-#: classes/forms/admin-form.php:81
-msgid "Checkout Fields"
-msgstr ""
-
-#: classes/forms/admin-form.php:97
-msgid "Click to add to the editor"
-msgstr ""
-
-#: classes/forms/admin-form.php:101
-msgid "First"
-msgstr ""
-
-#: classes/forms/admin-form.php:102 classes/forms/admin-form.php:255
-msgid "Last Name"
-msgstr ""
-
-#: classes/forms/admin-form.php:103
-msgid "E-mail"
-msgstr ""
-
-#: classes/forms/admin-form.php:104
+#: classes/abstracts/class-field.php:564 classes/fields/text.php:44
+msgctxt "CFM Field title translation"
 msgid "Text"
 msgstr ""
 
-#: classes/forms/admin-form.php:105 classes/forms/admin-template.php:191
-msgid "Textarea"
-msgstr ""
-
-#: classes/forms/admin-form.php:106
-msgid "Dropdown"
-msgstr ""
-
-#: classes/forms/admin-form.php:107
-msgid "Date"
-msgstr ""
-
-#: classes/forms/admin-form.php:108
-msgid "Radio"
-msgstr ""
-
-#: classes/forms/admin-form.php:109
-msgid "Checkbox"
-msgstr ""
-
-#: classes/forms/admin-form.php:111
-msgid "URL"
-msgstr ""
-
-#: classes/forms/admin-form.php:112
-msgid "Multi Select"
-msgstr ""
-
-#: classes/forms/admin-form.php:113
-msgid "Repeat Field"
-msgstr ""
-
-#: classes/forms/admin-form.php:114 classes/forms/admin-form.php:239
-msgid "HTML"
-msgstr ""
-
-#: classes/forms/admin-form.php:115
-msgid "Do Action"
-msgstr ""
-
-#: classes/forms/admin-form.php:162
-msgid "Toggle All Fields Open/Close"
-msgstr ""
-
-#: classes/forms/admin-form.php:166
-msgid "Your checkout form has no fields!"
-msgstr ""
-
-#: classes/forms/admin-form.php:199
-msgid "Custom field: Text"
-msgstr ""
-
-#: classes/forms/admin-form.php:203
-msgid "Custom field: Textarea"
-msgstr ""
-
-#: classes/forms/admin-form.php:207
-msgid "Custom field: Select"
-msgstr ""
-
-#: classes/forms/admin-form.php:211
-msgid "Custom field: Multiselect"
-msgstr ""
-
-#: classes/forms/admin-form.php:215
-msgid "Custom field: Radio"
-msgstr ""
-
-#: classes/forms/admin-form.php:219
-msgid "Custom field: Checkbox"
-msgstr ""
-
-#: classes/forms/admin-form.php:223
-msgid "Custom field: File Upload"
-msgstr ""
-
-#: classes/forms/admin-form.php:227
-msgid "Custom field: URL"
-msgstr ""
-
-#: classes/forms/admin-form.php:231
-msgid "Custom field: E-Mail"
-msgstr ""
-
-#: classes/forms/admin-form.php:235
-msgid "Custom field: Repeat Field"
-msgstr ""
-
-#: classes/forms/admin-form.php:243
-msgid "Action Hook"
-msgstr ""
-
-#: classes/forms/admin-form.php:247
-msgid "Custom Field: Date"
-msgstr ""
-
-#: classes/forms/admin-form.php:251
-msgid "First Name"
-msgstr ""
-
-#: classes/forms/admin-form.php:259
-msgid "Email"
-msgstr ""
-
-#: classes/forms/admin-posting.php:34
-msgid "Custom Checkout Fields"
-msgstr ""
-
-#: classes/forms/admin-posting.php:176
-msgid "Update"
-msgstr ""
-
-#: classes/forms/admin-template.php:28
+#: classes/abstracts/class-field.php:624
+#: classes/admin/formbuilder/class-formbuilder-templates.php:79
 msgid "Click and Drag to rearrange"
 msgstr ""
 
-#: classes/forms/admin-template.php:32
+#: classes/abstracts/class-field.php:628
+#: classes/admin/formbuilder/class-formbuilder-templates.php:83
 msgid "Remove"
 msgstr ""
 
-#: classes/forms/admin-template.php:34
+#: classes/abstracts/class-field.php:630
+#: classes/admin/formbuilder/class-formbuilder-templates.php:85
 msgid "Toggle"
 msgstr ""
 
-#: classes/forms/admin-template.php:71
+#: classes/abstracts/class-form.php:124 classes/abstracts/class-form.php:202
+msgid "Access denied."
+msgstr ""
+
+#: classes/abstracts/class-form.php:186
+msgid "The form has no custom fields!"
+msgstr ""
+
+#: classes/abstracts/class-form.php:225
+msgid "Personal Info"
+msgstr ""
+
+#: classes/abstracts/class-form.php:262
+msgid "The form has no fields!"
+msgstr ""
+
+#: classes/abstracts/class-form.php:381 classes/abstracts/class-form.php:468
+msgid "You are not permitted to do this."
+msgstr ""
+
+#: classes/abstracts/class-form.php:440 classes/abstracts/class-form.php:519
+msgid "There are no fields on the form."
+msgstr ""
+
+#: classes/abstracts/class-form.php:841 classes/forms/checkout.php:37
+msgctxt "CFM Form title translation"
+msgid "Checkout"
+msgstr ""
+
+#: classes/abstracts/class-form.php:848
+#, php-format
+msgctxt "%s = CFM Form Name (translated)"
+msgid "%s Form"
+msgstr ""
+
+#: classes/admin/class-install.php:231 classes/admin/class-tools.php:157
+#: classes/admin/class-tools.php:234
+#: classes/admin/customers/class-admin-customer-profile.php:92
+msgid "Checkout Fields"
+msgstr ""
+
+#: classes/admin/class-tools.php:61 edd-cfm.php:302
+msgid "Checkout Fields Manager"
+msgstr ""
+
+#: classes/admin/class-tools.php:82
+msgid "Reset Checkout Form"
+msgstr ""
+
+#: classes/admin/class-tools.php:84
+msgid "You can use this to reset the Checkout Fields Manager Form"
+msgstr ""
+
+#: classes/admin/class-tools.php:89
+msgid "Reset"
+msgstr ""
+
+#: classes/admin/class-tools.php:95
+msgid "Export Checkout Fields"
+msgstr ""
+
+#: classes/admin/class-tools.php:97
+msgid ""
+"Export the checkout fields for this site as a .json file. This allows you to "
+"easily import the configuration into another site."
+msgstr ""
+
+#: classes/admin/class-tools.php:102
+msgid "Export"
+msgstr ""
+
+#: classes/admin/class-tools.php:108
+msgid "Import Checkout Fields"
+msgstr ""
+
+#: classes/admin/class-tools.php:110
+msgid ""
+"Import the checkout fields from a .json file. This file can be obtained by "
+"exporting the checkout fields on another site using the form above."
+msgstr ""
+
+#: classes/admin/class-tools.php:118
+msgid "Import"
+msgstr ""
+
+#: classes/admin/class-tools.php:220
+msgid "Please upload a valid .json file"
+msgstr ""
+
+#: classes/admin/class-tools.php:220 classes/admin/class-tools.php:224
+msgid "Error"
+msgstr ""
+
+#: classes/admin/class-tools.php:224
+msgid "Please upload a file to import"
+msgstr ""
+
+#: classes/admin/class-update.php:34
+msgid "CFM Upgrades"
+msgstr ""
+
+#: classes/admin/class-update.php:56
+msgid "Checkout Fields Manager - Upgrades"
+msgstr ""
+
+#: classes/admin/class-update.php:58
+msgid ""
+"The upgrade process is running, please be patient. This could take several "
+"minutes to complete."
+msgstr ""
+
+#: classes/admin/class-update.php:59
+#, php-format
+msgid "Step %d of approximately %d running"
+msgstr ""
+
+#: classes/admin/class-update.php:97
+#, php-format
+msgid ""
+"The Checkout Fields Manager datepicker field schema needs to be updated! "
+"Click <a href=\"%s\">here</a> to start the upgrade."
+msgstr ""
+
+#: classes/admin/customers/class-admin-customer-profile.php:61
+msgid "Custom User Meta"
+msgstr ""
+
+#: classes/admin/customers/class-admin-customer-profile.php:96
+msgid "User meta can only be saved for logged in customers."
+msgstr ""
+
+#: classes/admin/customers/class-admin-customer-profile.php:116
+msgid "Submit"
+msgstr ""
+
+#: classes/admin/formbuilder/class-formbuilder-templates.php:148
+#: classes/admin/formbuilder/class-formbuilder-templates.php:245
 msgid "Required"
 msgstr ""
 
-#: classes/forms/admin-template.php:75
+#: classes/admin/formbuilder/class-formbuilder-templates.php:150
+#: classes/admin/formbuilder/class-formbuilder-templates.php:247
 msgid "Yes"
 msgstr ""
 
-#: classes/forms/admin-template.php:77
+#: classes/admin/formbuilder/class-formbuilder-templates.php:151
+#: classes/admin/formbuilder/class-formbuilder-templates.php:248
 msgid "No"
 msgstr ""
 
-#: classes/forms/admin-template.php:83
+#: classes/admin/formbuilder/class-formbuilder-templates.php:159
+#: classes/admin/formbuilder/class-formbuilder-templates.php:256
 msgid "Field Label"
 msgstr ""
 
-#: classes/forms/admin-template.php:84
+#: classes/admin/formbuilder/class-formbuilder-templates.php:160
+#: classes/admin/formbuilder/class-formbuilder-templates.php:257
 msgid "Enter a title of this field"
 msgstr ""
 
-#: classes/forms/admin-template.php:89
+#: classes/admin/formbuilder/class-formbuilder-templates.php:165
+#: classes/admin/formbuilder/class-formbuilder-templates.php:263
+#: classes/fields/hidden.php:105
 msgid "Meta Key"
 msgstr ""
 
-#: classes/forms/admin-template.php:90
+#: classes/admin/formbuilder/class-formbuilder-templates.php:166
+#: classes/admin/formbuilder/class-formbuilder-templates.php:264
+#: classes/fields/hidden.php:106
 msgid "Name of the meta key this field will save to"
 msgstr ""
 
-#: classes/forms/admin-template.php:101
+#: classes/admin/formbuilder/class-formbuilder-templates.php:173
+#: classes/admin/formbuilder/class-formbuilder-templates.php:271
 msgid "Help text"
 msgstr ""
 
-#: classes/forms/admin-template.php:102
+#: classes/admin/formbuilder/class-formbuilder-templates.php:174
 msgid "Give the user some information about this field"
 msgstr ""
 
-#: classes/forms/admin-template.php:106
+#: classes/admin/formbuilder/class-formbuilder-templates.php:178
+#: classes/admin/formbuilder/class-formbuilder-templates.php:638
 msgid "CSS Class Name"
 msgstr ""
 
-#: classes/forms/admin-template.php:107
+#: classes/admin/formbuilder/class-formbuilder-templates.php:179
+#: classes/admin/formbuilder/class-formbuilder-templates.php:639
 msgid "Add a CSS class name for this field"
 msgstr ""
 
-#: classes/forms/admin-template.php:133 classes/forms/admin-template.php:181
-#: classes/forms/admin-template.php:553
+#: classes/admin/formbuilder/class-formbuilder-templates.php:272
+msgid "Shown on the checkout only"
+msgstr ""
+
+#: classes/admin/formbuilder/class-formbuilder-templates.php:302
+#: classes/admin/formbuilder/class-formbuilder-templates.php:354
+#: classes/fields/repeat.php:285
 msgid "Placeholder text"
 msgstr ""
 
-#: classes/forms/admin-template.php:134
+#: classes/admin/formbuilder/class-formbuilder-templates.php:303
 msgid "Text for HTML5 placeholder attribute"
 msgstr ""
 
-#: classes/forms/admin-template.php:138 classes/forms/admin-template.php:186
-#: classes/forms/admin-template.php:558
+#: classes/admin/formbuilder/class-formbuilder-templates.php:308
+#: classes/admin/formbuilder/class-formbuilder-templates.php:359
+#: classes/fields/repeat.php:290
 msgid "Default value"
 msgstr ""
 
-#: classes/forms/admin-template.php:139
+#: classes/admin/formbuilder/class-formbuilder-templates.php:309
 msgid "The default value this field will have"
 msgstr ""
 
-#: classes/forms/admin-template.php:143 classes/forms/admin-template.php:563
+#: classes/admin/formbuilder/class-formbuilder-templates.php:313
+#: classes/fields/repeat.php:295
 msgid "Size"
 msgstr ""
 
-#: classes/forms/admin-template.php:144
+#: classes/admin/formbuilder/class-formbuilder-templates.php:314
 msgid "Size of this input field"
 msgstr ""
 
-#: classes/forms/admin-template.php:171
+#: classes/admin/formbuilder/class-formbuilder-templates.php:344
 msgid "Rows"
 msgstr ""
 
-#: classes/forms/admin-template.php:176 classes/forms/admin-template.php:568
+#: classes/admin/formbuilder/class-formbuilder-templates.php:349
+#: classes/fields/repeat.php:300
 msgid "Columns"
 msgstr ""
 
-#: classes/forms/admin-template.php:194
+#: classes/admin/formbuilder/class-formbuilder-templates.php:364
+msgid "Textarea"
+msgstr ""
+
+#: classes/admin/formbuilder/class-formbuilder-templates.php:367
 msgid "Normal"
 msgstr ""
 
-#: classes/forms/admin-template.php:195
+#: classes/admin/formbuilder/class-formbuilder-templates.php:368
 msgid "Rich textarea"
 msgstr ""
 
-#: classes/forms/admin-template.php:196
+#: classes/admin/formbuilder/class-formbuilder-templates.php:369
 msgid "Teeny Rich textarea"
 msgstr ""
 
-#: classes/forms/admin-template.php:347 classes/forms/admin-template.php:369
-#: classes/forms/admin-template.php:399 classes/forms/admin-template.php:429
+#: classes/admin/formbuilder/class-formbuilder-templates.php:526
+msgid "Show field on frontend checkout field"
+msgstr ""
+
+#: classes/admin/formbuilder/class-formbuilder-templates.php:529
+msgid "Show this in both the frontend and admin (default)"
+msgstr ""
+
+#: classes/admin/formbuilder/class-formbuilder-templates.php:530
+msgid ""
+"Show this field only in the admin. Useful for storing admin-only order data"
+msgstr ""
+
+#: classes/admin/formbuilder/class-formbuilder-templates.php:565
+msgid "Show in exported CSVs"
+msgstr ""
+
+#: classes/admin/formbuilder/class-formbuilder-templates.php:568
+msgid "Show this field in CSV exports (default)"
+msgstr ""
+
+#: classes/admin/formbuilder/class-formbuilder-templates.php:569
+msgid "Do not show this field in CSV exports"
+msgstr ""
+
+#: classes/admin/formbuilder/class-formbuilder-templates.php:606
+msgid "Where should this meta be stored"
+msgstr ""
+
+#: classes/admin/formbuilder/class-formbuilder-templates.php:609
+msgid "Payment Meta (different values for all orders by a particular user)"
+msgstr ""
+
+#: classes/admin/formbuilder/class-formbuilder-templates.php:610
+msgid "User Meta (same value for all orders by a particular user)"
+msgstr ""
+
+#: classes/admin/formbuilder/class-formbuilder-templates.php:611
+msgid ""
+"Warning: Do not change where the meta is stored once you set it for a "
+"particular field."
+msgstr ""
+
+#: classes/admin/formbuilder/class-formbuilder.php:32
+#: classes/admin/formbuilder/class-formbuilder.php:33
+#: classes/admin/formbuilder/class-formbuilder.php:34
+#: classes/admin/formbuilder/class-formbuilder.php:35
+#: classes/admin/formbuilder/class-formbuilder.php:37
+#: classes/admin/formbuilder/class-formbuilder.php:38
+#: classes/admin/formbuilder/class-formbuilder.php:39
+#: classes/admin/formbuilder/class-formbuilder.php:40
+#: classes/admin/formbuilder/class-formbuilder.php:41
+msgid "Checkout form updated."
+msgstr ""
+
+#: classes/admin/formbuilder/class-formbuilder.php:36
+#, php-format
+msgid "Checkout form restored to revision from %s"
+msgstr ""
+
+#: classes/admin/formbuilder/class-formbuilder.php:62
+msgid "Form Editor"
+msgstr ""
+
+#: classes/admin/formbuilder/class-formbuilder.php:63
+#: classes/admin/formbuilder/class-formbuilder.php:194
+#: classes/admin/formbuilder/class-formbuilder.php:195
+msgid "Save"
+msgstr ""
+
+#: classes/admin/formbuilder/class-formbuilder.php:72
+#, php-format
+msgid "Add %s Form Fields"
+msgstr ""
+
+#: classes/admin/formbuilder/class-formbuilder.php:73
+msgid "Add Custom Fields"
+msgstr ""
+
+#: classes/admin/formbuilder/class-formbuilder.php:74
+msgid "Add Extension Created Fields"
+msgstr ""
+
+#: classes/admin/formbuilder/class-formbuilder.php:114
+#, php-format
+msgid "%s Form"
+msgstr ""
+
+#: classes/admin/formbuilder/class-formbuilder.php:119
+#, php-format
+msgid "Your %s form has no fields"
+msgstr ""
+
+#: classes/admin/formbuilder/class-formbuilder.php:125
+msgid "Toggle All Fields Open/Close"
+msgstr ""
+
+#: classes/admin/formbuilder/class-formbuilder.php:257
+#: classes/admin/formbuilder/class-formbuilder.php:329
+msgid "Click to add to the editor"
+msgstr ""
+
+#: classes/admin/formbuilder/class-formbuilder.php:266
+msgid "There are no custom fields for this form"
+msgstr ""
+
+#: classes/admin/formbuilder/class-formbuilder.php:339
+msgid "You do not have any extensions installed that have a CFM custom field"
+msgstr ""
+
+#: classes/admin/payments/class-edit-payment.php:64
+msgid "Checkout form not set!"
+msgstr ""
+
+#: classes/admin/payments/class-edit-payment.php:72
+msgid "Custom Fields"
+msgstr ""
+
+#: classes/class-post-types.php:61 classes/class-post-types.php:88
+msgid "EDD CFM Forms"
+msgstr ""
+
+#: classes/class-post-types.php:89
+msgid "CFM Form"
+msgstr ""
+
+#: classes/class-post-types.php:90
+msgid "CFM Forms"
+msgstr ""
+
+#: classes/class-post-types.php:91
+msgid "Add CFM Form"
+msgstr ""
+
+#: classes/class-post-types.php:92
+msgid "Add New Form"
+msgstr ""
+
+#: classes/class-post-types.php:93
+msgid "Edit"
+msgstr ""
+
+#: classes/class-post-types.php:95
+msgid "New CFM Form"
+msgstr ""
+
+#: classes/class-post-types.php:96 classes/class-post-types.php:97
+msgid "View CFM Form"
+msgstr ""
+
+#: classes/class-post-types.php:98
+msgid "Search CFM Forms"
+msgstr ""
+
+#: classes/class-post-types.php:99
+msgid "No CFM Forms Found"
+msgstr ""
+
+#: classes/class-post-types.php:100
+msgid "No CFM Forms Found in Trash"
+msgstr ""
+
+#: classes/class-post-types.php:101
+msgid "Parent CFM Form"
+msgstr ""
+
+#: classes/class-setup.php:69
+msgid ""
+"Warning: The checkout form isn't set. Go to EDD->Tools->Checkout Fields "
+"Manager, and reset the checkout form."
+msgstr ""
+
+#: classes/class-setup.php:122 classes/class-setup.php:207
+msgid "Please fix the errors to proceed"
+msgstr ""
+
+#: classes/class-setup.php:124 classes/class-setup.php:209
+msgid "Choose a file"
+msgstr ""
+
+#: classes/class-setup.php:125 classes/class-setup.php:210
+#: classes/fields/file_upload.php:95 classes/fields/file_upload.php:174
+msgid "Insert file URL"
+msgstr ""
+
+#: classes/class-setup.php:126 classes/class-setup.php:211
+msgid "You may not add more than "
+msgstr ""
+
+#: classes/class-setup.php:127 classes/class-setup.php:212
+msgid " files!"
+msgstr ""
+
+#: classes/class-setup.php:415 classes/class-setup.php:422
+msgid "Required to use the reCAPTCHA field."
+msgstr ""
+
+#: classes/class-setup.php:416
+msgid "reCAPTCHA Public Key"
+msgstr ""
+
+#: classes/class-setup.php:423
+msgid "reCAPTCHA Private Key"
+msgstr ""
+
+#: classes/fields/action_hook.php:40
+msgctxt "CFM Field title translation"
+msgid "Action Hook"
+msgstr ""
+
+#: classes/fields/action_hook.php:88
+msgid "Hook Name"
+msgstr ""
+
+#: classes/fields/action_hook.php:90
+msgid "Name of the hook"
+msgstr ""
+
+#: classes/fields/action_hook.php:93
+msgid ""
+"This is for developers to add dynamic elements as they want. It provides the "
+"chance to add whatever input type you want to add in this form."
+msgstr ""
+
+#: classes/fields/checkbox.php:46
+msgctxt "CFM Field title translation"
+msgid "Checkbox"
+msgstr ""
+
+#: classes/fields/checkbox.php:156 classes/fields/multiselect.php:156
+#: classes/fields/radio.php:141 classes/fields/select.php:139
 msgid "Options"
 msgstr ""
 
-#: classes/forms/admin-template.php:383 classes/forms/admin-template.php:413
+#: classes/fields/checkbox.php:177
+#, php-format
+msgid "Please select at least 1 option for %s."
+msgstr ""
+
+#: classes/fields/checkbox.php:179
+#, php-format
+msgid "Please check the checkbox for %s."
+msgstr ""
+
+#: classes/fields/country.php:47
+msgctxt "CFM Field title translation"
+msgid "Country"
+msgstr ""
+
+#: classes/fields/country.php:125
+msgid "Vendor Country"
+msgstr ""
+
+#: classes/fields/country.php:127 classes/fields/multiselect.php:137
+#: classes/fields/select.php:121
 msgid ""
 "First element of the select dropdown. Leave this empty if you don't want to "
 "show this field"
 msgstr ""
 
-#: classes/forms/admin-template.php:394 classes/forms/admin-template.php:424
+#: classes/fields/country.php:141 classes/fields/multiselect.php:151
+#: classes/fields/select.php:134
 msgid "Select Text"
 msgstr ""
 
-#: classes/forms/admin-template.php:451
-msgid "Enter maximum upload size limit in KB"
+#: classes/fields/country.php:146
+msgid "Countries"
 msgstr ""
 
-#: classes/forms/admin-template.php:452
-msgid "Number of images can be uploaded"
+#: classes/fields/date.php:47
+msgctxt "CFM Field title translation"
+msgid "Date"
 msgstr ""
 
-#: classes/forms/admin-template.php:463
-msgid "Max. file size"
-msgstr ""
-
-#: classes/forms/admin-template.php:468
-msgid "Max. files"
-msgstr ""
-
-#: classes/forms/admin-template.php:545
-msgid "Multiple Column"
-msgstr ""
-
-#: classes/forms/admin-template.php:614
-msgid "Title"
-msgstr ""
-
-#: classes/forms/admin-template.php:619
-msgid "HTML Codes"
-msgstr ""
-
-#: classes/forms/admin-template.php:638
-msgid "Hook Name"
-msgstr ""
-
-#: classes/forms/admin-template.php:641
-msgid "Name of the hook"
-msgstr ""
-
-#: classes/forms/admin-template.php:644
-msgid ""
-"This is for developers to add dynamic elements as they want. It provides "
-"the chance to add whatever input type you want to add in this form."
-msgstr ""
-
-#: classes/forms/admin-template.php:645
-msgid ""
-"You can bind your own functions to render the form to this action hook. "
-"You'll be given 3 parameters to play with: $form_id, $post_id, "
-"$form_settings."
-msgstr ""
-
-#: classes/forms/admin-template.php:667
+#: classes/fields/date.php:141
 msgid "The date format"
 msgstr ""
 
-#: classes/forms/admin-template.php:678
-msgid "Date Format"
+#: classes/fields/date.php:154
+msgid "Date Format To Store Values In"
 msgstr ""
 
-#: classes/forms/admin-template.php:683
+#: classes/fields/date.php:159
 msgid "Time"
 msgstr ""
 
-#: classes/forms/admin-template.php:689
+#: classes/fields/date.php:164
 msgid "Enable time input"
 msgstr ""
 
-#: classes/forms/frontend-form.php:93
-msgid "Please enter "
+#: classes/fields/date.php:170
+msgid "Start View"
 msgstr ""
 
-#: classes/forms/functions.php:4
-msgid "Images"
+#: classes/fields/date.php:173
+msgid "Day"
 msgstr ""
 
-#: classes/forms/functions.php:5
-msgid "Audio"
+#: classes/fields/date.php:174
+msgid "Month"
 msgstr ""
 
-#: classes/forms/functions.php:6
-msgid "Videos"
+#: classes/fields/date.php:175
+msgid "Year"
 msgstr ""
 
-#: classes/forms/functions.php:7
-msgid "PDF"
+#: classes/fields/email.php:45
+msgctxt "CFM Field title translation"
+msgid "Email"
 msgstr ""
 
-#: classes/forms/functions.php:8
-msgid "Office Documents"
+#: classes/fields/email.php:116
+#, php-format
+msgid "Please enter a valid email address in %s."
 msgstr ""
 
-#: classes/forms/functions.php:9
-msgid "Zip Archives"
+#: classes/fields/file_upload.php:47
+msgctxt "CFM Field title translation"
+msgid "File Upload"
 msgstr ""
 
-#: classes/forms/functions.php:10
-msgid "Executable Files"
+#: classes/fields/file_upload.php:78 classes/fields/file_upload.php:158
+msgid "File URL"
 msgstr ""
 
-#: classes/forms/functions.php:11
-msgid "CSV"
-msgstr ""
-
-#: classes/forms/render-form.php:474
-msgid "Insert Photo"
-msgstr ""
-
-#: classes/forms/render-form.php:527
-msgid "Select File(s)"
-msgstr ""
-
-#: classes/forms/render-form.php:538
+#: classes/fields/file_upload.php:79 classes/fields/file_upload.php:99
 msgid "Download File"
 msgstr ""
 
-#: classes/forms/render-form.php:759 classes/forms/render-form.php:775
+#: classes/fields/file_upload.php:92 classes/fields/file_upload.php:171
+msgid "http://"
+msgstr ""
+
+#: classes/fields/file_upload.php:95 classes/fields/file_upload.php:96
+#: classes/fields/file_upload.php:174 classes/fields/file_upload.php:175
+msgid "Choose file"
+msgstr ""
+
+#: classes/fields/file_upload.php:104 classes/fields/file_upload.php:180
+msgid "&times;"
+msgstr ""
+
+#: classes/fields/file_upload.php:114 classes/fields/file_upload.php:191
+msgid "Add File"
+msgstr ""
+
+#: classes/fields/file_upload.php:241
+msgid "Enter maximum upload size limit in KB"
+msgstr ""
+
+#: classes/fields/file_upload.php:242
+msgid "Number of files which can be uploaded"
+msgstr ""
+
+#: classes/fields/file_upload.php:260
+msgid "Max. file size"
+msgstr ""
+
+#: classes/fields/file_upload.php:265
+msgid "Max. files"
+msgstr ""
+
+#: classes/fields/file_upload.php:270
+msgid "Allowed Files"
+msgstr ""
+
+#: classes/fields/file_upload.php:297
+#, php-format
+msgid "Please enter a valid URL for %s."
+msgstr ""
+
+#: classes/fields/first_name.php:67
+msgctxt "CFM Field title translation"
+msgid "First Name"
+msgstr ""
+
+#: classes/fields/hidden.php:42
+msgctxt "CFM Field title translation"
+msgid "Hidden"
+msgstr ""
+
+#: classes/fields/hidden.php:111
+msgid "Meta Value"
+msgstr ""
+
+#: classes/fields/hidden.php:112
+msgid "Enter the meta value"
+msgstr ""
+
+#: classes/fields/honeypot.php:42
+msgctxt "CFM Field title translation"
+msgid "Honeypot"
+msgstr ""
+
+#: classes/fields/honeypot.php:96
+msgid "There are no settings for this field"
+msgstr ""
+
+#: classes/fields/honeypot.php:107
+#, php-format
+msgid "Nice try bot, but you failed the %s."
+msgstr ""
+
+#: classes/fields/html.php:42
+msgctxt "CFM Field title translation"
+msgid "HTML"
+msgstr ""
+
+#: classes/fields/html.php:115 classes/fields/section_break.php:120
+msgid "Title"
+msgstr ""
+
+#: classes/fields/html.php:120
+msgid "HTML"
+msgstr ""
+
+#: classes/fields/last_name.php:67
+msgctxt "CFM Field title translation"
+msgid "Last Name"
+msgstr ""
+
+#: classes/fields/multiselect.php:48
+msgctxt "CFM Field title translation"
+msgid "Multiselect"
+msgstr ""
+
+#: classes/fields/radio.php:46
+msgctxt "CFM Field title translation"
+msgid "Radio"
+msgstr ""
+
+#: classes/fields/recaptcha.php:42
+msgctxt "CFM Field title translation"
+msgid "reCAPTCHA"
+msgstr ""
+
+#: classes/fields/recaptcha.php:134
+msgid "Important:"
+msgstr ""
+
+#: classes/fields/recaptcha.php:139
+msgid ""
+"In order for reCAPTCHA to work you must insert your site key and private key "
+"in the EDD settings panel. <a href='https://www.google.com/recaptcha/"
+"admin#list' target='_blank'>Create a key</a> first if you don't have any "
+"keys."
+msgstr ""
+
+#: classes/fields/recaptcha.php:169 classes/fields/recaptcha.php:173
+msgid "Please retry the reCAPTCHA challenge"
+msgstr ""
+
+#: classes/fields/recaptcha.php:178
+msgid "Please complete the reCAPTCHA challenge"
+msgstr ""
+
+#: classes/fields/repeat.php:48
+msgctxt "CFM Field title translation"
+msgid "Repeat"
+msgstr ""
+
+#: classes/fields/repeat.php:77 classes/fields/repeat.php:173
+msgid "Actions"
+msgstr ""
+
+#: classes/fields/repeat.php:93 classes/fields/repeat.php:107
+#: classes/fields/repeat.php:190 classes/fields/repeat.php:204
 msgid "Add another"
 msgstr ""
 
-#: classes/forms/render-form.php:760 classes/forms/render-form.php:776
+#: classes/fields/repeat.php:94 classes/fields/repeat.php:108
+#: classes/fields/repeat.php:191 classes/fields/repeat.php:205
 msgid "Remove this choice"
 msgstr ""
 
-#: classes/forms/upload.php:97 classes/forms/upload.php:104
-msgid "Delete"
+#: classes/fields/repeat.php:136 classes/fields/repeat.php:235
+msgid "add another choice"
 msgstr ""
 
-#: edd-cfm.php:86
-msgid "Checkout Fields Manager"
+#: classes/fields/repeat.php:137 classes/fields/repeat.php:236
+msgid "remove this choice"
+msgstr ""
+
+#: classes/fields/repeat.php:277
+msgid "Multiple Column"
+msgstr ""
+
+#: classes/fields/repeat.php:280
+msgid "Enable Multi Column"
+msgstr ""
+
+#: classes/fields/repeat.php:371 classes/fields/repeat.php:376
+#: classes/fields/repeat.php:381 classes/fields/repeat.php:387
+#: classes/fields/repeat.php:392 classes/fields/repeat.php:398
+#, php-format
+msgid "Please complete the %s field"
+msgstr ""
+
+#: classes/fields/section_break.php:42
+msgctxt "CFM Field title translation"
+msgid "Section Break"
+msgstr ""
+
+#: classes/fields/section_break.php:125
+msgid "Description"
+msgstr ""
+
+#: classes/fields/select.php:47
+msgctxt "CFM Field title translation"
+msgid "Select"
+msgstr ""
+
+#: classes/fields/select.php:159
+#, php-format
+msgid "Please select a value for %s."
+msgstr ""
+
+#: classes/fields/textarea.php:47
+msgctxt "CFM Field title translation"
+msgid "Textarea"
+msgstr ""
+
+#: classes/fields/toc.php:41
+msgctxt "CFM Field title translation"
+msgid "Terms & Cond."
+msgstr ""
+
+#: classes/fields/toc.php:106
+msgid "Terms & Conditions"
+msgstr ""
+
+#: classes/fields/toc.php:107
+msgid "Insert terms and condtions here."
+msgstr ""
+
+#: classes/fields/toc.php:110
+msgid "Agreement Checkbox Label"
+msgstr ""
+
+#: classes/fields/toc.php:131
+#, php-format
+msgid "Please agree to %s."
+msgstr ""
+
+#: classes/fields/url.php:44
+msgctxt "CFM Field title translation"
+msgid "URL"
+msgstr ""
+
+#: classes/fields/url.php:115
+#, php-format
+msgid "Please enter a valid url in the %s field."
+msgstr ""
+
+#: classes/fields/url.php:120
+#, php-format
+msgid "Please fill out the %s field."
+msgstr ""
+
+#: classes/fields/user_email.php:44
+msgctxt "CFM Field title translation"
+msgid "User Email"
+msgstr ""
+
+#: classes/misc-functions.php:186
+msgid "Images"
+msgstr ""
+
+#: classes/misc-functions.php:187
+msgid "Audio"
+msgstr ""
+
+#: classes/misc-functions.php:188
+msgid "Videos"
+msgstr ""
+
+#: classes/misc-functions.php:189
+msgid "PDF"
+msgstr ""
+
+#: classes/misc-functions.php:190
+msgid "Office Documents"
+msgstr ""
+
+#: classes/misc-functions.php:191
+msgid "Zip Archives"
+msgstr ""
+
+#: classes/misc-functions.php:192
+msgid "Executable Files"
+msgstr ""
+
+#: classes/misc-functions.php:193
+msgid "CSV"
+msgstr ""
+
+#: classes/misc-functions.php:258
+#, php-format
+msgid ""
+"%1$s is <strong>deprecated</strong> since Easy Digital Downloads Checkout "
+"Fields Manager version %2$s! Use %3$s instead."
+msgstr ""
+
+#: classes/misc-functions.php:262
+#, php-format
+msgid ""
+"%1$s is <strong>deprecated</strong> since Easy Digital Downloads Checkout "
+"Fields Manager version %2$s."
+msgstr ""
+
+#: classes/misc-functions.php:309
+#, php-format
+msgid "%s"
+msgstr ""
+
+#: classes/misc-functions.php:743
+#, php-format
+msgid "Please upload files no larger than %s KB"
+msgstr ""
+
+#: classes/misc-functions.php:764
+#, php-format
+msgid "Please upload files with one of these extensions: %s"
+msgstr ""
+
+#: classes/misc-functions.php:806
+msgid "Please enter your first name"
+msgstr ""
+
+#: classes/misc-functions.php:841
+msgid "Please enter your last name."
+msgstr ""
+
+#: edd-cfm.php:274 edd-cfm.php:288
+msgid "Cheatin&#8217; huh?"
+msgstr ""
+
+#: edd-cfm.php:467
+msgid ""
+"<strong>Notice:</strong> Easy Digital Downloads Checkout Fields Manager "
+"requires Easy Digital Downloads 2.5 or higher in order to function properly."
+msgstr ""
+
+#: edd-cfm.php:485
+msgid ""
+"<strong>Notice:</strong> Easy Digital Downloads Checkout Fields Manager "
+"requires WordPress 4.3 or higher in order to function properly."
 msgstr ""
 
 #. Plugin Name of the plugin/theme
@@ -527,11 +949,11 @@ msgid "Easy Digital Downloads - Checkout Fields Manager"
 msgstr ""
 
 #. Plugin URI of the plugin/theme
-msgid "https://easydigitaldownloads.com/extension/checkout-fields-manager/"
+msgid "https://easydigitaldownloads.com/extensions/checkout-fields-manager/"
 msgstr ""
 
 #. Description of the plugin/theme
-msgid "Easily add and control EDD's checkout fields"
+msgid "Easily add and control EDD's checkout fields!"
 msgstr ""
 
 #. Author of the plugin/theme

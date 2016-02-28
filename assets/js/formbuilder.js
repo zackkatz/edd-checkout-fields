@@ -1,232 +1,272 @@
 ;(function($) {
 
-    var $formEditor = $('ul#edd-checkout-fields-editor');
+	var $formEditor = $('ul#cfm-formbuilder-fields');
 
-    var Editor = {
-        init: function() {
+	var Editor = {
+		init: function() {
 
-            // make it sortable
-            this.makeSortable();
+			// make it sortable
+			this.makeSortable();
 
-            this.tooltip();
-            this.tabber();
-            this.showHideHelp();
+			this.tooltip();
+			this.tabber();
+			this.showHideHelp();
 
-            // collapse all
-            $('button.cfm-collapse').on('click', this.collpaseEditFields);
+			// on save validation
+			$('form#post').submit(function(e) {
+				var errors = false;
+				var regexp = /^[a-zA-Z0-9_-]+$/; // metakeys can only be upperloweralpha + numeric + underscore
+				$('li.custom-field input[data-type="label"]').each( function(index) {
+					if ($(this).val().length === 0 ) {
+						errors = true;
+						$(this).css('border', '3px solid #993333');
+					}
+				});
 
-            // add field click
-            $('.edd-checkout-fields-buttons').on('click', 'button', this.addNewField);
+				$('li.custom-field input[data-type="metakey"]').each( function(index) {
+					var thatstring = $.trim($(this).val());
+					if ( ( thatstring.length === 0 ) || ( !regexp.test(thatstring) ) ) {
+						errors = true;
+						$(this).css('border', '3px solid #993333');
+					}
+				});
 
-            // remove form field
-            $('#edd-checkout-fields-editor').on('click', '.cfm-remove', this.removeFormField);
+				if (errors) {
+					e.preventDefault();
+					alert( 'Please fix the errors to save the form.' );
+					return false;
+				}
+			});
 
-            // on change event: meta key
-            $('#edd-checkout-fields-editor').on('change', 'li.custom-field input[data-type="label"]', this.setMetaKey);
+			// collapse all
+			$('button.cfm-collapse').on('click', this.collapseEditFields);
 
-            // on change event: checkbox|radio fields
-            $('#edd-checkout-fields-editor').on('change', '.edd-checkout-fields-sub-fields input[type=text]', function() {
-                $(this).prev('input[type=checkbox], input[type=radio]').val($(this).val());
-            });
+			// add field click
+			$('.cfm-form-buttons').on('click', 'button', this.addNewField);
 
-            // on change event: checkbox|radio fields
-            $('#edd-checkout-fields-editor').on('click', 'input[type=checkbox].multicolumn', function() {
-                // $(this).prev('input[type=checkbox], input[type=radio]').val($(this).val());
-                var $self = $(this),
-                    $parent = $self.closest('.edd-checkout-fields-rows');
+			// remove form field
+			$('ul#cfm-formbuilder-fields').on('click', '.cfm-remove', this.removeFormField);
 
-                if ($self.is(':checked')) {
-                    $parent.next().hide().next().hide();
-                    $parent.siblings('.column-names').show();
-                } else {
-                    $parent.next().show().next().show();
-                    $parent.siblings('.column-names').hide();
-                }
-            });
+			// on change event: meta key
+			$('ul#cfm-formbuilder-fields').on('blur', 'li.custom-field input[data-type="label"]', this.setMetaKey);
 
-            // on change event: checkbox|radio fields
-            $('#edd-checkout-fields-editor').on('click', 'input[type=checkbox].retype-pass', function() {
-                // $(this).prev('input[type=checkbox], input[type=radio]').val($(this).val());
-                var $self = $(this),
-                    $parent = $self.closest('.edd-checkout-fields-rows');
+			// on change event: checkbox|radio fields
+			$('ul#cfm-formbuilder-fields').on('change', '.cfm-form-sub-fields input[type=text]', function() {
+				$(this).prev('input[type=checkbox], input[type=radio]').val($(this).val());
+			});
 
-                if ($self.is(':checked')) {
-                    $parent.next().show().next().show();
-                } else {
-                    $parent.next().hide().next().hide();
-                }
-            });
+			// on change event: checkbox|radio fields
+			$('ul#cfm-formbuilder-fields').on('click', 'input[type=checkbox].multicolumn', function() {
+				// $(this).prev('input[type=checkbox], input[type=radio]').val($(this).val());
+				var $self = $(this),
+					$parent = $self.closest('.cfm-form-rows');
 
-            // toggle form field
-            $('#edd-checkout-fields-editor').on('click', '.cfm-toggle', this.toggleFormField);
+				if ($self.is(':checked')) {
+					$parent.next().hide().next().hide();
+					$parent.siblings('.column-names').show();
+				} else {
+					$parent.next().show().next().show();
+					$parent.siblings('.column-names').hide();
+				}
+			});
 
-            // clone and remove repeated field
-            $('#edd-checkout-fields-editor').on('click', 'img.cfm-clone-field', this.cloneField);
-            $('#edd-checkout-fields-editor').on('click', 'img.cfm-remove-field', this.removeField);
-        },
+			// on change event: checkbox|radio fields
+			$('ul#cfm-formbuilder-fields').on('click', 'input[type=checkbox].retype-pass', function() {
+				// $(this).prev('input[type=checkbox], input[type=radio]').val($(this).val());
+				var $self = $(this),
+					$parent = $self.closest('.cfm-form-rows');
 
-        showHideHelp: function() {
-            var childs = $('ul#edd-checkout-fields-editor').children('li');
+				if ($self.is(':checked')) {
+					$parent.next().show().next().show();
+				} else {
+					$parent.next().hide().next().hide();
+				}
+			});
 
-            if ( !childs.length) {
-                $('.cfm-updated').show();
-            } else {
-                $('.cfm-updated').hide();
-            }
-        },
+			// toggle form field
+			$('ul#cfm-formbuilder-fields').on('click', '.cfm-toggle', this.toggleFormField);
 
-        makeSortable: function() {
-            $formEditor = $('ul#edd-checkout-fields-editor');
+			// clone and remove repeated field
+			$('ul#cfm-formbuilder-fields').on('click', 'img.cfm-clone-field', this.cloneField);
+			$('ul#cfm-formbuilder-fields').on('click', 'img.cfm-remove-field', this.removeField);
+		},
 
-            if ($formEditor) {
-                $formEditor.sortable({
-                    placeholder: "ui-state-highlight",
-                    handle: '> .cfm-legend',
-                    distance: 5
-                });
-            }
-        },
+		showHideHelp: function() {
+			var childs = $('ul#cfm-formbuilder-fields').children('li');
 
-        addNewField: function(e) {
-            e.preventDefault();
+			if ( !childs.length) {
+				$('.cfm-updated').show();
+			} else {
+				$('.cfm-updated').hide();
+			}
+		},
 
-            var $self = $(this),
-                $formEditor = $('ul#edd-checkout-fields-editor'),
-                name = $self.data('name'),
-                type = $self.data('type'),
-                data = {
-                    name: name,
-                    type: type,
-                    order: $formEditor.find('li').length + 1,
-                    action: 'edd-checkout-fields_add_el'
-                };
+		makeSortable: function() {
+			$formEditor = $('ul#cfm-formbuilder-fields');
 
-            // console.log($self, data);
+			if ($formEditor) {
+				$formEditor.sortable({
+					placeholder: "ui-state-highlight",
+					handle: '> .cfm-legend',
+					distance: 5
+				});
+			}
+		},
 
-            // check if these are already inserted
-            var oneInstance = ['edd_first', 'edd_last', 'edd_email'];
+		addNewField: function(e) {
+			e.preventDefault();
 
-            if ($.inArray(name, oneInstance) >= 0) {
-                if( $formEditor.find('li.' + name).length ) {
-                    alert('You already have this field in the form');
-                    return false;
-                }
-            }
+			var $self = $(this),
+				$formEditor = $('ul#cfm-formbuilder-fields'),
+				name = $self.data('name'),
+				type = $self.data('type'),
+				id   = $self.data('formid'),
+				data = {
+					name: name,
+					type: type,
+					id: id,
+					order: $formEditor.find('li').length + 1,
+					action: 'cfm_formbuilder'
+				};
 
-            $('.cfm-loading').removeClass('hide');
-            $.post(ajaxurl, data, function(res) {
-                $formEditor.append(res);
+			// check if these are already inserted
+			var oneInstance = ['first_name', 'last_name', 'user_email'];
 
-                // re-call sortable
-                Editor.makeSortable();
+			if ($.inArray(name, oneInstance) >= 0) {
+				if ( $formEditor.find('li.' + name).length ) {
+					alert('You already have this field in the form');
+					return false;
+				}
+			}
 
-                // enable tooltip
-                Editor.tooltip();
+			var buttonText = $self.text();
+			$self.html('<div class="cfm-loading"></div>');
+			$self.attr('disabled', 'disabled');
+			$('.cfm-button:not(:disabled):not([readonly])').each(function() {
+				$(this).attr('disabled', 'disabled');
+			})
 
-                $('.cfm-loading').addClass('hide');
-                Editor.showHideHelp();
-            });
-        },
+			$.post(ajaxurl, data, function(res) {
+				$formEditor.append(res);
 
-        removeFormField: function(e) {
-            e.preventDefault();
+				// re-call sortable
+				Editor.makeSortable();
 
-            if (confirm('Are you sure?')) {
+				// enable tooltip
+				Editor.tooltip();
 
-                $(this).closest('li').fadeOut(function() {
-                    $(this).remove();
+				$self.removeAttr('disabled');
+				$('.cfm-button:not(:enabled):not([readonly])').each(function() {
+					$(this).removeAttr('disabled');
+				})
+				$self.text(buttonText);
+				Editor.showHideHelp();
+			});
+		},
 
-                    Editor.showHideHelp();
-                });
-            }
-        },
+		removeFormField: function(e) {
+			e.preventDefault();
 
-        toggleFormField: function(e) {
-            e.preventDefault();
+			if (confirm('Are you sure?')) {
 
-            $(this).closest('li').find('.edd-checkout-fields-holder').slideToggle('fast');
-        },
+				$(this).closest('li').fadeOut(function() {
+					$(this).remove();
 
-        cloneField: function(e) {
-            e.preventDefault();
+					Editor.showHideHelp();
+				});
+			}
+		},
 
-            var $div = $(this).closest('div');
-            var $clone = $div.clone();
-            // console.log($clone);
+		toggleFormField: function(e) {
+			e.preventDefault();
 
-            //clear the inputs
-            $clone.find('input').val('');
-            $clone.find(':checked').attr('checked', '');
-            $div.after($clone);
-        },
+			$(this).closest('li').find('.cfm-form-holder').slideToggle('fast');
+		},
 
-        removeField: function() {
-            //check if it's the only item
-            var $parent = $(this).closest('div');
-            var items = $parent.siblings().andSelf().length;
+		cloneField: function(e) {
+			e.preventDefault();
 
-            if( items > 1 ) {
-                $parent.remove();
-            }
-        },
+			var $div = $(this).closest('div');
+			var $clone = $div.clone();
+			// console.log($clone);
 
-        setMetaKey: function() {
-            var $self = $(this),
-                val = $self.val().toLowerCase().split(' ').join('_').split('\'').join(''),
-                $metaKey = $(this).closest('.edd-checkout-fields-rows').next().find('input[type=text]');
+			//clear the inputs
+			$clone.find('input').val('');
+			$clone.find(':checked').attr('checked', '');
+			$div.after($clone);
+		},
 
-            if ($metaKey.length) {
-                $metaKey.val(val);
-            }
-        },
+		removeField: function() {
+			//check if it's the only item
+			var $parent = $(this).closest('div');
+			var items = $parent.siblings().andSelf().length;
 
-        tooltip: function() {
-            $('.smallipopInput').smallipop({
-                preferredPosition: 'right',
-                theme: 'black',
-                popupOffset: 0,
-                triggerOnClick: true
-            });
-        },
+			if ( items > 1 ) {
+				$parent.remove();
+			}
+		},
 
-        collpaseEditFields: function(e) {
-            e.preventDefault();
+		setMetaKey: function() {
+			var $self = $(this),
+				val = $self.val().toLowerCase().split(' ').join('_').split('\'').join(''),
+				$metaKey = $(this).closest('.cfm-form-rows').next().find('input[type=text]');
 
-            $('ul#edd-checkout-fields-editor').children('li').find('.edd-checkout-fields-holder').slideToggle();
-        },
+			if ($metaKey.length && $metaKey.val() == '' ) {
+				$metaKey.val(val);
+			}
+		},
 
-        tabber: function() {
-            // Switches option sections
-            $('.group').hide();
-            $('.group:first').fadeIn();
+		tooltip: function() {
+			$('.smallipopInput').smallipop({
+				preferredPosition: 'right',
+				theme: 'black',
+				popupOffset: 0,
+				triggerOnClick: true
+			});
+		},
 
-            $('.group .collapsed').each(function(){
-                $(this).find('input:checked').parent().parent().parent().nextAll().each(
-                function(){
-                    if ($(this).hasClass('last')) {
-                        $(this).removeClass('hidden');
-                        return false;
-                    }
-                    $(this).filter('.hidden').removeClass('hidden');
-                });
-            });
+		collapseEditFields: function(e) {
+			e.preventDefault();
 
-            $('.nav-tab-wrapper a:first').addClass('nav-tab-active');
+			$('ul#cfm-formbuilder-fields').children('li').find('.cfm-form-holder').slideToggle();
+		},
 
-            $('.nav-tab-wrapper a').click(function(evt) {
-                $('.nav-tab-wrapper a').removeClass('nav-tab-active');
-                $(this).addClass('nav-tab-active').blur();
-                var clicked_group = $(this).attr('href');
-                $('.group').hide();
-                $(clicked_group).fadeIn();
-                evt.preventDefault();
-            });
-        }
-    };
+		tabber: function() {
+			// Switches option sections
+			$('.group').hide();
+			$('.group:first').fadeIn();
 
-    // on DOM ready
-    $(function() {
-        Editor.init();
-    });
+			$('.group .collapsed').each(function(){
+				$(this).find('input:checked').parent().parent().parent().nextAll().each(
+				function(){
+					if ($(this).hasClass('last')) {
+						$(this).removeClass('hidden');
+						return false;
+					}
+					$(this).filter('.hidden').removeClass('hidden');
+				});
+			});
+
+			$('.nav-tab-wrapper a:first').addClass('nav-tab-active');
+
+			$('.nav-tab-wrapper a').click(function(evt) {
+				var clicked_group = $(this).attr('href');
+				if ( clicked_group.indexOf( '#' ) >= 0 ) {
+					evt.preventDefault();
+					$('.nav-tab-wrapper a').removeClass('nav-tab-active');
+					$(this).addClass('nav-tab-active').blur();
+					$('.group').hide();
+					$(clicked_group).fadeIn();
+				}
+			});
+		}
+	};
+
+	// on DOM ready
+	$(function() {
+		Editor.init();
+		$( "#cfm-metabox-fields-custom.postbox" ).removeClass( "closed" );
+		$( "#cfm-metabox-fields-extension.postbox") .addClass( "closed" );
+	});
 
 })(jQuery);

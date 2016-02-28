@@ -1,260 +1,218 @@
-;(function($) {
-    var CFM_Form = {
-        init: function() {
-            // clone and remove repeated field
-            $('body').on('click', '#edd_purchase_form_wrap img.cfm-clone-field', this.cloneField);
-            $('body').on('click', '#edd_purchase_form_wrap img.cfm-remove-field', this.removeField);
+;(function ($) {
+	var CFM_Form = {
+		init: function () {
+			// clone and remove repeated field
+			$('body').on('click', 'img.cfm-clone-field', this.cloneField);
+			$('body').on('click', 'img.cfm-remove-field', this.removeField);
 
-            $('body').on('submit', '#edd_purchase_form', this.formSubmit);
-            $('form#post').on('submit', this.adminPostSubmit);
-        },
+			// form submissions
+				// frontend
+					// checkout
+						$('body').on('submit', '#edd_purchase_form', this.formSubmit);
+					// profile
+						// @todo
+				// admin
+					// payments
+						$('form#post').on('submit', this.adminPostSubmit);
+					// profile
+						// @todo
 
-        cloneField: function(e) {
-            e.preventDefault();
+			// download links
+			$('body').on('click', 'a.upload_file_button', this.fileDownloadable);
 
-            var $div = $(this).closest('tr');
-            var $clone = $div.clone();
-            // console.log($clone);
+			// Repeatable file inputs
+			$('body').on('click', 'a.insert-file-row', function (e) {
+				e.preventDefault();
+				var clickedID = $(this).attr('id');
+				var max = $('#cfm-upload-max-files-'+clickedID ).val();
+				var optionContainer = $('.cfm-variations-list-'+clickedID);
+				var option = optionContainer.find('.cfm-single-variation:last');
+				var newOption = option.clone();
+				delete newOption[1];
+				newOption.length = 1;
+				var count = optionContainer.find('.cfm-single-variation').length;
 
-            //clear the inputs
-            $clone.find('input').val('');
-            $clone.find(':checked').attr('checked', '');
-            $div.after($clone);
-        },
+				// too many files 
+				if ( count + 1 > max && max != 0 ){
+					return alert(cfm_form.too_many_files_pt_1 + max + cfm_form.too_many_files_pt_2);
+				}
 
-        removeField: function() {
-            //check if it's the only item
-            var $parent = $(this).closest('tr');
-            var items = $parent.siblings().andSelf().length;
+				newOption.find('input, select, textarea').val('');
+				newOption.find('input, select, textarea').each(function () {
+					var name = $(this).attr('name');
+					name = name.replace(/\[(\d+)\]/, '[' + parseInt(count) + ']');
+					$(this)
+						.attr('name', name)
+						.attr('id', name);
 
-            if( items > 1 ) {
-                $parent.remove();
-            }
-        },
+					newOption.insertBefore("#"+clickedID);
+				});
+				return false;
+			});
 
-        adminPostSubmit: function(e) {
-            e.preventDefault();
+			$('body').on('click', 'a.edd-cfm-delete', function (e) {
+				e.preventDefault();
+				var option = $(this).parents('.cfm-single-variation');
+				var optionContainer = $(this).parents('[class^=cfm-variations-list-]');
+				var count = optionContainer.find('.cfm-single-variation').length;
 
-            var form = $(this),
-                form_data = CFM_Form.validateForm(form);
+				if (count == 1) {
+					option.find('input, select, textarea').val('');
+					return false;
+				} else {
+					option.remove();
+					return false;
+				}
+			});
+		},
 
-            if (form_data) {
-                return true;
-            }
-        },
+		fileDownloadable: function (e) {
+			e.preventDefault();
 
-        formSubmit: function(e) {
+			var self = $(this),
+				downloadable_frame;
 
-            var form = $(this),
-                submitButton = form.find('input[type=submit]')
-                form_data = CFM_Form.validateForm(form);
+			if (downloadable_frame) {
+				downloadable_frame.open();
+				return;
+			}
+
+			downloadable_frame = wp.media({
+				title: cfm_form.file_title,
+				frame: 'select',
+				button: {
+					text: cfm_form.file_button
+				},
+				multiple: false
+			});
+
+			downloadable_frame.on('open',function() {
+				// turn on file filter
+				var fid   = self.closest('tr').find('input.cfm-file-value').attr("data-formid");
+				var fname = self.closest('tr').find('input.cfm-file-value').attr("data-fieldname");
+				$.post(cfm_form.ajaxurl,{ action:'cfm_turn_on_file_filter', formid: fid, name: fname }, function (res) { });
+			});
+
+			downloadable_frame.on('close',function() {
+				// turn on file filter
+				var fid   = self.closest('tr').find('input.cfm-file-value').attr("data-formid");
+				var fname = self.closest('tr').find('input.cfm-file-value').attr("data-fieldname");
+				$.post(cfm_form.ajaxurl,{ action:'cfm_turn_off_file_filter', formid: fid, name: fname }, function (res) { });
+			});
+
+			downloadable_frame.on('select', function () {
+				var selection = downloadable_frame.state().get('selection');
+
+				selection.map(function (attachment) {
+					attachment = attachment.toJSON();
+
+					self.closest('tr').find('input.cfm-file-value').val(attachment.url);
+				});
+			});
+
+			downloadable_frame.open();
+		},
+
+		cloneField: function (e) {
+			e.preventDefault();
+
+			var $div = $(this).closest('tr');
+			var $clone = $div.clone();
+			var $trs = $div.parent().find('tr');
+
+			var key = highest = 0;
+			$trs.each(function() {
+				var current = $(this).data( 'key' );
+				if ( parseInt( current ) > highest ) {
+					highest = current;
+				}
+			});
+			key = highest + 1;
+
+			//clear the inputs
+			$clone.attr( 'data-key', parseInt( key ) );
+			$clone.find(':checked').attr('checked', '');
+			$clone.find('input, select, textarea').val('');
+			$clone.find('input, select, textarea').each(function () {
+				var name = $(this).attr('name');
+				name = name.replace(/\[(\d+)\]/, '[' + parseInt(key) + ']');
+				$(this).attr('name', name).attr('id', name);
+			});
+
+			$div.after($clone);
+		},
+
+		removeField: function () {
+			//check if it's the only item
+			var $parent = $(this).closest('tr');
+			var items = $parent.siblings().andSelf().length;
+
+			if (items > 1) {
+				$parent.remove();
+			}
+		},
+		
+		hasItems: function (map) {
+		   for(var key in map) {
+			  if (map.hasOwnProperty(key)) {
+				 return true;
+			  }
+		   }
+		   return false;
+		},
+		
+		adminPostSubmit: function(e) {
+			var form = $(this),
+				form_data = CFM_Form.validateForm(form);
+		},
+
+		formSubmit: function(e) {
+
+			var form = $(this),
+				submitButton = form.find('input[type=submit]')
+				form_data = CFM_Form.validateForm(form);
 			
 			if(form_data) {
 				return true;
 			} else {
-				// Prevent the form from submissing is there are errors
-	            e.preventDefault();
+				// Prevent the form from submitting is there are errors
+				e.preventDefault();
 			}
 
-        },
+		},
+		
+		validateForm: function (self) {
+			var temp,
+				form_data = self.serialize(),
+				rich_texts = [];
 
-        validateForm: function( self ) {
+			// grab rich texts from tinyMCE
+			$('.cfm-rich-validation').each(function (index, item) {
+				temp = $(item).data('id');
+				val = $.trim(tinyMCE.get(temp).getContent());
+				rich_texts.push(temp + '=' + encodeURIComponent(val));
+			});
 
-            var temp,
-                temp_val = '',
-                error = false,
-                error_items = [];
+			// append them to the form var
+			form_data = form_data + '&' + rich_texts.join('&');
+			return form_data;
+		},
+	};
 
-            // remove all initial errors if any
-            CFM_Form.removeErrors(self);
-            CFM_Form.removeErrorNotice(self);
-
-            // ===== Validate: Text and Textarea ========
-            var required = self.find('[data-required="yes"]');
-
-            required.each(function(i, item) {
-                // temp_val = $.trim($(item).val());
-
-                // console.log( $(item).data('type') );
-                var data_type = $(item).data('type')
-                    val = '';
-                    //console.log( data_type );
-
-                switch(data_type) {
-                    case 'rich':
-                        var name = $(item).data('id')
-                        val = $.trim( tinyMCE.get(name).getContent() );
-
-                        if ( val === '') {
-                            error = true;
-
-                            // make it warn color
-                            CFM_Form.markError(item);
-                        }
-                        break;
-
-                    case 'textarea':
-                    case 'text':
-                        val = $.trim( $(item).val() );
-
-                        if ( val === '') {
-                            error = true;
-
-                            // make it warn color
-                            CFM_Form.markError(item);
-                        }
-                        break;
-
-                    case 'select':
-                        val = $(item).val();
-
-                        // console.log(val);
-                        if ( !val || val === '-1' ) {
-                            error = true;
-
-                            // make it warn color
-                            CFM_Form.markError(item);
-                        }
-                        break;
-
-                    case 'multiselect':
-                        val = $(item).val();
-
-                        if ( val === null || val.length === 0 ) {
-                            error = true;
-
-                            // make it warn color
-                            CFM_Form.markError(item);
-                        }
-                        break;
-
-                    case 'checkbox':
-
-                        var length = $(item).parent().find('input:checked').length;
-
-                        if ( ! length ) {
-                            error = true;
-
-                            // make it warn color
-                            CFM_Form.markError(item);
-                        }
-                        break;
-
-
-                    case 'radio':
-
-                        var length = $(item).parent().find('input:checked').length;
-
-                        if ( !length ) {
-                            error = true;
-
-                            // make it warn color
-                            CFM_Form.markError(item);
-                        }
-                        break;
-
-                    case 'file':
-                        var length = $(item).next('ul').children().length;
-
-                        if ( !length ) {
-                            error = true;
-
-                            // make it warn color
-                            CFM_Form.markError(item);
-                        }
-                        break;
-
-                    case 'email':
-                        var val = $(item).val();
-
-                        if ( val !== '' ) {
-                            //run the validation
-                            if( !CFM_Form.isValidEmail( val ) ) {
-                                error = true;
-
-                                CFM_Form.markError(item);
-                            }
-                        }
-                        break;
-
-
-                    case 'url':
-                        var val = $(item).val();
-
-                        if ( val !== '' ) {
-                            //run the validation
-                            if( !CFM_Form.isValidURL( val ) ) {
-                                error = true;
-
-                                CFM_Form.markError(item);
-                            }
-                        }
-                        break;
-
-                };
-
-            });
-
-            // if already some error found, bail out
-            if (error) {
-                // add error notice
-                CFM_Form.addErrorNotice(self);
-                return false;
-            }
-
-            var form_data = self.serialize(),
-                rich_texts = [];
-
-            // grab rich texts from tinyMCE
-            $('.cfm-rich-validation').each(function (index, item) {
-                temp = $(item).data('id');
-                val = $.trim( tinyMCE.get(temp).getContent() );
-
-                rich_texts.push(temp + '=' + encodeURIComponent( val ) );
-            });
-
-            // append them to the form var
-            form_data = form_data + '&' + rich_texts.join('&');
-            return form_data;
-        },
-
-        addErrorNotice: function(form) {
-			$('#edd_purchase_form #edd-purchase-button').attr("disabled", false);
-			$('.edd-cart-ajax').hide();
-			if( edd_global_vars.complete_purchase )
-				$('#edd-purchase-button').val(edd_global_vars.complete_purchase);
-			else
-				$('#edd-purchase-button').val('Purchase');
-			
-            $(form).find('#edd_purchase_submit').prepend('<div class="edd_errors"><p class="edd_error">' + cfm_frontend.error_message + '</p></div>');
-	   },
-
-        removeErrorNotice: function(form) {
-            $(form).find('.cfm-error edd_errors').remove();
-        },
-
-        markError: function(item) {
-            $(item).closest('fieldset').addClass('has-error');
-            $(item).focus();
-        },
-
-        removeErrors: function(item) {
-            $(item).find('.has-error').removeClass('has-error');
-        },
-
-        isValidEmail: function( email ) {
-            var pattern = new RegExp(/^((([a-z]|\d|[!#\$%&'\*\+\-\/=\?\^_`{\|}~]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])+(\.([a-z]|\d|[!#\$%&'\*\+\-\/=\?\^_`{\|}~]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])+)*)|((\x22)((((\x20|\x09)*(\x0d\x0a))?(\x20|\x09)+)?(([\x01-\x08\x0b\x0c\x0e-\x1f\x7f]|\x21|[\x23-\x5b]|[\x5d-\x7e]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(\\([\x01-\x09\x0b\x0c\x0d-\x7f]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]))))*(((\x20|\x09)*(\x0d\x0a))?(\x20|\x09)+)?(\x22)))@((([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))\.)+(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))\.?$/i);
-            return pattern.test(email);
-        },
-
-        isValidURL: function(url) {
-            var urlregex = new RegExp("^(http:\/\/www.|https:\/\/www.|ftp:\/\/www.|www.|http:\/\/|https:\/\/){1}([0-9A-Za-z]+\.)");
-            return urlregex.test(url);
-        },
-    };
-
-    $(function() {
-        CFM_Form.init();
-    });
+	$(function () {
+		CFM_Form.init();
+	});
 
 })(jQuery);
+webshim.setOptions('forms-ext', {
+	replaceUI: true,
+	types: 'date datetime',
+	date: {
+		openOnFocus: true,
+	},
+	datetime: {
+		openOnFocus: true,
+	}
+});
+//start polyfilling
+webshim.polyfill('forms forms-ext');
