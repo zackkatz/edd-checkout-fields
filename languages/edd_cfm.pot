@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
 "Project-Id-Version: Easy Digital Downloads - Checkout Fields Manager\n"
-"POT-Creation-Date: 2016-02-28 15:47-0500\n"
+"POT-Creation-Date: 2016-02-28 15:54-0500\n"
 "PO-Revision-Date: 2015-09-09 19:25-0400\n"
 "Last-Translator: Chris Christoff <support@easydigitaldownloads.com>\n"
 "Language-Team: Chris Christoff <support@easydigitaldownloads.com>\n"
@@ -910,21 +910,21 @@ msgstr ""
 msgid "%s"
 msgstr ""
 
-#: classes/misc-functions.php:746
+#: classes/misc-functions.php:743
 #, php-format
 msgid "Please upload files no larger than %s KB"
 msgstr ""
 
-#: classes/misc-functions.php:767
+#: classes/misc-functions.php:764
 #, php-format
 msgid "Please upload files with one of these extensions: %s"
 msgstr ""
 
-#: classes/misc-functions.php:809
+#: classes/misc-functions.php:806
 msgid "Please enter your first name"
 msgstr ""
 
-#: classes/misc-functions.php:844
+#: classes/misc-functions.php:841
 msgid "Please enter your last name."
 msgstr ""
 
