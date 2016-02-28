@@ -642,7 +642,7 @@ if ( !function_exists( 'auth_redirect' ) ) {
 		 *
 		 * @param bool $skip Whether to skip authentication redirect. Default false.
 		 */
-		$skip = apply_filters( 'secure_auth_redirect', false );
+		$skip = apply_filters( 'skip_auth_redirect', false );
 		
 		if ( $skip ) {
 			return;
