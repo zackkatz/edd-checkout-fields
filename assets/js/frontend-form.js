@@ -5,17 +5,10 @@
 			$('body').on('click', 'img.cfm-clone-field', this.cloneField);
 			$('body').on('click', 'img.cfm-remove-field', this.removeField);
 
-			// form submissions
-				// frontend
-					// checkout
-						$('body').on('submit', '#edd_purchase_form', this.formSubmit);
-					// profile
-						// @todo
-				// admin
-					// payments
-						$('form#post').on('submit', this.adminPostSubmit);
-					// profile
-						// @todo
+			// Frontend checkout submission
+			$('body').on('submit', '#edd_purchase_form', this.formSubmit);
+			// admin payment submission
+			$('form#post').on('submit', this.adminPostSubmit);
 
 			// download links
 			$('body').on('click', 'a.upload_file_button', this.fileDownloadable);
