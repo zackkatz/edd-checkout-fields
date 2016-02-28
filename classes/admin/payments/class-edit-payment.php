@@ -47,14 +47,7 @@ class CFM_Edit_Payment {
 	 *
 	 * @since 2.0.0
 	 *
-	 * @global $post The current payment, as provided by WP core.
-	 * @uses  CFM_Forms::render_form_admin() Provides the HTML for the form.
-	 *
-	 * @param string $type Type of CFM form.
-	 * @param int $id ID of user/post to edit in form.
-	 * @param bool $readonly Whether the form is readonly.
-	 * @param array $args Additional arguments to send 
-	 *                    to form rendering functions.
+	 * @param int $payment_id The payment ID.
 	 * @return void
 	 */
 	public function render_form( $payment_id ) {

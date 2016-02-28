@@ -1,6 +1,6 @@
 <?php
 /**
- * CFM Installation and Automatic Upgrades
+ * CFM Installation and Automatic Upgrades.
  *
  * This file handles setting up new
  * CFM installs as well as performing

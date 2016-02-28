@@ -1,9 +1,9 @@
 <?php
 /**
- * CFM Profile
+ * CFM Checkout
  *
- * This file deals with the rendering and saving of CFM forms,
- * particularly from shortcodes.
+ * This file deals with the rendering and saving of CFM forms on
+ * the checkout page.
  *
  * @package CFM
  * @subpackage Frontend
@@ -16,21 +16,20 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 /**
- * CFM Forms.
+ * CFM Checkout Form.
  *
- * Register the form shortcodes and create render/save 
- * ajax functions for them.
+ * Renders, validates and saves the checkout form fields.
  *
  * @since 2.0.0
  * @access public
  */
 class CFM_Checkout {
+
 	/**
-	 * CFM Form Actions and Shortcodes.
+	 * CFM Checkout Actions.
 	 *
-	 * Registers ajax endpoints to save CFM forms with
-	 * on the frontend as well as registers shortcodes for
-	 * the default CFM forms.
+	 * Registers ajax endpoints to register, validate and save CFM forms with
+	 * on the frontend.
 	 *
 	 * @since 2.0.0
 	 * @access public
@@ -39,8 +38,7 @@ class CFM_Checkout {
 	 */	
 	function __construct() {
 		// save actions
-		add_action( 'edd_insert_payment', array($this,'submit_checkout_form'),10,2);
-		//add_filter( 'edd_purchase_form_required_fields', array($this, 'req_fields'), 10, 3);
+		add_action( 'edd_insert_payment', array($this,'submit_checkout_form'), 10, 2);
 		remove_action( 'edd_register_fields_before', 'edd_user_info_fields' );
 		add_action( 'edd_register_fields_before', array( $this, 'render_checkout_form' ) );
 		remove_action( 'edd_purchase_form_after_user_info', 'edd_user_info_fields' );
@@ -48,20 +46,15 @@ class CFM_Checkout {
 		add_action( 'edd_checkout_error_checks', array( $this, 'validate' ), 10, 2 );
 	}
 
-
 	/**
-	 * Render Profile Form.
+	 * Render Checkout Form.
 	 *
-	 * Renders profile form.
+	 * Renders checkout form.
 	 *
 	 * @since 2.0.0
 	 * @access public
 	 * 
-	 * @param int  $post_id User id to edit.
-	 * @param bool $readonly Whether the form is readonly.
-	 * @param array $args Additional arguments to send 
-	 *                    to form rendering functions.
-	 * @return string HTML of profile form.
+	 * @return string HTML of fields to add to checkout form.
 	 */
 	public function render_checkout_form( ) {
 		$user_id = get_current_user_id();
@@ -80,6 +73,18 @@ class CFM_Checkout {
 		echo $output;
 	}
 	
+	/**
+	 * Validate Checkout Form.
+	 *
+	 * Validate checkout form.
+	 *
+	 * @since 2.0.0
+	 * @access public
+	 *
+	 * @param array $valid_data Unused.
+	 * @param array $post_data POST'd data to validate.
+	 * @return void.
+	 */
 	public function validate( $valid_data, $post_data ){
 		$form_id   = isset( $post_data['form_id'] )   ? absint( $post_data['form_id'] ) : get_option( 'cfm-checkout-form', -2 );
 		// Make the CFM Form
@@ -91,19 +96,16 @@ class CFM_Checkout {
 	/**
 	 * Submit Checkout Form.
 	 *
-	 * Submit profile form on the frontend
-	 * My Account page.
+	 * Submit checkout form.
 	 *
 	 * @since 2.0.0
 	 * @access public
 	 * 
-	 * @param int  $id User id to edit.
-	 * @param array $values Values to save.
-	 * @param array $args Additional arguments to send 
-	 *                    to form rendering functions.
+	 * @param int  $payment_id Payment ID to save data to.
+	 * @param array $payment_data Values to save.
 	 * @return void
 	 */
-	function submit_checkout_form( $payment_id, $payment_data ) {
+	public function submit_checkout_form( $payment_id, $payment_data ) {
 		$form_id   = isset( $_REQUEST['form_id'] )   ? absint( $_REQUEST['form_id'] ) : get_option( 'cfm-checkout-form', -2 );
 		$values    = $_POST;
 		// Make the CFM Form

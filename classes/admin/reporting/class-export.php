@@ -1,5 +1,4 @@
 <?php
-// @todo Finish this post framework migration
 /**
  * CFM Export
  *
@@ -27,12 +26,32 @@ if ( ! defined( 'ABSPATH' ) ) {
  * @todo Extend to multiple forms.
  */
 class CFM_Export {
-
+	/**
+	 * CFM Export Actions.
+	 *
+	 * Runs actions required to add fields to exports.
+	 *
+	 * @since 2.0.0
+	 * @access public
+	 * 
+	 * @return void
+	 */	
 	public function __construct() {
 		add_filter( 'edd_export_csv_cols_payments', array( $this, 'columns' ) );
 		add_filter( 'edd_export_get_data_payments', array( $this, 'data' ) );
 	}
 	
+	/**
+	 * CFM Export Columns.
+	 *
+	 * Adds columns to the export files.
+	 *
+	 * @since 2.0.0
+	 * @access public
+	 *
+	 * @param  array $cols Array of columns on the export.
+	 * @return array Array of cols on the export.
+	 */	
 	public function columns( $cols ){
 		$form_id = get_option( 'cfm-checkout-form', false );
 		if ( !$form_id ){
@@ -52,6 +71,17 @@ class CFM_Export {
 		return $cols;
 	}
 
+	/**
+	 * CFM Export Data.
+	 *
+	 * Adds data to the export files.
+	 *
+	 * @since 2.0.0
+	 * @access public
+	 *
+	 * @param  array $data Array of data on the export.
+	 * @return array Array of data on the export.
+	 */	
 	public function data( $data ){
 		$form_id = get_option( 'cfm-checkout-form', false );
 		if ( !$form_id ){

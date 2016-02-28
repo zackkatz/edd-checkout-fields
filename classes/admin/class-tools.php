@@ -1,5 +1,4 @@
 <?php
-// @todo move this to the EDD tools page
 /**
  * CFM Tools
  *
@@ -8,7 +7,7 @@
  *
  * @package CFM
  * @subpackage Tools
- * @since 2.3.0
+ * @since 2.0.0
  */
 
 // Exit if accessed directly
@@ -22,7 +21,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  * Deals with adding CFM tools on the
  * Tools submenu page for CFM.
  *
- * @since 2.3.0
+ * @since 2.0.0
  * @access public
  */
 class CFM_Tools {
@@ -33,7 +32,7 @@ class CFM_Tools {
 	 * Runs actions required to show 
 	 * and run the CFM tools.
 	 *
-	 * @since 2.3.0
+	 * @since 2.0.0
 	 * @access public
 	 * 
 	 * @return void
@@ -46,6 +45,17 @@ class CFM_Tools {
 		add_action( 'edd_reset_cfm_form', array( $this,'reset' ) );
 	}
 	
+	/**
+	 * CFM Tools Tab.
+	 *
+	 * Adds tool tab to the EDD tools page.
+	 *
+	 * @since 2.0.0
+	 * @access public
+	 *
+	 * @param  array $tabs Array of tabs on the EDD tools page.
+	 * @return array Array of tabs on the EDD tools page.
+	 */		
 	public function add_cfm_tab( $tabs ){
 		if( current_user_can( 'manage_shop_settings' ) ) {
 			$tabs['cfm'] = __( 'Checkout Fields Manager', 'edd_cfm' );
@@ -55,10 +65,14 @@ class CFM_Tools {
 	
 
 	/**
-	 * Display the recount stats
+	 * CFM Tools Tab page contents.
 	 *
-	 * @since       2.5
-	 * @return      void
+	 * Renders the tools for CFM.
+	 *
+	 * @since  2.0.0
+	 * @access public
+	 * 
+	 * @return void
 	 */
 	public function cfm_tab() {
 		if( ! current_user_can( 'manage_shop_settings' ) ) {
@@ -110,10 +124,14 @@ class CFM_Tools {
 	}
 	
 	/**
-	 * Process a settings export that generates a .json file of the shop settings
+	 * CFM Checkout Form Reset.
+	 * 
+	 * Resets the checkout form to it's default fields.
 	 *
-	 * @since       1.7
-	 * @return      void
+	 * @since  2.0.0
+	 * @access public
+	 * 
+	 * @return void
 	 */
 	public function reset( ) {
 		if( empty( $_POST['edd_reset_cfm_form_nonce'] ) ) {
@@ -145,10 +163,14 @@ class CFM_Tools {
 	}
 
 	/**
-	 * Process a settings export that generates a .json file of the shop settings
+	 * CFM Checkout Form Export.
+	 * 
+	 * Process a settings export that generates a .json file of the checkout form.
 	 *
-	 * @since       1.7
-	 * @return      void
+	 * @since  2.0.0
+	 * @access public
+	 * 
+	 * @return void
 	 */
 	public function export() {
 		if( empty( $_POST['edd_export_cfm_form_nonce'] ) ) {
@@ -174,11 +196,14 @@ class CFM_Tools {
 		exit;
 	}
 
-	
 	/**
-	 * Process a settings import from a json file
+	 * CFM Checkout Form Import.
+	 * 
+	 * Process checkout fields import from a json file.
 	 *
-	 * @since 1.7
+	 * @since  2.0.0
+	 * @access public
+	 * 
 	 * @return void
 	 */
 	function import() {
@@ -217,15 +242,13 @@ class CFM_Tools {
 		wp_safe_redirect( admin_url( 'edit.php?post_type=download&page=edd-tools&tab=cfm&edd-message=fields-imported' ) ); exit;
 	}
 	
-	
-	
 	/**
 	 * CFM tools panel
 	 *
 	 * Shows the tools panel which contains CFM-specific tools including the
 	 * built-in import/export system.
 	 *
-	 * @since 2.3.0
+	 * @since 2.0.0
 	 * @access public
 	 * 
 	 * @return void

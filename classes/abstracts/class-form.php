@@ -241,7 +241,7 @@ class CFM_Form {
 				if ( is_object( $field ) && method_exists( $field, 'render_field_frontend' ) ) {
 					$output .= $field->render_field_frontend( $current_user_id, $profile );
 				} else if ( isset( $field['template'] ) ) {
-					_cfm_deprecated( 'Outputting using a non CFM Field is deprecated. Support will be removed in 2.4.' );
+					_cfm_deprecated( 'Outputting using a non CFM Field is deprecated. Support will be removed in 2.1.' );
 					ob_start();
 					do_action( 'cfm_render_field_' . $field['template'], $this->characteristics, $this->payment_id, '' );
 					$output .= ob_get_clean();

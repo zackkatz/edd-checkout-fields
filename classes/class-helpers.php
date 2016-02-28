@@ -87,7 +87,7 @@ class CFM_Helpers {
 		$class = get_post_meta( $id, 'cfm-form-class', false );
 		if ( !$class ){
 			if ( get_option( 'cfm-checkout-form', false ) == $id ) {
-				$class = 'CFM_Submission_Form';
+				$class = 'CFM_Checkout_Form';
 			}
 		}
 		return $class;
@@ -210,7 +210,7 @@ class CFM_Helpers {
 	 */
 	public function get_form_name_by_class( $class ){
 		if ( 'submission' == $class ) {
-			$class = 'CFM_Submission_Form';
+			$class = 'CFM_Checkout_Form';
 		}
 		return $class;
 	}

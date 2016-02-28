@@ -8,7 +8,7 @@
  *
  * @package CFM
  * @subpackage Formbuilder
- * @since 2.0.0
+ * @since 1.0.0
  */
 
 // Exit if accessed directly
@@ -17,7 +17,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 /**
- * Warning: This class is a candidate for deprecation starting with 2.4
+ * Warning: This class is a candidate for deprecation starting with 2.1
  */
 
 /**
@@ -49,7 +49,7 @@ class CFM_Formbuilder_Templates {
 	 * @return void
 	 */	
 	public static function legend( $title = 'Field Name', $values = array(), $removable = true ) {
-		_cfm_deprecated_function( 'EDD_CFM()->formbuilder_templates->legend', '2.3', 'CFM_Field->legend' );
+		_cfm_deprecated_function( 'EDD_CFM()->formbuilder_templates->legend', '2.0.0', 'CFM_Field->legend' );
 		$field_label = '';
 		$legend      = '';
 		if ( empty( $values['label'] ) && !empty( $values['class'] ) ) {
@@ -112,7 +112,7 @@ class CFM_Formbuilder_Templates {
 	 * @return void
 	 */		
 	public static function common( $id, $field_name_value = '', $custom_field = true, $values = array(), $force_required = false, $template = 'text' ) {
-		_cfm_deprecated_function( 'EDD_CFM()->formbuilder_templates->common', '2.3', 'EDD_CFM()->formbuilder_templates->standard' );
+		_cfm_deprecated_function( 'EDD_CFM()->formbuilder_templates->common', '2.0.0', 'EDD_CFM()->formbuilder_templates->standard' );
 		$tpl = '%s[%d][%s]';
 		$required_name = sprintf( $tpl, 'cfm_input', $id, 'required' );
 		$field_name    = sprintf( $tpl, 'cfm_input', $id, 'name' );

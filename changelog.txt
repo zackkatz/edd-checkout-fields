@@ -1,4 +1,4 @@
-= 2.0.0, February 22, 2016 =
+= 2.0.0, March 1, 2016 =
 * New: Introduced CFM Field API that all CFM fields now run on
 * New: Introduced CFM Form API that all CFM forms now run on
 * New: Introduced _cfm_deprecated_function()

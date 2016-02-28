@@ -7,7 +7,7 @@
  *
  * @package CFM
  * @subpackage Post Types
- * @since 2.3.0
+ * @since 2.0.0
  */
 
 // Exit if accessed directly
@@ -21,7 +21,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  * This file contains code that affects the 
  * CFM Forms post type.
  *
- * @since 2.3.0
+ * @since 2.0.0
  * @access public
  */
 class CFM_Post_Types {
@@ -33,7 +33,7 @@ class CFM_Post_Types {
 	 * the CFM Forms post type and disable UI items 
 	 * of it.
 	 *
-	 * @since 2.3.0
+	 * @since 2.0.0
 	 * @access public
 	 * 
 	 * @return void
@@ -50,7 +50,7 @@ class CFM_Post_Types {
 	 * Adds the CFM Forms post type which is 
 	 * used to store CFM forms.
 	 *
-	 * @since 2.3.0
+	 * @since 2.0.0
 	 * @access public
 	 *
 	 * @return void
@@ -112,7 +112,7 @@ class CFM_Post_Types {
 	 * that doesn't make any sense for use
 	 * with CFM.
 	 *
-	 * @since 2.3.0
+	 * @since 2.0.0
 	 * @access public
 	 *
 	 * @param  bool $hide Whether to hide the dropdown for the post type.

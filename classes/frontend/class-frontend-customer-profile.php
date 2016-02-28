@@ -1,9 +1,9 @@
 <?php
 /**
- * CFM Profile
+ * CFM Customer Frontned Pofile.
  *
- * This file deals with the rendering and saving of CFM forms,
- * particularly from shortcodes.
+ * This file deals with the rendering and saving of CFM forms on 
+ * the frontend but not the checkout form.
  *
  * @package CFM
  * @subpackage Frontend
@@ -15,22 +15,22 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
+
 /**
- * CFM Forms.
+ * CFM Frontend Customer Profile.
  *
- * Register the form shortcodes and create render/save 
- * ajax functions for them.
+ * Renders, validates and saves the frontend profile fields.
  *
  * @since 2.0.0
  * @access public
  */
 class CFM_Frontend_Customer_Profile {
+
 	/**
-	 * CFM Form Actions and Shortcodes.
+	 * CFM Frontend Customer Profile Actions.
 	 *
-	 * Registers ajax endpoints to save CFM forms with
-	 * on the frontend as well as registers shortcodes for
-	 * the default CFM forms.
+	 * Registers ajax endpoints to register, validate and save CFM forms with
+	 * on the frontend custom profile.
 	 *
 	 * @since 2.0.0
 	 * @access public
@@ -43,16 +43,15 @@ class CFM_Frontend_Customer_Profile {
 		add_action( 'edd_user_profile_updated', array( $this, 'save' ) );
 	}
 
-
 	/**
-	 * Render Profile Form.
+	 * Render Customer Profile Form.
 	 *
-	 * Renders profile form.
+	 * Renders customer profile form.
 	 *
 	 * @since 2.0.0
 	 * @access public
 	 * 
-	 * @return string HTML of profile form.
+	 * @return string HTML of fields to add to [edd_profile] form.
 	 */
 	public function render() {
 		$user_id = get_current_user_id();
@@ -72,6 +71,18 @@ class CFM_Frontend_Customer_Profile {
 		}
 	}
 	
+	/**
+	 * Validate Frontend Customer Profile Form.
+	 *
+	 * Validate frontend profile form.
+	 *
+	 * @since 2.0.0
+	 * @access public
+	 *
+	 * @param array $valid_data Unused.
+	 * @param array $post_data POST'd data to validate.
+	 * @return void.
+	 */
 	public function validate() {
 		$user_id = get_current_user_id();
 		$form_id = isset( $_REQUEST['form_id'] )   ? absint( $_REQUEST['form_id'] )   : get_option( 'cfm-checkout-form', false );
@@ -80,13 +91,12 @@ class CFM_Frontend_Customer_Profile {
 		$form      = new CFM_Checkout_Form( $form_id, 'id', -2, $user_id );
 		// Save the CFM Form
 		$form->validate_form_frontend( $values, $user_id, true );
-	}	
+	}
 
 	/**
-	 * Submit Profile Form.
+	 * Submit Frontend Customer Profile Form.
 	 *
-	 * Submit profile form on the frontend
-	 * My Account page.
+	 * Submit customer profile form.
 	 *
 	 * @since 2.0.0
 	 * @access public

@@ -123,35 +123,35 @@ class EDD_Checkout_Fields_Manager {
 	public $tools;	
 	
 	/**
-	 * CFM Profile
+	 * CFM Admin Customer Profile
 	 *
 	 * @since 2.0.0
 	 * @access public
-	 * @var CFM_Profile $profile Use to access any function in CFM_Profile class.
+	 * @var CFM_Admin_Customer_Profile $admin_profile Use to access any function in CFM_Admin_Customer_Profile class.
 	 */
 	public $admin_profile;
 	
 	/**
-	 * CFM Profile
+	 * CFM Frontend Customer Profile
 	 *
 	 * @since 2.0.0
 	 * @access public
-	 * @var CFM_Profile $profile Use to access any function in CFM_Profile class.
+	 * @var CFM_Frontend_Customer_Profile $admin_profile Use to access any function in CFM_Frontend_Customer_Profile class.
 	 */
 	public $frontend_profile;
 	
 	/**
-	 * CFM Profile
+	 * CFM Checkout Form
 	 *
 	 * @since 2.0.0
 	 * @access public
-	 * @var CFM_Profile $profile Use to access any function in CFM_Profile class.
+	 * @var CFM_Checkout_Form $checkout Use to access any function in CFM_Checkout_Form class.
 	 */
 	public $checkout;
 	
 	
 	/**
-	 * CFM Edit Download
+	 * CFM Edit Payment
 	 *
 	 * @since 2.0.0
 	 * @access public
@@ -293,7 +293,7 @@ class EDD_Checkout_Fields_Manager {
 	 *
 	 * This function defines all of the CFM PHP constants and a few object attributes.
 	 *
-	 * @since 2.2.0
+	 * @since 2.0.0
 	 * @access public
 	 *
 	 * @return void

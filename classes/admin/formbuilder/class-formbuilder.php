@@ -40,18 +40,6 @@ function cfm_forms_form_updated_message( $messages ) {
 		9  => __( 'Checkout form updated.', 'edd_cfm' ) ,
 		10 => __( 'Checkout form updated.', 'edd_cfm' )
 	);
-
-	/**
-	 * Messages for the CFM formbuilder
-	 *
-	 * Lets you edit the CFM messages via a filter rather than
-	 * via a translation.
-	 *
-	 * @since 2.0.0
-	 *
-	 * @param array $message Array of update code to message for the formbuilder.
-	 */	
-	$messages['edd-checkout-fields'] = apply_filters( 'cfm_forms_form_updated_message', $message );
 	return $messages;
 }
 add_filter( 'post_updated_messages', 'cfm_forms_form_updated_message' );
@@ -438,7 +426,7 @@ function cfm_forms_ajax_post_add_field() {
 		 *
 		 * @since 2.0.0
 		 *
-		 * @deprecated 2.3.0
+		 * @deprecated 2.0.0
 		 * @see  CFM_Field
 		 *
 		 * @param int $field_id Order of field in the formbuilder.

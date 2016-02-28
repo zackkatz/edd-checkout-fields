@@ -31,7 +31,7 @@ class CFM_Setup {
 	 *
 	 * Registers the actions and filters.
 	 *
-	 * @since 2.3.0
+	 * @since 2.0.0
 	 * @access public
 	 * 
 	 * @return void
@@ -52,12 +52,12 @@ class CFM_Setup {
 	}
 
 	/**
-	 * CFM No Vendor Dashboard Set Notice.
+	 * CFM No checkout page Set Notice.
 	 *
-	 * Shows an admin notice if the vendor dashboard
+	 * Shows an admin notice if the checkout page
 	 * page isn't set in the CFM settings.
 	 *
-	 * @since 2.3.0
+	 * @since 2.0.0
 	 * @access public
 	 * 
 	 * @return void
@@ -99,7 +99,7 @@ class CFM_Setup {
 	 * @access public
 	 *
 	 * @param bool $override If true load on page even if the
-	 *                       page isn't the vendor dashboard.
+	 *                       page isn't the checkout page.
 	 * @return void
 	 */
 	public function enqueue_scripts( $override = false ) {
@@ -146,7 +146,7 @@ class CFM_Setup {
 	 * @access public
 	 *
 	 * @param bool $override If true load on page even if the
-	 *                       page isn't the vendor dashboard.
+	 *                       page isn't the checkout page.
 	 * @return void
 	 */
 	public function enqueue_styles( $override = false ) {
@@ -211,8 +211,6 @@ class CFM_Setup {
 				'too_many_files_pt_1' => __( 'You may not add more than ', 'edd_cfm' ),
 				'too_many_files_pt_2' => __( ' files!', 'edd_cfm' ),
 			);
-			
-			$options = apply_filters( 'cfm_cfm_forms_options_admin', $options );
 			
 			wp_enqueue_script( 'jquery-ui-autocomplete' );
 			wp_enqueue_script( 'suggest' );
@@ -325,7 +323,7 @@ class CFM_Setup {
 		 * action and require_once your field here. Warning to devs:
 		 * See "Planned Potentially Breaking Changes" section in README.
 		 *
-		 * @since 2.1.0
+		 * @since 2.0.0
 		 */
 		//do_action( 'cfm_load_fields_require' );
 
@@ -374,7 +372,7 @@ class CFM_Setup {
 	 * Loads the abstract and then all of the extended
 	 * CFM Forms.
 	 *
-	 * @since 2.3.0
+	 * @since 2.0.0
 	 * @access public
 	 *
 	 * @return void
@@ -386,7 +384,7 @@ class CFM_Setup {
 		// require forms
 		require_once cfm_plugin_dir . 'classes/forms/checkout.php';
 
-		// do_action( 'cfm_load_forms_require' ); Allow starting 2.4
+		// do_action( 'cfm_load_forms_require' ); Allow starting 2.1
 
 		// get names ( name -> class)
 		//$forms = apply_filters( 'cfm_load_forms_array', array( 
@@ -399,8 +397,8 @@ class CFM_Setup {
 	}
 	
 	public function add_section( $sections ) {
-	    $sections['cfm'] = cfm_plugin_name;
-	    return $sections;
+		$sections['cfm'] = cfm_plugin_name;
+		return $sections;
 	}
 	
 	public function add_settings( $settings ) {
@@ -426,11 +424,12 @@ class CFM_Setup {
 					'section' => 'cfm'
 				)
 			)
-	    );
+		);
 		return array_merge( $settings, $cfm_settings );	
 	}
+
 	/**
-	 * FES Lock Uploaded.
+	 * CFM Lock Uploaded.
 	 *
 	 * Locks the media modal on the frontend
 	 * to start on the upload window.
@@ -441,10 +440,21 @@ class CFM_Setup {
 	 * @return void
 	 */
 	public function edd_lockup_uploaded() {
+		if ( cfm_is_admin() ) {
+			return;
+		}
+?>
+		<script type="text/javascript">
+		jQuery(document).on("DOMNodeInserted", function(){
+			// Lock uploads to "Uploaded to this post"
+			jQuery('select.attachment-filters [value="uploaded"]').attr( 'selected', true ).parent().trigger('change');
+		});
+		</script>
+		<?php
 	}
 
 	/**
-	 * FES Remove Media Library Tab.
+	 * CFM Remove Media Library Tab.
 	 *
 	 * Removes the library, gallery, type, type url,
 	 * and url tabs from the media library on the 
@@ -457,9 +467,11 @@ class CFM_Setup {
 	 * @return array Tabs to show on the media modal.
 	 */
 	public function remove_media_library_tab( $tabs ) {
-		if ( !EDD()->session->get( 'CFM_FILE_UPLOAD' ) ) {
+		
+		if ( cfm_is_admin() || !EDD()->session->get( 'CFM_FILE_UPLOAD' ) ) {
 			return $tabs;
 		}
+
 		unset( $tabs['library'] );
 		unset( $tabs['gallery'] );
 		unset( $tabs['type'] );
@@ -469,7 +481,7 @@ class CFM_Setup {
 	}
 
 	/**
-	 * FES Restrict Media.
+	 * CFM Restrict Media.
 	 *
 	 * Prevents vendors from seeing media files that aren't theirs
 	 * if the current user isn't an admin.
@@ -481,9 +493,9 @@ class CFM_Setup {
 	 * @return void
 	 */
 	public function restrict_media( $wp_query ) {
-		if ( !EDD()->session->get( 'CFM_FILE_UPLOAD' ) ) {
+		if ( cfm_is_admin() || !EDD()->session->get( 'CFM_FILE_UPLOAD' ) ) {
 			return;
-		}		
+		}
 		if ( $wp_query->get( 'post_type' ) == 'attachment' ) {
 			exit;
 		}

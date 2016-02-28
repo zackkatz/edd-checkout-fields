@@ -18,48 +18,13 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-
-/**
- * Associate attachment to a post.
- *
- * CFM uses this to attach uploaded media items
- * to the download post type.
- *
- * @since 2.0
- * @access public
- *
- * @global $wpdb WordPress database object.
- *
- * @param int $attachment_id Upload media item's id.
- * @param int $post_id Download's post id.
- */
-function cfm_associate_attachment( $attachment_id, $post_id ) {
-	global $wpdb;
-
-	$wpdb->update(
-		$wpdb->posts,
-		array(
-			'post_parent' => $post_id,
-		),
-		array(
-			'ID' => $attachment_id,
-		),
-		array(
-			'%d'
-		),
-		array(
-			'%d'
-		)
-	);
-}
-
 /**
  * Get attachment ID from a URL.
  *
  * CFM stores the attachment ids for file fields. This
  * function gets the attachment ID from a URL.
  *
- * @since 2.1.8
+ * @since 2.0.0
  * @access public
  *
  * @link http://philipnewcomer.net/2012/11/get-the-attachment-id-from-an-image-url-in-wordpress/ Original Implementation
@@ -85,16 +50,13 @@ function cfm_get_attachment_id_from_url( $attachment_url = '', $author_id = 0 ) 
 	// Make sure the upload path base directory exists in the attachment URL, to verify that we're working with a media library image
 	if ( false !== strpos( $attachment_url, $upload_dir_paths['baseurl'] ) ) {
 
-		// Don't remove this for now. See https://github.com/chriscct7/edd-cfm/issues/662
-		// todo: remove in 2.4 unless 662 is reopened
+		// Don't remove this for now. See https://github.com/chriscct7/edd-fes/issues/662
+		// @todo: remove in 2.1 unless 662 is reopened
 		// If this is the URL of an auto-generated thumbnail, get the URL of the original image
 		// $attachment_url = preg_replace( '/-\d+x\d+(?=\.(jpg|jpeg|png|gif)$)/i', '', $attachment_url );
 
 		// Remove the upload path base directory from the attachment URL
 		$attachment_url = str_replace( $upload_dir_paths['baseurl'] . '/', '', $attachment_url );
-
-		// Remove the -avatar suffix
-		$attachment_url = str_replace( '-avatar.', '.', $attachment_url );
 
 		// If an author ID is specified
 		$author = '';
@@ -116,7 +78,7 @@ function cfm_get_attachment_id_from_url( $attachment_url = '', $author_id = 0 ) 
  * specific HTML tags on textarea and other
  * fields that allow HTML.
  *
- * @since   2.2.2
+ * @since   1.2.0
  * @access  public
  *
  * @return array Allowed HTML tags.
@@ -199,26 +161,41 @@ function cfm_allowed_html_tags() {
 	 *
 	 * Filter the allowed HTML tags in CFM fields.
 	 *
-	 * @since 2.2.2
+	 * @since 2.0.0
 	 * 
 	 * @param array $tags Array of allowed HTML elements.
 	 */
 	return apply_filters( 'cfm_allowed_html_tags', $tags );
 }
 
+/**
+ * Allowed File Extensions.
+ *
+ * This function converts checked options into an array
+ * of the extensions.
+ *
+ * @since   1.2.0
+ * @access  public
+ *
+ * @deprecated 2.0.0 Will be removed in 2.1.0.
+ *
+ * @return array Allowed HTML tags.
+*/
 function cfm_allowed_extensions() {
-    $extensions = array(
-        'images' => array('ext' => 'jpg,jpeg,gif,png,bmp', 'label' => __( 'Images', 'edd_cfm' )),
-        'audio' => array('ext' => 'mp3,wav,ogg,wma,mka,m4a,ra,mid,midi', 'label' => __( 'Audio', 'edd_cfm' )),
-        'video' => array('ext' => 'avi,divx,flv,mov,ogv,mkv,mp4,m4v,divx,mpg,mpeg,mpe', 'label' => __( 'Videos', 'edd_cfm' )),
-        'pdf' => array('ext' => 'pdf', 'label' => __( 'PDF', 'edd_cfm' )),
-        'office' => array('ext' => 'doc,ppt,pps,xls,mdb,docx,xlsx,pptx,odt,odp,ods,odg,odc,odb,odf,rtf,txt', 'label' => __( 'Office Documents', 'edd_cfm' )),
-        'zip' => array('ext' => 'zip,gz,gzip,rar,7z', 'label' => __( 'Zip Archives' )),
-        'exe' => array('ext' => 'exe', 'label' => __( 'Executable Files', 'edd_cfm' )),
-        'csv' => array('ext' => 'csv', 'label' => __( 'CSV', 'edd_cfm' ))
-    );
+	$extensions = array(
+		'images' => array('ext' => 'jpg,jpeg,gif,png,bmp', 'label' => __( 'Images', 'edd_cfm' )),
+		'audio' => array('ext' => 'mp3,wav,ogg,wma,mka,m4a,ra,mid,midi', 'label' => __( 'Audio', 'edd_cfm' )),
+		'video' => array('ext' => 'avi,divx,flv,mov,ogv,mkv,mp4,m4v,divx,mpg,mpeg,mpe', 'label' => __( 'Videos', 'edd_cfm' )),
+		'pdf' => array('ext' => 'pdf', 'label' => __( 'PDF', 'edd_cfm' )),
+		'office' => array('ext' => 'doc,ppt,pps,xls,mdb,docx,xlsx,pptx,odt,odp,ods,odg,odc,odb,odf,rtf,txt', 'label' => __( 'Office Documents', 'edd_cfm' )),
+		'zip' => array('ext' => 'zip,gz,gzip,rar,7z', 'label' => __( 'Zip Archives' )),
+		'exe' => array('ext' => 'exe', 'label' => __( 'Executable Files', 'edd_cfm' )),
+		'csv' => array('ext' => 'csv', 'label' => __( 'CSV', 'edd_cfm' ))
+	);
 
-    return apply_filters( 'cfm_allowed_extensions', $extensions );
+	// Warning: This filter is being removed in 2.1.0 in favor of being able to specify on the formbuilder exactly
+	// which extensions you want allowed. Do not use this filter!
+	return apply_filters( 'cfm_allowed_extensions', $extensions );
 }
 
 /**
@@ -232,7 +209,7 @@ function cfm_allowed_extensions() {
  *
  * This function is to be used in every function that is deprecated.
  *
- * @since 2.3.0
+ * @since 2.0.0
  * @access public
  *
  * @uses do_action() Calls 'cfm_deprecated_function_run' and passes the function name, what to use instead,
@@ -255,7 +232,7 @@ function _cfm_deprecated_function( $function, $version, $replacement = null, $ba
 	 * deprecated function. This could be used to
 	 * feed into an error logging program or file.
 	 *
-	 * @since 2.3.0
+	 * @since 2.0.0
 	 * 
 	 * @param string  $function    The function that was called.
 	 * @param string  $version     The version of WordPress that deprecated the function.
@@ -271,7 +248,7 @@ function _cfm_deprecated_function( $function, $version, $replacement = null, $ba
 	 *
 	 * Allow plugin to filter the output error trigger.
 	 *
-	 * @since 2.3.0
+	 * @since 2.0.0
 	 * 
 	 * @param bool $show_errors Whether to show errors.
 	 */
@@ -294,7 +271,7 @@ function _cfm_deprecated_function( $function, $version, $replacement = null, $ba
  *
  * The current behavior is to trigger a user error if WP_DEBUG is true.
  *
- * @since 2.3.0
+ * @since 2.0.0
  * @access public
  *
  * @uses apply_filters() Calls 'cfm_deprecated_trigger_error' and expects boolean value of true to do
@@ -310,7 +287,7 @@ function _cfm_deprecated( $message ) {
 	 *
 	 * Allow plugin to filter the deprecated message.
 	 *
-	 * @since 2.3.0
+	 * @since 2.0.0
 	 * 
 	 * @param string $message Error message.
 	 */	
@@ -323,7 +300,7 @@ function _cfm_deprecated( $message ) {
 	 *
 	 * Allow plugin to filter the output error trigger.
 	 *
-	 * @since 2.3.0
+	 * @since 2.0.0
 	 * 
 	 * @param bool $show_errors Whether to show errors.
 	 */
@@ -343,7 +320,7 @@ function _cfm_deprecated( $message ) {
  * $a = array( "one" => 1, "two" => 2 );
  * if ( cfm_is_key( "one", $a ) ) { … } // == true
  *
- * @since 2.3.0
+ * @since 2.0.0
  * @access public
  *
  * @param string  $needle    The key we're looking for.
@@ -373,7 +350,7 @@ function cfm_is_key( $needle = '', $haystack = array() ) {
  * $a = array( "one" => 1, "two" => 2 );
  * if ( cfm_is_key_value( "one", 1, $a ) ) { … } // == true
  *
- * @since 2.3.0
+ * @since 2.0.0
  * @access public
  *
  * @param string  $needle    The key we're looking in.
@@ -396,7 +373,7 @@ function cfm_has_key_value( $needle = '', $value = '', $haystack = array() ) {
  * 
  * Converts all dashes in a string to underscores.
  *
- * @since 2.3.0
+ * @since 2.0.0
  * @access public
  *
  * @param string  $string    String to convert.
@@ -413,7 +390,7 @@ function cfm_dash_to_lower( $string ){
  * by not being in the admin, and not being in an
  * api request.
  *
- * @since 2.3.0
+ * @since 2.0.0
  * @access public
  *
  * @return bool Whether we are on frontend.
@@ -431,7 +408,7 @@ function cfm_is_frontend(){
  * 
  * Determines if user is in admin.
  *
- * @since 2.3.0
+ * @since 2.0.0
  * @access public
  *
  * @return bool Whether we are in admin.
@@ -450,7 +427,7 @@ function cfm_is_admin(){
  * For now unused. Reserved for future
  * use.
  *
- * @since 2.3.0
+ * @since 2.0.0
  * @access public
  *
  * @return bool Whether we are in api request.
@@ -465,7 +442,7 @@ function cfm_is_api_request(){
  * Determines if the user is in an
  * ajax request.
  *
- * @since 2.3.0
+ * @since 2.0.0
  * @access public
  *
  * @return bool Whether we are in ajax request.
@@ -484,7 +461,7 @@ function cfm_is_ajax_request(){
  * Determines if the user is in an
  * frontend ajax request.
  *
- * @since 2.3.0
+ * @since 2.0.0
  * @access public
  *
  * @todo  There has to be a better way.
@@ -498,7 +475,7 @@ function cfm_is_frontend_ajax_request(){
 		// This is a replication of (and replaces a call to) wp_get_referer() function, see https://core.trac.wordpress.org/ticket/25294
 		// First we see if there's the server referrer and use that if possible, to see if its in the admin
 		// If its not there we then try to use the referrer field
-		// This is literally insanity but there is no better way for now. We'll use a custom AJAX endpoint to get rid of this nonsense in 2.4
+		// This is literally insanity but there is no better way for now. We'll use a custom AJAX endpoint to get rid of this nonsense in 2.1
 		// unless WordPress and/or EDD can finish their proposed inprovements on this issue, and if so we'll use theirs.
 		$ref = '';
 		if ( ! empty( $_SERVER['HTTP_REFERER'] ) ){
@@ -516,9 +493,6 @@ function cfm_is_frontend_ajax_request(){
 	return $output;
 }
 
-
-// better CFM upload files protection. Circa 2.3
-
 /**
  * Change Downloads Upload Directory.
  *
@@ -528,14 +502,14 @@ function cfm_is_frontend_ajax_request(){
  * the new directory is wp-content/uploads/edd/{year}/{month}. This directory is
  * provides protection to anything uploaded to it.
  *
- * @since 2.3
+ * @since 2.0.0
  * @access public 
  *
  * @param array $file Unused but contains file being currently uploaded.
  * @return array File that was uploaded.
  */
 function cfm_change_downloads_upload_dir( $file ) {
-	$override_default_dir = apply_filters('override_default_cfm_dir', false );
+	//$override_default_dir = apply_filters('override_default_cfm_dir', false );
 	if ( EDD()->session->get( 'CFM_FILE_UPLOAD' ) ) {
 		if ( function_exists( 'edd_set_upload_dir' ) && !$override_default_dir ) {
 			add_filter( 'upload_dir', 'edd_set_upload_dir' );
@@ -555,7 +529,7 @@ add_action( 'wp_handle_upload_prefilter', 'cfm_change_downloads_upload_dir' );
  * When this is active, intercepts all files and
  * puts them in the CFM file directory.
  *
- * @since 2.3.0
+ * @since 2.0.0
  * @access public
  * 
  * @return void
@@ -575,22 +549,31 @@ function cfm_turn_on_file_filter(){
 }
 add_action( 'wp_ajax_cfm_turn_on_file_filter', 'cfm_turn_on_file_filter' );
 add_action( 'wp_ajax_nopriv_cfm_turn_on_file_filter', 'cfm_turn_on_file_filter' );
-add_filter( 'user_has_cap', 'user_can_upload_checkout', 10, 3 );
+
+/**
+ * Let users upload files on the checkout form.
+ *
+ * @since 2.0.0
+ * @access public
+ *
+ * @todo  Re-examine in 2.1.0
+ * 
+ * @return void
+ */
 function user_can_upload_checkout( $allcaps, $cap, $args ){
 	if ( EDD()->session->get( 'CFM_FILE_UPLOAD' )  ) {
 		$allcaps['upload_files'] = 1;
 	}
 	return $allcaps;
 }
-
-
+add_filter( 'user_has_cap', 'user_can_upload_checkout', 10, 3 );
 
 /**
  * Turn off File Filter.
  * 
  * Used after an CFM file finishes uploading.
  *
- * @since 2.3.0
+ * @since 2.0.0
  * @access public
  * 
  * @return void
@@ -609,10 +592,35 @@ function cfm_turn_off_file_filter(){
 add_action( 'wp_ajax_cfm_turn_off_file_filter', 'cfm_turn_off_file_filter' );
 add_action( 'wp_ajax_nopriv_cfm_turn_off_file_filter', 'cfm_turn_off_file_filter' );
 
+/**
+ * CFM Admin Customer Tab Page Contents.
+ * 
+ * Calls the admin function to render the page
+ * of the CFM form on the customers page.
+ *
+ * @since 2.0.0
+ * @access public
+ * 
+ * @param int $customer Customer ID.
+ * @return void
+ */
 function cfm_customers_view( $customer ){
 	EDD_CFM()->admin_profile->page( $customer );
 }
 
+
+/**
+ * CFM Admin Customer Tab Page Save.
+ * 
+ * Calls the admin function to save the page
+ * of the CFM form on the customers page.
+ *
+ * @since 2.0.0
+ * @access public
+ * 
+ * @param array $args POST'd values to save.
+ * @return void
+ */
 function cfm_customers_view_save( $args ){
 	EDD_CFM()->admin_profile->save( $args );
 }
@@ -630,9 +638,23 @@ if ( !function_exists( 'auth_redirect' ) ) {
 			return;
 		}
 		
+		/**
+		 * Allow plugins to circumvent authentication redirect.
+		 *
+		 * @since 2.0
+		 *
+		 * @param bool $skip Whether to skip authentication redirect. Default false.
+		 */
+		$skip = apply_filters( 'secure_auth_redirect', false );
+		
+		if ( $skip ) {
+			return;
+		}
+		
 		// Checks if a user is logged in, if not redirects them to the login page
 		$secure = ( is_ssl() || force_ssl_admin() );
-			/**
+		
+		/**
 		 * Filter whether to use a secure authentication redirect.
 		 *
 		 * @since 3.1.0
@@ -690,57 +712,77 @@ if ( !function_exists( 'auth_redirect' ) ) {
 			wp_redirect($login_url);
 		exit();
 	}
-
-	add_filter( 'wp_handle_upload_prefilter','cfm_file_restrictions_error_message' );
-	function cfm_file_restrictions_error_message( $file ) {
-		if ( ! EDD()->session->get( 'CFM_FILE_UPLOAD' ) ) {
-			return $file;
-		}
-		$formid = EDD()->session->get( 'CFM_FILE_UPLOAD_FORMID' );
-		$fieldname  = EDD()->session->get( 'CFM_FILE_UPLOAD_FIELD_NAME' );
-		$fields = get_post_meta( $formid, 'cfm-form', true );
-		$characteristics = array();
-		foreach ( $fields as $field ) {
-			if ( $field['name'] == $fieldname ) {
-				$characteristics = $field;
-			}
-		}
-		
-		if ( !empty( $characteristics['max_size'] ) ){
-			$size = $file['size'];
-			$size = $size / 1024;
-			if ( $size >  $characteristics['max_size'] ){
-				$file['error'] = sprintf( __( 'Please upload files no larger than %s KB', 'edd_cfm'), $characteristics['max_size'] );
-				return $file;
-			}
-		}
-		if ( !empty( $characteristics['extension'] ) ){
-			$extensions = cfm_allowed_extensions();
-			$file_type = wp_check_filetype( $file['name'] );
-			$file_type = $file_type["ext"];
-			$pass      = false;
-			$allowed_types = array();
-			foreach ( $characteristics['extension'] as $type ){
-				$check = $extensions[ $type ]["ext"];
-				$check = explode( ',', $check );
-				if ( in_array( $file_type, $check ) ){
-					$pass = true;
-					break;
-				}
-				$allowed_types = array_merge( $allowed_types, $check );
-			}
-			if ( !$pass ){
-				$allowed_types = implode( ', ', $allowed_types );
-				$file['error'] = sprintf( __( 'Please upload files with one of these extensions: %s', 'edd_cfm' ), $allowed_types   );
-				return $file;
-			}
-		}
+}
+	
+/**
+ * CFM File Restriction Error Messages.
+ * 
+ * Runs custom validation on the frontend for CFM file upload fields.
+ *
+ * @since 2.0.0
+ * @access public
+ * 
+ * @param array $file Uploaded file array.
+ * @return array $file Uploaded file array or error message.
+ */
+function cfm_file_restrictions_error_message( $file ) {
+	if ( cfm_is_admin() || ! EDD()->session->get( 'CFM_FILE_UPLOAD' ) ) {
 		return $file;
 	}
+	$formid = EDD()->session->get( 'CFM_FILE_UPLOAD_FORMID' );
+	$fieldname  = EDD()->session->get( 'CFM_FILE_UPLOAD_FIELD_NAME' );
+	$fields = get_post_meta( $formid, 'cfm-form', true );
+	$characteristics = array();
+	foreach ( $fields as $field ) {
+		if ( $field['name'] == $fieldname ) {
+			$characteristics = $field;
+		}
+	}
+	
+	if ( !empty( $characteristics['max_size'] ) ){
+		$size = $file['size'];
+		$size = $size / 1024;
+		if ( $size >  $characteristics['max_size'] ){
+			$file['error'] = sprintf( __( 'Please upload files no larger than %s KB', 'edd_cfm'), $characteristics['max_size'] );
+			return $file;
+		}
+	}
+	if ( !empty( $characteristics['extension'] ) ){
+		$extensions = cfm_allowed_extensions();
+		$file_type = wp_check_filetype( $file['name'] );
+		$file_type = $file_type["ext"];
+		$pass      = false;
+		$allowed_types = array();
+		foreach ( $characteristics['extension'] as $type ){
+			$check = $extensions[ $type ]["ext"];
+			$check = explode( ',', $check );
+			if ( in_array( $file_type, $check ) ){
+				$pass = true;
+				break;
+			}
+			$allowed_types = array_merge( $allowed_types, $check );
+		}
+		if ( !$pass ){
+			$allowed_types = implode( ', ', $allowed_types );
+			$file['error'] = sprintf( __( 'Please upload files with one of these extensions: %s', 'edd_cfm' ), $allowed_types   );
+			return $file;
+		}
+	}
+	return $file;
 }
+add_filter( 'wp_handle_upload_prefilter','cfm_file_restrictions_error_message' );
 
-
-add_filter( 'edd_purchase_form_required_fields', 'cfm_checkout_custom_validation',10, 1 );
+/**
+ * CFM Checkout Custom Validation.
+ * 
+ * Sets the CFM custom validation for the checkout form.
+ *
+ * @since 2.0.0
+ * @access public
+ * 
+ * @param array $required_fields Array of error messages.
+ * @return array Array of error messages.
+ */
 function cfm_checkout_custom_validation( $required_fields ) {
 	$form_id = get_option( 'cfm-checkout-form', -2 );
 	$fields = get_post_meta( $form_id, 'cfm-form', true );
@@ -817,3 +859,4 @@ function cfm_checkout_custom_validation( $required_fields ) {
 	
 	return $required_fields;
 }
+add_filter( 'edd_purchase_form_required_fields', 'cfm_checkout_custom_validation', 10, 1 );
