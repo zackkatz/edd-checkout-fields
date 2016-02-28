@@ -513,11 +513,11 @@ function cfm_change_downloads_upload_dir( $file ) {
 	if ( EDD()->session->get( 'CFM_FILE_UPLOAD' ) ) {
 		if ( function_exists( 'edd_set_upload_dir' ) && !$override_default_dir ) {
 			add_filter( 'upload_dir', 'edd_set_upload_dir' );
-		} else if ( $override_default_dir ) {
+		} else  { //if ( $override_default_dir ) {
 			add_filter( 'upload_dir', 'cfm_set_custom_upload_dir' );
-		} else {
+		} //else {
 			// wierd. Should never get here
-		}
+		//}
 	}
 	return $file;
 }
