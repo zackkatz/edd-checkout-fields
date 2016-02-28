@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
 "Project-Id-Version: Easy Digital Downloads - Checkout Fields Manager\n"
-"POT-Creation-Date: 2016-02-21 12:51-0500\n"
+"POT-Creation-Date: 2016-02-28 15:47-0500\n"
 "PO-Revision-Date: 2015-09-09 19:25-0400\n"
 "Last-Translator: Chris Christoff <support@easydigitaldownloads.com>\n"
 "Language-Team: Chris Christoff <support@easydigitaldownloads.com>\n"
@@ -81,65 +81,65 @@ msgctxt "%s = CFM Form Name (translated)"
 msgid "%s Form"
 msgstr ""
 
-#: classes/admin/class-install.php:231 classes/admin/class-tools.php:139
-#: classes/admin/class-tools.php:209
-#: classes/admin/customers/class-admin-customer-profile.php:79
+#: classes/admin/class-install.php:231 classes/admin/class-tools.php:157
+#: classes/admin/class-tools.php:234
+#: classes/admin/customers/class-admin-customer-profile.php:92
 msgid "Checkout Fields"
 msgstr ""
 
-#: classes/admin/class-tools.php:51 edd-cfm.php:302
+#: classes/admin/class-tools.php:61 edd-cfm.php:302
 msgid "Checkout Fields Manager"
 msgstr ""
 
-#: classes/admin/class-tools.php:68
+#: classes/admin/class-tools.php:82
 msgid "Reset Checkout Form"
 msgstr ""
 
-#: classes/admin/class-tools.php:70
+#: classes/admin/class-tools.php:84
 msgid "You can use this to reset the Checkout Fields Manager Form"
 msgstr ""
 
-#: classes/admin/class-tools.php:75
+#: classes/admin/class-tools.php:89
 msgid "Reset"
 msgstr ""
 
-#: classes/admin/class-tools.php:81
+#: classes/admin/class-tools.php:95
 msgid "Export Checkout Fields"
 msgstr ""
 
-#: classes/admin/class-tools.php:83
+#: classes/admin/class-tools.php:97
 msgid ""
 "Export the checkout fields for this site as a .json file. This allows you to "
 "easily import the configuration into another site."
 msgstr ""
 
-#: classes/admin/class-tools.php:88
+#: classes/admin/class-tools.php:102
 msgid "Export"
 msgstr ""
 
-#: classes/admin/class-tools.php:94
+#: classes/admin/class-tools.php:108
 msgid "Import Checkout Fields"
 msgstr ""
 
-#: classes/admin/class-tools.php:96
+#: classes/admin/class-tools.php:110
 msgid ""
 "Import the checkout fields from a .json file. This file can be obtained by "
 "exporting the checkout fields on another site using the form above."
 msgstr ""
 
-#: classes/admin/class-tools.php:104
+#: classes/admin/class-tools.php:118
 msgid "Import"
 msgstr ""
 
-#: classes/admin/class-tools.php:195
+#: classes/admin/class-tools.php:220
 msgid "Please upload a valid .json file"
 msgstr ""
 
-#: classes/admin/class-tools.php:195 classes/admin/class-tools.php:199
+#: classes/admin/class-tools.php:220 classes/admin/class-tools.php:224
 msgid "Error"
 msgstr ""
 
-#: classes/admin/class-tools.php:199
+#: classes/admin/class-tools.php:224
 msgid "Please upload a file to import"
 msgstr ""
 
@@ -169,15 +169,15 @@ msgid ""
 "Click <a href=\"%s\">here</a> to start the upgrade."
 msgstr ""
 
-#: classes/admin/customers/class-admin-customer-profile.php:48
+#: classes/admin/customers/class-admin-customer-profile.php:61
 msgid "Custom User Meta"
 msgstr ""
 
-#: classes/admin/customers/class-admin-customer-profile.php:83
+#: classes/admin/customers/class-admin-customer-profile.php:96
 msgid "User meta can only be saved for logged in customers."
 msgstr ""
 
-#: classes/admin/customers/class-admin-customer-profile.php:103
+#: classes/admin/customers/class-admin-customer-profile.php:116
 msgid "Submit"
 msgstr ""
 
@@ -355,61 +355,61 @@ msgstr ""
 msgid "Checkout form restored to revision from %s"
 msgstr ""
 
-#: classes/admin/formbuilder/class-formbuilder.php:74
+#: classes/admin/formbuilder/class-formbuilder.php:62
 msgid "Form Editor"
 msgstr ""
 
-#: classes/admin/formbuilder/class-formbuilder.php:75
-#: classes/admin/formbuilder/class-formbuilder.php:206
-#: classes/admin/formbuilder/class-formbuilder.php:207
+#: classes/admin/formbuilder/class-formbuilder.php:63
+#: classes/admin/formbuilder/class-formbuilder.php:194
+#: classes/admin/formbuilder/class-formbuilder.php:195
 msgid "Save"
 msgstr ""
 
-#: classes/admin/formbuilder/class-formbuilder.php:84
+#: classes/admin/formbuilder/class-formbuilder.php:72
 #, php-format
 msgid "Add %s Form Fields"
 msgstr ""
 
-#: classes/admin/formbuilder/class-formbuilder.php:85
+#: classes/admin/formbuilder/class-formbuilder.php:73
 msgid "Add Custom Fields"
 msgstr ""
 
-#: classes/admin/formbuilder/class-formbuilder.php:86
+#: classes/admin/formbuilder/class-formbuilder.php:74
 msgid "Add Extension Created Fields"
 msgstr ""
 
-#: classes/admin/formbuilder/class-formbuilder.php:126
+#: classes/admin/formbuilder/class-formbuilder.php:114
 #, php-format
 msgid "%s Form"
 msgstr ""
 
-#: classes/admin/formbuilder/class-formbuilder.php:131
+#: classes/admin/formbuilder/class-formbuilder.php:119
 #, php-format
 msgid "Your %s form has no fields"
 msgstr ""
 
-#: classes/admin/formbuilder/class-formbuilder.php:137
+#: classes/admin/formbuilder/class-formbuilder.php:125
 msgid "Toggle All Fields Open/Close"
 msgstr ""
 
-#: classes/admin/formbuilder/class-formbuilder.php:269
-#: classes/admin/formbuilder/class-formbuilder.php:341
+#: classes/admin/formbuilder/class-formbuilder.php:257
+#: classes/admin/formbuilder/class-formbuilder.php:329
 msgid "Click to add to the editor"
 msgstr ""
 
-#: classes/admin/formbuilder/class-formbuilder.php:278
+#: classes/admin/formbuilder/class-formbuilder.php:266
 msgid "There are no custom fields for this form"
 msgstr ""
 
-#: classes/admin/formbuilder/class-formbuilder.php:351
+#: classes/admin/formbuilder/class-formbuilder.php:339
 msgid "You do not have any extensions installed that have a CFM custom field"
 msgstr ""
 
-#: classes/admin/payments/class-edit-payment.php:71
+#: classes/admin/payments/class-edit-payment.php:64
 msgid "Checkout form not set!"
 msgstr ""
 
-#: classes/admin/payments/class-edit-payment.php:79
+#: classes/admin/payments/class-edit-payment.php:72
 msgid "Custom Fields"
 msgstr ""
 
@@ -488,15 +488,15 @@ msgstr ""
 msgid " files!"
 msgstr ""
 
-#: classes/class-setup.php:417 classes/class-setup.php:424
+#: classes/class-setup.php:415 classes/class-setup.php:422
 msgid "Required to use the reCAPTCHA field."
 msgstr ""
 
-#: classes/class-setup.php:418
+#: classes/class-setup.php:416
 msgid "reCAPTCHA Public Key"
 msgstr ""
 
-#: classes/class-setup.php:425
+#: classes/class-setup.php:423
 msgid "reCAPTCHA Private Key"
 msgstr ""
 
@@ -564,40 +564,40 @@ msgstr ""
 msgid "Countries"
 msgstr ""
 
-#: classes/fields/date.php:46
+#: classes/fields/date.php:47
 msgctxt "CFM Field title translation"
 msgid "Date"
 msgstr ""
 
-#: classes/fields/date.php:140
+#: classes/fields/date.php:141
 msgid "The date format"
 msgstr ""
 
-#: classes/fields/date.php:153
+#: classes/fields/date.php:154
 msgid "Date Format To Store Values In"
 msgstr ""
 
-#: classes/fields/date.php:158
+#: classes/fields/date.php:159
 msgid "Time"
 msgstr ""
 
-#: classes/fields/date.php:163
+#: classes/fields/date.php:164
 msgid "Enable time input"
 msgstr ""
 
-#: classes/fields/date.php:169
+#: classes/fields/date.php:170
 msgid "Start View"
 msgstr ""
 
-#: classes/fields/date.php:172
+#: classes/fields/date.php:173
 msgid "Day"
 msgstr ""
 
-#: classes/fields/date.php:173
+#: classes/fields/date.php:174
 msgid "Month"
 msgstr ""
 
-#: classes/fields/date.php:174
+#: classes/fields/date.php:175
 msgid "Year"
 msgstr ""
 
@@ -859,72 +859,72 @@ msgctxt "CFM Field title translation"
 msgid "User Email"
 msgstr ""
 
-#: classes/misc-functions.php:211
+#: classes/misc-functions.php:186
 msgid "Images"
 msgstr ""
 
-#: classes/misc-functions.php:212
+#: classes/misc-functions.php:187
 msgid "Audio"
 msgstr ""
 
-#: classes/misc-functions.php:213
+#: classes/misc-functions.php:188
 msgid "Videos"
 msgstr ""
 
-#: classes/misc-functions.php:214
+#: classes/misc-functions.php:189
 msgid "PDF"
 msgstr ""
 
-#: classes/misc-functions.php:215
+#: classes/misc-functions.php:190
 msgid "Office Documents"
 msgstr ""
 
-#: classes/misc-functions.php:216
+#: classes/misc-functions.php:191
 msgid "Zip Archives"
 msgstr ""
 
-#: classes/misc-functions.php:217
+#: classes/misc-functions.php:192
 msgid "Executable Files"
 msgstr ""
 
-#: classes/misc-functions.php:218
+#: classes/misc-functions.php:193
 msgid "CSV"
 msgstr ""
 
-#: classes/misc-functions.php:281
+#: classes/misc-functions.php:258
 #, php-format
 msgid ""
 "%1$s is <strong>deprecated</strong> since Easy Digital Downloads Checkout "
 "Fields Manager version %2$s! Use %3$s instead."
 msgstr ""
 
-#: classes/misc-functions.php:285
+#: classes/misc-functions.php:262
 #, php-format
 msgid ""
 "%1$s is <strong>deprecated</strong> since Easy Digital Downloads Checkout "
 "Fields Manager version %2$s."
 msgstr ""
 
-#: classes/misc-functions.php:332
+#: classes/misc-functions.php:309
 #, php-format
 msgid "%s"
 msgstr ""
 
-#: classes/misc-functions.php:713
+#: classes/misc-functions.php:746
 #, php-format
 msgid "Please upload files no larger than %s KB"
 msgstr ""
 
-#: classes/misc-functions.php:734
+#: classes/misc-functions.php:767
 #, php-format
 msgid "Please upload files with one of these extensions: %s"
 msgstr ""
 
-#: classes/misc-functions.php:767
+#: classes/misc-functions.php:809
 msgid "Please enter your first name"
 msgstr ""
 
-#: classes/misc-functions.php:802
+#: classes/misc-functions.php:844
 msgid "Please enter your last name."
 msgstr ""
 
