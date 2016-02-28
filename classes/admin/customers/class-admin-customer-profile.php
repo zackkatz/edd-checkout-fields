@@ -18,19 +18,20 @@ if ( ! defined( 'ABSPATH' ) ) {
 /**
  * CFM Forms.
  *
- * Register the form shortcodes and create render/save 
- * ajax functions for them.
+ * Registers the display, sanitize and render form functionality
+ * for the admin customer profile form.
  *
  * @since 2.0.0
  * @access public
  */
 class CFM_Admin_Customer_Profile {
+
 	/**
-	 * CFM Form Actions and Shortcodes.
+	 * CFM Admin Customer Profile Hook Registration.
 	 *
-	 * Registers ajax endpoints to save CFM forms with
-	 * on the frontend as well as registers shortcodes for
-	 * the default CFM forms.
+	 * If WP_DEBUG is on or guest checkout is off, and there are
+	 * fields that are set to save to user meta, show the values of 
+	 * those fields on the EDD Edit Customer view.
 	 *
 	 * @since 2.0.0
 	 * @access public
@@ -44,6 +45,18 @@ class CFM_Admin_Customer_Profile {
 		}
 	}
 	
+	/**
+	 * CFM Form Actions and Shortcodes.
+	 *
+	 * If WP_DEBUG is on or guest checkout is off, and there are
+	 * fields that are set to save to user meta, show the values of 
+	 * those fields on the EDD Edit Customer view.
+	 *
+	 * @since 2.0.0
+	 * @access public
+	 * 
+	 * @return void
+	 */	
 	public function tab( $tabs ){
 		$tabs['usermeta'] = array( 'dashicon' => 'dashicons-analytics', 'title' => __( 'Custom User Meta', 'edd_cfm' ) );
 		return $tabs;
