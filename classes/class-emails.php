@@ -82,7 +82,7 @@ class CFM_Emails {
 	 * @param  string $message The email message prior to CFM tag replacement.
 	 * @return string The message after replacing CFM tags.
 	 */	
-	public function custom_meta_values( $post_id, $message ){
+	public function custom_meta_values( $message, $post_id ) {
 		$form = '';
 		foreach( EDD_CFM()->load_forms as $template => $class ){
 			$form = EDD_CFM()->helper->get_form_by_name( $template, $post_id );
