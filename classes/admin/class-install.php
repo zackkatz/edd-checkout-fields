@@ -66,9 +66,15 @@ class CFM_Install {
 		 * doctor appointment. Your eyes are fine :-).
 		 */
 		$version = get_option( 'cfm_current_version', false );
+		
+		/** 
+		 * In old CFM installs, cfm_current_version didn't exist
+		 * but instead edd_cfm_version did
+		 */
+		$old = get_option( 'edd_cfm_version', false );
 
 		// if new install
-		if ( !$version ) {
+		if ( !$version && !$old ) {
 			$this->cfm_new_install();
 			// This is the version used for CFM upgrade routines.
 			update_option( 'cfm_db_version', '2.0' );
