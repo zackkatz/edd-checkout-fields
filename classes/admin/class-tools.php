@@ -182,8 +182,9 @@ class CFM_Tools {
 		if( ! current_user_can( 'manage_shop_settings' ) ) {
 			return;
 		}
-		$settings = array();
-		$settings = get_option( 'edd_settings' );
+
+		$form 	     = get_option( 'cfm-checkout-form', false );
+		$fields      = get_post_meta( $form, 'cfm-form', true );
 		ignore_user_abort( true );
 		if ( ! edd_is_func_disabled( 'set_time_limit' ) && ! ini_get( 'safe_mode' ) ) {
 			set_time_limit( 0 );
@@ -192,7 +193,7 @@ class CFM_Tools {
 		header( 'Content-Type: application/json; charset=utf-8' );
 		header( 'Content-Disposition: attachment; filename=cfm-checkout-fields-export-' . date( 'm-d-Y' ) . '.json' );
 		header( "Expires: 0" );
-		echo json_encode( $settings );
+		echo json_encode( $fields );
 		exit;
 	}
 
