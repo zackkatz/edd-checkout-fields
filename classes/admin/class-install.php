@@ -163,11 +163,10 @@ class CFM_Install {
 	public function cfm_v20_upgrades() {
 		$post_id = get_option( 'edd_cfm_id', false );
 		update_option( 'cfm-checkout-form', $post_id );
-		$fields = get_post_meta( $post_id, 'edd-checkout-fields', false );
+		$fields = get_post_meta( $post_id, 'edd-checkout-fields', true );
 		update_post_meta( $post_id, 'cfm-form', $fields );
 		update_post_meta( $post_id, 'cfm-form-name', 'checkout' );
 		update_post_meta( $post_id, 'cfm-form-class', 'CFM_Checkout_Form' );
-		update_option( 'cfm-checkout-form', $post_id );
 	}
 
 	/**
