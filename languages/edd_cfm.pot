@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
 "Project-Id-Version: Easy Digital Downloads - Checkout Fields Manager\n"
-"POT-Creation-Date: 2016-02-28 15:54-0500\n"
+"POT-Creation-Date: 2016-03-10 17:11-0500\n"
 "PO-Revision-Date: 2015-09-09 19:25-0400\n"
 "Last-Translator: Chris Christoff <support@easydigitaldownloads.com>\n"
 "Language-Team: Chris Christoff <support@easydigitaldownloads.com>\n"
@@ -81,65 +81,78 @@ msgctxt "%s = CFM Form Name (translated)"
 msgid "%s Form"
 msgstr ""
 
-#: classes/admin/class-install.php:231 classes/admin/class-tools.php:157
-#: classes/admin/class-tools.php:234
+#: classes/admin/class-install.php:231 classes/admin/class-tools.php:171
+#: classes/admin/class-tools.php:273
 #: classes/admin/customers/class-admin-customer-profile.php:92
 msgid "Checkout Fields"
 msgstr ""
 
-#: classes/admin/class-tools.php:61 edd-cfm.php:302
+#: classes/admin/class-tools.php:62 edd-cfm.php:302
 msgid "Checkout Fields Manager"
 msgstr ""
 
-#: classes/admin/class-tools.php:82
+#: classes/admin/class-tools.php:83
 msgid "Reset Checkout Form"
 msgstr ""
 
-#: classes/admin/class-tools.php:84
+#: classes/admin/class-tools.php:85
 msgid "You can use this to reset the Checkout Fields Manager Form"
 msgstr ""
 
-#: classes/admin/class-tools.php:89
+#: classes/admin/class-tools.php:90
 msgid "Reset"
 msgstr ""
 
-#: classes/admin/class-tools.php:95
+#: classes/admin/class-tools.php:96
 msgid "Export Checkout Fields"
 msgstr ""
 
-#: classes/admin/class-tools.php:97
+#: classes/admin/class-tools.php:98
 msgid ""
 "Export the checkout fields for this site as a .json file. This allows you to "
 "easily import the configuration into another site."
 msgstr ""
 
-#: classes/admin/class-tools.php:102
+#: classes/admin/class-tools.php:103
 msgid "Export"
 msgstr ""
 
-#: classes/admin/class-tools.php:108
+#: classes/admin/class-tools.php:109
 msgid "Import Checkout Fields"
 msgstr ""
 
-#: classes/admin/class-tools.php:110
+#: classes/admin/class-tools.php:111
 msgid ""
 "Import the checkout fields from a .json file. This file can be obtained by "
 "exporting the checkout fields on another site using the form above."
 msgstr ""
 
-#: classes/admin/class-tools.php:118
+#: classes/admin/class-tools.php:119
 msgid "Import"
 msgstr ""
 
-#: classes/admin/class-tools.php:220
+#: classes/admin/class-tools.php:125
+msgid "Rerun 2.0 Upgrade Routine"
+msgstr ""
+
+#: classes/admin/class-tools.php:127
+msgid ""
+"In a rare instance, you might need to run the CFM 1.x to 2.0 upgrade routine"
+msgstr ""
+
+#: classes/admin/class-tools.php:132
+msgid "Rerun Routine"
+msgstr ""
+
+#: classes/admin/class-tools.php:259
 msgid "Please upload a valid .json file"
 msgstr ""
 
-#: classes/admin/class-tools.php:220 classes/admin/class-tools.php:224
+#: classes/admin/class-tools.php:259 classes/admin/class-tools.php:263
 msgid "Error"
 msgstr ""
 
-#: classes/admin/class-tools.php:224
+#: classes/admin/class-tools.php:263
 msgid "Please upload a file to import"
 msgstr ""
 

@@ -43,6 +43,7 @@ class CFM_Tools {
 		add_action( 'edd_export_cfm_form', array( $this,'export' ) );
 		add_action( 'edd_import_cfm_form', array( $this,'import' ) );
 		add_action( 'edd_reset_cfm_form', array( $this,'reset' ) );
+		add_action( 'edd_rerun_cfm_form', array( $this,'rerun' ) );
 	}
 	
 	/**
@@ -119,7 +120,20 @@ class CFM_Tools {
 					</p>
 				</form>
 			</div><!-- .inside -->
-		</div><!-- .postbox -->		
+		</div><!-- .postbox -->
+		<div class="postbox">
+			<h3><span><?php _e( 'Rerun 2.0 Upgrade Routine', 'edd_cfm' ); ?></span></h3>
+			<div class="inside">
+				<p><?php _e( 'In a rare instance, you might need to run the CFM 1.x to 2.0 upgrade routine', 'edd_cfm' ); ?></p>
+				<form method="post" action="<?php echo admin_url( 'edit.php?post_type=download&page=edd-tools&tab=cfm' ); ?>">
+					<p><input type="hidden" name="edd_action" value="rerun_cfm_form" /></p>
+					<p>
+						<?php wp_nonce_field( 'edd_rerun_cfm_form_nonce', 'edd_rerun_cfm_form_nonce' ); ?>
+						<?php submit_button( __( 'Rerun Routine', 'edd_cfm' ), 'secondary', 'submit', false ); ?>
+					</p>
+				</form>
+			</div><!-- .inside -->
+		</div><!-- .postbox -->
 		<?php
 	}
 	
@@ -161,6 +175,31 @@ class CFM_Tools {
 		cfm_save_initial_checkout_form( $page_id );
 		wp_safe_redirect( admin_url( 'edit.php?post_type=download&page=edd-tools&tab=cfm&edd-message=fields-reset' ) ); exit;
 	}
+
+	/**
+	 * CFM Checkout Form Rerun Upgrade Routine.
+	 * 
+	 * In a rare instance, you might need to run the CFM 1.x to 2.0 upgrade routine.
+	 *
+	 * @since  2.0.2
+	 * @access public
+	 * 
+	 * @return void
+	 */
+	public function rerun( ) {
+		if( empty( $_POST['edd_rerun_cfm_form_nonce'] ) ) {
+			return;
+		}
+		if( ! wp_verify_nonce( $_POST['edd_rerun_cfm_form_nonce'], 'edd_rerun_cfm_form_nonce' ) ) {
+			return;
+		}
+		if( ! current_user_can( 'manage_shop_settings' ) ) {
+			return;
+		}
+		update_option( 'cfm_current_version', '1.0' );
+		update_option( 'cfm_db_version', '1.0' );
+		wp_safe_redirect( admin_url( 'edit.php?post_type=download&page=edd-tools&tab=cfm&edd-message=fields-rerun' ) ); exit;
+	}	
 
 	/**
 	 * CFM Checkout Form Export.
