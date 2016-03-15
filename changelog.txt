@@ -1,4 +1,4 @@
-= 2.0.2, March 10, 2016 =
+= 2.0.2, March 15, 2016 =
 * Fixed: upgrade issue from 1.x to 2.0 branch
 
 = 2.0.1, March 1, 2016 =
