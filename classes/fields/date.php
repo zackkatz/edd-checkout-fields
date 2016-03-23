@@ -132,13 +132,10 @@ class CFM_Date_Field extends CFM_Field {
 	/** Returns the Date to render a field for the formbuilder */
 	public function render_formbuilder_field( $index = -2, $insert = false ) {
 		$removable    = $this->can_remove_from_formbuilder();
-		$format_name  = sprintf( '%s[%d][format]', 'cfm_input', $index );
 		$time_name    = sprintf( '%s[%d][time]', 'cfm_input', $index );
 		$view_name    = sprintf( '%s[%d][view]', 'cfm_input', $index );
-		$format_value = isset( $this->characteristics['format'] ) ? $this->characteristics['format'] : 'mm/dd/yy';
 		$time_value   = isset( $this->characteristics['time'] ) ? $this->characteristics['time'] : 'no';
 		$view         = isset( $this->characteristics['view'] ) ? $this->characteristics['view'] : 'day';
-		$help         = esc_attr( __( 'The date format', 'edd_cfm' ) ); ?>
 		<li class="custom-field custom_image">
 			<?php $this->legend( $this->title(), $this->get_label(), $removable ); ?>
 			<?php CFM_Formbuilder_Templates::hidden_field( "[$index][template]", $this->template() ); ?>
@@ -149,12 +146,6 @@ class CFM_Date_Field extends CFM_Field {
 				<?php CFM_Formbuilder_Templates::meta_type_radio( $index, $this->characteristics ); ?>
 				<?php CFM_Formbuilder_Templates::standard( $index, $this ); ?>
 				<?php CFM_Formbuilder_Templates::css( $index, $this->characteristics ); ?>
-
-				<div class="cfm-form-rows">
-					<label><?php _e( 'Date Format To Store Values In', 'edd_cfm' ); ?></label>
-					<input type="text" class="smallipopInput" name="<?php echo $format_name; ?>" value="<?php echo $format_value; ?>" title="<?php echo $help; ?>">
-				</div>
-
 				<div class="cfm-form-rows">
 					<label><?php _e( 'Time', 'edd_cfm' ); ?></label>
 					<div class="cfm-form-sub-fields">
