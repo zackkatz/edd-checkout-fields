@@ -136,10 +136,11 @@ class CFM_Date_Field extends CFM_Field {
 		$view_name    = sprintf( '%s[%d][view]', 'cfm_input', $index );
 		$time_value   = isset( $this->characteristics['time'] ) ? $this->characteristics['time'] : 'no';
 		$view         = isset( $this->characteristics['view'] ) ? $this->characteristics['view'] : 'day';
+		$format_value = isset( $this->characteristics['format'] ) ? $this->characteristics['format'] : 'mm/dd/yy';
 		<li class="custom-field custom_image">
 			<?php $this->legend( $this->title(), $this->get_label(), $removable ); ?>
 			<?php CFM_Formbuilder_Templates::hidden_field( "[$index][template]", $this->template() ); ?>
-
+			<?php CFM_Formbuilder_Templates::hidden_field( "[$index][format]", $format_value ); ?>
 			<?php CFM_Formbuilder_Templates::field_div( $index, $this->name(), $this->characteristics, $insert ); ?>
 				<?php CFM_Formbuilder_Templates::public_radio( $index, $this->characteristics ); ?>
 				<?php CFM_Formbuilder_Templates::export_radio( $index, $this->characteristics ); ?>
