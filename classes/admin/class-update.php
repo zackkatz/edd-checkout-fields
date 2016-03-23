@@ -140,7 +140,7 @@ function cfm_upgrade_cfm_date_fields() {
 	
 	if ( $payments && count( $payments ) > 0 ) {
 		$form 		 = get_option( 'cfm-checkout-form', false );
-		$fields      = get_post_meta( $form, 'cfm-form', true );
+		$fields          = get_post_meta( $form, 'cfm-form', true );
 		$has_date_field = false;
 		$date_fields    = array();
 		foreach ( $fields as $field ) {
@@ -154,7 +154,7 @@ function cfm_upgrade_cfm_date_fields() {
 		}
 		foreach( $payments as $payment => $id ) {
 			foreach ( $date_fields as $dfield ) {
-				$value = get_post_meta( $id, $dfield['name'], false );
+				$value = get_post_meta( $id, $dfield['name'], true );
 				if ( $value ) {
 					$format = $dfield['format'];
 					$format = str_replace( 'oo', 'z', $format ); // day of the year (three digit)
@@ -172,13 +172,15 @@ function cfm_upgrade_cfm_date_fields() {
 					$format = str_replace( '!' , ' ', $format ); // Windows ticks (100ns since 01/01/0001). Not supported by PHP.
 					$format = str_replace( "'" , ' ', $format ); // single quote
 					$format .= "+";
-					$value     = date_create_from_format($format, $value);
-					if ( !empty( $dfield['time'] ) && $dfield['time'] === 'yes' ) {
-						$value  = date_format( $value, "Y-m-d" ) . 'T'. date_format( $value, "H:i" );
-					} else {
-						$value  = date_format( $value, "Y-m-d" );
+					$value     = date_create_from_format( $format, $value );
+					if ( $value !== false ) {
+						if ( !empty( $dfield['time'] ) && $dfield['time'] === 'yes' ) {
+							$value  = date_format( $value, "Y-m-d" ) . 'T'. date_format( $value, "H:i" );
+						} else {
+							$value  = date_format( $value, "Y-m-d" );
+						}
+						update_post_meta( $id, $name, $value );
 					}
-					update_post_meta( $id, $name, $value );
 				}
 			}
 		}
