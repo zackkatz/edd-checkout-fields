@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
 "Project-Id-Version: Easy Digital Downloads - Checkout Fields Manager\n"
-"POT-Creation-Date: 2016-03-10 17:11-0500\n"
+"POT-Creation-Date: 2016-03-23 13:42-0600\n"
 "PO-Revision-Date: 2015-09-09 19:25-0400\n"
 "Last-Translator: Chris Christoff <support@easydigitaldownloads.com>\n"
 "Language-Team: Chris Christoff <support@easydigitaldownloads.com>\n"
@@ -81,8 +81,8 @@ msgctxt "%s = CFM Form Name (translated)"
 msgid "%s Form"
 msgstr ""
 
-#: classes/admin/class-install.php:231 classes/admin/class-tools.php:171
-#: classes/admin/class-tools.php:273
+#: classes/admin/class-install.php:236 classes/admin/class-tools.php:171
+#: classes/admin/class-tools.php:274
 #: classes/admin/customers/class-admin-customer-profile.php:92
 msgid "Checkout Fields"
 msgstr ""
@@ -144,15 +144,15 @@ msgstr ""
 msgid "Rerun Routine"
 msgstr ""
 
-#: classes/admin/class-tools.php:259
+#: classes/admin/class-tools.php:260
 msgid "Please upload a valid .json file"
 msgstr ""
 
-#: classes/admin/class-tools.php:259 classes/admin/class-tools.php:263
+#: classes/admin/class-tools.php:260 classes/admin/class-tools.php:264
 msgid "Error"
 msgstr ""
 
-#: classes/admin/class-tools.php:263
+#: classes/admin/class-tools.php:264
 msgid "Please upload a file to import"
 msgstr ""
 
