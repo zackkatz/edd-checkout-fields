@@ -803,7 +803,7 @@ function cfm_checkout_custom_validation( $required_fields ) {
 			if ( !isset( $required_fields['edd_first'] ) ){
 				 $required_fields['edd_first'] = array(   
 					'error_id' => 'invalid_first_name',
-					'error_message' => __( 'Please enter your first name', 'easy-digital-downloads' )
+					'error_message' => __( 'Please enter your first name', 'edd_cfm' )
 				);
 			}
 		} else {
@@ -838,7 +838,7 @@ function cfm_checkout_custom_validation( $required_fields ) {
 			if ( !isset( $required_fields['edd_last'] ) ){
 				 $required_fields['edd_last'] = array(   
 					'error_id' => 'invalid_last_name',
-					'error_message' => __( 'Please enter your last name.', 'easy-digital-downloads' )
+					'error_message' => __( 'Please enter your last name.', 'edd_cfm' )
 				);
 			}
 		} else {
