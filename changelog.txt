@@ -1,3 +1,6 @@
+= 2.0.4, April 21, 2016 =
+* Fix: Some text strings used the wrong text domain
+
 = 2.0.3, March 23, 2016 =
 * Fixed: The grabbing of meta (errors were showing upon "Checkout Fields Manager datepicker field schema" update).
 
