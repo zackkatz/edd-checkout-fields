@@ -435,7 +435,7 @@ class EDD_Checkout_Fields_Manager {
 	 */
 	public function load_textdomain() {
 		// This filter is already documented in WordPress core
-		$locale        = apply_filters( 'plugin_locale', 'en_US', 'edd_cfm' );
+		$locale        = apply_filters( 'plugin_locale', get_locale(), 'edd_cfm' );
 		
 		$mofile        = sprintf( '%1$s-%2$s.mo', 'edd_cfm', $locale );
 
