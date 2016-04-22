@@ -1,3 +1,6 @@
+= 2.0.5, April 22, 2016 =
+* Fix: Allow translation files to load correctly based on locale
+
 = 2.0.4, April 21, 2016 =
 * Fix: Some text strings used the wrong text domain
 

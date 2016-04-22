@@ -6,7 +6,7 @@
  * Author:              Chris Christoff
  * Author URI:          http://www.chriscct7.com
  *
- * Version:             2.0.4
+ * Version:             2.0.5
  * Requires at least:   4.3
  * Tested up to:        4.5
  *
@@ -44,11 +44,11 @@ class EDD_Checkout_Fields_Manager {
 	 *
 	 * @since 2.0.0
 	 * @access public
-	 * @var EDD_Checkout_Fields_Manager $instance Singleton object of CFM. 
+	 * @var EDD_Checkout_Fields_Manager $instance Singleton object of CFM.
 	 *      Use it to call all CFM methods instead of calling CFM functions directly.
 	 */
 	private static $instance;
-	
+
 	/**
 	 * CFM plugin id string
 	 *
@@ -57,7 +57,7 @@ class EDD_Checkout_Fields_Manager {
 	 * @var string $id
 	 */
 	public $id = 'edd_cfm';
-	
+
 	/**
 	 * CFM plugin basename
 	 *
@@ -66,7 +66,7 @@ class EDD_Checkout_Fields_Manager {
 	 * @var string $basename
 	 */
 	public $basename;
-	
+
 	/**
 	 * CFM Setup
 	 *
@@ -75,7 +75,7 @@ class EDD_Checkout_Fields_Manager {
 	 * @var CFM_Setup $setup Use to access any function in CFM_Setup class.
 	 */
 	public $setup;
-	
+
 	/**
 	 * CFM Emails
 	 *
@@ -84,8 +84,8 @@ class EDD_Checkout_Fields_Manager {
 	 * @var CFM_Emails $emails Use to access any function in CFM_Emails class.
 	 */
 	public $emails;
-	
-	
+
+
 	/**
 	 * CFM Menu
 	 *
@@ -94,7 +94,7 @@ class EDD_Checkout_Fields_Manager {
 	 * @var CFM_Menu $menu Use to access any function in CFM_Menu class.
 	 */
 	public $menu;
-	
+
 	/**
 	 * CFM Helper
 	 *
@@ -103,7 +103,7 @@ class EDD_Checkout_Fields_Manager {
 	 * @var CFM_Helper $helper Use to access any function in CFM_Helper class.
 	 */
 	public $helper;
-	
+
 	/**
 	 * CFM Export
 	 *
@@ -112,7 +112,7 @@ class EDD_Checkout_Fields_Manager {
 	 * @var CFM_Export $export Use to access any function in CFM_Export class.
 	 */
 	public $export;
-	
+
 	/**
 	 * CFM Tools
 	 *
@@ -120,8 +120,8 @@ class EDD_Checkout_Fields_Manager {
 	 * @access public
 	 * @var CFM_Tools $tools Use to access any function in CFM_Tools class.
 	 */
-	public $tools;	
-	
+	public $tools;
+
 	/**
 	 * CFM Admin Customer Profile
 	 *
@@ -130,7 +130,7 @@ class EDD_Checkout_Fields_Manager {
 	 * @var CFM_Admin_Customer_Profile $admin_profile Use to access any function in CFM_Admin_Customer_Profile class.
 	 */
 	public $admin_profile;
-	
+
 	/**
 	 * CFM Frontend Customer Profile
 	 *
@@ -139,7 +139,7 @@ class EDD_Checkout_Fields_Manager {
 	 * @var CFM_Frontend_Customer_Profile $admin_profile Use to access any function in CFM_Frontend_Customer_Profile class.
 	 */
 	public $frontend_profile;
-	
+
 	/**
 	 * CFM Checkout Form
 	 *
@@ -148,8 +148,8 @@ class EDD_Checkout_Fields_Manager {
 	 * @var CFM_Checkout_Form $checkout Use to access any function in CFM_Checkout_Form class.
 	 */
 	public $checkout;
-	
-	
+
+
 	/**
 	 * CFM Edit Payment
 	 *
@@ -168,7 +168,7 @@ class EDD_Checkout_Fields_Manager {
 	 *					 instantiated object.
 	 */
 	public $load_forms;
-	
+
 	/**
 	 * CFM Field objects
 	 *
@@ -178,8 +178,8 @@ class EDD_Checkout_Fields_Manager {
 	 *					 instantiated object.
 	 */
 	public $load_fields;
-	
-	
+
+
 	/**
 	 * Main EDD_Checkout_Fields_Manager Instance
 	 *
@@ -216,7 +216,7 @@ class EDD_Checkout_Fields_Manager {
 			self::$instance = new EDD_Checkout_Fields_Manager;
 			self::$instance->define_globals();
 			self::$instance->includes();
-			
+
 			$cfm_version = get_option( 'cfm_current_version', '1.0' );
 
 			// this does the version to version background update routines including schema correction
@@ -226,7 +226,7 @@ class EDD_Checkout_Fields_Manager {
 
 			self::$instance->setup();
 
-			/* 
+			/*
 			 * Here we're loading all of the registered CFM Form and Field objects.
 			 * We do this on an add_action on plugins_loaded to ensure other plugins
 			 * can register custom CFM Form and CFM Field classes. The plugins_loaded
@@ -258,7 +258,7 @@ class EDD_Checkout_Fields_Manager {
 		}
 		return self::$instance;
 	}
-	
+
 	/**
 	 * Throw error on object clone
 	 *
@@ -278,7 +278,7 @@ class EDD_Checkout_Fields_Manager {
 	 * Disable unserializing of the class
 	 *
 	 * Attempting to wakeup an CFM instance will throw a doing it wrong notice.
-	 * 
+	 *
 	 * @since 2.0.0
 	 * @access public
 	 *
@@ -302,7 +302,7 @@ class EDD_Checkout_Fields_Manager {
 		$this->title	= __( 'Checkout Fields Manager', 'edd_cfm' );
 		$this->file		= __FILE__;
 		$basename		= plugin_basename( $this->file );
-		
+
 		/**
 		 * CFM basename.
 		 *
@@ -313,14 +313,14 @@ class EDD_Checkout_Fields_Manager {
 		 * @param string  $basename Basename of CFM.
 		 */
 		$this->basename = apply_filters( 'cfm_plugin_basename', $basename );
-		
+
 		// Plugin Name
 		if ( !defined( 'cfm_plugin_name' ) ) {
 			define( 'cfm_plugin_name', 'Checkout Fields Manager' );
 		}
 		// Plugin Version
 		if ( !defined( 'cfm_plugin_version' ) ) {
-			define( 'cfm_plugin_version', '2.0.4' );
+			define( 'cfm_plugin_version', '2.0.5' );
 		}
 		// Plugin Root File
 		if ( !defined( 'cfm_plugin_file' ) ) {
@@ -348,7 +348,7 @@ class EDD_Checkout_Fields_Manager {
 	 *
 	 * @since 2.0.0
 	 * @access public
-	 * 
+	 *
 	 * @uses CFM_Setup::load_forms() Load all CFM Form classes.
 	 * @uses CFM_Setup::load_fields() Load all CFM Field classes.
 	 *
@@ -357,7 +357,7 @@ class EDD_Checkout_Fields_Manager {
 	public function load_abstracts(){
 		// load form abstract and extending forms
 		self::$instance->load_forms 	= self::$instance->setup->load_forms();
-		
+
 		// load field abstract and extending fields
 		self::$instance->load_fields 	= self::$instance->setup->load_fields();
 	}
@@ -370,7 +370,7 @@ class EDD_Checkout_Fields_Manager {
 	 * @since 2.0.0
 	 * @access public
 	 * @todo Use better check for admin (cfm_is_admin())
-	 * 
+	 *
 	 * @return void
 	 */
 	public function includes() {
@@ -402,9 +402,9 @@ class EDD_Checkout_Fields_Manager {
 	 *
 	 * @since 2.0.0
 	 * @access public
-	 * 
+	 *
 	 * @uses CFM_Setup::load_settings() Loads CFM settings
-	 * 
+	 *
 	 * @return void
 	 */
 	public function setup() {
@@ -415,7 +415,7 @@ class EDD_Checkout_Fields_Manager {
 		$this->load_textdomain();
 
 		self::$instance->setup = $this->setup = new CFM_Setup;
-		
+
 		// load license
 		if ( class_exists( 'EDD_License' ) ) {
 			$license = new EDD_License( __FILE__, cfm_plugin_name, cfm_plugin_version, 'Chris Christoff' );
@@ -430,13 +430,13 @@ class EDD_Checkout_Fields_Manager {
 	 *
 	 * @since 2.0.0
 	 * @access public
-	 * 
+	 *
 	 * @return void
 	 */
 	public function load_textdomain() {
 		// This filter is already documented in WordPress core
 		$locale        = apply_filters( 'plugin_locale', get_locale(), 'edd_cfm' );
-		
+
 		$mofile        = sprintf( '%1$s-%2$s.mo', 'edd_cfm', $locale );
 
 		$mofile_local  = trailingslashit( cfm_plugin_dir . 'languages' ) . $mofile;
@@ -459,7 +459,7 @@ class EDD_Checkout_Fields_Manager {
 	 *
 	 * @since 2.0.0
 	 * @access public
-	 * 
+	 *
 	 * @return void
 	 */
 	public static function edd_notice() { ?>
@@ -468,7 +468,7 @@ class EDD_Checkout_Fields_Manager {
 		</div>
 		<?php
 	}
-	
+
 	/**
 	 * CFM minimum WP version notice
 	 *
@@ -477,7 +477,7 @@ class EDD_Checkout_Fields_Manager {
 	 *
 	 * @since 2.0.0
 	 * @access public
-	 * 
+	 *
 	 * @return void
 	 */
 	public static function wp_notice() { ?>
@@ -500,7 +500,7 @@ class EDD_Checkout_Fields_Manager {
  * @since 2.0.0
  *
  * @uses EDD_Checkout_Fields_Manager::instance() Retrieve CFM instance.
- * 
+ *
  * @return EDD_Checkout_Fields_Manager The singleton CFM instance.
  */
 function EDD_CFM() {
@@ -520,7 +520,7 @@ EDD_CFM();
  * @global string $wp_version WordPress version (provided by WordPress core).
  * @uses EDD_Checkout_Fields_Manager::load_settings() Loads CFM settings
  * @uses CFM_Install::init() Runs install process
- * 
+ *
  * @return void
  */
 function CFM_Install() {
@@ -562,7 +562,7 @@ function CFM_Install() {
  * @access public
  *
  * @uses CFM_Install() Runs install process
- * 
+ *
  * @return void
  */
 function cfm_call_install(){
