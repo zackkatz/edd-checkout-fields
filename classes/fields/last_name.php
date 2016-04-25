@@ -16,7 +16,7 @@ class CFM_Last_Name_Field extends CFM_Field {
 		),
 		'position'    => 'custom',
 		'permissions' => array(
-			'can_remove_from_formbuilder' => false,
+			'can_remove_from_formbuilder' => true,
 			'can_change_meta_key'         => false,
 			'can_add_to_formbuilder'      => true
 		),
