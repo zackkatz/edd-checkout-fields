@@ -160,7 +160,8 @@ class CFM_Recaptcha_Field extends CFM_Field {
 			$recap_challenge = isset( $values[ 'g-recaptcha-response' ] ) ? $values[ 'g-recaptcha-response' ] : '';
 			$private_key     = edd_get_option( 'cfm-recaptcha-private-key', '' );
 			try {
-				$url      = 'https://www.google.com/recaptcha/api/siteverify';
+				$prefix   = is_ssl() ? "https" : "http";
+				$url      = $prefix . '://www.google.com/recaptcha/api/siteverify';
 				$data     = array( 'secret' => $private_key, 'response' => $recap_challenge, 'remoteip' => $_SERVER['REMOTE_ADDR'] );
 				$options  = array( 'http' => array( 'header' => "Content-type: application/x-www-form-urlencoded\r\n", 'method' => 'POST', 'content' => http_build_query( $data ) ) );
 				$context  = stream_context_create( $options );
