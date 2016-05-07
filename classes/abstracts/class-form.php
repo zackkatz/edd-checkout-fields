@@ -44,7 +44,7 @@ class CFM_Form {
 		if ( $user_id === -2 ){
 			if ( $payment_id !== -2 ){
 				$payment = new EDD_Payment( $payment_id );
-				$user_id = $payment->__get('user_id');
+				$user_id = $payment->user_id;
 			}
 		}
 		$this->user_id         = $user_id;
