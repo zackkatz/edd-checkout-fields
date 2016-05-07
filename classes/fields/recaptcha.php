@@ -90,9 +90,11 @@ class CFM_Recaptcha_Field extends CFM_Field {
 		$output        = '';
 		$output     .= sprintf( '<p class="cfm-el %1s %2s %3s">', esc_attr( $this->template() ), esc_attr( $this->name() ), esc_attr( $this->css() ) );
 		$output        .= $this->label( $profile );
+		$prefix   = is_ssl() ? "https" : "http";
+		$url      = $prefix . '://www.google.com/recaptcha/api.js';
 		ob_start(); ?>
 
-		<?php wp_enqueue_script( 'recaptcha', 'https://www.google.com/recaptcha/api.js' ); ?>
+		<?php wp_enqueue_script( 'recaptcha', $url ); ?>
 		<div class="g-recaptcha" data-sitekey="<?php echo $public_key; ?>" data-theme="<?php echo $theme; ?>" data-type="<?php echo $type; ?>" data-size="<?php echo $size; ?>"></div>
 		<noscript>
 			<div style="width: 302px; height: 422px;">
