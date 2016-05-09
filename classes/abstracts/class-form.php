@@ -459,7 +459,7 @@ class CFM_Form {
 		$values   = apply_filters( 'cfm_save_' . $this->name() . '_form_frontend_values', $values, $this, $this->payment_id, $this->user_id );
 		$profile   = apply_filters( 'cfm_save_' . $this->name() . '_form_frontend_profile', $profile, $this, $this->payment_id, $this->user_id );
 
-		if ( ( cfm_is_admin() ) || ( !isset( $_REQUEST['cfm-' . $this->name() .'-form'] ) || !wp_verify_nonce( $_REQUEST['cfm-' . $this->name() .'-form'], 'cfm-' . $this->name() .'-form' ) ) ) {
+		if ( ( cfm_is_admin() ) || ( ( !isset( $_REQUEST['cfm-' . $this->name() .'-form'] ) || !wp_verify_nonce( $_REQUEST['cfm-' . $this->name() .'-form'], 'cfm-' . $this->name() .'-form' ) ) && $profile ) ) {
 			return;
 		}
 
@@ -628,7 +628,7 @@ class CFM_Form {
 		$values   = apply_filters( 'cfm_save_' . $this->name() . '_form_frontend_values', $values, $this, $this->payment_id, $this->user_id );
 		$profile   = apply_filters( 'cfm_save_' . $this->name() . '_form_frontend_profile', $profile, $this, $this->payment_id, $this->user_id );
 
-		if ( ( cfm_is_admin() ) || ( !isset( $_REQUEST['cfm-' . $this->name() .'-form'] ) || !wp_verify_nonce( $_REQUEST['cfm-' . $this->name() .'-form'], 'cfm-' . $this->name() .'-form' ) ) ) {
+		if ( ( cfm_is_admin() ) || ( ( !isset( $_REQUEST['cfm-' . $this->name() .'-form'] ) || !wp_verify_nonce( $_REQUEST['cfm-' . $this->name() .'-form'], 'cfm-' . $this->name() .'-form' ) ) && $profile ) ) {
 			return;
 		}
 
