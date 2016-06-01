@@ -15,7 +15,7 @@ class CFM_Field {
 
 	/** @var int The id of the object the field value is saved to. This is the payment ID. */
 	public $payment_id = null;
-	
+
 	/** @var int The id of the object the field value is saved to. This is the user ID. */
 	public $user_id = null;
 
@@ -84,7 +84,7 @@ class CFM_Field {
 				$this->characteristics = $this->pull_characteristics( $field, $form );
 				$this->meta = $this->is_meta();
 			}
-			
+
 			$this->payment_id = $payment_id;
 			$this->user_id = $user_id;
 			$this->value = $this->get_field_value();
@@ -140,14 +140,14 @@ class CFM_Field {
 	public function set_payment_id( $payment_id ) {
 		$this->payment_id = $payment_id;
 	}
-	
+
 	public function get_user_id() {
 		return $this->user_id;
 	}
 
 	public function set_user_id( $user_id ) {
 		$this->user_id = $user_id;
-	}	
+	}
 
 	public function set_meta( $meta ) {
 		$this->meta = $meta;
@@ -241,12 +241,12 @@ class CFM_Field {
 		// defined in the extending fields
 		return '';
 	}
-	
+
 	public function export_data( $payment_id = -2, $user_id = -2 ) {
 		if ( $payment_id === -2 ){
 			$payment_id = $this->payment_id;
 		}
-		
+
 		if ( $user_id === -2 ){
 			if ( $payment_id !== -2 ){
 				$payment = new EDD_Payment( $payment_id );
@@ -255,13 +255,13 @@ class CFM_Field {
 				$user_id = $this->user_id;
 			}
 		}
-		
+
 		$value = $this->get_field_value_frontend( $payment_id, $user_id );
 		if ( ! empty( $value ) && is_array( $value ) ){
 			$value = implode( ", ", $value );
 		}
 		return $value;
-	}	
+	}
 
 	/** Saves field by extracting value from array of values (for all fields of a form) */
 	public function save_field_values( $payment_id = -2, $user_id = -2, $values = array(), $current_user_id = -2 ) {
@@ -272,7 +272,7 @@ class CFM_Field {
 		if ( $payment_id == -2 ) {
 			$payment_id = $this->payment_id;
 		}
-		
+
 		if ( $user_id == -2 ) {
 			$user_id = $this->user_id;
 		}
@@ -305,7 +305,7 @@ class CFM_Field {
 		if ( $payment_id == -2 ) {
 			$payment_id = $this->payment_id;
 		}
-		
+
 		if ( $user_id == -2 ) {
 			$user_id = $this->user_id;
 		}
@@ -342,11 +342,11 @@ class CFM_Field {
 		if ( $payment_id == -2 ) {
 			$payment_id = $this->payment_id;
 		}
-		
+
 		if ( $user_id == -2 ) {
 			$user_id = $this->user_id;
 		}
-		
+
 		do_action( 'cfm_save_field_before_save_frontend', $this, $payment_id, $user_id, $value, $current_user_id );
 
 		if ( (bool) $this->meta ) {
@@ -388,7 +388,7 @@ class CFM_Field {
 			$user_id = get_current_user_id();
 		}
 
-		if ( ( $this->is_meta() && $this->meta_type() === 'payment' && $payment_id === -2 ) || 
+		if ( ( $this->is_meta() && $this->meta_type() === 'payment' && $payment_id === -2 ) ||
 			 ( $this->is_meta() && $this->meta_type() === 'user' && $user_id === -2 ) ||
 			 ( !$this->is_meta() && $user_id === -2 ) ){
 			// if the place we are saving to doesn't have a save_id we are on a draft and therefore don't have a value
@@ -427,7 +427,7 @@ class CFM_Field {
 			$user_id = get_current_user_id();
 		}
 
-		if ( ( $this->is_meta() && $this->meta_type() === 'payment' && $payment_id === -2 ) || 
+		if ( ( $this->is_meta() && $this->meta_type() === 'payment' && $payment_id === -2 ) ||
 			 ( $this->is_meta() && $this->meta_type() === 'user' && $user_id === -2 ) ||
 			 ( !$this->is_meta() && $user_id === -2 ) ){
 			// if the place we are saving to doesn't have a save_id we are on a draft and therefore don't have a value
@@ -530,7 +530,7 @@ class CFM_Field {
 
 	public function required() {
 		$required = false;
-		
+
 		$required = isset( $this->characteristics['required'] ) ? $this->characteristics['required'] : 'no';
 		if ( $required === 'no' ) {
 			$required = false;
@@ -563,7 +563,7 @@ class CFM_Field {
 	public function set_title() {
 		$title = _x( 'Text', 'CFM Field title translation', 'edd_cfm' );
 		$title = apply_filters( 'cfm_' . $this->name() . '_field_title', $title );
-		$this->supports['title'] = $title;		
+		$this->supports['title'] = $title;
 	}
 
 	public function title() {
@@ -586,7 +586,7 @@ class CFM_Field {
 			return false;
 		}
 	}
-	
+
 	public function meta_type() {
 		if ( ( isset( $this->supports['is_meta'] ) && (bool) $this->supports['is_meta'] ) || (  ! isset( $this->supports['is_meta'] ) && isset( $this->characteristics['is_meta'] ) && (bool) $this->characteristics['is_meta'] ) ) {
 			if ( isset( $this->characteristics['meta_type'] ) ){
@@ -636,7 +636,7 @@ class CFM_Field {
 	public function extending_constructor( ) {
 		// used by extending fields who need it
 	}
-	
+
 	public function can_export(){
 		return ( isset( $this->characteristics['show_in_exports'] ) &&  $this->characteristics['show_in_exports'] === 'export' ) ?  true : false;
 	}

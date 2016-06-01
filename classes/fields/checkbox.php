@@ -45,8 +45,8 @@ class CFM_Checkbox_Field extends CFM_Field {
 	public function set_title() {
 		$title = _x( 'Checkbox', 'CFM Field title translation', 'edd_cfm' );
 		$title = apply_filters( 'cfm_' . $this->name() . '_field_title', $title );
-		$this->supports['title'] = $title;		
-	}	
+		$this->supports['title'] = $title;
+	}
 
 	/** Returns the HTML to render a field in admin */
 	public function render_field_admin( $user_id = -2, $profile = -2 ) {
@@ -57,9 +57,9 @@ class CFM_Checkbox_Field extends CFM_Field {
 		$value     = $this->get_field_value_admin( $this->payment_id, $this->user_id );
 		if ( !is_array( $value ) ){
 			$value = explode( '|', $value );
-		}		
-		
-		
+		}
+
+
 		$required  = $this->required();
 		$output    = '';
 		$output   .= sprintf( '<p class="cfm-el %1s %2s %3s">', esc_attr( $this->template() ), esc_attr( $this->name() ), esc_attr( $this->css() ) );
@@ -95,13 +95,13 @@ class CFM_Checkbox_Field extends CFM_Field {
 		}
 		if ( !is_array( $value ) ){
 			$value = explode( '|', $value );
-		}		
-		
-		
+		}
+
+
 		$required  = $this->required();
 		$output    = '';
 		$output   .= sprintf( '<p class="cfm-el %1s %2s %3s">', esc_attr( $this->template() ), esc_attr( $this->name() ), esc_attr( $this->css() ) );
-		$output   .= $this->label( $profile );
+		$output   .= $this->label( true );
 
 		ob_start(); ?>
 		<?php
@@ -122,7 +122,7 @@ class CFM_Checkbox_Field extends CFM_Field {
 		$output .= '</p>';
 		return $output;
 	}
-	
+
 	public function export_data( $payment_id = -2, $user_id = -2 ) {
 		if ( $user_id === -2 ) {
 			$user_id = get_current_user_id();
