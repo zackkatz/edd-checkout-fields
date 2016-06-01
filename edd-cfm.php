@@ -6,7 +6,7 @@
  * Author:              Chris Christoff
  * Author URI:          http://www.chriscct7.com
  *
- * Version:             2.0.7
+ * Version:             2.0.8
  * Requires at least:   4.3
  * Tested up to:        4.5
  *
@@ -320,7 +320,7 @@ class EDD_Checkout_Fields_Manager {
 		}
 		// Plugin Version
 		if ( !defined( 'cfm_plugin_version' ) ) {
-			define( 'cfm_plugin_version', '2.0.7' );
+			define( 'cfm_plugin_version', '2.0.8' );
 		}
 		// Plugin Root File
 		if ( !defined( 'cfm_plugin_file' ) ) {
