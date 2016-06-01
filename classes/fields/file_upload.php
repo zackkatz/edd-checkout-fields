@@ -46,7 +46,7 @@ class CFM_File_Upload_Field extends CFM_Field {
 	public function set_title() {
 		$title = _x( 'File Upload', 'CFM Field title translation', 'edd_cfm' );
 		$title = apply_filters( 'cfm_' . $this->name() . '_field_title', $title );
-		$this->supports['title'] = $title;		
+		$this->supports['title'] = $title;
 	}
 
 	/** Returns the HTML to render a field in admin */
@@ -54,7 +54,7 @@ class CFM_File_Upload_Field extends CFM_Field {
 		if ( $user_id === -2 ) {
 			$user_id = get_current_user_id();
 		}
-		
+
 		$value     = $this->get_field_value_admin( $this->payment_id, $this->user_id );
 
 		$uploaded_items = $value;
@@ -149,7 +149,7 @@ class CFM_File_Upload_Field extends CFM_Field {
 		}
 		$output        = '';
 		$output     .= sprintf( '<p class="cfm-el %1s %2s %3s">', esc_attr( $this->template() ), esc_attr( $this->name() ), esc_attr( $this->css() ) );
-		$output    .= $this->label( $profile );
+		$output    .= $this->label( true );
 		ob_start(); ?>
 			<div class="cfm-fields">
 				 <table class="<?php echo sanitize_key( $this->name() ); ?>">
@@ -210,7 +210,7 @@ class CFM_File_Upload_Field extends CFM_Field {
 		if ( $payment_id === -2 ){
 			$payment_id = $this->payment_id;
 		}
-		
+
 		if ( $user_id === -2 ){
 			if ( $payment_id !== -2 ){
 				$payment = new EDD_Payment( $payment_id );
@@ -219,7 +219,7 @@ class CFM_File_Upload_Field extends CFM_Field {
 				$user_id = $this->user_id;
 			}
 		}
-		
+
 		$value = $this->get_field_value_frontend( $payment_id, $user_id );
 		if ( ! empty( $value ) && is_array( $value ) ){
 			foreach( $value as $key => $file ){
@@ -255,7 +255,7 @@ class CFM_File_Upload_Field extends CFM_Field {
 				<?php CFM_Formbuilder_Templates::meta_type_radio( $index, $this->characteristics ); ?>
 				<?php CFM_Formbuilder_Templates::standard( $index, $this ); ?>
 				<?php CFM_Formbuilder_Templates::css( $index, $this->characteristics ); ?>
-				
+
                 <div class="cfm-form-rows">
                     <label><?php _e( 'Max. file size', 'edd_cfm' ); ?></label>
                     <input type="text" class="smallipopInput" name="<?php echo $max_size_name; ?>" value="<?php echo $max_size_value; ?>" title="<?php echo $help; ?>">
@@ -280,7 +280,7 @@ class CFM_File_Upload_Field extends CFM_Field {
                     </div>
                 </div> <!-- .edd-checkout-fields-rows -->
             </div> <!-- .edd-checkout-fields-holder -->
-        </li>		
+        </li>
 		<?php
 		return ob_get_clean();
 	}
@@ -327,7 +327,7 @@ class CFM_File_Upload_Field extends CFM_Field {
 		if ( $payment_id == -2 ) {
 			$payment_id = $this->payment_id;
 		}
-		
+
 		if ( $user_id == -2 ) {
 			$user_id = $this->user_id;
 		}
@@ -357,9 +357,9 @@ class CFM_File_Upload_Field extends CFM_Field {
 				$attachment_id = cfm_get_attachment_id_from_url( $url );
 				$ids[] = $attachment_id;
 			}
-			update_post_meta( $payment_id, $this->id, $ids );				
+			update_post_meta( $payment_id, $this->id, $ids );
 		}
-		
+
 		$this->value = $value;
 		do_action( 'cfm_save_field_after_save_admin', $this, $payment_id, $user_id, $value, $current_user_id );
 	}
@@ -372,7 +372,7 @@ class CFM_File_Upload_Field extends CFM_Field {
 		if ( $payment_id == -2 ) {
 			$payment_id = $this->payment_id;
 		}
-		
+
 		if ( $user_id == -2 ) {
 			$user_id = $this->user_id;
 		}
@@ -402,9 +402,9 @@ class CFM_File_Upload_Field extends CFM_Field {
 				$attachment_id = cfm_get_attachment_id_from_url( $url );
 				$ids[] = $attachment_id;
 			}
-			update_post_meta( $payment_id, $this->id, $ids );				
+			update_post_meta( $payment_id, $this->id, $ids );
 		}
-		
+
 		$this->value = $value;
 		do_action( 'cfm_save_field_after_save_frontend', $this, $payment_id, $user_id, $value, $current_user_id );
 	}
