@@ -861,7 +861,7 @@ add_filter( 'edd_purchase_form_required_fields', 'cfm_checkout_custom_validation
 /**
  * Process any template tags from Checkout Fields Manager used by PDF Stamper.
  *
- * @since       3.1.4
+ * @since       2.0.9
  * @param       string $message The message that will be stamped on the PDF.
  * @param       int $download_id The ID of a download
  * @param       int $payment_id The ID of they payment which allows this PDF to be downloaded.
