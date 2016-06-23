@@ -864,7 +864,7 @@ add_filter( 'edd_purchase_form_required_fields', 'cfm_checkout_custom_validation
  * @since       2.0.9
  * @param       string $message The message that will be stamped on the PDF.
  * @param       int $download_id The ID of a download
- * @param       int $payment_id The ID of they payment which allows this PDF to be downloaded.
+ * @param       int $payment_id The ID of the payment which allows this PDF to be downloaded.
  * @return      string $message The message that will be stamped on the PDF.
  */
 function cfm_pdf_stamper_do_tags( $message, $download_id, $payment_id ){
