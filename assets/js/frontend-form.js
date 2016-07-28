@@ -1,4 +1,4 @@
-;(function ($) {
+(function ($) {
 	var CFM_Form = {
 		init: function () {
 			// clone and remove repeated field
@@ -25,7 +25,7 @@
 				newOption.length = 1;
 				var count = optionContainer.find('.cfm-single-variation').length;
 
-				// too many files 
+				// too many files
 				if ( count + 1 > max && max != 0 ){
 					return alert(cfm_form.too_many_files_pt_1 + max + cfm_form.too_many_files_pt_2);
 				}
@@ -144,7 +144,7 @@
 				$parent.remove();
 			}
 		},
-		
+
 		hasItems: function (map) {
 		   for(var key in map) {
 			  if (map.hasOwnProperty(key)) {
@@ -153,7 +153,7 @@
 		   }
 		   return false;
 		},
-		
+
 		adminPostSubmit: function(e) {
 			var form = $(this),
 				form_data = CFM_Form.validateForm(form);
@@ -164,7 +164,7 @@
 			var form = $(this),
 				submitButton = form.find('input[type=submit]')
 				form_data = CFM_Form.validateForm(form);
-			
+
 			if(form_data) {
 				return true;
 			} else {
@@ -173,7 +173,7 @@
 			}
 
 		},
-		
+
 		validateForm: function (self) {
 			var temp,
 				form_data = self.serialize(),
@@ -198,7 +198,10 @@
 
 })(jQuery);
 webshim.setOptions('forms-ext', {
-	replaceUI: true,
+	replaceUI: {
+		date: true,
+		datetime: true
+	},
 	types: 'date datetime',
 	date: {
 		openOnFocus: true,
