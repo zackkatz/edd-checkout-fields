@@ -1,3 +1,6 @@
+= 2.0.9, July 28, 2016 =
+* Fix: Quantity fields do not work properly when CFM is activated
+
 = 2.0.8, June 1, 2016 =
 * Fix: Help text not shown on Checkbox fields
 * Fix: Help text not shown on File Upload fields
