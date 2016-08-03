@@ -86,7 +86,13 @@ class CFM_File_Upload_Field extends CFM_Field {
 							<input type="hidden" id="cfm-upload-max-files-<?php echo sanitize_key( $this->name() ); ?>" value="<?php echo $max_files; ?>" />
 							<?php
 							foreach ( $uploaded_items as $index => $attach_id ) {
-								$download = wp_get_attachment_url( $attach_id ); ?>
+								$show_download_link = false;
+								if ( is_numeric( $attach_id ) ){
+									$download = wp_get_attachment_url( $attach_id ); 
+									$show_download_link = true;
+								} else {
+									$download = $attach_id;
+								} ?>
 								<tr class="cfm-single-variation">
 									 <td class="cfm-url-row">
 												<input type="text" class="cfm-file-value" placeholder="<?php _e( "http://", 'edd_cfm' ); ?>" name="<?php echo $this->name(); ?>[<?php echo esc_attr( $index ); ?>]" value="<?php echo esc_attr( $download ); ?>" />
@@ -96,7 +102,11 @@ class CFM_File_Upload_Field extends CFM_Field {
 												<?php echo str_replace( ' ', '&nbsp;', __( 'Choose file', 'edd_cfm' ) ); ?></a>
 									 </td>
 									 <td class="cfm-download-file">
+									 		<?php if ( $show_download_link ) { ?>
 												<?php printf( '<a href="%s">%s</a>', wp_get_attachment_url( $attach_id ), __( 'Download File', 'edd_cfm' ) ); ?>
+											<?php } else { ?>
+												<?php _e( 'File is not available locally.', 'edd_cfm' ); ?>
+											<?php } ?>
 									 </td>
 									 <?php if ( $max_files > 1 || $max_files === 0 ) { ?>
 									 <td width="1%" class="cfm-delete-row">
@@ -165,7 +175,11 @@ class CFM_File_Upload_Field extends CFM_Field {
 							 <input type="hidden" id="cfm-upload-max-files-<?php echo sanitize_key( $this->name() ); ?>" value="<?php echo $max_files; ?>" />
 							<?php
 							foreach ( $uploaded_items as $index => $attach_id ) {
-								$download = wp_get_attachment_url( $attach_id ); ?>
+								if ( is_numeric( $attach_id ) ){
+									$download = wp_get_attachment_url( $attach_id ); 
+								} else {
+									$download = $attach_id;
+								} ?>
 								<tr class="cfm-single-variation">
 									 <td class="cfm-url-row">
 												<input type="text" data-formid="<?php echo $this->form;?>" data-fieldname="<?php echo $this->name();?>" class="cfm-file-value" placeholder="<?php _e( "http://", 'edd_cfm' ); ?>" name="<?php echo $this->name(); ?>[<?php echo esc_attr( $index ); ?>]" value="<?php echo esc_attr( $download ); ?>" />
@@ -223,11 +237,19 @@ class CFM_File_Upload_Field extends CFM_Field {
 		$value = $this->get_field_value_frontend( $payment_id, $user_id );
 		if ( ! empty( $value ) && is_array( $value ) ){
 			foreach( $value as $key => $file ){
-				$value[ $key ] = wp_get_attachment_url( $file );
+				if ( is_numeric( $file ) ){
+					$value[ $key ] = wp_get_attachment_url( $file );
+				} else {
+					$value[ $key ] = $file;
+				}
 			}
 			$value = implode( ", ", $value );
 		} else {
-			$value = wp_get_attachment_url( $value );
+			if ( is_numeric( $value ) ){
+				$value = wp_get_attachment_url( $value );
+			} else {
+				// $value is already url (amazon s3)
+			}
 		}
 		return $value;
 	}
@@ -294,8 +316,11 @@ class CFM_File_Upload_Field extends CFM_Field {
 					foreach( $values[ $name ] as $key => $file  ){
 						if ( filter_var( $file, FILTER_VALIDATE_URL ) === false ) {
 							// if that's not a url
-							edd_set_error( 'invalid_' . $this->id, sprintf( __( 'Please enter a valid URL for %s.', 'edd_cfm' ), $this->get_label() ) );
-							break;
+							$valid = apply_filters( 'cfm_validate_filter_url_' . $this->template() . '_field', false, $file, $payment_id, $user_id );
+							if ( ! $valid ) {
+								edd_set_error( 'invalid_' . $this->id, sprintf( __( 'Please enter a valid URL for %s.', 'edd_cfm' ), $this->get_label() ) );
+								break;
+							}
 						}
 					}
 				} else {
@@ -343,6 +368,7 @@ class CFM_File_Upload_Field extends CFM_Field {
 					continue;
 				}
 				$attachment_id = cfm_get_attachment_id_from_url( $url );
+				$attachment_id = apply_filters( 'cfm_save_field_admin_file_upload_field_attachment_id', $attachment_id, $url, $meta_type, $payment_id, $user_id, $value, $current_user_id );
 				$ids[] = $attachment_id;
 			}
 			update_user_meta( $user_id, $this->id, $ids );
@@ -355,6 +381,7 @@ class CFM_File_Upload_Field extends CFM_Field {
 					continue;
 				}
 				$attachment_id = cfm_get_attachment_id_from_url( $url );
+				$attachment_id = apply_filters( 'cfm_save_field_admin_file_upload_field_attachment_id', $attachment_id, $url, $meta_type, $payment_id, $user_id, $value, $current_user_id );
 				$ids[] = $attachment_id;
 			}
 			update_post_meta( $payment_id, $this->id, $ids );
@@ -388,6 +415,7 @@ class CFM_File_Upload_Field extends CFM_Field {
 					continue;
 				}
 				$attachment_id = cfm_get_attachment_id_from_url( $url );
+				$attachment_id = apply_filters( 'cfm_save_field_frontend_file_upload_field_attachment_id', $attachment_id, $url, $meta_type, $payment_id, $user_id, $value, $current_user_id );
 				$ids[] = $attachment_id;
 			}
 			update_user_meta( $user_id, $this->id, $ids );
@@ -400,6 +428,7 @@ class CFM_File_Upload_Field extends CFM_Field {
 					continue;
 				}
 				$attachment_id = cfm_get_attachment_id_from_url( $url );
+				$attachment_id = apply_filters( 'cfm_save_field_frontend_file_upload_field_attachment_id', $attachment_id, $url, $meta_type, $payment_id, $user_id, $value, $current_user_id );
 				$ids[] = $attachment_id;
 			}
 			update_post_meta( $payment_id, $this->id, $ids );
