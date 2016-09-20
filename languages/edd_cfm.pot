@@ -1,7 +1,8 @@
+#, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: Easy Digital Downloads - Checkout Fields Manager\n"
-"POT-Creation-Date: 2016-04-21 14:47-0600\n"
+"POT-Creation-Date: 2016-09-20 16:47-0700\n"
 "PO-Revision-Date: 2016-04-21 14:47-0600\n"
 "Last-Translator: Chris Christoff <chriscct7@gmail.com>\n"
 "Language-Team: Chris Christoff <support@easydigitaldownloads.com>\n"
@@ -10,194 +11,18 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 1.6.3\n"
+"X-Generator: Poedit 1.8.9\n"
 "X-Poedit-Basepath: ..\n"
 "X-Poedit-WPHeader: edd-cfm.php\n"
 "X-Poedit-SourceCharset: UTF-8\n"
 "X-Poedit-KeywordsList: __;_e;_n:1,2;_x:1,2c;_ex:1,2c;_nx:4c,1,2;esc_attr__;"
 "esc_attr_e;esc_attr_x:1,2c;esc_html__;esc_html_e;esc_html_x:1,2c;_n_noop:1,2;"
 "_nx_noop:3c,1,2;__ngettext_noop:1,2\n"
-"X-Poedit-SearchPathExcluded-0: *.js\n"
 "X-Poedit-SearchPath-0: .\n"
-
-#: edd-cfm.php:274 edd-cfm.php:288
-msgid "Cheatin&#8217; huh?"
-msgstr ""
-
-#: edd-cfm.php:302 classes/admin/class-tools.php:62
-msgid "Checkout Fields Manager"
-msgstr ""
-
-#: edd-cfm.php:467
-msgid ""
-"<strong>Notice:</strong> Easy Digital Downloads Checkout Fields Manager "
-"requires Easy Digital Downloads 2.5 or higher in order to function properly."
-msgstr ""
-
-#: edd-cfm.php:485
-msgid ""
-"<strong>Notice:</strong> Easy Digital Downloads Checkout Fields Manager "
-"requires WordPress 4.3 or higher in order to function properly."
-msgstr ""
-
-#: classes/class-post-types.php:61 classes/class-post-types.php:88
-msgid "EDD CFM Forms"
-msgstr ""
-
-#: classes/class-post-types.php:89
-msgid "CFM Form"
-msgstr ""
-
-#: classes/class-post-types.php:90
-msgid "CFM Forms"
-msgstr ""
-
-#: classes/class-post-types.php:91
-msgid "Add CFM Form"
-msgstr ""
-
-#: classes/class-post-types.php:92
-msgid "Add New Form"
-msgstr ""
-
-#: classes/class-post-types.php:93
-msgid "Edit"
-msgstr ""
-
-#: classes/class-post-types.php:95
-msgid "New CFM Form"
-msgstr ""
-
-#: classes/class-post-types.php:96 classes/class-post-types.php:97
-msgid "View CFM Form"
-msgstr ""
-
-#: classes/class-post-types.php:98
-msgid "Search CFM Forms"
-msgstr ""
-
-#: classes/class-post-types.php:99
-msgid "No CFM Forms Found"
-msgstr ""
-
-#: classes/class-post-types.php:100
-msgid "No CFM Forms Found in Trash"
-msgstr ""
-
-#: classes/class-post-types.php:101
-msgid "Parent CFM Form"
-msgstr ""
-
-#: classes/class-setup.php:69
-msgid ""
-"Warning: The checkout form isn't set. Go to EDD->Tools->Checkout Fields "
-"Manager, and reset the checkout form."
-msgstr ""
-
-#: classes/class-setup.php:122 classes/class-setup.php:207
-msgid "Please fix the errors to proceed"
-msgstr ""
-
-#: classes/class-setup.php:124 classes/class-setup.php:209
-msgid "Choose a file"
-msgstr ""
-
-#: classes/class-setup.php:125 classes/class-setup.php:210
-#: classes/fields/file_upload.php:95 classes/fields/file_upload.php:174
-msgid "Insert file URL"
-msgstr ""
-
-#: classes/class-setup.php:126 classes/class-setup.php:211
-msgid "You may not add more than "
-msgstr ""
-
-#: classes/class-setup.php:127 classes/class-setup.php:212
-msgid " files!"
-msgstr ""
-
-#: classes/class-setup.php:415 classes/class-setup.php:422
-msgid "Required to use the reCAPTCHA field."
-msgstr ""
-
-#: classes/class-setup.php:416
-msgid "reCAPTCHA Public Key"
-msgstr ""
-
-#: classes/class-setup.php:423
-msgid "reCAPTCHA Private Key"
-msgstr ""
-
-#: classes/misc-functions.php:186
-msgid "Images"
-msgstr ""
-
-#: classes/misc-functions.php:187
-msgid "Audio"
-msgstr ""
-
-#: classes/misc-functions.php:188
-msgid "Videos"
-msgstr ""
-
-#: classes/misc-functions.php:189
-msgid "PDF"
-msgstr ""
-
-#: classes/misc-functions.php:190
-msgid "Office Documents"
-msgstr ""
-
-#: classes/misc-functions.php:191
-msgid "Zip Archives"
-msgstr ""
-
-#: classes/misc-functions.php:192
-msgid "Executable Files"
-msgstr ""
-
-#: classes/misc-functions.php:193
-msgid "CSV"
-msgstr ""
-
-#: classes/misc-functions.php:258
-#, php-format
-msgid ""
-"%1$s is <strong>deprecated</strong> since Easy Digital Downloads Checkout "
-"Fields Manager version %2$s! Use %3$s instead."
-msgstr ""
-
-#: classes/misc-functions.php:262
-#, php-format
-msgid ""
-"%1$s is <strong>deprecated</strong> since Easy Digital Downloads Checkout "
-"Fields Manager version %2$s."
-msgstr ""
-
-#: classes/misc-functions.php:309
-#, php-format
-msgid "%s"
-msgstr ""
-
-#: classes/misc-functions.php:743
-#, php-format
-msgid "Please upload files no larger than %s KB"
-msgstr ""
-
-#: classes/misc-functions.php:764
-#, php-format
-msgid "Please upload files with one of these extensions: %s"
-msgstr ""
-
-#: classes/misc-functions.php:806
-msgid "Please enter your first name"
-msgstr ""
-
-#: classes/misc-functions.php:841
-msgid "Please enter your last name."
-msgstr ""
+"X-Poedit-SearchPathExcluded-0: *.js\n"
 
 #: classes/abstracts/class-field.php:478 classes/fields/email.php:121
-#: classes/fields/file_upload.php:302 classes/fields/file_upload.php:305
+#: classes/fields/file_upload.php:333 classes/fields/file_upload.php:336
 #, php-format
 msgid "Please enter a value for %s."
 msgstr ""
@@ -261,6 +86,10 @@ msgstr ""
 #: classes/admin/class-tools.php:274
 #: classes/admin/customers/class-admin-customer-profile.php:92
 msgid "Checkout Fields"
+msgstr ""
+
+#: classes/admin/class-tools.php:62 edd-cfm.php:302
+msgid "Checkout Fields Manager"
 msgstr ""
 
 #: classes/admin/class-tools.php:83
@@ -598,6 +427,93 @@ msgstr ""
 msgid "Custom Fields"
 msgstr ""
 
+#: classes/class-post-types.php:61 classes/class-post-types.php:88
+msgid "EDD CFM Forms"
+msgstr ""
+
+#: classes/class-post-types.php:89
+msgid "CFM Form"
+msgstr ""
+
+#: classes/class-post-types.php:90
+msgid "CFM Forms"
+msgstr ""
+
+#: classes/class-post-types.php:91
+msgid "Add CFM Form"
+msgstr ""
+
+#: classes/class-post-types.php:92
+msgid "Add New Form"
+msgstr ""
+
+#: classes/class-post-types.php:93
+msgid "Edit"
+msgstr ""
+
+#: classes/class-post-types.php:95
+msgid "New CFM Form"
+msgstr ""
+
+#: classes/class-post-types.php:96 classes/class-post-types.php:97
+msgid "View CFM Form"
+msgstr ""
+
+#: classes/class-post-types.php:98
+msgid "Search CFM Forms"
+msgstr ""
+
+#: classes/class-post-types.php:99
+msgid "No CFM Forms Found"
+msgstr ""
+
+#: classes/class-post-types.php:100
+msgid "No CFM Forms Found in Trash"
+msgstr ""
+
+#: classes/class-post-types.php:101
+msgid "Parent CFM Form"
+msgstr ""
+
+#: classes/class-setup.php:69
+msgid ""
+"Warning: The checkout form isn't set. Go to EDD->Tools->Checkout Fields "
+"Manager, and reset the checkout form."
+msgstr ""
+
+#: classes/class-setup.php:122 classes/class-setup.php:207
+msgid "Please fix the errors to proceed"
+msgstr ""
+
+#: classes/class-setup.php:124 classes/class-setup.php:209
+msgid "Choose a file"
+msgstr ""
+
+#: classes/class-setup.php:125 classes/class-setup.php:210
+#: classes/fields/file_upload.php:107 classes/fields/file_upload.php:194
+msgid "Insert file URL"
+msgstr ""
+
+#: classes/class-setup.php:126 classes/class-setup.php:211
+msgid "You may not add more than "
+msgstr ""
+
+#: classes/class-setup.php:127 classes/class-setup.php:212
+msgid " files!"
+msgstr ""
+
+#: classes/class-setup.php:415 classes/class-setup.php:422
+msgid "Required to use the reCAPTCHA field."
+msgstr ""
+
+#: classes/class-setup.php:416
+msgid "reCAPTCHA Public Key"
+msgstr ""
+
+#: classes/class-setup.php:423
+msgid "reCAPTCHA Private Key"
+msgstr ""
+
 #: classes/fields/action_hook.php:40
 msgctxt "CFM Field title translation"
 msgid "Action Hook"
@@ -706,52 +622,56 @@ msgctxt "CFM Field title translation"
 msgid "File Upload"
 msgstr ""
 
-#: classes/fields/file_upload.php:78 classes/fields/file_upload.php:158
+#: classes/fields/file_upload.php:78 classes/fields/file_upload.php:174
 msgid "File URL"
 msgstr ""
 
-#: classes/fields/file_upload.php:79 classes/fields/file_upload.php:99
+#: classes/fields/file_upload.php:79 classes/fields/file_upload.php:112
 msgid "Download File"
 msgstr ""
 
-#: classes/fields/file_upload.php:92 classes/fields/file_upload.php:171
+#: classes/fields/file_upload.php:104 classes/fields/file_upload.php:191
 msgid "http://"
 msgstr ""
 
-#: classes/fields/file_upload.php:95 classes/fields/file_upload.php:96
-#: classes/fields/file_upload.php:174 classes/fields/file_upload.php:175
+#: classes/fields/file_upload.php:107 classes/fields/file_upload.php:108
+#: classes/fields/file_upload.php:194 classes/fields/file_upload.php:195
 msgid "Choose file"
 msgstr ""
 
-#: classes/fields/file_upload.php:104 classes/fields/file_upload.php:180
+#: classes/fields/file_upload.php:114
+msgid "File is not available locally."
+msgstr ""
+
+#: classes/fields/file_upload.php:120 classes/fields/file_upload.php:200
 msgid "&times;"
 msgstr ""
 
-#: classes/fields/file_upload.php:114 classes/fields/file_upload.php:191
+#: classes/fields/file_upload.php:130 classes/fields/file_upload.php:211
 msgid "Add File"
 msgstr ""
 
-#: classes/fields/file_upload.php:241
+#: classes/fields/file_upload.php:269
 msgid "Enter maximum upload size limit in KB"
 msgstr ""
 
-#: classes/fields/file_upload.php:242
+#: classes/fields/file_upload.php:270
 msgid "Number of files which can be uploaded"
 msgstr ""
 
-#: classes/fields/file_upload.php:260
+#: classes/fields/file_upload.php:288
 msgid "Max. file size"
 msgstr ""
 
-#: classes/fields/file_upload.php:265
+#: classes/fields/file_upload.php:293
 msgid "Max. files"
 msgstr ""
 
-#: classes/fields/file_upload.php:270
+#: classes/fields/file_upload.php:298
 msgid "Allowed Files"
 msgstr ""
 
-#: classes/fields/file_upload.php:297
+#: classes/fields/file_upload.php:327
 #, php-format
 msgid "Please enter a valid URL for %s."
 msgstr ""
@@ -821,11 +741,11 @@ msgctxt "CFM Field title translation"
 msgid "reCAPTCHA"
 msgstr ""
 
-#: classes/fields/recaptcha.php:134
+#: classes/fields/recaptcha.php:136
 msgid "Important:"
 msgstr ""
 
-#: classes/fields/recaptcha.php:139
+#: classes/fields/recaptcha.php:141
 msgid ""
 "In order for reCAPTCHA to work you must insert your site key and private key "
 "in the EDD settings panel. <a href='https://www.google.com/recaptcha/"
@@ -833,11 +753,11 @@ msgid ""
 "keys."
 msgstr ""
 
-#: classes/fields/recaptcha.php:169 classes/fields/recaptcha.php:173
+#: classes/fields/recaptcha.php:172 classes/fields/recaptcha.php:176
 msgid "Please retry the reCAPTCHA challenge"
 msgstr ""
 
-#: classes/fields/recaptcha.php:178
+#: classes/fields/recaptcha.php:181
 msgid "Please complete the reCAPTCHA challenge"
 msgstr ""
 
@@ -947,4 +867,109 @@ msgstr ""
 #: classes/fields/user_email.php:44
 msgctxt "CFM Field title translation"
 msgid "User Email"
+msgstr ""
+
+#: classes/misc-functions.php:186
+msgid "Images"
+msgstr ""
+
+#: classes/misc-functions.php:187
+msgid "Audio"
+msgstr ""
+
+#: classes/misc-functions.php:188
+msgid "Videos"
+msgstr ""
+
+#: classes/misc-functions.php:189
+msgid "PDF"
+msgstr ""
+
+#: classes/misc-functions.php:190
+msgid "Office Documents"
+msgstr ""
+
+#: classes/misc-functions.php:191
+msgid "Zip Archives"
+msgstr ""
+
+#: classes/misc-functions.php:192
+msgid "Executable Files"
+msgstr ""
+
+#: classes/misc-functions.php:193
+msgid "CSV"
+msgstr ""
+
+#: classes/misc-functions.php:258
+#, php-format
+msgid ""
+"%1$s is <strong>deprecated</strong> since Easy Digital Downloads Checkout "
+"Fields Manager version %2$s! Use %3$s instead."
+msgstr ""
+
+#: classes/misc-functions.php:262
+#, php-format
+msgid ""
+"%1$s is <strong>deprecated</strong> since Easy Digital Downloads Checkout "
+"Fields Manager version %2$s."
+msgstr ""
+
+#: classes/misc-functions.php:309
+#, php-format
+msgid "%s"
+msgstr ""
+
+#: classes/misc-functions.php:743
+#, php-format
+msgid "Please upload files no larger than %s KB"
+msgstr ""
+
+#: classes/misc-functions.php:764
+#, php-format
+msgid "Please upload files with one of these extensions: %s"
+msgstr ""
+
+#: classes/misc-functions.php:806
+msgid "Please enter your first name"
+msgstr ""
+
+#: classes/misc-functions.php:841
+msgid "Please enter your last name."
+msgstr ""
+
+#: edd-cfm.php:274 edd-cfm.php:288
+msgid "Cheatin&#8217; huh?"
+msgstr ""
+
+#: edd-cfm.php:467
+msgid ""
+"<strong>Notice:</strong> Easy Digital Downloads Checkout Fields Manager "
+"requires Easy Digital Downloads 2.5 or higher in order to function properly."
+msgstr ""
+
+#: edd-cfm.php:485
+msgid ""
+"<strong>Notice:</strong> Easy Digital Downloads Checkout Fields Manager "
+"requires WordPress 4.3 or higher in order to function properly."
+msgstr ""
+
+#. Plugin Name of the plugin/theme
+msgid "Easy Digital Downloads - Checkout Fields Manager"
+msgstr ""
+
+#. Plugin URI of the plugin/theme
+msgid "https://easydigitaldownloads.com/extensions/checkout-fields-manager/"
+msgstr ""
+
+#. Description of the plugin/theme
+msgid "Easily add and control EDD's checkout fields!"
+msgstr ""
+
+#. Author of the plugin/theme
+msgid "Chris Christoff"
+msgstr ""
+
+#. Author URI of the plugin/theme
+msgid "http://www.chriscct7.com"
 msgstr ""
