@@ -1,4 +1,4 @@
-= 2.0.10, September 20, 2016 =
+= 2.0.10, September 21, 2016 =
 * Fix: Incorrect text domain in personal info string
 * New: Add support for using custom checkout field meta inside of EDD PDF Stamper
 * New: Allow checkout field file uploader to work with EDD Amazon S3
