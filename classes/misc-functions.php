@@ -857,3 +857,17 @@ function cfm_checkout_custom_validation( $required_fields ) {
 	return $required_fields;
 }
 add_filter( 'edd_purchase_form_required_fields', 'cfm_checkout_custom_validation', 10, 1 );
+
+/**
+ * Process any template tags from Checkout Fields Manager used by PDF Stamper.
+ *
+ * @since       2.0.9
+ * @param       string $message The message that will be stamped on the PDF.
+ * @param       int $download_id The ID of a download
+ * @param       int $payment_id The ID of the payment which allows this PDF to be downloaded.
+ * @return      string $message The message that will be stamped on the PDF.
+ */
+function cfm_pdf_stamper_do_tags( $message, $download_id, $payment_id ){
+	return EDD_CFM()->emails->custom_meta_values( $message, $payment_id );
+}
+add_filter( 'edd_pdf_stamper_do_tags', 'cfm_pdf_stamper_do_tags', 10, 3 );
