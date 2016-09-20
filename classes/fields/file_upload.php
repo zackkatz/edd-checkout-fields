@@ -87,12 +87,18 @@ class CFM_File_Upload_Field extends CFM_Field {
 							<?php
 							foreach ( $uploaded_items as $index => $attach_id ) {
 								$show_download_link = false;
-								if ( is_numeric( $attach_id ) ){
-									$download = wp_get_attachment_url( $attach_id ); 
-									$show_download_link = true;
+
+								if ( is_numeric( $attach_id ) ) {
+									$download = wp_get_attachment_url( $attach_id );
 								} else {
-									$download = $attach_id;
-								} ?>
+									$download = apply_filters( 'eddcfm_file_download_url', $attach_id );
+								}
+
+								if ( $download ) {
+									$show_download_link = true;
+								}
+
+								?>
 								<tr class="cfm-single-variation">
 									 <td class="cfm-url-row">
 												<input type="text" class="cfm-file-value" placeholder="<?php _e( "http://", 'edd_cfm' ); ?>" name="<?php echo $this->name(); ?>[<?php echo esc_attr( $index ); ?>]" value="<?php echo esc_attr( $download ); ?>" />
@@ -103,7 +109,7 @@ class CFM_File_Upload_Field extends CFM_Field {
 									 </td>
 									 <td class="cfm-download-file">
 									 		<?php if ( $show_download_link ) { ?>
-												<?php printf( '<a href="%s">%s</a>', wp_get_attachment_url( $attach_id ), __( 'Download File', 'edd_cfm' ) ); ?>
+												<?php printf( '<a href="%s">%s</a>', $download, __( 'Download File', 'edd_cfm' ) ); ?>
 											<?php } else { ?>
 												<?php _e( 'File is not available locally.', 'edd_cfm' ); ?>
 											<?php } ?>
@@ -176,7 +182,7 @@ class CFM_File_Upload_Field extends CFM_Field {
 							<?php
 							foreach ( $uploaded_items as $index => $attach_id ) {
 								if ( is_numeric( $attach_id ) ){
-									$download = wp_get_attachment_url( $attach_id ); 
+									$download = wp_get_attachment_url( $attach_id );
 								} else {
 									$download = $attach_id;
 								} ?>
