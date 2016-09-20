@@ -91,7 +91,7 @@ class CFM_File_Upload_Field extends CFM_Field {
 								if ( is_numeric( $attach_id ) ) {
 									$download = wp_get_attachment_url( $attach_id );
 								} else {
-									$download = apply_filters( 'eddcfm_file_download_url', $attach_id );
+									$download = apply_filters( 'cfm_file_download_url', $attach_id );
 								}
 
 								if ( $download ) {
