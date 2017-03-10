@@ -89,7 +89,7 @@ class CFM_Radio_Field extends CFM_Field {
 			$user_id = get_current_user_id();
 		}
 
-		$value     = $this->get_field_value_frontend( $this->payment_id, $this->user_id );
+		$value     = $this->get_field_value_frontend( $this->payment_id, $user_id );
 		if ( ! $profile && is_integer( $user_id ) && $user_id > 0 && ! metadata_exists( 'user', $user_id, $this->name() ) ) {
 			$value  = isset( $this->characteristics['selected'] ) ? $this->characteristics['selected'] : array();
 		}
