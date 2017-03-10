@@ -78,7 +78,7 @@ class CFM_Email_Field extends CFM_Field {
 		$output     .= sprintf( '<p class="cfm-el %1s %2s %3s">', esc_attr( $this->template() ), esc_attr( $this->name() ), esc_attr( $this->css() ) );
 		$output    .= $this->label( ! (bool) $profile );
 		ob_start(); ?>
-		<input name="<?php echo esc_attr( $this->name() ); ?>"  id="<?php echo esc_attr( $this->name() ); ?>" type="email" class="email text edd-input <?php echo $this->required_class(); ?>" data-required="<?php echo $required; ?>" data-type="text"<?php $this->required_html5(); ?> placeholder="<?php echo esc_attr( $this->placeholder() ); ?>" value="<?php echo esc_attr( $value ) ?>" size="<?php echo esc_attr( $this->size() ) ?>" />
+		<input name="<?php echo esc_attr( $this->name() ); ?>"  id="<?php echo esc_attr( $this->id() ); ?>" type="email" class="email text edd-input <?php echo $this->required_class(); ?>" data-required="<?php echo $required; ?>" data-type="text"<?php $this->required_html5(); ?> placeholder="<?php echo esc_attr( $this->placeholder() ); ?>" value="<?php echo esc_attr( $value ) ?>" size="<?php echo esc_attr( $this->size() ) ?>" />
 		<?php
 		$output .= ob_get_clean();
 		$output .= '</p>';

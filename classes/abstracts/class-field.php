@@ -548,6 +548,10 @@ class CFM_Field {
 		return $this->characteristics['name'];
 	}
 
+	public function id() {
+		return str_replace( '_' , '-', $this->name() );
+	}
+
 	public function placeholder() {
 		return isset( $this->characteristics['placeholder'] ) ?  $this->characteristics['placeholder'] : '';
 	}
