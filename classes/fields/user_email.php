@@ -90,7 +90,7 @@ class CFM_User_Email_Field extends CFM_Field {
 		ob_start(); ?>
 		<?php do_action( 'edd_purchase_form_before_email' ); ?>
 		<?php do_action( 'edd_purchase_form_after_email' ); ?>
-			<input name="<?php echo esc_attr( $this->name() ); ?>" id="<?php echo esc_attr( $this->name() ); ?>" class="email text edd-input <?php echo $this->required_class(); ?>" type="email" data-required="<?php echo $required; ?>" data-type="text"<?php $this->required_html5(); ?> placeholder="<?php echo esc_attr( $this->placeholder() ); ?>" value="<?php echo esc_attr( $value ) ?>" size="<?php echo esc_attr( $this->size() ) ?>" />
+			<input name="<?php echo esc_attr( $this->name() ); ?>" id="<?php echo esc_attr( $this->id() ); ?>" class="email text edd-input <?php echo $this->required_class(); ?>" type="email" data-required="<?php echo $required; ?>" data-type="text"<?php $this->required_html5(); ?> placeholder="<?php echo esc_attr( $this->placeholder() ); ?>" value="<?php echo esc_attr( $value ) ?>" size="<?php echo esc_attr( $this->size() ) ?>" />
 		<?php
 		$output .= ob_get_clean();
 		$output .= '</p>';
