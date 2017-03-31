@@ -12,7 +12,7 @@
  */
 
 // Exit if accessed directly
-if ( ! defined( 'ABSPATH' ) ) { 
+if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
@@ -24,7 +24,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  * fields so they can be used in things like creating
  * the forms for the first time, as well as resetting
  * them.
- * 
+ *
  * @since 2.0.0
  * @access public
  *
@@ -43,7 +43,7 @@ function cfm_get_default_checkout_form_fields(){
 				'placeholder' => '',
 				'default' => '',
 				'size' => '40',
-				'public'  => "public", 
+				'public'  => "public",
 				'show_in_exports' => "noexport",
 			),
 			2 => array(
@@ -84,7 +84,7 @@ function cfm_get_default_checkout_form_fields(){
  *
  * Saves meta for the checkout form, as well as optionally
  * saves/resets the default fields.
- * 
+ *
  * @since 2.0.0
  * @access public
  *
@@ -112,10 +112,10 @@ function cfm_save_initial_checkout_form( $post_id = -2, $reset_fields = true ){
  *
  * Attempts to correct all mistakes (and also
  * runs all version upgrade routines that
- * need to change saved characteristics of 
- * a field). If this function has a bug, the 
+ * need to change saved characteristics of
+ * a field). If this function has a bug, the
  * results can be catastrophic. *crosses fingers*
- * 
+ *
  * @since 2.0.0
  * @access public
  *
@@ -145,9 +145,9 @@ function cfm_upgrade_field( $field ) {
 			$field['show_in_exports'] = "noexport";
 			$field['meta_type'] = "payment";
 			$field['is_meta'] = true;
-			$field['template'] = "last_name";
+			$field['template'] = "first_name";
 			break;
-			
+
 		case 'edd_last':
 			$field['public'] = "public";
 			$field['show_in_exports'] = "noexport";
@@ -155,7 +155,7 @@ function cfm_upgrade_field( $field ) {
 			$field['is_meta'] = true;
 			$field['template'] = "last_name";
 			break;
-			
+
 		case 'edd_email':
 			$field['public'] = "public";
 			$field['show_in_exports'] = "noexport";
@@ -163,7 +163,7 @@ function cfm_upgrade_field( $field ) {
 			$field['is_meta'] = true;
 			$field['template'] = "user_email";
 			break;
-		
+
 		case 'checkbox_field':
 			$field['template'] = 'checkbox';
 			break;
@@ -202,7 +202,7 @@ function cfm_upgrade_field( $field ) {
 
 		case 'dropdown_field':
 			$field['template'] = 'select';
-			break;			
+			break;
 
 		case 'multiple_select':
 			$field['template'] = 'multiselect';
@@ -248,7 +248,7 @@ function cfm_upgrade_field( $field ) {
 	if ( isset( $field['is_meta'] ) && $field['is_meta'] === 'yes' ){
 		$field['is_meta'] = true;
 	}
-	
+
 	// if its a meta, but has no meta type, default meta type to payment meta
 	if ( isset( $field['is_meta'] ) && $field['is_meta'] && empty( $field['meta_type'] ) ){
 		$field['meta_type'] = 'payment';

@@ -38,7 +38,7 @@ class CFM_First_Name_Field extends CFM_Field {
 		'public'          => "public", // denotes whether a field shows in the admin only
 		'show_in_exports' => "noexport", // denotes whether a field is in the CSV exports
 	);
-	
+
 	public function extending_constructor() {
 		add_filter( 'cfm_templates_to_exclude_render_checkout_form_admin', array( $this, 'conditional_render' ),10, 2 );
 		add_filter( 'cfm_templates_to_exclude_validate_checkout_form_frontend', array( $this, 'exclude' ),10, 2 );
@@ -48,15 +48,15 @@ class CFM_First_Name_Field extends CFM_Field {
 		add_filter( 'cfm_templates_to_exclude_validate_checkout_form_admin', array( $this, 'exclude' ),10, 2 );
 		add_filter( 'cfm_templates_to_exclude_save_checkout_form_admin', array( $this, 'exclude' ),10, 2 );
 	}
-	
+
 	public function exclude( $templates, $profile ) {
 		array_push( $templates, $this->template() );
 		return $templates;
 	}
-	
+
 	public function conditional_render( $templates, $profile ) {
 		if ( $profile !== true ){
-			
+
 		} else {
 			array_push( $templates, $this->template() );
 		}
@@ -66,7 +66,7 @@ class CFM_First_Name_Field extends CFM_Field {
 	public function set_title() {
 		$title = _x( 'First Name', 'CFM Field title translation', 'edd_cfm' );
 		$title = apply_filters( 'cfm_' . $this->name() . '_field_title', $title );
-		$this->supports['title'] = $title;		
+		$this->supports['title'] = $title;
 	}
 
 	/** Returns the First_Name to render a field in admin */
@@ -84,7 +84,7 @@ class CFM_First_Name_Field extends CFM_Field {
 			return '';
 		}
 		global $current_user;
-		
+
 		$value     = is_user_logged_in() ? $current_user->user_firstname : '';
 		$required  = $this->required();
 		$output    = '';
