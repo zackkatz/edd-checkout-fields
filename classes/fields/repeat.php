@@ -344,7 +344,7 @@ class CFM_Repeat_Field extends CFM_Field {
 		
 		$value = $this->get_field_value_frontend( $payment_id, $user_id );
 		if ( ! empty( $value ) && is_array( $value ) ){
-			if ( is_array( $value[0] ) ) {
+			if ( ! is_array( $value[0] ) ) {
 				// if 1D array
 				$value = implode( ", ", $value );
 			} else {
