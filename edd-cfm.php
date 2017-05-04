@@ -3,19 +3,19 @@
  * Plugin Name:         Easy Digital Downloads - Checkout Fields Manager
  * Plugin URI:          https://easydigitaldownloads.com/extensions/checkout-fields-manager/
  * Description:         Easily add and control EDD's checkout fields!
- * Author:              Chris Christoff
- * Author URI:          http://www.chriscct7.com
+ * Author:              Easy Digital Downloads
+ * Author URI:          https://easydigitaldownloads.com
  *
  * Version:             2.0.11
  * Requires at least:   4.3
- * Tested up to:        4.5
+ * Tested up to:        4.7.4
  *
  * Text Domain:         edd_cfm
  * Domain Path:         /languages/
  *
  * @category            Plugin
- * @copyright           Copyright © 2016 Chris Christoff
- * @author              Chris Christoff
+ * @copyright           Copyright © 2016 Easy Digital Downloads, LLC
+ * @author              Easy Digital Downloads
  * @package             CFM
  */
 
