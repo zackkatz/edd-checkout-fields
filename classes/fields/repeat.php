@@ -114,7 +114,7 @@ class CFM_Repeat_Field extends CFM_Field {
 		<?php } else { ?>
 			<table>
 				<?php
-				if ( $value && count( $value ) > 1 ) {
+				if ( $value && count( $value ) >= 1 ) {
 					foreach ( $value as $item ) { ?>
 					 <tr>
 						 <td class="cfm-repeat-field">
