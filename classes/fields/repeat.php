@@ -158,7 +158,7 @@ class CFM_Repeat_Field extends CFM_Field {
 		$required  = $this->required();
 		$output        = '';
 		$output     .= sprintf( '<p class="cfm-el %1s %2s %3s">', esc_attr( $this->template() ), esc_attr( $this->name() ), esc_attr( $this->css() ) );
-		$output    .= $this->label();
+		$output    .= $this->label( ! (bool) $profile );
 		ob_start(); ?>
 			<?php if ( isset( $this->characteristics['multiple'] ) ) { ?>
 				<table>
