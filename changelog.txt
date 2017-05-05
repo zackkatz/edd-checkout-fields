@@ -1,3 +1,9 @@
+= 2.0.12, March 10, 2017 =
+* Fix: Repeatable field doesn't display info on payment history.
+* Fix: Repeat fields can throw PHP errors upon checkout submission.
+* Fix: Repeatable field help text doesn't show to users.
+* Fix: Last name shown in first name field on checkout.
+
 = 2.0.11, March 10, 2017 =
 * Fix: Checkbox and Radio fields unable to be set as selected by default
 * Fix: Incorrect field ID used for Email field

@@ -1,2 +1,2 @@
 # Easy Digital Downloads <br />Checkout Fields Manager#
-Version: 2.0.10<br />
+Version: 2.0.12<br />
