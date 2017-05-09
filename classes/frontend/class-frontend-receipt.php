@@ -63,7 +63,18 @@ class CFM_Frontend_Receipt {
 				echo '<tr class="edd-cfm-receipt-field">';
 
 					echo '<td id="edd-cfm-field-' . $field->name() . '">' . $field->get_label() . '</td>';
-					echo '<td>' . $field->get_field_value_frontend( $payment->ID, get_current_user_id() ) . '</td>';
+
+					$value = $field->get_field_value_frontend( $payment->ID, get_current_user_id() );
+
+					if( is_array( $value ) ) {
+
+						echo '<td>' . implode( ', ', $value ) . '</td>';
+
+					} else {
+
+						echo '<td>' . $value . '</td>';
+
+					}
 
 				echo '</tr>';
 
