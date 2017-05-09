@@ -45,6 +45,10 @@ class CFM_Frontend_Receipt {
 	 */
 	public function render( $payment, $receipt_args ) {
 
+		if( ! edd_get_option( 'cfm-receipt-show-info' ) ) {
+			return;
+		}
+
 		$form_id = get_option( 'cfm-checkout-form', false );
 
 		// if we can't find the checkout form, echo an error
@@ -56,7 +60,7 @@ class CFM_Frontend_Receipt {
 
 		if( ! empty( $form->fields ) ) {
 
-			echo '<tr class="edd-cfm-receipt-fields"><th colspan="2"><strong>' . __( 'Information', 'edd_cfm' ) . '</strong></th></tr>';
+			echo '<tr class="edd-cfm-receipt-fields"><th colspan="2"><strong>' . edd_get_option( 'cfm-receipt-header', __( 'Information', 'edd_cfm' ) ) . '</strong></th></tr>';
 
 			foreach( $form->fields as $field ) {
 
