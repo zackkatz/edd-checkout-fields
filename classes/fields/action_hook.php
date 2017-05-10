@@ -3,7 +3,7 @@ class CFM_Action_Hook_Field extends CFM_Field {
 
 	/** @var bool For 3rd parameter of get_post/user_meta */
 	public $single = true;
-	
+
 	/** @var string Version of field */
 	public $version = '1.0.0';
 
@@ -22,6 +22,7 @@ class CFM_Action_Hook_Field extends CFM_Field {
 		),
 		'template'    => 'action_hook', // the type of field
 		'title'       => 'Action Hook',
+		'show_on_receipt' => false,
 	);
 
 	/** @var array Characteristics are things that can change from field to field of the same field type. Like the placeholder between two email fields. Stored in db. */
@@ -39,7 +40,7 @@ class CFM_Action_Hook_Field extends CFM_Field {
 	public function set_title() {
 		$title = _x( 'Action Hook', 'CFM Field title translation', 'edd_cfm' );
 		$title = apply_filters( 'cfm_' . $this->name() . '_field_title', $title );
-		$this->supports['title'] = $title;		
+		$this->supports['title'] = $title;
 	}
 
 	/** Returns the Action_Hook to render a field in admin */
@@ -118,12 +119,12 @@ function my_function_name( $form, $payment_id, $user_id, $field ) {
 	// note in order for this to run, a hidden text field should be output in the render function with an id of the meta_key, else this won't run
 	public function save_field_frontend( $payment_id = -2, $user_id = -2, $value = '', $current_user_id = -2 ) {
 		do_action( $this->name() . '_save_frontend', $payment_id, $user_id, $value, $current_user_id, $this );
-	}	
+	}
 
 	/** Returns formatted data of field in frontend */
 	public function export_data( $payment_id = -2, $user_id = -2 ) {
 		return apply_filters( 'cfm_formatted_' . $this->template() . '_field', '', $payment_id, $user_id );
-	}	
+	}
 
 	public function validate( $values = array(), $payment_id = -2, $user_id = -2 ) {
 		return apply_filters( 'cfm_validate_' . $this->template() . '_field', false, $values,  $this->name(), $payment_id, $user_id );

@@ -43,7 +43,7 @@ class CFM_Url_Field extends CFM_Field {
 	public function set_title() {
 		$title = _x( 'URL', 'CFM Field title translation', 'edd_cfm' );
 		$title = apply_filters( 'cfm_' . $this->name() . '_field_title', $title );
-		$this->supports['title'] = $title;		
+		$this->supports['title'] = $title;
 	}
 
 	/** Returns the HTML to render a field in admin */

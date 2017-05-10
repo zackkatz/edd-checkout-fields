@@ -247,6 +247,7 @@ class EDD_Checkout_Fields_Manager {
 				self::$instance->formbuilder_templates = new CFM_Formbuilder_Templates;
 			}
 			self::$instance->frontend_profile         = new CFM_Frontend_Customer_Profile;
+			self::$instance->frontend_receipt         = new CFM_Frontend_Receipt;
 			self::$instance->checkout         		  = new CFM_Checkout;
 
 			/*
@@ -391,6 +392,7 @@ class EDD_Checkout_Fields_Manager {
 		}
 		require_once cfm_plugin_dir . 'classes/frontend/class-checkout.php';
 		require_once cfm_plugin_dir . 'classes/frontend/class-frontend-customer-profile.php';
+		require_once cfm_plugin_dir . 'classes/frontend/class-frontend-receipt.php';
 	}
 
 	/**

@@ -25,7 +25,7 @@ class CFM_Recaptcha_Field extends CFM_Field {
 		'title'       => 'reCAPTCHA',
 		'meta_type'   => 'payment', // 'payment' or 'user' here if is_meta()
 		'public'          => "public", // denotes whether a field shows in the admin only
-		'show_in_exports' => "noexport", // denotes whether a field is in the CSV exports
+		'show_on_receipt' => false,
 	);
 
 	/** @var array Characteristics are things that can change from field to field of the same field type. Like the placeholder between two email fields. Stored in db. */
@@ -35,13 +35,14 @@ class CFM_Recaptcha_Field extends CFM_Field {
 		'public'      => false,
 		'required'    => true,
 		'label'       => '',
-		'html'     => '',
+		'html'        => '',
+		'show_in_exports' => "noexport", // denotes whether a field is in the CSV exports
 	);
 
 	public function set_title() {
 		$title = _x( 'reCAPTCHA', 'CFM Field title translation', 'edd_cfm' );
 		$title = apply_filters( 'cfm_' . $this->name() . '_field_title', $title );
-		$this->supports['title'] = $title;		
+		$this->supports['title'] = $title;
 	}
 
 	public function extending_constructor( ) {
@@ -53,7 +54,7 @@ class CFM_Recaptcha_Field extends CFM_Field {
 		add_filter( 'cfm_templates_to_exclude_render_checkout_form_frontend', array( $this, 'exclude_field_frontend' ), 10, 1  );
 		add_filter( 'cfm_templates_to_exclude_sanitize_checkout_form_frontend', array( $this, 'exclude_field_frontend' ), 10, 1  );
 		add_filter( 'cfm_templates_to_exclude_validate_checkout_form_frontend', array( $this, 'exclude_field_frontend' ), 10, 1  );
-		add_filter( 'cfm_templates_to_exclude_save_checkout_form_frontend', array( $this, 'exclude_field_frontend' ), 10, 1  );		
+		add_filter( 'cfm_templates_to_exclude_save_checkout_form_frontend', array( $this, 'exclude_field_frontend' ), 10, 1  );
 	}
 
 	public function exclude_field_admin( $fields ) {

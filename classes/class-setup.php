@@ -11,7 +11,7 @@
  */
 
 // Exit if accessed directly
-if ( ! defined( 'ABSPATH' ) ) { 
+if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
@@ -33,9 +33,9 @@ class CFM_Setup {
 	 *
 	 * @since 2.0.0
 	 * @access public
-	 * 
+	 *
 	 * @return void
-	 */	
+	 */
 	public function __construct() {
 		add_action( 'wp_enqueue_scripts',	 array( $this, 'enqueue_scripts' ) );
 		add_action( 'wp_enqueue_scripts',	 array( $this, 'enqueue_styles'  ) );
@@ -45,10 +45,10 @@ class CFM_Setup {
 		add_action( 'admin_notices', 		 array( $this, 'no_checkout_form_set' ) );
 		add_filter( 'edd_settings_sections_extensions',     array( $this, 'add_section' ), 10, 1 );
 		add_filter( 'edd_settings_extensions',      array( $this, 'add_settings' ), 10, 1 );
-		
+
 		add_filter( 'media_upload_tabs', 	 array( $this, 'remove_media_library_tab' ) );
 		add_action( 'wp_footer', 			 array( $this, 'edd_lockup_uploaded' ) );
-		add_filter( 'parse_query', 			 array( $this, 'restrict_media' ) );		
+		add_filter( 'parse_query', 			 array( $this, 'restrict_media' ) );
 	}
 
 	/**
@@ -59,7 +59,7 @@ class CFM_Setup {
 	 *
 	 * @since 2.0.0
 	 * @access public
-	 * 
+	 *
 	 * @return void
 	 */
 	public function no_checkout_form_set(){
@@ -81,7 +81,7 @@ class CFM_Setup {
 	 *
 	 * @since 2.0.0
 	 * @access public
-	 * 
+	 *
 	 * @return void
 	 */
 	public function enqueue_form_assets() {
@@ -126,7 +126,7 @@ class CFM_Setup {
 				'too_many_files_pt_1' => __( 'You may not add more than ', 'edd_cfm' ),
 				'too_many_files_pt_2' => __( ' files!', 'edd_cfm' ),
 			);
-			
+
 			$options = apply_filters( 'cfm_forms_options_frontend', $options );
 			wp_localize_script( 'cfm_form', 'cfm_form', $options );
 			wp_enqueue_media();
@@ -181,10 +181,10 @@ class CFM_Setup {
 		$is_cfm_page = false;
 		$is_formbuilder = false;
 
-		if ( is_object( $current_screen ) && isset( $current_screen->post_type ) && $current_screen->post_type === 'edd-checkout-fields' ) { 
+		if ( is_object( $current_screen ) && isset( $current_screen->post_type ) && $current_screen->post_type === 'edd-checkout-fields' ) {
 			$is_cfm_page    = true;
 			$is_formbuilder = true;
-		} else if ( is_object( $current_screen ) && isset( $current_screen->id ) && $current_screen->id === 'download_page_edd-payment-history' ) { 
+		} else if ( is_object( $current_screen ) && isset( $current_screen->id ) && $current_screen->id === 'download_page_edd-payment-history' ) {
 			$is_cfm_page    = true;
 			$is_formbuilder = false;
 		} else if ( is_object( $current_screen ) && isset( $current_screen->id ) && $current_screen->id === 'download_page_edd-customers' ) {
@@ -200,7 +200,7 @@ class CFM_Setup {
 			}
 			wp_register_script( 'jquery-tiptip', cfm_plugin_url . 'assets/js/jquery-tiptip/jquery.tipTip.min.js', array( 'jquery' ), '2.0', true );
 			wp_enqueue_script( 'underscore' );
-			
+
 
 			$options = array(
 				'ajaxurl' => admin_url( 'admin-ajax.php' ),
@@ -211,7 +211,7 @@ class CFM_Setup {
 				'too_many_files_pt_1' => __( 'You may not add more than ', 'edd_cfm' ),
 				'too_many_files_pt_2' => __( ' files!', 'edd_cfm' ),
 			);
-			
+
 			wp_enqueue_script( 'jquery-ui-autocomplete' );
 			wp_enqueue_script( 'suggest' );
 			wp_enqueue_script( 'cfm-polyfiller', cfm_plugin_url . 'assets/js/polyfiller.js', array( 'jquery' ) );
@@ -241,13 +241,13 @@ class CFM_Setup {
 		$current_screen = get_current_screen();
 		$is_cfm_page    = false;
 		$is_formbuilder = false;
-		if ( is_object( $current_screen ) && isset( $current_screen->post_type ) && $current_screen->post_type === 'edd-checkout-fields' ) { 
+		if ( is_object( $current_screen ) && isset( $current_screen->post_type ) && $current_screen->post_type === 'edd-checkout-fields' ) {
 			$is_cfm_page    = true;
 			$is_formbuilder = true;
-		} else if ( is_object( $current_screen ) && isset( $current_screen->id ) && $current_screen->id === 'download_page_edd-payment-history' ) { 
+		} else if ( is_object( $current_screen ) && isset( $current_screen->id ) && $current_screen->id === 'download_page_edd-payment-history' ) {
 			$is_cfm_page    = true;
 			$is_formbuilder = false;
-		} 
+		}
 
 		if ( $is_cfm_page ){
 			if ( $is_formbuilder ) {
@@ -319,7 +319,7 @@ class CFM_Setup {
 		/**
 		 * CFM Load Fields Require
 		 *
-		 * To add a custom CFM Field, you should hook into this 
+		 * To add a custom CFM Field, you should hook into this
 		 * action and require_once your field here. Warning to devs:
 		 * See "Planned Potentially Breaking Changes" section in README.
 		 *
@@ -330,7 +330,7 @@ class CFM_Setup {
 		/**
 		 * CFM Load Fields Array
 		 *
-		 * To add a custom CFM Field, you should hook into this 
+		 * To add a custom CFM Field, you should hook into this
 		 * filter and add your template -> class relationship.
 		 *
 		 * @since 2.0.0
@@ -387,7 +387,7 @@ class CFM_Setup {
 		// do_action( 'cfm_load_forms_require' ); Allow starting 2.1
 
 		// get names ( name -> class)
-		//$forms = apply_filters( 'cfm_load_forms_array', array( 
+		//$forms = apply_filters( 'cfm_load_forms_array', array(
 		$forms = array(
 			'checkout'	 => 'CFM_Checkout_Form'
 		);
@@ -395,12 +395,12 @@ class CFM_Setup {
 
 		return $forms;
 	}
-	
+
 	public function add_section( $sections ) {
 		$sections['cfm'] = cfm_plugin_name;
 		return $sections;
 	}
-	
+
 	public function add_settings( $settings ) {
 	   $cfm_settings= array(
 		   'cfm' => array(
@@ -408,6 +408,21 @@ class CFM_Setup {
 					'id' => 'cfm_settings',
 					'name' => '<strong>' . cfm_plugin_name . '</strong>',
 					'type' => 'header'
+				),
+				array(
+					'id'      => 'cfm-receipt-show-info',
+					'type'    => 'checkbox',
+					'name'    => __( 'Show submitted information on Purchase Confirmation?', 'edd_cfm' ),
+					'desc'    => __( 'Check this box to display the submitted field information on the purchase confirmation page.', 'edd_cfm' ),
+					'section' => 'cfm'
+				),
+				array(
+					'id'      => 'cfm-receipt-header',
+					'type'    => 'text',
+					'name'    => __( 'Purchase Confirmation Header Text', 'edd_cfm' ),
+					'desc'    => __( 'Text shown above the field values on the purchase confirmation page, if enabled.', 'edd_cfm' ),
+					'section' => 'cfm',
+					'std'     => __( 'Information', 'edd_cf' )
 				),
 				array(
 					'id'      => 'cfm-recaptcha-public-key',
@@ -425,7 +440,7 @@ class CFM_Setup {
 				)
 			)
 		);
-		return array_merge( $settings, $cfm_settings );	
+		return array_merge( $settings, $cfm_settings );
 	}
 
 	/**
@@ -457,7 +472,7 @@ class CFM_Setup {
 	 * CFM Remove Media Library Tab.
 	 *
 	 * Removes the library, gallery, type, type url,
-	 * and url tabs from the media library on the 
+	 * and url tabs from the media library on the
 	 * frontend if the current user is not an admin.
 	 *
 	 * @since 2.0.0
@@ -467,7 +482,7 @@ class CFM_Setup {
 	 * @return array Tabs to show on the media modal.
 	 */
 	public function remove_media_library_tab( $tabs ) {
-		
+
 		if ( cfm_is_admin() || !EDD()->session->get( 'CFM_FILE_UPLOAD' ) ) {
 			return $tabs;
 		}
@@ -476,7 +491,7 @@ class CFM_Setup {
 		unset( $tabs['gallery'] );
 		unset( $tabs['type'] );
 		unset( $tabs['type_url'] );
-		
+
 		return $tabs;
 	}
 
