@@ -87,6 +87,8 @@ class CFM_Frontend_Receipt {
 	/**
 	 * Determines if a field should be shown on the receipt.
 	 *
+	 * This looks at the show_on_receipt supports argument while also allowing the fields to be enabled / disabled with a filter
+	 *
 	 * @since 2.1
 	 * @access public
 	 * @param $field CFM_Field object
@@ -95,18 +97,7 @@ class CFM_Frontend_Receipt {
 	 */
 	public function show_field( $field ) {
 
-		$ret = true;
-
-		switch( $field->characteristics['template'] ) {
-
-			case 'action_hook' :
-			case 'section_break' :
-			case 'html' :
-			case 'toc' :
-
-				$ret = false;
-				break;
-		}
+		$ret = isset( $field->supports['show_on_receipt'] ) ? $field->supports['show_on_receipt'] : true;
 
 		return apply_filters( 'cfm_receipt_show_field', $ret, $field );
 	}

@@ -22,6 +22,7 @@ class CFM_Section_Break_Field extends CFM_Field {
 		),
 		'template'   => 'section_break',
 		'title'       => 'Section Break',
+		'show_on_receipt' => false,
 	);
 
 	/** @var array Characteristics are things that can change from field to field of the same field type. Like the placeholder between two email fields. Stored in db. */
@@ -41,14 +42,14 @@ class CFM_Section_Break_Field extends CFM_Field {
 	public function set_title() {
 		$title = _x( 'Section Break', 'CFM Field title translation', 'edd_cfm' );
 		$title = apply_filters( 'cfm_' . $this->name() . '_field_title', $title );
-		$this->supports['title'] = $title;		
+		$this->supports['title'] = $title;
 	}
 
 	public function extending_constructor( ) {
 		add_filter( 'cfm_templates_to_exclude_sanitize_checkout_form_admin', array( $this, 'exclude_field' ), 10, 1  );
 		add_filter( 'cfm_templates_to_exclude_validate_checkout_form_admin', array( $this, 'exclude_field' ), 10, 1  );
 		add_filter( 'cfm_templates_to_exclude_save_checkout_form_admin', array( $this, 'exclude_field' ), 10, 1  );
-		
+
 		add_filter( 'cfm_templates_to_exclude_sanitize_checkout_form_frontend', array( $this, 'exclude_field' ), 10, 1  );
 		add_filter( 'cfm_templates_to_exclude_validate_checkout_form_frontend', array( $this, 'exclude_field' ), 10, 1  );
 		add_filter( 'cfm_templates_to_exclude_save_checkout_form_frontend', array( $this, 'exclude_field' ), 10, 1  );

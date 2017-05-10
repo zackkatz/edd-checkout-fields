@@ -22,6 +22,7 @@ class CFM_Hidden_Field extends CFM_Field {
 		),
 		'template'   => 'hidden',
 		'title'       => 'Hidden',
+		'show_on_receipt' => false,
 	);
 
 	/** @var array Characteristics are things that can change from field to field of the same field type. Like the placeholder between two email fields. Stored in db. */
@@ -41,7 +42,7 @@ class CFM_Hidden_Field extends CFM_Field {
 	public function set_title() {
 		$title = _x( 'Hidden', 'CFM Field title translation', 'edd_cfm' );
 		$title = apply_filters( 'cfm_' . $this->name() . '_field_title', $title );
-		$this->supports['title'] = $title;		
+		$this->supports['title'] = $title;
 	}
 
 	/** Returns the Hidden to render a field in admin */

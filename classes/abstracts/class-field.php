@@ -38,7 +38,8 @@ class CFM_Field {
 			'can_add_to_formbuilder'      => true,
 		),
 		'template'    => 'text',
-		'title'       => 'Text'
+		'title'       => 'Text',
+		'show_on_receipt' => true, // denotes whether a field is shown on the purchase confirmation page
 	);
 
 	/** @var array Characteristics are things that can change from field to field of the same field type. Like the placeholder between two text fields. Stored in db. */
@@ -54,7 +55,7 @@ class CFM_Field {
 		'placeholder' => '',
 		'meta_type'   => 'payment', // 'payment' or 'user' here if is_meta()
 		'public'          => true, // denotes whether a field shows in the admin only
-		'show_in_exports' => true, // denotes whether a field is in the CSV exports
+		'show_in_exports' => 'export', // denotes whether a field is in the CSV exports
 	);
 
 	/** From here down, parameters for functions as they relate to the field object are:
