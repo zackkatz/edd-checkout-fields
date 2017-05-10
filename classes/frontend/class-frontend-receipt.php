@@ -72,7 +72,13 @@ class CFM_Frontend_Receipt {
 
 					echo '<td id="edd-cfm-field-' . $field->name() . '">' . $field->get_label() . '</td>';
 
-					$value = $field->export_data( $payment->ID, get_current_user_id() );
+						$value = $field->export_data( $payment->ID, get_current_user_id() );
+
+						if( 'file_upload' == $field->characteristics['template'] ) {
+
+							$value = '<a href="' . esc_url( $value ) . '" target="_blank">' . basename( $value ) . '</a>';
+
+						}
 
 					echo '<td>' . $value . '</td>';
 
