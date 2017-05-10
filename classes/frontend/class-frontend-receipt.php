@@ -64,6 +64,10 @@ class CFM_Frontend_Receipt {
 
 			foreach( $form->fields as $field ) {
 
+				if( ! $this->show_field( $field ) ) {
+					continue;
+				}
+
 				echo '<tr class="edd-cfm-receipt-field">';
 
 					echo '<td id="edd-cfm-field-' . $field->name() . '">' . $field->get_label() . '</td>';
@@ -78,6 +82,33 @@ class CFM_Frontend_Receipt {
 
 		}
 
+	}
+
+	/**
+	 * Determines if a field should be shown on the receipt.
+	 *
+	 * @since 2.1
+	 * @access public
+	 * @param $field CFM_Field object
+	 *
+	 * @return bool
+	 */
+	public function show_field( $field ) {
+
+		$ret = true;
+
+		switch( $field->characteristics['template'] ) {
+
+			case 'action_hook' :
+			case 'section_break' :
+			case 'html' :
+			case 'toc' :
+
+				$ret = false;
+				break;
+		}
+
+		return apply_filters( 'cfm_receipt_show_field', $ret, $field );
 	}
 
 }
