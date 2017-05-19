@@ -39,9 +39,7 @@ class CFM_Recaptcha_Field extends CFM_Field {
 	);
 
 	public function set_title() {
-		$title = _x( 'reCAPTCHA', 'CFM Field title translation', 'edd_cfm' );
-		$title = apply_filters( 'cfm_' . $this->name() . '_field_title', $title );
-		$this->supports['title'] = $title;		
+		$this->supports['title'] = apply_filters( 'cfm_' . $this->name() . '_field_title', _x( 'reCAPTCHA', 'CFM Field title translation', 'edd_cfm' ) );
 	}
 
 	public function extending_constructor( ) {
@@ -53,7 +51,7 @@ class CFM_Recaptcha_Field extends CFM_Field {
 		add_filter( 'cfm_templates_to_exclude_render_checkout_form_frontend', array( $this, 'exclude_field_frontend' ), 10, 1  );
 		add_filter( 'cfm_templates_to_exclude_sanitize_checkout_form_frontend', array( $this, 'exclude_field_frontend' ), 10, 1  );
 		add_filter( 'cfm_templates_to_exclude_validate_checkout_form_frontend', array( $this, 'exclude_field_frontend' ), 10, 1  );
-		add_filter( 'cfm_templates_to_exclude_save_checkout_form_frontend', array( $this, 'exclude_field_frontend' ), 10, 1  );		
+		add_filter( 'cfm_templates_to_exclude_save_checkout_form_frontend', array( $this, 'exclude_field_frontend' ), 10, 1  );
 	}
 
 	public function exclude_field_admin( $fields ) {
