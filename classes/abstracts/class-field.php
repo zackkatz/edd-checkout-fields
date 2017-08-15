@@ -37,22 +37,22 @@ class CFM_Field {
 			'can_change_meta_key'         => true,
 			'can_add_to_formbuilder'      => true,
 		),
-		'template'    => 'text',
-		'title'       => 'Text'
+		'template' => 'text',
+		'title'    => 'Text',
 	);
 
 	/** @var array Characteristics are things that can change from field to field of the same field type. Like the placeholder between two text fields. Stored in db. */
 	public $characteristics = array(
-		'name'        => '',
-		'template'    => 'text',
-		'required'    => false,
-		'label'       => '',
-		'css'         => '',
-		'default'     => '',
-		'size'        => '',
-		'help'        => '',
-		'placeholder' => '',
-		'meta_type'   => 'payment', // 'payment' or 'user' here if is_meta()
+		'name'            => '',
+		'template'        => 'text',
+		'required'        => false,
+		'label'           => '',
+		'css'             => '',
+		'default'         => '',
+		'size'            => '',
+		'help'            => '',
+		'placeholder'     => '',
+		'meta_type'       => 'payment', // 'payment' or 'user' here if is_meta()
 		'public'          => true, // denotes whether a field shows in the admin only
 		'show_in_exports' => true, // denotes whether a field is in the CSV exports
 	);
@@ -181,17 +181,22 @@ class CFM_Field {
 			$this->id = $id;
 			$this->form = $form;
 		}
-		$value;
+
+		$value  = null;
 		$fields = get_post_meta( $form, 'cfm-form', true );
+
 		if ( !$fields ) {
 			$fields = array();
 		}
+
 		$found = false;
 		foreach ( $fields as $field ) {
+
 			if ( isset( $field['name'] ) && $field['name'] == $this->id ) {
 				$value = $field;
 				$found = true;
 			}
+
 		}
 
 		if ( !$found ) {

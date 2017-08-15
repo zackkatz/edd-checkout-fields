@@ -20,19 +20,19 @@ class CFM_HTML_Field extends CFM_Field {
 			'can_change_meta_key'         => true,
 			'can_add_to_formbuilder'      => true,
 		),
-		'template'   => 'html',
-		'title'       => 'HTML',
+		'template' => 'html',
+		'title'    => 'HTML',
 	);
 
 	/** @var array Characteristics are things that can change from field to field of the same field type. Like the placeholder between two email fields. Stored in db. */
 	public $characteristics = array(
-		'name'        => '',
-		'template'   => 'html',
-		'required'    => false,
-		'label'       => '',
-		'html'        => '',
-		'css'         => '',
-		'meta_type'   => 'payment', // 'payment' or 'user' here if is_meta()
+		'name'            => '',
+		'template'        => 'html',
+		'required'        => false,
+		'label'           => '',
+		'html'            => '',
+		'css'             => '',
+		'meta_type'       => 'payment', // 'payment' or 'user' here if is_meta()
 		'public'          => "public", // denotes whether a field shows in the admin only
 		'show_in_exports' => "noexport", // denotes whether a field is in the CSV exports
 	);
@@ -41,7 +41,7 @@ class CFM_HTML_Field extends CFM_Field {
 	public function set_title() {
 		$title = _x( 'HTML', 'CFM Field title translation', 'edd_cfm' );
 		$title = apply_filters( 'cfm_' . $this->name() . '_field_title', $title );
-		$this->supports['title'] = $title;		
+		$this->supports['title'] = $title;
 	}
 
 	public function extending_constructor( ) {
@@ -65,9 +65,9 @@ class CFM_HTML_Field extends CFM_Field {
 			$user_id = get_current_user_id();
 		}
 
-		$output        = '';
-		$output     .= sprintf( '<p class="cfm-el %1s %2s %3s">', esc_attr( $this->template() ), esc_attr( $this->name() ), esc_attr( $this->css() ) );
-		$output    .= $this->label( false );
+		$output  = '';
+		$output .= sprintf( '<p class="cfm-el %1s %2s %3s">', esc_attr( $this->template() ), esc_attr( $this->name() ), esc_attr( $this->css() ) );
+		$output .= $this->label( false );
 		ob_start(); ?>
 		<?php echo do_shortcode( $this->characteristics['html'] ); ?>
 		<?php
@@ -82,9 +82,9 @@ class CFM_HTML_Field extends CFM_Field {
 			$user_id = get_current_user_id();
 		}
 
-		$output        = '';
-		$output     .= sprintf( '<p class="cfm-el %1s %2s %3s">', esc_attr( $this->template() ), esc_attr( $this->name() ), esc_attr( $this->css() ) );
-		$output    .= $this->label( ! (bool) $profile );
+		$output  = '';
+		$output .= sprintf( '<p class="cfm-el %1s %2s %3s">', esc_attr( $this->template() ), esc_attr( $this->name() ), esc_attr( $this->css() ) );
+		$output .= $this->label( ! (bool) $profile );
 		ob_start(); ?>
 		<?php echo do_shortcode( $this->characteristics['html'] ); ?>
 		<?php

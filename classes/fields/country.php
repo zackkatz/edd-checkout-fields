@@ -99,7 +99,7 @@ class CFM_Country_Field extends CFM_Field {
 		$output     .= sprintf( '<p class="cfm-el %1s %2s %3s">', esc_attr( $this->template() ), esc_attr( $this->name() ), esc_attr( $this->css() ) );
 		$output    .= $this->label( ! (bool) $profile );
 		ob_start(); ?>
-		<select name="<?php echo esc_attr( $this->name() ); ?>[]"  id="<?php echo esc_attr( $this->name() ); ?>" data-required="<?php echo $required; ?>" data-type="select"<?php $this->required_html5(); ?> class="select edd-input <?php echo $this->required_class(); ?>">
+		<select name="<?php echo esc_attr( $this->name() ); ?>[]"  id="<?php echo esc_attr( $this->name() ); ?>" data-required="<?php echo $required; ?>" data-type="select"<?php echo $this->required_html5(); ?> class="select edd-input <?php echo $this->required_class(); ?>">
 			<?php if ( !empty( $this->characteristics['first'] ) ) { ?>
 				<option value=""><?php echo $this->characteristics['first']; ?></option>
 			<?php }

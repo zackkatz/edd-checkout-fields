@@ -109,7 +109,7 @@ class CFM_Radio_Field extends CFM_Field {
 			echo '<ul class="cfm-checkbox-checklist" class="radio edd-input ' . $this->required_class() . '">';
 			foreach ( $this->characteristics['options'] as $option ) { 
 				echo '<li>';?>
-						<input name="<?php echo $this->name(); ?>" type="radio" value="<?php echo esc_attr( $option ); ?>" <?php echo in_array( $option, $value ) ? ' checked="checked"' : ''; ?> />
+						<input name="<?php echo $this->name(); ?>" type="radio" value="<?php echo esc_attr( $option ); ?>" <?php echo in_array( $option, $value ) ? ' checked="checked"' : ''; ?> <?php echo $this->required_html5(); ?> />
 						<?php _e( $option, 'edd_cfm' ); ?>
 					<?php
 				echo '</li>';
