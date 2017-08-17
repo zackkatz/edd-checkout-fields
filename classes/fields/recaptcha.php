@@ -130,20 +130,33 @@ class CFM_Recaptcha_Field extends CFM_Field {
 
 			try {
 
-				$verify = wp_safe_remote_post(
-					'https://www.google.com/recaptcha/api/siteverify',
-					array(
-						'body' => array(
-							'secret'   => trim( edd_get_option( 'cfm-recaptcha-private-key', '' ) ),
-							'response' => $_POST[ 'g-recaptcha-response' ],
-							'remoteip' => $_POST[ 'cfm_ip' ]
-						)
-					)
+				$private_key     = trim( edd_get_option( 'cfm-recaptcha-private-key', '' ) );
+				$recap_challenge = trim( $values['g-recaptcha-response'] );
+				$remote_ip       = trim( $values['cfm_ip'] );
+				$url             = 'https://www.google.com/recaptcha/api/siteverify';
+
+				$data     = array( 'secret' => $private_key, 'response' => $recap_challenge, 'remoteip' => $remote_ip );
+
+				$args     = array(
+					'headers' => array(
+						'Content-type' => 'application/x-www-form-urlencoded',
+					),
+					'body' => $data,
 				);
 
-				$verify = json_decode( wp_remote_retrieve_body( $verify ) );
-				if( empty( $verify->success ) || true !== $verify->success ) {
+				$response = wp_safe_remote_post( $url, $data );
+				if ( is_wp_error( $response ) ) {
+
 					edd_set_error( 'invalid_recaptcha_bad_' . $this->id, __( 'Please retry the reCAPTCHA challenge', 'edd_cfm' ) );
+
+				} else {
+					
+					$verify = json_decode( wp_remote_retrieve_body( $response ) );
+
+					if ( $verify->sucess === 'false' ) {
+						edd_set_error( 'invalid_recaptcha_bad_' . $this->id, __( 'Please retry the reCAPTCHA challenge', 'edd_cfm' ) );
+					}
+
 				}
 
 			} catch ( Exception $e ) {

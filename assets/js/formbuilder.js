@@ -207,12 +207,13 @@
 		},
 
 		setMetaKey: function() {
+
 			var $self = $(this),
 				val = $self.val().toLowerCase().split(' ').join('_').split('\'').join(''),
 				$metaKey = $(this).closest('.cfm-form-rows').next().find('input[type=text]');
 
 			if ($metaKey.length && $metaKey.val() == '' ) {
-				$metaKey.val(val);
+				$metaKey.val(val.replace(/\W/g, ""));
 			}
 		},
 
