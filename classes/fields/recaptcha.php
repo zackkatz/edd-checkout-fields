@@ -150,7 +150,7 @@ class CFM_Recaptcha_Field extends CFM_Field {
 					edd_set_error( 'invalid_recaptcha_bad_' . $this->id, __( 'Please retry the reCAPTCHA challenge', 'edd_cfm' ) );
 
 				} else {
-					
+
 					$verify = json_decode( wp_remote_retrieve_body( $response ) );
 
 					if ( $verify->sucess === 'false' ) {
