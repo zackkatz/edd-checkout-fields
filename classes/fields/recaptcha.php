@@ -163,12 +163,22 @@ class CFM_Recaptcha_Field extends CFM_Field {
 			$private_key     = edd_get_option( 'cfm-recaptcha-private-key', '' );
 			try {
 				$prefix   = is_ssl() ? "https" : "http";
-				$url      = $prefix . '://www.google.com/recaptcha/api/siteverify';
+				$url      = 'https://www.google.com/recaptcha/api/siteverify';
 				$data     = array( 'secret' => $private_key, 'response' => $recap_challenge, 'remoteip' => $_SERVER['REMOTE_ADDR'] );
-				$options  = array( 'http' => array( 'header' => "Content-type: application/x-www-form-urlencoded\r\n", 'method' => 'POST', 'content' => http_build_query( $data ) ) );
-				$context  = stream_context_create( $options );
-				$result   = file_get_contents( $url, false, $context );
-				if ( json_decode( $result )->success == false ) {
+				$args     = array(
+					'headers' => array(
+						'Content-type' => 'application/x-www-form-urlencoded',
+					),
+					'body' => $data,
+				);
+
+				$response   = wp_remote_post( $url, $args );
+				if ( is_wp_error( $response ) ) {
+					edd_set_error( 'invalid_recaptcha_bad_' . $this->id, __( 'Please retry the reCAPTCHA challenge', 'edd_cfm' ) );
+				}
+
+				$reponse_body = json_decode( wp_remote_retrieve_body( $response ) );
+				if ( $response_body->sucess === 'false' ) {
 					edd_set_error( 'invalid_recaptcha_bad_' . $this->id, __( 'Please retry the reCAPTCHA challenge', 'edd_cfm' ) );
 				}
 			}
