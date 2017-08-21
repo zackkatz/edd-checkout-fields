@@ -39,9 +39,7 @@ class CFM_Recaptcha_Field extends CFM_Field {
 	);
 
 	public function set_title() {
-		$title = _x( 'reCAPTCHA', 'CFM Field title translation', 'edd_cfm' );
-		$title = apply_filters( 'cfm_' . $this->name() . '_field_title', $title );
-		$this->supports['title'] = $title;
+		$this->supports['title'] = apply_filters( 'cfm_' . $this->name() . '_field_title', _x( 'reCAPTCHA', 'CFM Field title translation', 'edd_cfm' ) );
 	}
 
 	public function extending_constructor( ) {
@@ -53,7 +51,7 @@ class CFM_Recaptcha_Field extends CFM_Field {
 		add_filter( 'cfm_templates_to_exclude_render_checkout_form_frontend', array( $this, 'exclude_field_frontend' ), 10, 1  );
 		add_filter( 'cfm_templates_to_exclude_sanitize_checkout_form_frontend', array( $this, 'exclude_field_frontend' ), 10, 1  );
 		add_filter( 'cfm_templates_to_exclude_validate_checkout_form_frontend', array( $this, 'exclude_field_frontend' ), 10, 1  );
-		add_filter( 'cfm_templates_to_exclude_save_checkout_form_frontend', array( $this, 'exclude_field_frontend' ), 10, 1  );		
+		add_filter( 'cfm_templates_to_exclude_save_checkout_form_frontend', array( $this, 'exclude_field_frontend' ), 10, 1  );
 	}
 
 	public function exclude_field_admin( $fields ) {
@@ -80,46 +78,17 @@ class CFM_Recaptcha_Field extends CFM_Field {
 	public function render_field_frontend( $user_id = -2, $profile = -2 ) {
 		$public_key  = edd_get_option( 'cfm-recaptcha-public-key', '' );
 		$private_key = edd_get_option( 'cfm-recaptcha-private-key', '' );
-		$theme       = apply_filters( 'cfm_render_recaptcha_field_frontend_theme', 'light' ); // The color theme of the widget. Either dark or light
-		$type        = apply_filters( 'cfm_render_recaptcha_field_frontend_type', 'image' ); // The type of CAPTCHA to serve. Either audio or image
-		$size        = apply_filters( 'cfm_render_recaptcha_field_frontend_size', 'normal' ); // The size of the widget. Either compact  or normal
+		
 		if ( $public_key == '' || $private_key == '' ) {
 			return '';
 		}
 
-		$output  = '';
-		$output .= sprintf( '<p class="cfm-el %1s %2s %3s">', esc_attr( $this->template() ), esc_attr( $this->name() ), esc_attr( $this->css() ) );
-		$output .= $this->label( $profile );
-		$prefix  = is_ssl() ? "https" : "http";
-		$url     = $prefix . '://www.google.com/recaptcha/api.js';
-		ob_start(); ?>
+		$output = sprintf( '<div class="cfm-el %1s %2s %3s">', esc_attr( $this->template() ), esc_attr( $this->name() ), esc_attr( $this->css() ) );
+			$output .= $this->label( $profile );
+			$output .= '<div id="cfm-recaptcha"></div>';
+			$output .= '<input type="hidden" name="cfm_ip" value="'. esc_attr( edd_get_ip() ) . '"/>';
+		$output .= '</div>';
 
-		<?php wp_enqueue_script( 'recaptcha', $url ); ?>
-		<div class="g-recaptcha" data-sitekey="<?php echo $public_key; ?>" data-theme="<?php echo $theme; ?>" data-type="<?php echo $type; ?>" data-size="<?php echo $size; ?>"></div>
-		<noscript>
-			<div style="width: 302px; height: 422px;">
-				<div style="width: 302px; height: 422px; position: relative;">
-					<div style="width: 302px; height: 422px; position: absolute;">
-					<iframe src="https://www.google.com/recaptcha/api/fallback?k=<?php echo $public_key; ?>"
-						frameborder="0" scrolling="no"
-						style="width: 302px; height:422px; border-style: none;">
-					</iframe>
-					 </div>
-					 <div style="width: 300px; height: 60px; border-style: none;
-						bottom: 12px; left: 25px; margin: 0px; padding: 0px; right: 25px;
-						background: #f9f9f9; border: 1px solid #c1c1c1; border-radius: 3px;">
-					<textarea id="g-recaptcha-response" name="g-recaptcha-response"
-						class="g-recaptcha-response"
-						style="width: 250px; height: 40px; border: 1px solid #c1c1c1;
-						margin: 10px 25px; padding: 0px; resize: none;" >
-					</textarea>
-					 </div>
-				</div>
-			</div>
-		</noscript>
-		<?php
-		$output .= ob_get_clean();
-		$output .= '</p>';
 		return $output;
 	}
 
@@ -155,16 +124,20 @@ class CFM_Recaptcha_Field extends CFM_Field {
 
 	/** Validates field */
 	public function validate( $values = array(), $payment_id = -2, $user_id = -2 ) {
-		$name = $this->name();
-		$return_value = false;
 
-		if ( !empty( $values[ $name ] ) ) {
-			$recap_challenge = isset( $values[ 'g-recaptcha-response' ] ) ? $values[ 'g-recaptcha-response' ] : '';
-			$private_key     = edd_get_option( 'cfm-recaptcha-private-key', '' );
+		$name = $this->name();
+
+		if ( ! empty( $_POST[ 'g-recaptcha-response' ] ) ) {
+
 			try {
-				$prefix   = is_ssl() ? "https" : "http";
-				$url      = 'https://www.google.com/recaptcha/api/siteverify';
-				$data     = array( 'secret' => $private_key, 'response' => $recap_challenge, 'remoteip' => $_SERVER['REMOTE_ADDR'] );
+
+				$private_key     = trim( edd_get_option( 'cfm-recaptcha-private-key', '' ) );
+				$recap_challenge = trim( $values['g-recaptcha-response'] );
+				$remote_ip       = trim( $values['cfm_ip'] );
+				$url             = 'https://www.google.com/recaptcha/api/siteverify';
+
+				$data     = array( 'secret' => $private_key, 'response' => $recap_challenge, 'remoteip' => $remote_ip );
+
 				$args     = array(
 					'headers' => array(
 						'Content-type' => 'application/x-www-form-urlencoded',
@@ -172,25 +145,30 @@ class CFM_Recaptcha_Field extends CFM_Field {
 					'body' => $data,
 				);
 
-				$response   = wp_remote_post( $url, $args );
+				$response = wp_safe_remote_post( $url, $data );
 				if ( is_wp_error( $response ) ) {
+
 					edd_set_error( 'invalid_recaptcha_bad_' . $this->id, __( 'Please retry the reCAPTCHA challenge', 'edd_cfm' ) );
+
+				} else {
+
+					$verify = json_decode( wp_remote_retrieve_body( $response ) );
+
+					if ( $verify->success === 'false' ) {
+						edd_set_error( 'invalid_recaptcha_bad_' . $this->id, __( 'Please retry the reCAPTCHA challenge', 'edd_cfm' ) );
+					}
+
 				}
 
-				$reponse_body = json_decode( wp_remote_retrieve_body( $response ) );
-				if ( $response_body->sucess === 'false' ) {
-					edd_set_error( 'invalid_recaptcha_bad_' . $this->id, __( 'Please retry the reCAPTCHA challenge', 'edd_cfm' ) );
-				}
+			} catch ( Exception $e ) {
+				edd_set_error( 'invalid_recaptcha_bad_' . $this->id, __( 'There was an error validating the reCaptcha', 'edd_cfm' ) );
 			}
-			catch ( Exception $e ) {
-				edd_set_error( 'invalid_recaptcha_bad_' . $this->id, __( 'Please retry the reCAPTCHA challenge', 'edd_cfm' ) );
-			}
-		} else {
+
+		} else if ( $this->required() ) {
 			// if the field is required but isn't present
-			if ( $this->required() ) {
-				edd_set_error( 'invalid_recaptcha_incomplete_' . $this->id, __( 'Please complete the reCAPTCHA challenge', 'edd_cfm' ) );
-			}
+			edd_set_error( 'invalid_recaptcha_incomplete_' . $this->id, __( 'Please complete the reCAPTCHA challenge', 'edd_cfm' ) );
 		}
+
 	}
 
 	public function sanitize( $values = array(), $payment_id = -2, $user_id = -2 ) {

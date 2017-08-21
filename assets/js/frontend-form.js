@@ -1,6 +1,7 @@
 (function ($) {
 	var CFM_Form = {
 		init: function () {
+
 			// clone and remove repeated field
 			$('body').on('click', 'img.cfm-clone-field', this.cloneField);
 			$('body').on('click', 'img.cfm-remove-field', this.removeField);
@@ -12,6 +13,17 @@
 
 			// download links
 			$('body').on('click', 'a.upload_file_button', this.fileDownloadable);
+
+			// Render reCaptcha if the settings are filled out
+			if( cfm_form.recaptcha ) {
+				$('body').on( 'edd_gateway_loaded', function() {
+
+					grecaptcha.render( 'cfm-recaptcha', {
+						sitekey: cfm_form.sitekey
+					} );
+
+				});
+			}
 
 			// Repeatable file inputs
 			$('body').on('click', 'a.insert-file-row', function (e) {
