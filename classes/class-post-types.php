@@ -40,7 +40,7 @@ class CFM_Post_Types {
 	 */
 	public function __construct() {
 		add_action( 'init',  array( $this, 'register_post_types' ) );
-		add_filter( "bulk_actions-edit-edd-checkout-fields", '__return_empty_array' );
+		add_filter( 'bulk_actions-edit-edd-checkout-fields', '__return_empty_array' );
 		add_filter( 'disable_months_dropdown', array( $this, 'cfm_disable_months_dropdown'), 10, 2 );
 	}
 
@@ -58,47 +58,47 @@ class CFM_Post_Types {
 	public function register_post_types() {
 		$capability = 'manage_shop_settings';
 		register_post_type( 'edd-checkout-fields', array(
-			'label' => __( 'EDD CFM Forms', 'edd_cfm' ),
-			'public' => false,
-			'rewrites' => false,
+			'label'           => __( 'EDD CFM Forms', 'edd_cfm' ),
+			'public'          => false,
+			'rewrites'        => false,
 			'capability_type' => 'post',
-			'capabilities' => array(
-				'publish_posts' => 'cap_that_doesnt_exist',
-				'edit_posts' => $capability,
-				'edit_others_posts' => $capability,
-				'delete_posts' => 'cap_that_doesnt_exist',
+			'capabilities'    => array(
+				'publish_posts'       => 'cap_that_doesnt_exist',
+				'edit_posts'          => $capability,
+				'edit_others_posts'   => $capability,
+				'delete_posts'        => 'cap_that_doesnt_exist',
 				'delete_others_posts' => 'cap_that_doesnt_exist',
-				'read_private_posts' => 'cap_that_doesnt_exist',
-				'edit_post' => $capability,
-				'delete_post' => 'cap_that_doesnt_exist',
-				'read_post' => $capability,
-				'create_posts' => 'cap_that_doesnt_exist'
+				'read_private_posts'  => 'cap_that_doesnt_exist',
+				'edit_post'           => $capability,
+				'delete_post'         => 'cap_that_doesnt_exist',
+				'read_post'           => $capability,
+				'create_posts'        => 'cap_that_doesnt_exist',
 			),
 			'hierarchical' => false,
-			'query_var' => false,
-			'supports' => array(
+			'query_var'    => false,
+			'supports'     => array(
 				'title'
 			),
-			'can_export'  => true,
+			'can_export'        => true,
 			'show_ui'           => true,
-			'show_in_menu' => false,
+			'show_in_menu'      => false,
 			'show_in_nav_menus' => false,
 			'show_in_admin_bar' => false,
-			'labels' => array(
-				'name' => __( 'EDD CFM Forms', 'edd_cfm' ),
-				'singular_name' => __( 'CFM Form', 'edd_cfm' ),
-				'menu_name' => __( 'CFM Forms', 'edd_cfm' ),
-				'add_new' => __( 'Add CFM Form', 'edd_cfm' ),
-				'add_new_item' => __( 'Add New Form', 'edd_cfm' ),
-				'edit' => __( 'Edit', 'edd_cfm' ),
-				'edit_item' => '',
-				'new_item' => __( 'New CFM Form', 'edd_cfm' ),
-				'view' => __( 'View CFM Form', 'edd_cfm' ),
-				'view_item' => __( 'View CFM Form', 'edd_cfm' ),
-				'search_items' => __( 'Search CFM Forms', 'edd_cfm' ),
-				'not_found' => __( 'No CFM Forms Found', 'edd_cfm' ),
+			'labels'            => array(
+				'name'               => __( 'EDD CFM Forms', 'edd_cfm' ),
+				'singular_name'      => __( 'CFM Form', 'edd_cfm' ),
+				'menu_name'          => __( 'CFM Forms', 'edd_cfm' ),
+				'add_new'            => __( 'Add CFM Form', 'edd_cfm' ),
+				'add_new_item'       => __( 'Add New Form', 'edd_cfm' ),
+				'edit'               => __( 'Edit', 'edd_cfm' ),
+				'edit_item'          => '',
+				'new_item'           => __( 'New CFM Form', 'edd_cfm' ),
+				'view'               => __( 'View CFM Form', 'edd_cfm' ),
+				'view_item'          => __( 'View CFM Form', 'edd_cfm' ),
+				'search_items'       => __( 'Search CFM Forms', 'edd_cfm' ),
+				'not_found'          => __( 'No CFM Forms Found', 'edd_cfm' ),
 				'not_found_in_trash' => __( 'No CFM Forms Found in Trash', 'edd_cfm' ),
-				'parent' => __( 'Parent CFM Form', 'edd_cfm' )
+				'parent'             => __( 'Parent CFM Form', 'edd_cfm' ),
 			)
 		) );
 	}
