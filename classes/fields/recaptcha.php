@@ -21,20 +21,20 @@ class CFM_Recaptcha_Field extends CFM_Field {
 			'can_add_to_formbuilder'      => true,
 			'field_always_required'       => true,
 		),
-		'template'   => 'recaptcha',
-		'title'       => 'reCAPTCHA',
-		'meta_type'   => 'payment', // 'payment' or 'user' here if is_meta()
+		'template'        => 'recaptcha',
+		'title'           => 'reCAPTCHA',
+		'meta_type'       => 'payment', // 'payment' or 'user' here if is_meta()
 		'public'          => "public", // denotes whether a field shows in the admin only
 		'show_in_exports' => "noexport", // denotes whether a field is in the CSV exports
 	);
 
 	/** @var array Characteristics are things that can change from field to field of the same field type. Like the placeholder between two email fields. Stored in db. */
 	public $characteristics = array(
-		'name'        => 'recaptcha',
-		'template'   => 'recaptcha',
-		'public'      => false,
-		'required'    => true,
-		'label'       => '',
+		'name'     => 'recaptcha',
+		'template' => 'recaptcha',
+		'public'   => false,
+		'required' => true,
+		'label'    => '',
 		'html'     => '',
 	);
 
@@ -78,7 +78,7 @@ class CFM_Recaptcha_Field extends CFM_Field {
 	public function render_field_frontend( $user_id = -2, $profile = -2 ) {
 		$public_key  = edd_get_option( 'cfm-recaptcha-public-key', '' );
 		$private_key = edd_get_option( 'cfm-recaptcha-private-key', '' );
-
+		
 		if ( $public_key == '' || $private_key == '' ) {
 			return '';
 		}
@@ -88,6 +88,7 @@ class CFM_Recaptcha_Field extends CFM_Field {
 			$output .= '<div id="cfm-recaptcha"></div>';
 			$output .= '<input type="hidden" name="cfm_ip" value="'. esc_attr( edd_get_ip() ) . '"/>';
 		$output .= '</div>';
+
 		return $output;
 	}
 
