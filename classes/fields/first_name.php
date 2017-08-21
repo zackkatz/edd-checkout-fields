@@ -91,7 +91,7 @@ class CFM_First_Name_Field extends CFM_Field {
 		$output    .= '<p id="edd-first-name-wrap">';
 		$output    .= $this->label( ! (bool) $profile );
 		ob_start(); ?>
-		<input name="<?php echo esc_attr( $this->name() ); ?>" id="<?php echo esc_attr( $this->name() ); ?>" class="text edd-input <?php echo $this->required_class(); ?>" type="text" data-required="<?php echo $required; ?>" data-type="text"<?php $this->required_html5(); ?> placeholder="<?php echo esc_attr( $this->placeholder() ); ?>" value="<?php echo esc_attr( $value ) ?>" size="<?php echo esc_attr( $this->size() ) ?>" />
+		<input name="<?php echo esc_attr( $this->name() ); ?>" id="<?php echo esc_attr( $this->name() ); ?>" class="text edd-input <?php echo $this->required_class(); ?>" type="text" data-required="<?php echo $required; ?>" data-type="text"<?php echo $this->required_html5(); ?> placeholder="<?php echo esc_attr( $this->placeholder() ); ?>" value="<?php echo esc_attr( $value ) ?>" size="<?php echo esc_attr( $this->size() ) ?>" />
 		<?php
 		$output .= ob_get_clean();
 		$output .= '</p>';

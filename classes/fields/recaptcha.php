@@ -21,27 +21,27 @@ class CFM_Recaptcha_Field extends CFM_Field {
 			'can_add_to_formbuilder'      => true,
 			'field_always_required'       => true,
 		),
-		'template'   => 'recaptcha',
-		'title'       => 'reCAPTCHA',
-		'meta_type'   => 'payment', // 'payment' or 'user' here if is_meta()
+		'template'        => 'recaptcha',
+		'title'           => 'reCAPTCHA',
+		'meta_type'       => 'payment', // 'payment' or 'user' here if is_meta()
 		'public'          => "public", // denotes whether a field shows in the admin only
 		'show_in_exports' => "noexport", // denotes whether a field is in the CSV exports
 	);
 
 	/** @var array Characteristics are things that can change from field to field of the same field type. Like the placeholder between two email fields. Stored in db. */
 	public $characteristics = array(
-		'name'        => 'recaptcha',
-		'template'   => 'recaptcha',
-		'public'      => false,
-		'required'    => true,
-		'label'       => '',
+		'name'     => 'recaptcha',
+		'template' => 'recaptcha',
+		'public'   => false,
+		'required' => true,
+		'label'    => '',
 		'html'     => '',
 	);
 
 	public function set_title() {
 		$title = _x( 'reCAPTCHA', 'CFM Field title translation', 'edd_cfm' );
 		$title = apply_filters( 'cfm_' . $this->name() . '_field_title', $title );
-		$this->supports['title'] = $title;		
+		$this->supports['title'] = $title;
 	}
 
 	public function extending_constructor( ) {
@@ -78,20 +78,20 @@ class CFM_Recaptcha_Field extends CFM_Field {
 
 	/** Returns the Recaptcha to render a field in frontend */
 	public function render_field_frontend( $user_id = -2, $profile = -2 ) {
-		$public_key      = edd_get_option( 'cfm-recaptcha-public-key', '' );
-		$private_key     = edd_get_option( 'cfm-recaptcha-private-key', '' );
-		$theme           = apply_filters( 'cfm_render_recaptcha_field_frontend_theme', 'light' ); // The color theme of the widget. Either dark or light
-		$type       	 = apply_filters( 'cfm_render_recaptcha_field_frontend_type', 'image' ); // The type of CAPTCHA to serve. Either audio or image
-		$size       	 = apply_filters( 'cfm_render_recaptcha_field_frontend_size', 'normal' ); // The size of the widget. Either compact  or normal
+		$public_key  = edd_get_option( 'cfm-recaptcha-public-key', '' );
+		$private_key = edd_get_option( 'cfm-recaptcha-private-key', '' );
+		$theme       = apply_filters( 'cfm_render_recaptcha_field_frontend_theme', 'light' ); // The color theme of the widget. Either dark or light
+		$type        = apply_filters( 'cfm_render_recaptcha_field_frontend_type', 'image' ); // The type of CAPTCHA to serve. Either audio or image
+		$size        = apply_filters( 'cfm_render_recaptcha_field_frontend_size', 'normal' ); // The size of the widget. Either compact  or normal
 		if ( $public_key == '' || $private_key == '' ) {
 			return '';
 		}
 
-		$output        = '';
-		$output     .= sprintf( '<p class="cfm-el %1s %2s %3s">', esc_attr( $this->template() ), esc_attr( $this->name() ), esc_attr( $this->css() ) );
-		$output        .= $this->label( $profile );
-		$prefix   = is_ssl() ? "https" : "http";
-		$url      = $prefix . '://www.google.com/recaptcha/api.js';
+		$output  = '';
+		$output .= sprintf( '<p class="cfm-el %1s %2s %3s">', esc_attr( $this->template() ), esc_attr( $this->name() ), esc_attr( $this->css() ) );
+		$output .= $this->label( $profile );
+		$prefix  = is_ssl() ? "https" : "http";
+		$url     = $prefix . '://www.google.com/recaptcha/api.js';
 		ob_start(); ?>
 
 		<?php wp_enqueue_script( 'recaptcha', $url ); ?>

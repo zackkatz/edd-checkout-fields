@@ -20,19 +20,19 @@ class CFM_Toc_Field extends CFM_Field {
 			'can_change_meta_key'         => true,
 			'can_add_to_formbuilder'      => true,
 		),
-		'template'   => 'toc',
-		'title'       => 'Terms & Cond.',
+		'template' => 'toc',
+		'title'    => 'Terms & Cond.',
 	);
 
 	/** @var array Characteristics are things that can change from field to field of the same field type. Like the placeholder between two email fields. Stored in db. */
 	public $characteristics = array(
-		'name'        => 'cfm_accept_toc',
-		'template'   => 'toc',
-		'required'    => true,
-		'label'       => '',
-		'css'         => '',
-		'description' => '',
-		'meta_type'   => 'payment', // 'payment' or 'user' here if is_meta()
+		'name'            => 'cfm_accept_toc',
+		'template'        => 'toc',
+		'required'        => true,
+		'label'           => '',
+		'css'             => '',
+		'description'     => '',
+		'meta_type'       => 'payment', // 'payment' or 'user' here if is_meta()
 		'public'          => "public", // denotes whether a field shows in the admin only
 		'show_in_exports' => "noexport", // denotes whether a field is in the CSV exports
 	);
@@ -71,8 +71,8 @@ class CFM_Toc_Field extends CFM_Field {
 		if ( $value ) {
 			return '';
 		}
-		$output        = '';
-		$output     .= sprintf( '<p class="cfm-el %1s %2s %3s">', esc_attr( $this->template() ), esc_attr( $this->name() ), esc_attr( $this->css() ) );
+		$output  = '';
+		$output .= sprintf( '<p class="cfm-el %1s %2s %3s">', esc_attr( $this->template() ), esc_attr( $this->name() ), esc_attr( $this->css() ) );
 		//$output    .= $this->label( ! (bool) $profile );
 		ob_start(); ?>
 		<span data-required="yes" data-type="radio"></span>
@@ -88,7 +88,7 @@ class CFM_Toc_Field extends CFM_Field {
 
 	/** Returns the Toc to render a field for the formbuilder */
 	public function render_formbuilder_field( $index = -2, $insert = false ) {
-		$removable    = $this->can_remove_from_formbuilder();
+		$removable         = $this->can_remove_from_formbuilder();
 		$title_name        = sprintf( '%s[%d][label]', 'cfm_input', $index );
 		$description_name  = sprintf( '%s[%d][description]', 'cfm_input', $index );
 		$css_name          = sprintf( '%s[%d][css]', 'cfm_input', $index );
@@ -104,7 +104,7 @@ class CFM_Toc_Field extends CFM_Field {
 			<?php CFM_Formbuilder_Templates::field_div( $index, $this->name(), $this->characteristics, $insert ); ?>
 				<div class="cfm-form-rows">
 					<label><?php _e( 'Terms & Conditions', 'edd_cfm' ); ?></label>
-					<textarea class="smallipopInput" title="<?php _e( 'Insert terms and condtions here.', 'edd_cfm' ); ?>" name="<?php echo $description_name; ?>" rows="3"><?php echo esc_html( $description_value ); ?></textarea>
+					<textarea class="smallipopInput" title="<?php _e( 'Insert terms and conditions here.', 'edd_cfm' ); ?>" name="<?php echo $description_name; ?>" rows="3"><?php echo esc_html( $description_value ); ?></textarea>
 				</div>
 				<div class="cfm-form-rows">
 					<label><?php _e( 'Agreement Checkbox Label', 'edd_cfm' ); ?></label>
