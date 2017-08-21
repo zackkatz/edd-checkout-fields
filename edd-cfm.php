@@ -6,9 +6,9 @@
  * Author:              Easy Digital Downloads
  * Author URI:          https://easydigitaldownloads.com
  *
- * Version:             2.0.12
+ * Version:             2.0.13
  * Requires at least:   4.3
- * Tested up to:        4.7.4
+ * Tested up to:        4.9
  *
  * Text Domain:         edd_cfm
  * Domain Path:         /languages/
@@ -235,19 +235,19 @@ class EDD_Checkout_Fields_Manager {
 			add_action( 'plugins_loaded', array( self::$instance, 'load_abstracts' ) );
 
 			// Setup class instances
-			self::$instance->helper 			   = new CFM_Helpers;
-			self::$instance->emails                = new CFM_Emails;
+			self::$instance->helper = new CFM_Helpers;
+			self::$instance->emails = new CFM_Emails;
 
 			if ( cfm_is_admin() ) {
 				self::$instance->menu                  = new CFM_Menu;
 				self::$instance->edit_payment          = new CFM_Edit_Payment;
 				self::$instance->admin_profile         = new CFM_Admin_Customer_Profile;
-				self::$instance->export     	       = new CFM_Export;
-				self::$instance->tools         		   = new CFM_Tools;
+				self::$instance->export                = new CFM_Export;
+				self::$instance->tools                 = new CFM_Tools;
 				self::$instance->formbuilder_templates = new CFM_Formbuilder_Templates;
 			}
-			self::$instance->frontend_profile         = new CFM_Frontend_Customer_Profile;
-			self::$instance->checkout         		  = new CFM_Checkout;
+			self::$instance->frontend_profile = new CFM_Frontend_Customer_Profile;
+			self::$instance->checkout         = new CFM_Checkout;
 
 			/*
 			 * We have to load EDD's upload functions and misc functions files manually
@@ -320,7 +320,7 @@ class EDD_Checkout_Fields_Manager {
 		}
 		// Plugin Version
 		if ( !defined( 'cfm_plugin_version' ) ) {
-			define( 'cfm_plugin_version', '2.0.12' );
+			define( 'cfm_plugin_version', '2.0.13' );
 		}
 		// Plugin Root File
 		if ( !defined( 'cfm_plugin_file' ) ) {
@@ -356,10 +356,10 @@ class EDD_Checkout_Fields_Manager {
 	 */
 	public function load_abstracts(){
 		// load form abstract and extending forms
-		self::$instance->load_forms 	= self::$instance->setup->load_forms();
+		self::$instance->load_forms = self::$instance->setup->load_forms();
 
 		// load field abstract and extending fields
-		self::$instance->load_fields 	= self::$instance->setup->load_fields();
+		self::$instance->load_fields = self::$instance->setup->load_fields();
 	}
 
 	/**
