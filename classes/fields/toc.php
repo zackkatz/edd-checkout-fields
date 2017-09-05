@@ -20,8 +20,9 @@ class CFM_Toc_Field extends CFM_Field {
 			'can_change_meta_key'         => true,
 			'can_add_to_formbuilder'      => true,
 		),
-		'template' => 'toc',
-		'title'    => 'Terms & Cond.',
+		'template'   => 'toc',
+		'title'       => 'Terms & Cond.',
+		'show_on_receipt' => false,
 	);
 
 	/** @var array Characteristics are things that can change from field to field of the same field type. Like the placeholder between two email fields. Stored in db. */
@@ -53,7 +54,7 @@ class CFM_Toc_Field extends CFM_Field {
 	public function exclude_field_admin( $fields ) {
 		array_push( $fields, 'toc' );
 		return $fields;
-	}	
+	}
 
 	/** Returns the Toc to render a field in admin */
 	public function render_field_admin( $user_id = -2, $profile = -2 ) {

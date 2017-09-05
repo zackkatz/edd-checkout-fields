@@ -422,6 +422,21 @@ class CFM_Setup {
 					'type' => 'header'
 				),
 				array(
+					'id'      => 'cfm-receipt-show-info',
+					'type'    => 'checkbox',
+					'name'    => __( 'Show submitted information on Purchase Confirmation?', 'edd_cfm' ),
+					'desc'    => __( 'Check this box to display the submitted field information on the purchase confirmation page.', 'edd_cfm' ),
+					'section' => 'cfm'
+				),
+				array(
+					'id'      => 'cfm-receipt-header',
+					'type'    => 'text',
+					'name'    => __( 'Purchase Confirmation Header Text', 'edd_cfm' ),
+					'desc'    => __( 'Text shown above the field values on the purchase confirmation page, if enabled.', 'edd_cfm' ),
+					'section' => 'cfm',
+					'std'     => __( 'Information', 'edd_cf' )
+				),
+				array(
 					'id'      => 'cfm-recaptcha-public-key',
 					'type'    => 'text',
 					'desc'    => __( 'Required to use the reCAPTCHA field.', 'edd_cfm' ),

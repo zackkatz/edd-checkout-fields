@@ -6,7 +6,7 @@
  * Author:              Easy Digital Downloads
  * Author URI:          https://easydigitaldownloads.com
  *
- * Version:             2.0.13
+ * Version:             2.1
  * Requires at least:   4.3
  * Tested up to:        4.9
  *
@@ -246,8 +246,10 @@ class EDD_Checkout_Fields_Manager {
 				self::$instance->tools                 = new CFM_Tools;
 				self::$instance->formbuilder_templates = new CFM_Formbuilder_Templates;
 			}
-			self::$instance->frontend_profile = new CFM_Frontend_Customer_Profile;
-			self::$instance->checkout         = new CFM_Checkout;
+
+			self::$instance->frontend_profile         = new CFM_Frontend_Customer_Profile;
+			self::$instance->frontend_receipt         = new CFM_Frontend_Receipt;
+			self::$instance->checkout         		  = new CFM_Checkout;
 
 			/*
 			 * We have to load EDD's upload functions and misc functions files manually
@@ -320,7 +322,7 @@ class EDD_Checkout_Fields_Manager {
 		}
 		// Plugin Version
 		if ( !defined( 'cfm_plugin_version' ) ) {
-			define( 'cfm_plugin_version', '2.0.13' );
+			define( 'cfm_plugin_version', '2.1' );
 		}
 		// Plugin Root File
 		if ( !defined( 'cfm_plugin_file' ) ) {
@@ -391,6 +393,7 @@ class EDD_Checkout_Fields_Manager {
 		}
 		require_once cfm_plugin_dir . 'classes/frontend/class-checkout.php';
 		require_once cfm_plugin_dir . 'classes/frontend/class-frontend-customer-profile.php';
+		require_once cfm_plugin_dir . 'classes/frontend/class-frontend-receipt.php';
 	}
 
 	/**

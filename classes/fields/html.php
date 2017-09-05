@@ -20,8 +20,9 @@ class CFM_HTML_Field extends CFM_Field {
 			'can_change_meta_key'         => true,
 			'can_add_to_formbuilder'      => true,
 		),
-		'template' => 'html',
-		'title'    => 'HTML',
+		'template'   => 'html',
+		'title'       => 'HTML',
+		'show_on_receipt' => false,
 	);
 
 	/** @var array Characteristics are things that can change from field to field of the same field type. Like the placeholder between two email fields. Stored in db. */
@@ -48,10 +49,10 @@ class CFM_HTML_Field extends CFM_Field {
 		add_filter( 'cfm_templates_to_exclude_sanitize_checkout_form_admin', array( $this, 'exclude_field' ), 10, 1  );
 		add_filter( 'cfm_templates_to_exclude_validate_checkout_form_admin', array( $this, 'exclude_field' ), 10, 1  );
 		add_filter( 'cfm_templates_to_exclude_save_checkout_form_admin', array( $this, 'exclude_field' ), 10, 1  );
-		
+
 		add_filter( 'cfm_templates_to_exclude_sanitize_checkout_form_frontend', array( $this, 'exclude_field' ), 10, 1  );
 		add_filter( 'cfm_templates_to_exclude_validate_checkout_form_frontend', array( $this, 'exclude_field' ), 10, 1  );
-		add_filter( 'cfm_templates_to_exclude_save_checkout_form_frontend', array( $this, 'exclude_field' ), 10, 1  );		
+		add_filter( 'cfm_templates_to_exclude_save_checkout_form_frontend', array( $this, 'exclude_field' ), 10, 1  );
 	}
 
 	public function exclude_field( $fields ) {
