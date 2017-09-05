@@ -424,7 +424,7 @@ class CFM_Field {
 
 	/** Gets field value for frontend */
 	public function get_field_value_frontend( $payment_id = -2, $user_id = -2 ) {
-		if ( $user_id === -2 ) {
+		if ( $user_id === -2 || $user_id < 1 ) {
 			$user_id = get_current_user_id();
 		}
 
