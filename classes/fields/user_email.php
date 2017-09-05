@@ -27,15 +27,15 @@ class CFM_User_Email_Field extends CFM_Field {
 
 	/** @var array Characteristics are things that can change from field to field of the same field type. Like the placeholder between two email fields. Stored in db. */
 	public $characteristics = array(
-		'name'        => 'user_email',
-		'template'   => 'user_email',
-		'required'    => true,
-		'label'       => '',
-		'css'         => '',
-		'default'     => '',
-		'size'        => '',
-		'help'        => '',
-		'placeholder' => '',
+		'name'            => 'user_email',
+		'template'        => 'user_email',
+		'required'        => true,
+		'label'           => '',
+		'css'             => '',
+		'default'         => '',
+		'size'            => '',
+		'help'            => '',
+		'placeholder'     => '',
 		'public'          => "public", // denotes whether a field shows in the admin only
 		'show_in_exports' => "noexport", // denotes whether a field is in the CSV exports
 	);
@@ -90,7 +90,7 @@ class CFM_User_Email_Field extends CFM_Field {
 		ob_start(); ?>
 		<?php do_action( 'edd_purchase_form_before_email' ); ?>
 		<?php do_action( 'edd_purchase_form_after_email' ); ?>
-			<input name="<?php echo esc_attr( $this->name() ); ?>" id="<?php echo esc_attr( $this->id() ); ?>" class="email text edd-input <?php echo $this->required_class(); ?>" type="email" data-required="<?php echo $required; ?>" data-type="text"<?php $this->required_html5(); ?> placeholder="<?php echo esc_attr( $this->placeholder() ); ?>" value="<?php echo esc_attr( $value ) ?>" size="<?php echo esc_attr( $this->size() ) ?>" />
+			<input name="<?php echo esc_attr( $this->name() ); ?>" id="<?php echo esc_attr( $this->id() ); ?>" class="email text edd-input <?php echo $this->required_class(); ?>" type="email" data-required="<?php echo $required; ?>" data-type="text"<?php echo $this->required_html5(); ?> placeholder="<?php echo esc_attr( $this->placeholder() ); ?>" value="<?php echo esc_attr( $value ) ?>" size="<?php echo esc_attr( $this->size() ) ?>" />
 		<?php
 		$output .= ob_get_clean();
 		$output .= '</p>';

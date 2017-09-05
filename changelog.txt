@@ -3,6 +3,11 @@
 * New: Added support for showing customer-submitted data on the purchase confirmation screen
 * Fix: Custom fields stored in user meta do not pre-populate fields on checkout
 
+= 2.0.13, August 21, 2017 =
+* Fix: Add New CFM form button was showing while editing the Checkout Form in admin.
+* Fix: reCAPTCHA not always showing for users.
+* Fix: Required fields were missing the HTML5 'required' attribute.
+* Fix: Auto-generated meta keys could contain non-valid characters when based off the provided label.
 
 = 2.0.12, March 10, 2017 =
 * Fix: Repeatable field doesn't display info on payment history.

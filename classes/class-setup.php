@@ -107,24 +107,30 @@ class CFM_Setup {
 			return;
 		}
 		if ( edd_is_checkout() || $override ) {
+
 			wp_enqueue_script( 'jquery' );
 			wp_enqueue_script( 'underscore' );
+
 			// CFM outputs minified scripts by default on the frontend. To load full versions, hook into this and return empty string.
 			$minify = ( defined( 'WP_DEBUG' ) && WP_DEBUG ) || ( defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ) ? '' : '.min';
 			$minify = apply_filters( 'cfm_output_minified_versions', $minify );
+
 			wp_enqueue_script( 'cfm-polyfiller', cfm_plugin_url . 'assets/js/polyfiller.js', array( 'jquery' ) );
-			wp_enqueue_script( 'cfm_form', cfm_plugin_url . 'assets/js/frontend-form' . $minify . '.js', array(
-					'jquery'
-				), cfm_plugin_version );
+			wp_enqueue_script( 'cfm_form', cfm_plugin_url . 'assets/js/frontend-form' . $minify . '.js', array( 'jquery' ), cfm_plugin_version );
+
+			$public_key  = edd_get_option( 'cfm-recaptcha-public-key', '' );
+			$private_key = edd_get_option( 'cfm-recaptcha-private-key', '' );
 
 			$options = array(
-				'ajaxurl' => admin_url( 'admin-ajax.php' ),
-				'error_message' => __( 'Please fix the errors to proceed', 'edd_cfm' ),
-				'nonce' => wp_create_nonce( 'cfm_nonce' ),
-				'file_title' =>  __( 'Choose a file', 'edd_cfm' ),
-				'file_button' =>  __( 'Insert file URL', 'edd_cfm' ),
+				'ajaxurl'             => admin_url( 'admin-ajax.php' ),
+				'error_message'       => __( 'Please fix the errors to proceed', 'edd_cfm' ),
+				'nonce'               => wp_create_nonce( 'cfm_nonce' ),
+				'file_title'          => __( 'Choose a file', 'edd_cfm' ),
+				'file_button'         => __( 'Insert file URL', 'edd_cfm' ),
 				'too_many_files_pt_1' => __( 'You may not add more than ', 'edd_cfm' ),
 				'too_many_files_pt_2' => __( ' files!', 'edd_cfm' ),
+				'recaptcha'           => ! empty( $public_key ) && ! empty( $private_key ),
+				'sitekey'             => $public_key,
 			);
 
 			$options = apply_filters( 'cfm_forms_options_frontend', $options );
@@ -133,6 +139,12 @@ class CFM_Setup {
 			wp_enqueue_script( 'comment-reply' );
 			wp_enqueue_script( 'jquery-ui-autocomplete' );
 			wp_enqueue_script( 'suggest' );
+
+			if( ! empty( $public_key ) && ! empty( $private_key ) ) {
+
+				wp_enqueue_script( 'recaptcha', 'https://www.google.com/recaptcha/api.js' );
+
+			}
 		}
 	}
 

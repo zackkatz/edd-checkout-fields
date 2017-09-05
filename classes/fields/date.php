@@ -26,18 +26,18 @@ class CFM_Date_Field extends CFM_Field {
 
 	/** @var array Characteristics are things that can change from field to field of the same field type. Like the placeholder between two email fields. Stored in db. */
 	public $characteristics = array(
-		'name'        => '',
-		'template'    => 'date',
-		'required'    => false,
-		'label'       => '',
-		'time'        => 'no',
-		'view'		  => 'day',
-		'size'		  => '1',
-		'min'         => '',
-		'max'         => '',
-		'css'         => '',
-		'format'    => 'mm/dd/yy',
-		'meta_type'   => 'payment', // 'payment' or 'user' here if is_meta()
+		'name'            => '',
+		'template'        => 'date',
+		'required'        => false,
+		'label'           => '',
+		'time'            => 'no',
+		'view'            => 'day',
+		'size'            => '1',
+		'min'             => '',
+		'max'             => '',
+		'css'             => '',
+		'format'          => 'mm/dd/yy',
+		'meta_type'       => 'payment', // 'payment' or 'user' here if is_meta()
 		'public'          => "public", // denotes whether a field shows in the admin only
 		'show_in_exports' => "export", // denotes whether a field is in the CSV exports
 	);
@@ -46,7 +46,7 @@ class CFM_Date_Field extends CFM_Field {
 	public function set_title() {
 		$title = _x( 'Date', 'CFM Field title translation', 'edd_cfm' );
 		$title = apply_filters( 'cfm_' . $this->name() . '_field_title', $title );
-		$this->supports['title'] = $title;		
+		$this->supports['title'] = $title;
 	}
 
 	/** Returns the Date to render a field in admin */
@@ -120,7 +120,7 @@ class CFM_Date_Field extends CFM_Field {
 		$output    .= $this->label( $profile );
 		ob_start(); ?>
 		<?php if ( $this->characteristics['time'] == 'yes' ) { ?>
-			<input name="<?php echo esc_attr( $this->name() ); ?>"  id="<?php echo esc_attr( $this->name() ); ?>" type="datetime-local" class="datepicker show-yearbtns show-uparrow text edd-input <?php echo $this->required_class(); ?>" data-datetime-local-stepfactor="1" data-datetime-local-open-on-focus="true" data-datetime-start-view="<?php echo $view; ?>" <?php $this->required_html5(); ?> data-required="<?php echo $required; ?>" data-datetime-size="<?php echo $size; ?>" data-type="text" value="<?php echo esc_attr( $datetime ); ?>"  />
+			<input name="<?php echo esc_attr( $this->name() ); ?>"  id="<?php echo esc_attr( $this->name() ); ?>" type="datetime-local" class="datepicker show-yearbtns show-uparrow text edd-input <?php echo $this->required_class(); ?>" data-datetime-local-stepfactor="1" data-datetime-local-open-on-focus="true" data-datetime-start-view="<?php echo $view; ?>" <?php echo $this->required_html5(); ?> data-required="<?php echo $required; ?>" data-datetime-size="<?php echo $size; ?>" data-type="text" value="<?php echo esc_attr( $datetime ); ?>"  />
 		<?php } else { ?>
 			<input name="<?php echo esc_attr( $this->name() ); ?>"  id="<?php echo esc_attr( $this->name() ); ?>" type="date" class="datepicker show-yearbtns show-uparrow text edd-input <?php echo $this->required_class(); ?>" data-date-start-view="<?php echo $view; ?>" data-date-size="<?php echo $size; ?>" data-type="text" data-type="text" value="<?php echo esc_attr( $date ) ?>" <?php $this->required_html5(); ?> data-required="<?php echo $required; ?>" data-date-open-on-focus="true" />
 		<?php }

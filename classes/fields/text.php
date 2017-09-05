@@ -20,22 +20,22 @@ class CFM_Text_Field extends CFM_Field {
 			'can_change_meta_key'         => true,
 			'can_add_to_formbuilder'      => true,
 		),
-		'template'   => 'text',
-		'title'       => 'Text',
+		'template' => 'text',
+		'title'    => 'Text',
 	);
 
 	/** @var array Characteristics are things that can change from field to field of the same field type. Like the placeholder between two text fields. Stored in db. */
 	public $characteristics = array(
-		'name'        => '',
-		'template'   => 'text',
-		'required'    => false,
-		'label'       => '',
-		'css'         => '',
-		'default'     => '',
-		'size'        => '',
-		'help'        => '',
-		'placeholder' => '',
-		'meta_type'   => 'payment', // 'payment' or 'user' here if is_meta()
+		'name'            => '',
+		'template'        => 'text',
+		'required'        => false,
+		'label'           => '',
+		'css'             => '',
+		'default'         => '',
+		'size'            => '',
+		'help'            => '',
+		'placeholder'     => '',
+		'meta_type'       => 'payment', // 'payment' or 'user' here if is_meta()
 		'public'          => "public", // denotes whether a field shows in the admin only
 		'show_in_exports' => "export", // denotes whether a field is in the CSV exports
 	);
@@ -43,7 +43,7 @@ class CFM_Text_Field extends CFM_Field {
 	public function set_title() {
 		$title = _x( 'Text', 'CFM Field title translation', 'edd_cfm' );
 		$title = apply_filters( 'cfm_' . $this->name() . '_field_title', $title );
-		$this->supports['title'] = $title;		
+		$this->supports['title'] = $title;
 	}
 
 	/** Returns the HTML to render a field in admin */
@@ -51,11 +51,11 @@ class CFM_Text_Field extends CFM_Field {
 		if ( $user_id === -2 ) {
 			$user_id = get_current_user_id();
 		}
-		
-		$value     = $this->get_field_value_admin( $this->payment_id, $this->user_id );
-		$output        = '';
-		$output     .= sprintf( '<p class="cfm-el %1s %2s %3s">', esc_attr( $this->template() ), esc_attr( $this->name() ), esc_attr( $this->css() ) );
-		$output    .= $this->label( false );
+
+		$value   = $this->get_field_value_admin( $this->payment_id, $this->user_id );
+		$output  = '';
+		$output .= sprintf( '<p class="cfm-el %1s %2s %3s">', esc_attr( $this->template() ), esc_attr( $this->name() ), esc_attr( $this->css() ) );
+		$output .= $this->label( false );
 		ob_start(); ?>
 		<input name="<?php echo esc_attr( $this->name() ); ?>" id="<?php echo esc_attr( $this->name() ); ?>" class="text edd-input" type="text" data-required="false" data-type="text" placeholder="<?php echo esc_attr( $this->placeholder() ); ?>" value="<?php echo esc_attr( $value ) ?>" size="<?php echo esc_attr( $this->size() ) ?>" />
 		<?php
@@ -72,11 +72,11 @@ class CFM_Text_Field extends CFM_Field {
 
 		$value     = $this->get_field_value_frontend( $this->payment_id, $this->user_id );
 		$required  = $this->required();
-		$output        = '';
-		$output     .= sprintf( '<p class="cfm-el %1s %2s %3s">', esc_attr( $this->template() ), esc_attr( $this->name() ), esc_attr( $this->css() ) );
-		$output    .= $this->label( ! (bool) $profile );
+		$output    = '';
+		$output   .= sprintf( '<p class="cfm-el %1s %2s %3s">', esc_attr( $this->template() ), esc_attr( $this->name() ), esc_attr( $this->css() ) );
+		$output   .= $this->label( ! (bool) $profile );
 		ob_start(); ?>
-		<input name="<?php echo esc_attr( $this->name() ); ?>" id="<?php echo esc_attr( $this->name() ); ?>" class="text edd-input <?php echo $this->required_class(); ?>" type="text" data-required="<?php echo $required; ?>" data-type="text"<?php $this->required_html5(); ?> placeholder="<?php echo esc_attr( $this->placeholder() ); ?>" value="<?php echo esc_attr( $value ) ?>" size="<?php echo esc_attr( $this->size() ) ?>" />
+		<input name="<?php echo esc_attr( $this->name() ); ?>" id="<?php echo esc_attr( $this->name() ); ?>" class="text edd-input <?php echo $this->required_class(); ?>" type="text" data-required="<?php echo $required; ?>" data-type="text"<?php echo $this->required_html5(); ?> placeholder="<?php echo esc_attr( $this->placeholder() ); ?>" value="<?php echo esc_attr( $value ) ?>" size="<?php echo esc_attr( $this->size() ) ?>" />
 		<?php
 		$output .= ob_get_clean();
 		$output .= '</p>';
