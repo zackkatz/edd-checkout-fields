@@ -6,11 +6,7 @@
  * Author:              Easy Digital Downloads
  * Author URI:          https://easydigitaldownloads.com
  *
-<<<<<<< HEAD
  * Version:             2.1
-=======
- * Version:             2.0.13
->>>>>>> master
  * Requires at least:   4.3
  * Tested up to:        4.9
  *
