@@ -1,3 +1,9 @@
+= 2.1, September 5, 2017 =
+
+* New: Added support for showing customer-submitted data on the purchase confirmation screen
+* Fix: Custom fields stored in user meta do not pre-populate fields on checkout
+
+
 = 2.0.12, March 10, 2017 =
 * Fix: Repeatable field doesn't display info on payment history.
 * Fix: Repeat fields can throw PHP errors upon checkout submission.
