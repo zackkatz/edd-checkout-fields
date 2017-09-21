@@ -129,7 +129,7 @@ class CFM_Setup {
 				'file_button'         => __( 'Insert file URL', 'edd_cfm' ),
 				'too_many_files_pt_1' => __( 'You may not add more than ', 'edd_cfm' ),
 				'too_many_files_pt_2' => __( ' files!', 'edd_cfm' ),
-				'recaptcha'           => ! empty( $public_key ) && ! empty( $private_key ),
+				'recaptcha'           => ! empty( $public_key ) && ! empty( $private_key ) && $this->checkout_has_captcha(),
 				'sitekey'             => $public_key,
 			);
 
@@ -526,6 +526,21 @@ class CFM_Setup {
 		if ( $wp_query->get( 'post_type' ) == 'attachment' ) {
 			exit;
 		}
+	}
+
+	/**
+	 * Determines if a reCaptcha field has been added to checkout.
+	 *
+	 * @since 2.1.1
+	 * @access public
+	 *
+	 * @return bool
+	 */
+	public function checkout_has_captcha() {
+		$form   = new CFM_Checkout_Form( get_option( 'cfm-checkout-form', -2 ), 'id', -2 );
+		$fields = $form->get_fields();
+		$ret    = array_key_exists( 'recaptcha', $fields );
+		return apply_filters( 'edd_cfm_checkout_has_captcha', $ret );
 	}
 
 }
