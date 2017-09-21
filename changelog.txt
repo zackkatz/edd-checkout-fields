@@ -1,3 +1,7 @@
+= 2.1.1, September 21, 2017 =
+
+* Fix: Only run reCAPTCHA JS if the checkout has a reCAPTCHA field
+
 = 2.1, September 5, 2017 =
 
 * New: Added support for showing customer-submitted data on the purchase confirmation screen
