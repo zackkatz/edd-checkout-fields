@@ -45,15 +45,13 @@
 #cfm-metabox-fields .cfm-loading.hide {
 	display: none;
 }
-.cfm-formbuilder-fields {
-	font-size: 12px;
-	margin: 0;
-}
 .cfm-formbuilder-fields li {
-	background: #f9f9f9;
-	border: 1px solid #dfdfdf;
-	border-radius: 3px;
-	margin-bottom: 10px;
+	position: relative;
+	border: 1px solid #e5e5e5;
+	box-shadow: 0 1px 1px rgba(0,0,0,0.04);
+	background: #fff;
+	margin-bottom: 20px;
+	line-height: 1;
 }
 .cfm-formbuilder-fields li.ui-state-highlight {
 	background: #eee;
@@ -61,16 +59,9 @@
 	min-height: 50px;
 }
 .cfm-formbuilder-fields li .cfm-legend {
-	background: #f1f1f1;
-	background-image: -webkit-gradient(linear, left bottom, left top, from(#ececec), to(#f9f9f9));
-	background-image: -webkit-linear-gradient(bottom, #ececec, #f9f9f9);
-	background-image: -moz-linear-gradient(bottom, #ececec, #f9f9f9);
-	background-image: -o-linear-gradient(bottom, #ececec, #f9f9f9);
-	background-image: linear-gradient(to top, #ececec, #f9f9f9);
-	border-bottom: 1px solid #ccc;
-	color: #464646;
-	padding: 7px 10px;
-	padding-bottom: 5px;
+	clear: both;
+	background-color: #f1f1f1;
+	border: 1px solid #e5e5e5;
 }
 .cfm-formbuilder-fields li .cfm-legend:after {
 	clear: both;
@@ -83,6 +74,8 @@
 .cfm-formbuilder-fields li .cfm-legend .cfm-label {
 	float: left;
 	width: 70%;
+	padding: 8px;
+	box-sizing: border-box;
 }
 .cfm-formbuilder-fields li .cfm-legend .cfm-actions {
 	float: right;
@@ -117,7 +110,6 @@
 }
 .cfm-formbuilder-fields li .cfm-form-rows label {
 	float: left;
-	font-size: 12px;
 	width: 30%;
 }
 .cfm-formbuilder-fields li .cfm-form-rows textarea {
