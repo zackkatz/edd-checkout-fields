@@ -137,7 +137,7 @@ function cfm_formbuilder_fields_metabox( $post ) {
 			</div>
 			<?php } ?>
 
-			<ul id="cfm-formbuilder-fields" class="cfm-formbuilder-fields unstyled">
+			<ul id="cfm-formbuilder-fields" class="cfm-formbuilder-fields">
 				<?php
 				if ( $form_inputs ) {
 					$count = 0;
