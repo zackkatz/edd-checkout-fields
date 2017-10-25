@@ -103,6 +103,7 @@
 }
 .cfm-formbuilder-fields li .cfm-form-rows {
 	padding-bottom: 3px;
+	margin: 20px 0;
 }
 .cfm-formbuilder-fields li .cfm-form-rows:after {
 	clear: both;
@@ -111,7 +112,9 @@
 }
 .cfm-formbuilder-fields li .cfm-form-rows label {
 	float: left;
-	width: 30%;
+	width: 200px;
+	vertical-align: top;
+	line-height: 1.3;
 }
 .cfm-formbuilder-fields li .cfm-form-rows textarea {
 	width: 60%;
