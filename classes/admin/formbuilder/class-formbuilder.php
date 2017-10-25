@@ -112,11 +112,6 @@ function cfm_formbuilder_fields_metabox( $post ) {
 	}
 
 	$title = sprintf( __( '%s Form', 'edd_cfm' ), $fname ); ?>
-	<style>
-		.page-title-action {
-			display: none;
-		}
-	</style>
 	<h1><?php echo $title; ?></h1>
 	<div class="tab-content">
 		<div id="cfm-metabox" class="group">
