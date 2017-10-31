@@ -12,7 +12,7 @@ class CFM_User_Email_Field extends CFM_Field {
 		'multiple'    => false,
 		'is_meta'     => false,  // in object as public (bool) $meta;
 		'forms'       => array(
-			'checkout'     => true,
+			'checkout' => true,
 		),
 		'position'    => 'custom',
 		'permissions' => array(
@@ -21,8 +21,8 @@ class CFM_User_Email_Field extends CFM_Field {
 			'can_add_to_formbuilder'      => true,
 			'field_always_required'       => true,
 		),
-		'template'   => 'user_email',
-		'title'       => 'User Email'
+		'template'    => 'user_email',
+		'title'       => 'User Email',
 	);
 
 	/** @var array Characteristics are things that can change from field to field of the same field type. Like the placeholder between two email fields. Stored in db. */

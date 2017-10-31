@@ -9,33 +9,33 @@ class CFM_Honeypot_Field extends CFM_Field {
 
 	/** @var array Supports are things that are the same for all fields of a field type. Like whether or not a field type supports jQuery Phoenix. Stored in obj, not db. */
 	public $supports = array(
-		'multiple'    => false,
-		'is_meta'     => true,  // in object as public (bool) $meta;
-		'forms'       => array(
-			'checkout'     => true,
+		'multiple'        => false,
+		'is_meta'         => true,  // in object as public (bool) $meta;
+		'forms'           => array(
+			'checkout' => true,
 		),
-		'position'    => 'custom',
-		'permissions' => array(
+		'position'        => 'custom',
+		'permissions'     => array(
 			'can_remove_from_formbuilder' => true,
 			'can_change_meta_key'         => false,
 			'can_add_to_formbuilder'      => true,
 		),
-		'template'   => 'honeypot',
-		'title'       => 'Honeypot',
+		'template'        => 'honeypot',
+		'title'           => 'Honeypot',
 		'show_on_receipt' => false,
 	);
 
 	/** @var array Characteristics are things that can change from field to field of the same field type. Like the placeholder between two email fields. Stored in db. */
 	public $characteristics = array(
-		'name'        => 'honeypot',
-		'template'   => 'honeypot',
-		'public'      => false,
-		'required'    => false,
-		'label'       => '',
-		'description' => '',
-		'meta_type'   => 'payment', // 'payment' or 'user' here if is_meta()
-		'public'          => "public", // denotes whether a field shows in the admin only
-		'show_in_exports' => "noexport", // denotes whether a field is in the CSV exports
+		'name'              => 'honeypot',
+		'template'          => 'honeypot',
+		'public'            => false,
+		'required'          => false,
+		'label'             => '',
+		'description'       => '',
+		'meta_type'         => 'payment', // 'payment' or 'user' here if is_meta()
+		'public'            => "public", // denotes whether a field shows in the admin only
+		'show_in_exports'   => "noexport", // denotes whether a field is in the CSV exports
 	);
 
 

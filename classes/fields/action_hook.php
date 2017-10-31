@@ -105,6 +105,7 @@ function my_function_name( $form, $payment_id, $user_id, $field ) {
 						</div>
 					</div>
 				</div>
+				<?php echo $this->display_conditional_logic_fields( $index ); ?>
 			</div>
 		</li>
 		<?php

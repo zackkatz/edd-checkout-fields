@@ -26,20 +26,21 @@ class CFM_Date_Field extends CFM_Field {
 
 	/** @var array Characteristics are things that can change from field to field of the same field type. Like the placeholder between two email fields. Stored in db. */
 	public $characteristics = array(
-		'name'            => '',
-		'template'        => 'date',
-		'required'        => false,
-		'label'           => '',
-		'time'            => 'no',
-		'view'            => 'day',
-		'size'            => '1',
-		'min'             => '',
-		'max'             => '',
-		'css'             => '',
-		'format'          => 'mm/dd/yy',
-		'meta_type'       => 'payment', // 'payment' or 'user' here if is_meta()
-		'public'          => "public", // denotes whether a field shows in the admin only
-		'show_in_exports' => "export", // denotes whether a field is in the CSV exports
+		'name'              => '',
+		'template'          => 'date',
+		'required'          => false,
+		'label'             => '',
+		'time'              => 'no',
+		'view'              => 'day',
+		'size'              => '1',
+		'min'               => '',
+		'max'               => '',
+		'css'               => '',
+		'format'            => 'mm/dd/yy',
+		'meta_type'         => 'payment', // 'payment' or 'user' here if is_meta()
+		'public'            => "public", // denotes whether a field shows in the admin only
+		'show_in_exports'   => "export", // denotes whether a field is in the CSV exports
+		'conditional_logic' => array(),
 	);
 
 
@@ -168,6 +169,8 @@ class CFM_Date_Field extends CFM_Field {
 						</label>
 					</div>
 				</div>
+
+				<?php echo $this->display_conditional_logic_fields( $index ); ?>
 			</div>
 		</li>
 		<?php

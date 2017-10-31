@@ -26,21 +26,22 @@ class CFM_Select_Field extends CFM_Field {
 
 	/** @var array Characteristics are things that can change from field to field of the same field type. Like the placeholder between two text fields. Stored in db. */
 	public $characteristics = array(
-		'name'            => '',
-		'template'        => 'select',
-		'required'        => false,
-		'label'           => '',
-		'css'             => '',
-		'default'         => '',
-		'size'            => '',
-		'help'            => '',
-		'placeholder'     => '',
-		'first'           => '- select -',
-		'selected'        => '',
-		'options'         => '',
-		'meta_type'       => 'payment', // 'payment' or 'user' here if is_meta()
-		'public'          => "public", // denotes whether a field shows in the admin only
-		'show_in_exports' => "export", // denotes whether a field is in the CSV exports
+		'name'              => '',
+		'template'          => 'select',
+		'required'          => false,
+		'label'             => '',
+		'css'               => '',
+		'default'           => '',
+		'size'              => '',
+		'help'              => '',
+		'placeholder'       => '',
+		'first'             => '- select -',
+		'selected'          => '',
+		'options'           => '',
+		'meta_type'         => 'payment', // 'payment' or 'user' here if is_meta()
+		'public'            => "public", // denotes whether a field shows in the admin only
+		'show_in_exports'   => "export", // denotes whether a field is in the CSV exports
+		'conditional_logic' => array(),
 	);
 
 	public function set_title() {
@@ -141,6 +142,8 @@ class CFM_Select_Field extends CFM_Field {
 						<?php CFM_Formbuilder_Templates::radio_fields( $index, 'options', $this->characteristics ); ?>
 					</div>
 				</div>
+
+				<?php echo $this->display_conditional_logic_fields( $index ); ?>
 			</div>
 		</li>
 		<?php

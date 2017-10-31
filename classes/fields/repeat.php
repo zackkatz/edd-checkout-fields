@@ -12,7 +12,7 @@ class CFM_Repeat_Field extends CFM_Field {
 		'multiple'    => false,
 		'is_meta'     => true,  // in object as public (bool) $meta;
 		'forms'       => array(
-			'checkout'     => true,
+			'checkout' => true,
 		),
 		'position'    => 'custom',
 		'permissions' => array(
@@ -26,28 +26,29 @@ class CFM_Repeat_Field extends CFM_Field {
 
 	/** @var array Characteristics are things that can change from field to field of the same field type. Like the placeholder between two email fields. Stored in db. */
 	public $characteristics = array(
-		'name'        => '',
-		'template'    => 'repeat',
-		'public'      => false,
-		'required'    => false,
-		'label'       => '',
-		'css'         => '',
-		'default'     => '',
-		'size'        => '',
-		'help'        => '',
-		'placeholder' => '',
-		'multiple'    => array(),
-		'columns'     => false,
-		'size'     => '40',
-		'meta_type'   => 'payment', // 'payment' or 'user' here if is_meta()
-		'public'          => "public", // denotes whether a field shows in the admin only
-		'show_in_exports' => "export", // denotes whether a field is in the CSV exports
+		'name'              => '',
+		'template'          => 'repeat',
+		'public'            => false,
+		'required'          => false,
+		'label'             => '',
+		'css'               => '',
+		'default'           => '',
+		'size'              => '',
+		'help'              => '',
+		'placeholder'       => '',
+		'multiple'          => array(),
+		'columns'           => false,
+		'size'              => '40',
+		'meta_type'         => 'payment', // 'payment' or 'user' here if is_meta()
+		'public'            => "public", // denotes whether a field shows in the admin only
+		'show_in_exports'   => "export", // denotes whether a field is in the CSV exports
+		'conditional_logic' => array(),
 	);
 
 	public function set_title() {
 		$title = _x( 'Repeat', 'CFM Field title translation', 'edd_cfm' );
 		$title = apply_filters( 'cfm_' . $this->name() . '_field_title', $title );
-		$this->supports['title'] = $title;		
+		$this->supports['title'] = $title;
 	}
 
 	/** Returns the HTML to render a field in admin */
@@ -321,6 +322,8 @@ class CFM_Repeat_Field extends CFM_Field {
 					} ?>
 					</div>
 				</div>
+
+				<?php echo $this->display_conditional_logic_fields( $index ); ?>
 			</div>
 		</li>
 
@@ -332,7 +335,7 @@ class CFM_Repeat_Field extends CFM_Field {
 		if ( $payment_id === -2 ){
 			$payment_id = $this->payment_id;
 		}
-		
+
 		if ( $user_id === -2 ){
 			if ( $payment_id !== -2 ){
 				$payment = new EDD_Payment( $payment_id );
@@ -341,7 +344,7 @@ class CFM_Repeat_Field extends CFM_Field {
 				$user_id = $this->user_id;
 			}
 		}
-		
+
 		$value = $this->get_field_value_frontend( $payment_id, $user_id );
 		if ( ! empty( $value ) && is_array( $value ) ){
 			if ( ! is_array( $value[0] ) ) {

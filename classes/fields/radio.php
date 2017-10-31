@@ -12,7 +12,7 @@ class CFM_Radio_Field extends CFM_Field {
 		'multiple'    => true,
 		'is_meta'     => true,  // in object as public (bool) $meta;
 		'forms'       => array(
-			'checkout'     => true,
+			'checkout' => true,
 		),
 		'position'    => 'custom',
 		'permissions' => array(
@@ -20,26 +20,27 @@ class CFM_Radio_Field extends CFM_Field {
 			'can_change_meta_key'         => true,
 			'can_add_to_formbuilder'      => true,
 		),
-		'template'   => 'radio',
+		'template'    => 'radio',
 		'title'       => 'Radio',
 	);
 
 	/** @var array Characteristics are things that can change from field to field of the same field type. Like the placeholder between two radio fields. Stored in db. */
 	public $characteristics = array(
-		'name'        => '',
-		'template'   => 'radio',
-		'required'    => false,
-		'label'       => '',
-		'css'         => '',
-		'default'     => '',
-		'size'        => '',
-		'help'        => '',
-		'placeholder' => '',
-		'options'     => '',
-		'selected'    => '',
-		'meta_type'   => 'payment', // 'payment' or 'user' here if is_meta()
-		'public'          => "public", // denotes whether a field shows in the admin only
-		'show_in_exports' => "export", // denotes whether a field is in the CSV exports
+		'name'              => '',
+		'template'          => 'radio',
+		'required'          => false,
+		'label'             => '',
+		'css'               => '',
+		'default'           => '',
+		'size'              => '',
+		'help'              => '',
+		'placeholder'       => '',
+		'options'           => '',
+		'selected'          => '',
+		'meta_type'         => 'payment', // 'payment' or 'user' here if is_meta()
+		'public'            => "public", // denotes whether a field shows in the admin only
+		'show_in_exports'   => "export", // denotes whether a field is in the CSV exports
+		'conditional_logic' => array(),
 	);
 
 	public function set_title() {
@@ -144,6 +145,8 @@ class CFM_Radio_Field extends CFM_Field {
 						<?php CFM_Formbuilder_Templates::radio_fields( $index, 'options', $this->characteristics ); ?>
 					</div>
 				</div>
+
+				<?php echo $this->display_conditional_logic_fields( $index ); ?>
 			</div>
 		</li>
 		<?php

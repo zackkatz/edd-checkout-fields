@@ -9,34 +9,35 @@ class CFM_Section_Break_Field extends CFM_Field {
 
 	/** @var array Supports are things that are the same for all fields of a field type. Like whether or not a field type supports jQuery Phoenix. Stored in obj, not db. */
 	public $supports = array(
-		'multiple'    => true,
-		'is_meta'     => true,  // in object as public (bool) $meta;
-		'forms'       => array(
-			'checkout'     => true,
+		'multiple'        => true,
+		'is_meta'         => true,  // in object as public (bool) $meta;
+		'forms'           => array(
+			'checkout' => true,
 		),
-		'position'    => 'custom',
-		'permissions' => array(
+		'position'        => 'custom',
+		'permissions'     => array(
 			'can_remove_from_formbuilder' => true,
 			'can_change_meta_key'         => true,
 			'can_add_to_formbuilder'      => true,
 		),
-		'template'   => 'section_break',
-		'title'       => 'Section Break',
+		'template'        => 'section_break',
+		'title'           => 'Section Break',
 		'show_on_receipt' => false,
 	);
 
 	/** @var array Characteristics are things that can change from field to field of the same field type. Like the placeholder between two email fields. Stored in db. */
 	public $characteristics = array(
-		'name'        => '',
-		'template'   => 'section_break',
-		'public'      => false,
-		'required'    => false,
-		'label'       => '',
-		'description' => '',
-		'css'   	  => '',
-		'meta_type'   => 'payment', // 'payment' or 'user' here if is_meta()
-		'public'          => "public", // denotes whether a field shows in the admin only
-		'show_in_exports' => "noexport", // denotes whether a field is in the CSV exports
+		'name'              => '',
+		'template'          => 'section_break',
+		'public'            => false,
+		'required'          => false,
+		'label'             => '',
+		'description'       => '',
+		'css'               => '',
+		'meta_type'         => 'payment', // 'payment' or 'user' here if is_meta()
+		'public'            => "public", // denotes whether a field shows in the admin only
+		'show_in_exports'   => "noexport", // denotes whether a field is in the CSV exports
+		'conditional_logic' => array(),
 	);
 
 	public function set_title() {
@@ -112,11 +113,11 @@ class CFM_Section_Break_Field extends CFM_Field {
 		<li class="section_break">
 			<?php $this->legend( $this->title(), $this->get_label(), $removable ); ?>
 			<?php CFM_Formbuilder_Templates::field_div( $index, $this->name(), $this->characteristics, $insert ); ?>
-			<?php CFM_Formbuilder_Templates::public_radio( $index, $this->characteristics ); ?>
-			<?php CFM_Formbuilder_Templates::export_radio( $index, $this->characteristics, "noexport" ); ?>
-			<?php CFM_Formbuilder_Templates::meta_type_radio( $index, $this->characteristics, "payment" ); ?>
-			<?php CFM_Formbuilder_Templates::hidden_field( "[$index][template]", $this->template() ); ?>
-			<?php CFM_Formbuilder_Templates::hidden_field( "[$index][name]", $name ); ?>
+				<?php CFM_Formbuilder_Templates::public_radio( $index, $this->characteristics ); ?>
+				<?php CFM_Formbuilder_Templates::export_radio( $index, $this->characteristics, "noexport" ); ?>
+				<?php CFM_Formbuilder_Templates::meta_type_radio( $index, $this->characteristics, "payment" ); ?>
+				<?php CFM_Formbuilder_Templates::hidden_field( "[$index][template]", $this->template() ); ?>
+				<?php CFM_Formbuilder_Templates::hidden_field( "[$index][name]", $name ); ?>
 				<div class="cfm-form-rows">
 					<label><?php _e( 'Title', 'edd_cfm' ); ?></label>
 					<input type="text" class="smallipopInput" title="Title of the section" name="<?php echo $title_name; ?>" value="<?php echo esc_attr( $title_value ); ?>" />
@@ -127,7 +128,8 @@ class CFM_Section_Break_Field extends CFM_Field {
 					<textarea class="smallipopInput" title="Some details text about the section" name="<?php echo $description_name; ?>" rows="3"><?php echo esc_html( $description_value ); ?></textarea>
 				</div>
 
-			<?php CFM_Formbuilder_Templates::css( $index, $this->characteristics ); ?>
+				<?php CFM_Formbuilder_Templates::css( $index, $this->characteristics ); ?>
+				<?php echo $this->display_conditional_logic_fields( $index ); ?>
 			</div>
 		</li>
 		<?php

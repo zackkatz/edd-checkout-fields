@@ -9,13 +9,13 @@ class CFM_Recaptcha_Field extends CFM_Field {
 
 	/** @var array Supports are things that are the same for all fields of a field type. Like whether or not a field type supports jQuery Phoenix. Stored in obj, not db. */
 	public $supports = array(
-		'multiple'    => false,
-		'is_meta'     => true,  // in object as public (bool) $meta;
-		'forms'       => array(
-			'checkout'     => true,
+		'multiple'        => false,
+		'is_meta'         => true,  // in object as public (bool) $meta;
+		'forms'           => array(
+			'checkout' => true,
 		),
-		'position'    => 'custom',
-		'permissions' => array(
+		'position'        => 'custom',
+		'permissions'     => array(
 			'can_remove_from_formbuilder' => true,
 			'can_change_meta_key'         => false,
 			'can_add_to_formbuilder'      => true,
@@ -30,13 +30,14 @@ class CFM_Recaptcha_Field extends CFM_Field {
 
 	/** @var array Characteristics are things that can change from field to field of the same field type. Like the placeholder between two email fields. Stored in db. */
 	public $characteristics = array(
-		'name'        => 'recaptcha',
-		'template'    => 'recaptcha',
-		'public'      => false,
-		'required'    => true,
-		'label'       => '',
-		'html'        => '',
-		'show_in_exports' => "noexport", // denotes whether a field is in the CSV exports
+		'name'              => 'recaptcha',
+		'template'          => 'recaptcha',
+		'public'            => false,
+		'required'          => true,
+		'label'             => '',
+		'html'              => '',
+		'show_in_exports'   => "noexport", // denotes whether a field is in the CSV exports
+		'conditional_logic' => array(),
 	);
 
 	public function set_title() {
@@ -117,6 +118,7 @@ class CFM_Recaptcha_Field extends CFM_Field {
 				<?php CFM_Formbuilder_Templates::meta_type_radio( $index, $this->characteristics, "payment" ); ?>
 				<?php CFM_Formbuilder_Templates::standard( $index, $this ); ?>
 				<?php CFM_Formbuilder_Templates::css( $index, $this->characteristics ); ?>
+				<?php echo $this->display_conditional_logic_fields( $index ); ?>
 			</div>
 		</li>
 		<?php

@@ -176,3 +176,35 @@
 input#publish {
 	width: 100%;
 }
+
+.cfm-conditional-logic {
+	margin-top: 10px;
+}
+
+.cfm-conditional-logic select {
+	margin-top: 0;
+}
+
+.cfm-conditional-logic input[type=text] {
+	height: 28px;
+	line-height: 28px;
+}
+
+.cfm-conditional-logic-repeatable-row {
+	margin: 1em 0;
+}
+
+.cfm-conditional-logic-repeatable-row .edd-select-chosen {
+	width: 100%;
+	max-width: 300px;
+}
+
+.cfm-conditional-logic-repeatable-row-actions {
+	display: inline-block;
+	float: right;
+	line-height: 28px;
+}
+
+.cfm-conditional-logic-repeatable-row .edd-select-chosen.chosen-container.hidden {
+	display: none;
+}

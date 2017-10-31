@@ -239,7 +239,9 @@ class CFM_Form {
 				$output .= apply_filters( 'cfm_render_' . $this->name() . '_form_frontend_fields_before_field', '', $field, $this, $current_user_id, $profile );
 
 				if ( is_object( $field ) && method_exists( $field, 'render_field_frontend' ) ) {
-					$output .= $field->render_field_frontend( $current_user_id, $profile );
+					if ( $field->evaluate_conditional_logic() && 'show' == $field->get_conditional_logic_action() ) {
+						$output .= $field->render_field_frontend( $current_user_id, $profile );
+					}
 				} else if ( isset( $field['template'] ) ) {
 					_cfm_deprecated( 'Outputting using a non CFM Field is deprecated. Support will be removed in 2.1.' );
 					ob_start();

@@ -9,33 +9,34 @@ class CFM_Hidden_Field extends CFM_Field {
 
 	/** @var array Supports are things that are the same for all fields of a field type. Like whether or not a field type supports jQuery Phoenix. Stored in obj, not db. */
 	public $supports = array(
-		'multiple'    => true,
-		'is_meta'     => true,  // in object as public (bool) $meta;
-		'forms'       => array(
-			'checkout'     => true,
+		'multiple'        => true,
+		'is_meta'         => true,  // in object as public (bool) $meta;
+		'forms'           => array(
+			'checkout' => true,
 		),
-		'position'    => 'custom',
-		'permissions' => array(
+		'position'        => 'custom',
+		'permissions'     => array(
 			'can_remove_from_formbuilder' => true,
 			'can_change_meta_key'         => true,
 			'can_add_to_formbuilder'      => true,
 		),
-		'template'   => 'hidden',
-		'title'       => 'Hidden',
+		'template'        => 'hidden',
+		'title'           => 'Hidden',
 		'show_on_receipt' => false,
 	);
 
 	/** @var array Characteristics are things that can change from field to field of the same field type. Like the placeholder between two email fields. Stored in db. */
 	public $characteristics = array(
-		'name'        => '',
-		'template'   => 'hidden',
-		'public'      => false,
-		'required'    => false,
-		'label'       => '',
-		'meta_value'  => '',
-		'meta_type'   => 'payment', // 'payment' or 'user' here if is_meta()
-		'public'          => "public", // denotes whether a field shows in the admin only
-		'show_in_exports' => "noexport", // denotes whether a field is in the CSV exports
+		'name'              => '',
+		'template'          => 'hidden',
+		'public'            => false,
+		'required'          => false,
+		'label'             => '',
+		'meta_value'        => '',
+		'meta_type'         => 'payment', // 'payment' or 'user' here if is_meta()
+		'public'            => "public", // denotes whether a field shows in the admin only
+		'show_in_exports'   => "noexport", // denotes whether a field is in the CSV exports
+		'conditional_logic' => array(),
 	);
 
 
@@ -112,6 +113,8 @@ class CFM_Hidden_Field extends CFM_Field {
 					<label><?php _e( 'Meta Value', 'edd_cfm' ); ?></label>
 					<input type="text" class="smallipopInput" title="<?php esc_attr_e( 'Enter the meta value', 'edd_cfm' ); ?>" name="<?php echo $value_name; ?>" value="<?php echo $value_value; ?>">
 				</div>
+
+				<?php echo $this->display_conditional_logic_fields( $index ); ?>
 			</div>
 		</li>
 		<?php

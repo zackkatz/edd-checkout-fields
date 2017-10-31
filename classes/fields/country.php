@@ -26,20 +26,21 @@ class CFM_Country_Field extends CFM_Field {
 
 	/** @var array Characteristics are things that can change from field to field of the same field type. Like the placeholder between two country fields. Stored in db. */
 	public $characteristics = array(
-		'name'        => '',
-		'template'   => 'country',
-		'required'    => false,
-		'label'       => '',
-		'css'         => '',
-		'default'     => '',
-		'size'        => '',
-		'help'        => '',
-		'placeholder' => '',
-		'options'     => array(),
-		'first'       => ' - select -',
-		'meta_type'   => 'payment', // 'payment' or 'user' here if is_meta()
-		'public'          => "public", // denotes whether a field shows in the admin only
-		'show_in_exports' => "export", // denotes whether a field is in the CSV exports
+		'name'              => '',
+		'template'          => 'country',
+		'required'          => false,
+		'label'             => '',
+		'css'               => '',
+		'default'           => '',
+		'size'              => '',
+		'help'              => '',
+		'placeholder'       => '',
+		'options'           => array(),
+		'first'             => ' - select -',
+		'meta_type'         => 'payment', // 'payment' or 'user' here if is_meta()
+		'public'            => "public", // denotes whether a field shows in the admin only
+		'show_in_exports'   => "export", // denotes whether a field is in the CSV exports
+		'conditional_logic' => array(),
 	);
 
 
@@ -149,6 +150,8 @@ class CFM_Country_Field extends CFM_Field {
 						<?php CFM_Formbuilder_Templates::radio_fields( $index, 'options', $values ); ?>
 					</div>
 				</div>
+
+				<?php echo $this->display_conditional_logic_fields( $index ); ?>
 			</div>
 		</li>
 		<?php

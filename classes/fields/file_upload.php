@@ -12,7 +12,7 @@ class CFM_File_Upload_Field extends CFM_Field {
 		'multiple'    => true,
 		'is_meta'     => true,  // in object as public (bool) $meta;
 		'forms'       => array(
-			'checkout'     => true,
+			'checkout' => true,
 		),
 		'position'    => 'custom',
 		'permissions' => array(
@@ -22,24 +22,25 @@ class CFM_File_Upload_Field extends CFM_Field {
 		),
 		'template'    => 'file_upload',
 		'title'       => 'File Upload',
-		'phoenix'    => false,
+		'phoenix'     => false,
 	);
 
 	/** @var array Characteristics are things that can change from field to field of the same field type. Like the placeholder between two file_upload fields. Stored in db. */
 	public $characteristics = array(
-		'name'        => '',
-		'template'    => 'file_upload',
-		'required'    => false,
-		'label'       => '',
-		'default'     => '',
-		'size'        => '',
-		'help'        => '',
-		'placeholder' => '',
-		'count'       => '1',
-		'css'         => '',
-		'meta_type'   => 'payment', // 'payment' or 'user' here if is_meta()
-		'public'          => "public", // denotes whether a field shows in the admin only
-		'show_in_exports' => "export", // denotes whether a field is in the CSV exports
+		'name'              => '',
+		'template'          => 'file_upload',
+		'required'          => false,
+		'label'             => '',
+		'default'           => '',
+		'size'              => '',
+		'help'              => '',
+		'placeholder'       => '',
+		'count'             => '1',
+		'css'               => '',
+		'meta_type'         => 'payment', // 'payment' or 'user' here if is_meta()
+		'public'            => "public", // denotes whether a field shows in the admin only
+		'show_in_exports'   => "export", // denotes whether a field is in the CSV exports
+		'conditional_logic' => array(),
 	);
 
 
@@ -307,6 +308,8 @@ class CFM_File_Upload_Field extends CFM_Field {
                         <?php } ?>
                     </div>
                 </div> <!-- .edd-checkout-fields-rows -->
+
+	            <?php echo $this->display_conditional_logic_fields( $index ); ?>
             </div> <!-- .edd-checkout-fields-holder -->
         </li>
 		<?php

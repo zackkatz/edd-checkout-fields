@@ -27,15 +27,16 @@ class CFM_HTML_Field extends CFM_Field {
 
 	/** @var array Characteristics are things that can change from field to field of the same field type. Like the placeholder between two email fields. Stored in db. */
 	public $characteristics = array(
-		'name'            => '',
-		'template'        => 'html',
-		'required'        => false,
-		'label'           => '',
-		'html'            => '',
-		'css'             => '',
-		'meta_type'       => 'payment', // 'payment' or 'user' here if is_meta()
-		'public'          => "public", // denotes whether a field shows in the admin only
-		'show_in_exports' => "noexport", // denotes whether a field is in the CSV exports
+		'name'              => '',
+		'template'          => 'html',
+		'required'          => false,
+		'label'             => '',
+		'html'              => '',
+		'css'               => '',
+		'meta_type'         => 'payment', // 'payment' or 'user' here if is_meta()
+		'public'            => "public", // denotes whether a field shows in the admin only
+		'show_in_exports'   => "noexport", // denotes whether a field is in the CSV exports
+		'conditional_logic' => array(),
 	);
 
 
@@ -121,6 +122,8 @@ class CFM_HTML_Field extends CFM_Field {
 					<label><?php _e( 'HTML', 'edd_cfm' ); ?></label>
 					<textarea class="smallipopInput" title="Paste your HTML code & WordPress shortcodes here" name="<?php echo $html_name; ?>" rows="10"><?php echo esc_html( $html_value ); ?></textarea>
 				</div>
+
+				<?php echo $this->display_conditional_logic_fields( $index ); ?>
 			</div>
 		</li>
 		<?php

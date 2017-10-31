@@ -26,20 +26,21 @@ class CFM_Checkbox_Field extends CFM_Field {
 
 	/** @var array Characteristics are things that can change from field to field of the same field type. Like the placeholder between two checkbox fields. Stored in db. */
 	public $characteristics = array(
-		'name'        => '',
-		'template'    => 'checkbox',
-		'required'    => false,
-		'label'       => '',
-		'css'         => '',
-		'default'     => '',
-		'size'        => '',
-		'help'        => '',
-		'placeholder' => '',
-		'options'     => '',
-		'selected'    => '',
-		'meta_type'   => 'payment', // 'payment' or 'user' here if is_meta()
-		'public'          => "public", // denotes whether a field shows in the admin only
-		'show_in_exports' => "export", // denotes whether a field is in the CSV exports
+		'name'              => '',
+		'template'          => 'checkbox',
+		'required'          => false,
+		'label'             => '',
+		'css'               => '',
+		'default'           => '',
+		'size'              => '',
+		'help'              => '',
+		'placeholder'       => '',
+		'options'           => '',
+		'selected'          => '',
+		'meta_type'         => 'payment', // 'payment' or 'user' here if is_meta()
+		'public'            => "public", // denotes whether a field shows in the admin only
+		'show_in_exports'   => "export", // denotes whether a field is in the CSV exports
+		'conditional_logic' => array(),
 	);
 
 	public function set_title() {
@@ -158,6 +159,8 @@ class CFM_Checkbox_Field extends CFM_Field {
 						<?php CFM_Formbuilder_Templates::common_checkbox( $index, 'options', $this->characteristics ); ?>
 					</div>
 				</div>
+
+				<?php echo $this->display_conditional_logic_fields( $index ); ?>
 			</div>
 		</li>
 		<?php
