@@ -33,7 +33,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 function cfm_get_default_checkout_form_fields(){
 	$fields = array(
 			1 => array(
-				'template' => 'first_name',
+				'template' => 'edd_first',
 				'required' => 'yes',
 				'label' => 'First Name',
 				'name' => 'edd_first',
@@ -47,7 +47,7 @@ function cfm_get_default_checkout_form_fields(){
 				'show_in_exports' => "noexport",
 			),
 			2 => array(
-				'template' => 'last_name',
+				'template' => 'edd_last',
 				'required' => 'yes',
 				'label' => 'Last Name',
 				'name' => 'edd_last',
@@ -145,7 +145,7 @@ function cfm_upgrade_field( $field ) {
 			$field['show_in_exports'] = "noexport";
 			$field['meta_type'] = "payment";
 			$field['is_meta'] = true;
-			$field['template'] = "first_name";
+			$field['template'] = "edd_first";
 			break;
 
 		case 'edd_last':
@@ -153,7 +153,7 @@ function cfm_upgrade_field( $field ) {
 			$field['show_in_exports'] = "noexport";
 			$field['meta_type'] = "payment";
 			$field['is_meta'] = true;
-			$field['template'] = "last_name";
+			$field['template'] = "edd_last";
 			break;
 
 		case 'edd_email':
