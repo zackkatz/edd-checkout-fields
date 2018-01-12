@@ -79,6 +79,7 @@ class CFM_Form {
 	}
 
 	public function load_fields( $fields = array() ) {
+
 		$final = array();
 		if ( !empty( $fields ) ) {
 			foreach ( $fields as $key => $value ) {

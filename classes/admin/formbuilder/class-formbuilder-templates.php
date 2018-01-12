@@ -229,7 +229,7 @@ class CFM_Formbuilder_Templates {
 		}
 
 		$template           = !empty( $values['template'] ) ? $values['template'] : $template;
-		$label_value        = isset( $values['label'] ) && ! empty( $values['label'] ) ? esc_attr( $values['label'] ) : esc_attr( ucwords( str_replace( '_', ' ', $template ) ) );
+		$label_value        = isset( $values['label'] ) && ! empty( $values['label'] ) ? esc_attr( $values['label'] ) : $field->supports['title'];
 		$help_value         = isset( $values['help'] )? esc_textarea( $values['help'] ) : '';
 		$meta_type          = "yes"; // for post meta on custom fields
 

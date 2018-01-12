@@ -418,7 +418,6 @@ function cfm_forms_ajax_post_add_field() {
 	$name     = isset( $_POST['name'] )  ? $_POST['name'] : '' ;
 	$field_id = isset( $_POST['order'] ) ? $_POST['order'] : 0 ;
 	$id       = isset( $_POST['id'] )    ? $_POST['id'] : 0 ;
-
 	if ( cfm_is_key( $name, EDD_CFM()->load_fields ) ) {
 		$class = EDD_CFM()->load_fields[ $name ];
 		$class = new $class( '', $id );
