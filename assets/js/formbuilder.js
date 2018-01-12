@@ -131,7 +131,6 @@
 
 			// check if these are already inserted
 			var oneInstance = ['first_name', 'last_name', 'user_email'];
-
 			if ($.inArray(name, oneInstance) >= 0) {
 				if ( $formEditor.find('li.' + name).length ) {
 					alert('You already have this field in the form');
@@ -147,6 +146,7 @@
 			})
 
 			$.post(ajaxurl, data, function(res) {
+				console.log( res );
 				$formEditor.append(res);
 
 				// re-call sortable
