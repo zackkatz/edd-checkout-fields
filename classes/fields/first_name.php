@@ -20,14 +20,14 @@ class CFM_First_Name_Field extends CFM_Field {
 			'can_change_meta_key'         => false,
 			'can_add_to_formbuilder'      => true,
 		),
-		'template'  => 'first_name',
+		'template'  => 'edd_first',
 		'title'     => 'First Name',
 	);
 
 	/** @var array Characteristics are things that can change from field to field of the same field type. Like the placeholder between two email fields. Stored in db. */
 	public $characteristics = array(
-		'name'             => 'first_name',
-		'template'         => 'first_name',
+		'name'             => 'edd_first',
+		'template'         => 'edd_first',
 		'public'           => true,
 		'required'         => true,
 		'label'            => '',
