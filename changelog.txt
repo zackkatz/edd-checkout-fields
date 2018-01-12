@@ -1,3 +1,7 @@
+= 2.1.2, January 12, 2018 =
+
+* Fix: Field name for First and Last name is incorrect causing the field values to be stored improperly on checkout.
+
 = 2.1.1, September 21, 2017 =
 
 * Fix: Only run reCAPTCHA JS if the checkout has a reCAPTCHA field
