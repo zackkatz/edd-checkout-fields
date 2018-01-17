@@ -202,3 +202,43 @@ function cfm_upgrade_cfm_date_fields() {
 
 }
 add_action( 'edd_upgrade_cfm_date_field', 'cfm_upgrade_cfm_date_fields' );
+
+
+/**
+ * Updates the field keys for First Name and Last Name fields
+ *
+ * In CFM 2.1.2, the key for the name fields was changed. This upgrade routine ensures the fields get updated for existing installs.
+ *
+ * @since 2.1.3
+ * @access public
+ *
+ * @return void
+ */
+function edd_cfm_upgrade_name_field_keys() {
+
+	$db_version = get_option( 'cfm_db_version', '1.0' );
+
+	if ( version_compare( $db_version, '2.1.3', '>=' ) ) {
+		return;
+	}
+
+	$form   = get_option( 'cfm-checkout-form', false );
+	$fields = get_post_meta( $form, 'cfm-form', true );
+	foreach ( $fields as $field_id => $field ) {
+		if ( ! empty( $field['template'] ) && $field['template'] === 'first_name' ) {
+
+			$fields[ $field_id ]['template'] = 'edd_first';
+		}
+
+		if ( ! empty( $field['template'] ) && $field['template'] === 'last_name' ) {
+
+			$fields[ $field_id ]['template'] = 'edd_last';
+		}
+	}
+
+	update_post_meta( $form, 'cfm-form', $fields );
+
+	update_option( 'cfm_db_version', '2.1.3' );
+
+}
+add_action( 'admin_init', 'edd_cfm_upgrade_name_field_keys' );
