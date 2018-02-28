@@ -58,9 +58,11 @@ class CFM_Frontend_Receipt {
 
 		$form = new CFM_Checkout_Form( $form_id, 'id', $payment->ID );
 
+		$payment_meta = edd_get_payment_meta( $payment->ID );
+
 		if( ! empty( $form->fields ) ) {
 
-			echo '<tr class="edd-cfm-receipt-fields"><th colspan="2"><strong>' . edd_get_option( 'cfm-receipt-header', __( 'Information', 'edd_cfm' ) ) . '</strong></th></tr>';
+			echo '<tr class="edd-cfm-receipt-fields"><th colspan="2"><strong>' . edd_get_option( 'cfm-receipt-header', __( 'Information', 'edd_cfm' ) ) . ':</strong></th></tr>';
 
 			foreach( $form->fields as $field ) {
 
@@ -68,21 +70,30 @@ class CFM_Frontend_Receipt {
 					continue;
 				}
 
-				echo '<tr class="edd-cfm-receipt-field">';
+				$value = $field->export_data( $payment->ID, get_current_user_id() );
 
-					echo '<td id="edd-cfm-field-' . $field->name() . '">' . $field->get_label() . '</td>';
+				if( 'file_upload' == $field->characteristics['template'] ) {
+					$value = '<a href="' . esc_url( $value ) . '" target="_blank">' . basename( $value ) . '</a>';
+				}
 
-						$value = $field->export_data( $payment->ID, get_current_user_id() );
+				if( 'edd_first' == $field->characteristics['template'] ) {
+					$value = $payment_meta['user_info']['first_name'];
+				}
 
-						if( 'file_upload' == $field->characteristics['template'] ) {
+				if( 'edd_last' == $field->characteristics['template'] ) {
+					$value = $payment_meta['user_info']['last_name'];
+				}
 
-							$value = '<a href="' . esc_url( $value ) . '" target="_blank">' . basename( $value ) . '</a>';
+				if( 'user_email' == $field->characteristics['template'] ) {
+					$value = $payment_meta['user_info']['email'];
+				}
 
-						}
-
+				if ( $value ) {
+					echo '<tr class="edd-cfm-receipt-field">';
+					echo '<td id="edd-cfm-field-' . $field->name() . '"><strong>' . $field->get_label() . '</strong>:</td>';
 					echo '<td>' . $value . '</td>';
-
-				echo '</tr>';
+					echo '</tr>';
+				}
 
 			}
 
