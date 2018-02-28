@@ -108,7 +108,7 @@ class CFM_Checkbox_Field extends CFM_Field {
 			echo '<ul class="cfm-checkbox-checklist">';
 			foreach ( $this->characteristics['options'] as $option ) {
 				echo '<li>';?>
-					<input name="<?php echo esc_attr( $this->name() ); ?>[]"  id="<?php echo esc_attr( $this->name() ); ?>" type="checkbox" class="checkbox <?php echo $this->required_class(); ?>" value="<?php echo esc_attr( $option ); ?>"<?php echo in_array( $option, $value ) ? ' checked="checked"' : ''; ?> <?php echo $this->required_html5(); ?> />
+					<input name="<?php echo esc_attr( $this->name() ); ?>[]"  id="<?php echo esc_attr( $this->name() ); ?>" type="checkbox" class="checkbox <?php echo $this->required_class(); ?>" value="<?php echo esc_attr( $option ); ?>"<?php echo in_array( $option, $value ) ? ' checked="checked"' : ''; ?> />
 					<?php echo __( $option, 'edd_cfm' ); ?>
 				<?php
 				echo '</li>';

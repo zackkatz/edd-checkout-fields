@@ -45,7 +45,7 @@ class CFM_Radio_Field extends CFM_Field {
 	public function set_title() {
 		$title = _x( 'Radio', 'CFM Field title translation', 'edd_cfm' );
 		$title = apply_filters( 'cfm_' . $this->name() . '_field_title', $title );
-		$this->supports['title'] = $title;		
+		$this->supports['title'] = $title;
 	}
 
 	/** Returns the HTML to render a field in admin */
@@ -54,7 +54,7 @@ class CFM_Radio_Field extends CFM_Field {
 			$user_id = get_current_user_id();
 		}
 
-		
+
 		$value     = $this->get_field_value_admin( $this->payment_id, $this->user_id );
 		$output        = '';
 		$output     .= sprintf( '<p class="cfm-el %1s %2s %3s">', esc_attr( $this->template() ), esc_attr( $this->name() ), esc_attr( $this->css() ) );
@@ -68,7 +68,7 @@ class CFM_Radio_Field extends CFM_Field {
 		<?php
 		if ( $this->characteristics['options'] && count( $this->characteristics['options'] ) > 0 ) {
 			echo '<ul class="cfm-checkbox-checklist" class="radio edd-input">';
-			foreach ( $this->characteristics['options'] as $option ) { 
+			foreach ( $this->characteristics['options'] as $option ) {
 				echo '<li>';?>
 						<input name="<?php echo esc_attr( $this->name() ); ?>" id="<?php echo esc_attr( $this->name() ); ?>" type="radio" class="radio edd-input" value="<?php echo esc_attr( $option ); ?>" <?php echo in_array( $option, $value ) ? ' checked="checked"' : ''; ?> />
 						<?php _e( $option, 'edd_cfm' ); ?>
@@ -93,7 +93,7 @@ class CFM_Radio_Field extends CFM_Field {
 		if ( ! $profile && is_integer( $user_id ) && $user_id > 0 && ! metadata_exists( 'user', $user_id, $this->name() ) ) {
 			$value  = isset( $this->characteristics['selected'] ) ? $this->characteristics['selected'] : array();
 		}
-		
+
 		$required  = $this->required();
 		$output        = '';
 		$output     .= sprintf( '<p class="cfm-el %1s %2s %3s">', esc_attr( $this->template() ), esc_attr( $this->name() ), esc_attr( $this->css() ) );
@@ -107,9 +107,9 @@ class CFM_Radio_Field extends CFM_Field {
 		<?php
 		if ( $this->characteristics['options'] && count( $this->characteristics['options'] ) > 0 ) {
 			echo '<ul class="cfm-checkbox-checklist" class="radio edd-input ' . $this->required_class() . '">';
-			foreach ( $this->characteristics['options'] as $option ) { 
+			foreach ( $this->characteristics['options'] as $option ) {
 				echo '<li>';?>
-						<input name="<?php echo $this->name(); ?>" type="radio" value="<?php echo esc_attr( $option ); ?>" <?php echo in_array( $option, $value ) ? ' checked="checked"' : ''; ?> <?php echo $this->required_html5(); ?> />
+						<input name="<?php echo $this->name(); ?>" type="radio" value="<?php echo esc_attr( $option ); ?>" <?php echo in_array( $option, $value ) ? ' checked="checked"' : ''; ?> />
 						<?php _e( $option, 'edd_cfm' ); ?>
 					<?php
 				echo '</li>';
