@@ -1,3 +1,9 @@
+= 2.1.5, May 24, 2018 =
+
+* GDPR: Add checkout fields to the Personal Data Exporter.
+* GDPR: Allow anonymization and deletion of checkout fields with the Personal Data Eraser.
+* Note: All GDPR features require Easy Digital Downloads 2.9.2 or later.
+
 = 2.1.4, February 28, 2018 =
 
 * Fix: Purchase confirmation not showing user-saved fields
