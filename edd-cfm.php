@@ -245,11 +245,12 @@ class EDD_Checkout_Fields_Manager {
 				self::$instance->export                = new CFM_Export;
 				self::$instance->tools                 = new CFM_Tools;
 				self::$instance->formbuilder_templates = new CFM_Formbuilder_Templates;
+				self::$instance->privacy               = new CFM_Privacy;
 			}
 
 			self::$instance->frontend_profile         = new CFM_Frontend_Customer_Profile;
 			self::$instance->frontend_receipt         = new CFM_Frontend_Receipt;
-			self::$instance->checkout         		  = new CFM_Checkout;
+			self::$instance->checkout                 = new CFM_Checkout;
 
 			/*
 			 * We have to load EDD's upload functions and misc functions files manually
@@ -390,6 +391,7 @@ class EDD_Checkout_Fields_Manager {
 			require_once cfm_plugin_dir . 'classes/admin/reporting/class-export.php';
 			require_once cfm_plugin_dir . 'classes/admin/class-tools.php';
 			require_once cfm_plugin_dir . 'classes/admin/class-menu.php';
+			require_once cfm_plugin_dir . 'classes/admin/class-privacy.php';
 		}
 		require_once cfm_plugin_dir . 'classes/frontend/class-checkout.php';
 		require_once cfm_plugin_dir . 'classes/frontend/class-frontend-customer-profile.php';

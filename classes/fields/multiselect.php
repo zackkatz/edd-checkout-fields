@@ -159,6 +159,14 @@ class CFM_Multiselect_Field extends CFM_Field {
 						<?php CFM_Formbuilder_Templates::radio_fields( $index, 'options', $this->characteristics ); ?>
 					</div>
 				</div>
+
+				<?php CFM_Formbuilder_Templates::header(
+					$index,
+					__( 'Privacy Settings', 'edd_cfm' ),
+					__( 'These settings only affect fields stored as payment meta', 'edd_cfm' )
+				); ?>
+				<?php CFM_Formbuilder_Templates::privacy_export( $index, $this->characteristics ); ?>
+				<?php CFM_Formbuilder_Templates::eraser_action( $index, $this->characteristics ); ?>
 			</div>
 		</li>
 		<?php

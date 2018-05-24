@@ -640,4 +640,107 @@ class CFM_Formbuilder_Templates {
 		</div>
 		<?php
 	}
+
+	public static function header( $id, $header = '', $description = '' ) {
+		?>
+		<div class="cfm-form-rows">
+			<h3><label><?php echo sanitize_text_field( $header ) ?></label></h3>
+			<div class="cfm-form-sub-fields"><?php echo sanitize_text_field( $description ); ?></div>
+		</div>
+		<?php
+	}
+
+	/**
+	 * Field privacy settings.
+	 *
+	 * Output the admin settings for how a field should be treated with the Privacy Exporter
+	 *
+	 * @access public
+	 *
+	 * @param int        $id    Order number of the field in formbuilder.
+	 * @param values     $values CFM object formbuilder values.
+	 * @param int        $forced_value
+	 *
+	 * @return void
+	 */
+	public static function privacy_export( $id, $values = array(), $forced_value = -2 ) {
+		$tpl = '%s[%d][%s]';
+		$field_name  = sprintf( $tpl, 'cfm_input', $id, 'show_in_privacy_export' );
+		$field_value = $values && isset( $values[ 'show_in_privacy_export' ] ) ? esc_attr( $values[ 'show_in_privacy_export' ] ) : "1";
+		if ( $forced_value !== -2 ) { ?>
+			<div class="cfm-form-rows">
+				<?php $pii_abbr = __( 'Personally Identifiable Information', 'edd_cfm' ); ?>
+				<em><?php printf( __( 'This field contains <abbr title="%s">PII</abbr>, and as such is required to show in the Personal Data Exports.</em>', 'edd_cfm' ), $pii_abbr ); ?>
+				<input type="hidden" id="<?php echo esc_attr( $field_name ); ?>" name="<?php echo esc_attr( $field_name ); ?>" value="<?php echo $field_value; ?>" />
+			</div>
+			<?php
+		} else { ?>
+			<div class="cfm-form-rows">
+				<label><?php _e( 'Show field in Privacy Export', 'edd_cfm' ); ?></label>
+				<div class="cfm-form-sub-fields">
+					<label for="<?php esc_attr_e( $field_name ); ?>">
+						<input type="radio" id="<?php echo esc_attr( $field_name ); ?>" name="<?php echo esc_attr( $field_name ); ?>" value="0" <?php checked( '0' == $field_value ); ?> data-type="label" class="smallipopInput" /><?php _e( 'Do not show this field when a user requests an export of their private data.', 'edd_cfm' ); ?><br />
+						<input type="radio" id="<?php echo esc_attr( $field_name ); ?>-" name="<?php echo esc_attr( $field_name ); ?>" value="1" <?php checked( '1' == $field_value ); ?> data-type="label" class="smallipopInput" /><?php _e( 'Show this field when a user requests an export of their private data. (Default)', 'edd_cfm' ); ?>
+					</label>
+				</div>
+			</div>
+			<?php
+		}
+	}
+
+	/**
+	 * Field privacy settings.
+	 *
+	 * Output the admin settings for how a field should be treated with the Privacy Eraser
+	 *
+	 * @access public
+	 *
+	 * @param int        $id    Order number of the field in formbuilder.
+	 * @param values     $values CFM object formbuilder values.
+	 * @param int        $forced_value
+	 *
+	 * @return void
+	 */
+	public static function eraser_action( $id, $values = array(), $default_action = 'anonymize', $forced_value = -2 ) {
+		$tpl = '%s[%d][%s]';
+		$field_name  = sprintf( $tpl, 'cfm_input', $id, 'privacy_eraser_action' );
+		$field_value = $values && isset( $values[ 'privacy_eraser_action' ] ) ? esc_attr( $values[ 'privacy_eraser_action' ] ) : $default_action;
+		if ( $forced_value !== -2 ) { ?>
+			<div class="cfm-form-rows">
+				<?php
+					switch( $forced_value ) {
+						case 'none':
+							$message = __( 'When a user requests to delete personal data, no action will be taken on the data for this field.', 'edd_cfm' );
+							break;
+
+						case 'anonymize':
+							$message = __( 'When a user requests to delete personal data, the data for this field will be anonymized.', 'edd_cfm' );
+							break;
+
+						case 'delete':
+							$message = __( 'When a user requests to delete personal data, the data for this field will be deleted.', 'edd_cfm' );
+							break;
+					}
+				?>
+				<em><?php echo $message; ?></em>
+				<input type="hidden" id="<?php echo esc_attr( $field_name ); ?>" name="<?php echo esc_attr( $field_name ); ?>" value="<?php echo $forced_value; ?>" />
+			</div>
+			<?php
+		} else { ?>
+			<div class="cfm-form-rows">
+				<label><?php _e( 'Erase Private Data Action', 'edd_cfm' ); ?></label>
+				<div class="cfm-form-sub-fields">
+					<label for="<?php esc_attr_e( $field_name ); ?>">
+						<select id="<?php echo esc_attr( $field_name ); ?>" name="<?php echo esc_attr( $field_name ); ?>">
+							<option value="none" <?php selected( 'none', $field_value ); ?>><?php _e( 'No Action', 'edd_cfm' ); ?></option>
+							<option value="anonymize" <?php selected( 'anonymize', $field_value ); ?>><?php _e( 'Anonymize', 'edd_cfm' ); ?></option>
+							<option value="delete" <?php selected( 'delete', $field_value ); ?>><?php _e( 'Delete', 'edd_cfm' ); ?></option>
+						</select>
+						<span class="smallipopInput"><?php _e( 'When a user requests to erase private data, what action should be taken on this field.', 'edd_cfm' ); ?></span>
+					</label>
+				</div>
+			</div>
+			<?php
+		}
+	}
 }

@@ -113,6 +113,13 @@ class CFM_First_Name_Field extends CFM_Field {
 				<?php CFM_Formbuilder_Templates::standard( $index, $this ); ?>
 				<?php CFM_Formbuilder_Templates::css( $index, $this->characteristics ); ?>
 				<?php CFM_Formbuilder_Templates::common_text( $index, $this->characteristics ); ?>
+				<?php CFM_Formbuilder_Templates::header(
+					$index,
+					__( 'Privacy Settings', 'edd_cfm' ),
+					__( 'These settings only affect fields stored as payment meta', 'edd_cfm' )
+				); ?>
+				<?php CFM_Formbuilder_Templates::privacy_export( $index, $this->characteristics, null, "1" ); ?>
+				<?php CFM_Formbuilder_Templates::eraser_action( $index, $this->characteristics, null, "anonymize" ); ?>
 			</div>
 		</li>
 		<?php

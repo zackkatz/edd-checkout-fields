@@ -321,6 +321,14 @@ class CFM_Repeat_Field extends CFM_Field {
 					} ?>
 					</div>
 				</div>
+
+				<?php CFM_Formbuilder_Templates::header(
+					$index,
+					__( 'Privacy Settings', 'edd_cfm' ),
+					__( 'These settings only affect fields stored as payment meta', 'edd_cfm' )
+				); ?>
+				<?php CFM_Formbuilder_Templates::privacy_export( $index, $this->characteristics ); ?>
+				<?php CFM_Formbuilder_Templates::eraser_action( $index, $this->characteristics ); ?>
 			</div>
 		</li>
 

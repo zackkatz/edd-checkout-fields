@@ -261,54 +261,62 @@ class CFM_File_Upload_Field extends CFM_Field {
 	}
 
 	/** Returns the HTML to render a field for the formbuilder */
-	public function render_formbuilder_field( $index = -2, $insert = false ) {
-		$removable    = $this->can_remove_from_formbuilder();
-        $max_size_name = sprintf('%s[%d][max_size]', 'cfm_input', $index);
-        $max_files_name = sprintf('%s[%d][count]', 'cfm_input', $index);
-        $extensions_name = sprintf('%s[%d][extension][]', 'cfm_input', $index);
-        $help = esc_attr( __( 'Enter maximum upload size limit in KB', 'edd_cfm' ) );
-        $count = esc_attr( __( 'Number of files which can be uploaded', 'edd_cfm' ) );
+	public function render_formbuilder_field( $index = - 2, $insert = false ) {
+		$removable        = $this->can_remove_from_formbuilder();
+		$max_size_name    = sprintf( '%s[%d][max_size]', 'cfm_input', $index );
+		$max_files_name   = sprintf( '%s[%d][count]', 'cfm_input', $index );
+		$extensions_name  = sprintf( '%s[%d][extension][]', 'cfm_input', $index );
+		$help             = esc_attr( __( 'Enter maximum upload size limit in KB', 'edd_cfm' ) );
+		$count            = esc_attr( __( 'Number of files which can be uploaded', 'edd_cfm' ) );
 		$extensions_value = isset( $this->characteristics['extension'] ) ? $this->characteristics['extension'] : false;
-		$extensions = cfm_allowed_extensions();
-		$max_size_value = isset( $this->characteristics['max_size'] ) ? $this->characteristics['max_size'] : false;
-		$max_files_value = isset( $this->characteristics['count'] ) ? $this->characteristics['count'] : false;
+		$extensions       = cfm_allowed_extensions();
+		$max_size_value   = isset( $this->characteristics['max_size'] ) ? $this->characteristics['max_size'] : false;
+		$max_files_value  = isset( $this->characteristics['count'] ) ? $this->characteristics['count'] : false;
 		ob_start();
-        ?>
-        <li class="custom-field file_upload">
+		?>
+		<li class="custom-field file_upload">
 			<?php $this->legend( $this->title(), $this->get_label(), $removable ); ?>
 			<?php CFM_Formbuilder_Templates::hidden_field( "[$index][template]", $this->template() ); ?>
 			<?php CFM_Formbuilder_Templates::field_div( $index, $this->name(), $this->characteristics, $insert ); ?>
-				<?php CFM_Formbuilder_Templates::public_radio( $index, $this->characteristics ); ?>
-				<?php CFM_Formbuilder_Templates::export_radio( $index, $this->characteristics ); ?>
-				<?php CFM_Formbuilder_Templates::meta_type_radio( $index, $this->characteristics ); ?>
-				<?php CFM_Formbuilder_Templates::standard( $index, $this ); ?>
-				<?php CFM_Formbuilder_Templates::css( $index, $this->characteristics ); ?>
+			<?php CFM_Formbuilder_Templates::public_radio( $index, $this->characteristics ); ?>
+			<?php CFM_Formbuilder_Templates::export_radio( $index, $this->characteristics ); ?>
+			<?php CFM_Formbuilder_Templates::meta_type_radio( $index, $this->characteristics ); ?>
+			<?php CFM_Formbuilder_Templates::standard( $index, $this ); ?>
+			<?php CFM_Formbuilder_Templates::css( $index, $this->characteristics ); ?>
 
-                <div class="cfm-form-rows">
-                    <label><?php _e( 'Max. file size', 'edd_cfm' ); ?></label>
-                    <input type="text" class="smallipopInput" name="<?php echo $max_size_name; ?>" value="<?php echo $max_size_value; ?>" title="<?php echo $help; ?>">
-                </div> <!-- .edd-checkout-fields-rows -->
+			<div class="cfm-form-rows">
+				<label><?php _e( 'Max. file size', 'edd_cfm' ); ?></label>
+				<input type="text" class="smallipopInput" name="<?php echo $max_size_name; ?>" value="<?php echo $max_size_value; ?>" title="<?php echo $help; ?>">
+			</div> <!-- .edd-checkout-fields-rows -->
 
-                <div class="cfm-form-rows">
-                    <label><?php _e( 'Max. files', 'edd_cfm' ); ?></label>
-                    <input type="text" class="smallipopInput" name="<?php echo $max_files_name; ?>" value="<?php echo $max_files_value; ?>" title="<?php echo $count; ?>">
-                </div> <!-- .edd-checkout-fields-rows -->
+			<div class="cfm-form-rows">
+				<label><?php _e( 'Max. files', 'edd_cfm' ); ?></label>
+				<input type="text" class="smallipopInput" name="<?php echo $max_files_name; ?>" value="<?php echo $max_files_value; ?>" title="<?php echo $count; ?>">
+			</div> <!-- .edd-checkout-fields-rows -->
 
-                <div class="edd-checkout-fields-rows">
-                    <label><?php _e( 'Allowed Files', 'edd_cfm' ); ?></label>
+			<div class="edd-checkout-fields-rows">
+				<label><?php _e( 'Allowed Files', 'edd_cfm' ); ?></label>
 
-                    <div class="edd-checkout-fields-sub-fields">
-                        <?php foreach ($extensions as $key => $value) {
-                            ?>
-                            <label>
-                                <input type="checkbox" name="<?php echo $extensions_name; ?>" value="<?php echo $key; ?>"<?php echo $extensions_value && is_array( $extensions_value ) && in_array($key, $extensions_value) ? ' checked="checked"' : ''; ?>>
-                                <?php printf('%s (%s)', $value['label'], str_replace( ',', ', ', $value['ext'] ) ) ?>
-                            </label> <br />
-                        <?php } ?>
-                    </div>
-                </div> <!-- .edd-checkout-fields-rows -->
-            </div> <!-- .edd-checkout-fields-holder -->
-        </li>
+				<div class="edd-checkout-fields-sub-fields">
+					<?php foreach ( $extensions as $key => $value ) {
+						?>
+						<label>
+							<input type="checkbox" name="<?php echo $extensions_name; ?>" value="<?php echo $key; ?>"<?php echo $extensions_value && is_array( $extensions_value ) && in_array( $key, $extensions_value ) ? ' checked="checked"' : ''; ?>>
+							<?php printf( '%s (%s)', $value['label'], str_replace( ',', ', ', $value['ext'] ) ) ?>
+						</label> <br />
+					<?php } ?>
+				</div>
+			</div> <!-- .edd-checkout-fields-rows -->
+
+			<?php CFM_Formbuilder_Templates::header(
+				$index,
+				__( 'Privacy Settings', 'edd_cfm' ),
+				__( 'These settings only affect fields stored as payment meta', 'edd_cfm' )
+			); ?>
+			<?php CFM_Formbuilder_Templates::privacy_export( $index, $this->characteristics ); ?>
+			<?php CFM_Formbuilder_Templates::eraser_action( $index, $this->characteristics ); ?>
+			</div> <!-- .edd-checkout-fields-holder -->
+		</li>
 		<?php
 		return ob_get_clean();
 	}
